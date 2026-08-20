@@ -1,0 +1,79 @@
+'use client';
+
+import { useState } from 'react';
+import { Copy, Check, RefreshCw } from 'lucide-react';
+
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+export function UuidGenerator() {
+  const [uuids, setUuids] = useState<string[]>([generateUUID()]);
+  const [count, setCount] = useState(1);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+  function generate() {
+    setUuids(Array.from({ length: count }, generateUUID));
+  }
+
+  async function copy(uuid: string, i: number) {
+    await navigator.clipboard.writeText(uuid);
+    setCopiedIndex(i);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  }
+
+  async function copyAll() {
+    await navigator.clipboard.writeText(uuids.join('\n'));
+    setCopiedIndex(-1);
+    setTimeout(() => setCopiedIndex(null), 2000);
+  }
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-foreground mb-2">UUID Generator</h1>
+      <p className="text-muted-foreground text-sm mb-6">Generate random UUID v4 values.</p>
+
+      <div className="flex items-end gap-3 mb-4">
+        <div>
+          <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Count</label>
+          <input
+            type="number"
+            min={1}
+            max={20}
+            value={count}
+            onChange={e => setCount(Math.max(1, parseInt(e.target.value) || 1))}
+            className="w-20 px-3 py-2 text-sm border border-border rounded-lg bg-background text-foreground outline-none focus:border-blue-500"
+          />
+        </div>
+        <button onClick={generate} className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+          <RefreshCw className="w-3.5 h-3.5" />
+          Generate
+        </button>
+        {uuids.length > 1 && (
+          <button onClick={copyAll} className="flex items-center gap-2 px-4 py-2 border border-border bg-background hover:bg-muted/60 text-sm font-medium rounded-lg transition-colors text-foreground">
+            {copiedIndex === -1 ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedIndex === -1 ? 'Copied all!' : 'Copy all'}
+          </button>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        {uuids.map((uuid, i) => (
+          <div key={i} className="flex items-center justify-between p-3 bg-[#0d1117] border border-border rounded-lg">
+            <code className="text-sm font-mono text-[#e6edf3]">{uuid}</code>
+            <button
+              onClick={() => copy(uuid, i)}
+              className="flex items-center gap-1.5 text-xs text-[#8b949e] hover:text-white transition-colors ml-3 shrink-0"
+            >
+              {copiedIndex === i ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

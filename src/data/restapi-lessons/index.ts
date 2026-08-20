@@ -1,0 +1,22 @@
+export { lesson01 } from './01-introduction';
+export { lesson02 } from './02-http-basics';
+export { lesson03 } from './03-http-methods';
+export { lesson04 } from './04-status-codes';
+export { lesson05 } from './05-url-design';
+export { lesson06 } from './06-request-response';
+export { lesson07 } from './07-authentication';
+export { lesson08 } from './08-building-express-api';
+export { lesson09 } from './09-best-practices';
+export { lesson10 } from './10-references';
+import { lesson01 } from './01-introduction';
+import { lesson02 } from './02-http-basics';
+import { lesson03 } from './03-http-methods';
+import { lesson04 } from './04-status-codes';
+import { lesson05 } from './05-url-design';
+import { lesson06 } from './06-request-response';
+import { lesson07 } from './07-authentication';
+import { lesson08 } from './08-building-express-api';
+import { lesson09 } from './09-best-practices';
+import { lesson10 } from './10-references';
+
+export const allRestapiLessons = [lesson01, lesson02, lesson03, lesson04, lesson05, lesson06, lesson07, lesson08, lesson09, lesson10];

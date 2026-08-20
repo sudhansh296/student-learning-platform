@@ -1,26 +1,130 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════
+   LIGHT — Samsung style: pure white, crisp, minimal
+   ═══════════════════════════════════════════════════ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:          #ffffff;
+  --bg-section:  #f4f4f4;
+  --card:        #ffffff;
+  --card-hover:  #f9f9f9;
+  --text:        #1e1e1e;
+  --text-2:      #555555;
+  --text-3:      #888888;
+  --line:        #e0e0e0;
+  --line-2:      #cccccc;
+  --blue:        #2563eb;
+  --blue-h:      #1d4ed8;
+  --green:       #059669;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ═══════════════════════════════════════════════════
+   DARK — deep navy, NOT pure black
+   ═══════════════════════════════════════════════════ */
+.dark {
+  --bg:          #0d1117;
+  --bg-section:  #111827;
+  --card:        #161b22;
+  --card-hover:  #1c2333;
+  --text:        #e6edf3;
+  --text-2:      #8d96a0;
+  --text-3:      #5a6473;
+  --line:        #21262d;
+  --line-2:      #30363d;
+  --blue:        #58a6ff;
+  --blue-h:      #79c0ff;
+  --green:       #3fb950;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ═══════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; border-color: var(--line); }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
+h1,h2,h3,h4,h5,h6 { color: var(--text); }
+::selection { background: #2563eb22; }
+
+/* ═══════════════════════════════════════════════════
+   TAILWIND COMPATIBILITY ALIASES
+   ═══════════════════════════════════════════════════ */
+@layer utilities {
+  .bg-background         { background: var(--bg); }
+  .bg-muted              { background: var(--bg-section); }
+  .bg-card               { background: var(--card); }
+  .text-foreground       { color: var(--text); }
+  .text-muted-foreground { color: var(--text-2); }
+  .border-border         { border-color: var(--line); }
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════ */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 9999px; }
+
+/* ═══════════════════════════════════════════════════
+   FOCUS
+   ═══════════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════
+   FONTS
+   ═══════════════════════════════════════════════════ */
+pre, code, kbd { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace; }
+
+/* ═══════════════════════════════════════════════════
+   DOC PAGES
+   ═══════════════════════════════════════════════════ */
+.doc-content            { max-width: 70ch; }
+.doc-content h2         { scroll-margin-top: 5rem; }
+.doc-content code:not(pre code) {
+  font-size: 0.82em;
+  background: var(--bg-section);
+  color: #dc2626;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--line);
+}
+.dark .doc-content code:not(pre code) { color: #f87171; }
+
+/* ═══════════════════════════════════════════════════
+   TRANSITIONS
+   ═══════════════════════════════════════════════════ */
+*, *::before, *::after {
+  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-duration: 140ms;
+  transition-timing-function: ease;
+}
+
+/* ═══════════════════════════════════════════════════
+   GRADIENT TEXT (hero)
+   ═══════════════════════════════════════════════════ */
+.grad {
+  background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dark .grad {
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════════════════
+   BADGE PULSE
+   ═══════════════════════════════════════════════════ */
+@keyframes ps { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.7)} }
+.pulse { animation: ps 2.4s ease-in-out infinite; }

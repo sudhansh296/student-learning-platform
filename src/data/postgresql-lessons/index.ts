@@ -1,0 +1,26 @@
+export { lesson01 } from './01-introduction';
+export { lesson02 } from './02-installation';
+export { lesson03 } from './03-tables-schema';
+export { lesson04 } from './04-crud-basics';
+export { lesson05 } from './05-queries';
+export { lesson06 } from './06-joins';
+export { lesson07 } from './07-aggregation';
+export { lesson08 } from './08-indexes';
+export { lesson09 } from './09-transactions';
+export { lesson10 } from './10-nodejs-pg';
+export { lesson11 } from './11-advanced';
+export { lesson12 } from './12-references';
+import { lesson01 } from './01-introduction';
+import { lesson02 } from './02-installation';
+import { lesson03 } from './03-tables-schema';
+import { lesson04 } from './04-crud-basics';
+import { lesson05 } from './05-queries';
+import { lesson06 } from './06-joins';
+import { lesson07 } from './07-aggregation';
+import { lesson08 } from './08-indexes';
+import { lesson09 } from './09-transactions';
+import { lesson10 } from './10-nodejs-pg';
+import { lesson11 } from './11-advanced';
+import { lesson12 } from './12-references';
+
+export const allPostgresqlLessons = [lesson01, lesson02, lesson03, lesson04, lesson05, lesson06, lesson07, lesson08, lesson09, lesson10, lesson11, lesson12];

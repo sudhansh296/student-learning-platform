@@ -1,0 +1,22 @@
+export { lesson01 } from './01-introduction';
+export { lesson02 } from './02-tables';
+export { lesson03 } from './03-insert-select';
+export { lesson04 } from './04-where-filter';
+export { lesson05 } from './05-sorting-limiting';
+export { lesson06 } from './06-aggregates';
+export { lesson07 } from './07-joins';
+export { lesson08 } from './08-subqueries';
+export { lesson09 } from './09-indexes-constraints';
+export { lesson10 } from './10-references';
+import { lesson01 } from './01-introduction';
+import { lesson02 } from './02-tables';
+import { lesson03 } from './03-insert-select';
+import { lesson04 } from './04-where-filter';
+import { lesson05 } from './05-sorting-limiting';
+import { lesson06 } from './06-aggregates';
+import { lesson07 } from './07-joins';
+import { lesson08 } from './08-subqueries';
+import { lesson09 } from './09-indexes-constraints';
+import { lesson10 } from './10-references';
+
+export const allSqlLessons = [lesson01, lesson02, lesson03, lesson04, lesson05, lesson06, lesson07, lesson08, lesson09, lesson10];

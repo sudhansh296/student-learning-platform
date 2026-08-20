@@ -1,0 +1,22 @@
+export { lesson01 } from './01-introduction';
+export { lesson02 } from './02-setup';
+export { lesson03 } from './03-core-workflow';
+export { lesson04 } from './04-branching';
+export { lesson05 } from './05-merging';
+export { lesson06 } from './06-remote';
+export { lesson07 } from './07-undoing';
+export { lesson08 } from './08-conflicts';
+export { lesson09 } from './09-tags-workflows';
+export { lesson10 } from './10-references';
+import { lesson01 } from './01-introduction';
+import { lesson02 } from './02-setup';
+import { lesson03 } from './03-core-workflow';
+import { lesson04 } from './04-branching';
+import { lesson05 } from './05-merging';
+import { lesson06 } from './06-remote';
+import { lesson07 } from './07-undoing';
+import { lesson08 } from './08-conflicts';
+import { lesson09 } from './09-tags-workflows';
+import { lesson10 } from './10-references';
+
+export const allGitLessons = [lesson01, lesson02, lesson03, lesson04, lesson05, lesson06, lesson07, lesson08, lesson09, lesson10];
