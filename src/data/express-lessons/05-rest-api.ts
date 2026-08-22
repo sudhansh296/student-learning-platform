@@ -298,27 +298,27 @@ function showResponse(status, data) {
 
 function renderResources() {
   var list = users.map(function(u) {
-    return '<div class="res-item">{ id: ' + u.id + ', name: "' + u.name + '", email: "' + u.email + '" }</div>';
+    return '<div class=\\"res-item\\">{ id: ' + u.id + ', name: \\"' + u.name + '\\", email: \\"' + u.email + '\\" }</div>';
   }).join('');
   
   document.getElementById('resources').innerHTML =
-    '<div class="res-title">Current Users (' + users.length + ')</div>' + list;
+    '<div class=\\"res-title\\">Current Users (' + users.length + ')</div>' + list;
 }
 
 document.getElementById('output').innerHTML =
-  '<div class="console">' +
-  '<div class="header"><h2>REST API Console</h2><div class="badge">Express</div></div>' +
-  '<div class="controls">' +
-  '<select id="method" class="method-sel"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>' +
-  '<input id="url" class="url-inp" value="/users" placeholder="/users">' +
-  '<button class="send-btn" onclick="handleRequest()">Send</button>' +
+  '<div class=\\"console\\">' +
+  '<div class=\\"header\\"><h2>REST API Console</h2><div class=\\"badge\\">Express</div></div>' +
+  '<div class=\\"controls\\">' +
+  '<select id=\\"method\\" class=\\"method-sel\\"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>' +
+  '<input id=\\"url\\" class=\\"url-inp\\" value=\\"/users\\" placeholder=\\"/users\\">' +
+  '<button class=\\"send-btn\\" onclick=\\"handleRequest()\\">Send</button>' +
   '</div>' +
-  '<div class="body-section">' +
-  '<div class="label">Request Body (JSON for POST/PUT)</div>' +
-  '<textarea id="bodyInput" class="json-area" placeholder=\'{"name":"Charlie","email":"charlie@example.com"}\'></textarea>' +
+  '<div class=\\"body-section\\">' +
+  '<div class=\\"label\\">Request Body (JSON for POST/PUT)</div>' +
+  '<textarea id=\\"bodyInput\\" class=\\"json-area\\" placeholder=\\\'{\\"name\\":\\"Charlie\\",\\"email\\":\\"charlie@example.com\\"}\\\'></textarea>' +
   '</div>' +
-  '<div class="response" id="response">Click Send to make a request...</div>' +
-  '<div class="resources" id="resources"></div>' +
+  '<div class=\\"response\\" id=\\"response\\">Click Send to make a request...</div>' +
+  '<div class=\\"resources\\" id=\\"resources\\"></div>' +
   '</div>';
 
 renderResources();`,

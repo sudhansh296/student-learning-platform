@@ -326,40 +326,40 @@ npx nodemon app.js`,
   fs: {
     title: 'File System (fs)',
     items: [
-      { name: 'fs.readFile(path, encoding, callback)', desc: 'Read entire file into memory', code: 'fs.readFile("file.txt", "utf8", (err, data) => {})' },
-      { name: 'fs.writeFile(path, data, callback)', desc: 'Write data to file (overwrites)', code: 'fs.writeFile("file.txt", "content", (err) => {})' },
-      { name: 'fs.appendFile(path, data, callback)', desc: 'Append data to file', code: 'fs.appendFile("log.txt", "line\\n", (err) => {})' },
-      { name: 'fs.unlink(path, callback)', desc: 'Delete a file', code: 'fs.unlink("file.txt", (err) => {})' },
-      { name: 'fs.readdir(path, callback)', desc: 'List directory contents', code: 'fs.readdir("./folder", (err, files) => {})' }
+      { name: 'fs.readFile(path, encoding, callback)', desc: 'Read entire file into memory', code: 'fs.readFile(\\"file.txt\\", \\"utf8\\", (err, data) => {})' },
+      { name: 'fs.writeFile(path, data, callback)', desc: 'Write data to file (overwrites)', code: 'fs.writeFile(\\"file.txt\\", \\"content\\", (err) => {})' },
+      { name: 'fs.appendFile(path, data, callback)', desc: 'Append data to file', code: 'fs.appendFile(\\"log.txt\\", \\"line\\\\n\\", (err) => {})' },
+      { name: 'fs.unlink(path, callback)', desc: 'Delete a file', code: 'fs.unlink(\\"file.txt\\", (err) => {})' },
+      { name: 'fs.readdir(path, callback)', desc: 'List directory contents', code: 'fs.readdir(\\"./folder\\", (err, files) => {})' }
     ]
   },
   http: {
     title: 'HTTP Module',
     items: [
-      { name: 'http.createServer(callback)', desc: 'Create HTTP server', code: 'const server = http.createServer((req, res) => {\\n  res.end("Hello");\\n});' },
-      { name: 'server.listen(port)', desc: 'Start listening on port', code: 'server.listen(3000, () => console.log("Running"));' },
-      { name: 'res.writeHead(status, headers)', desc: 'Write response headers', code: 'res.writeHead(200, { "Content-Type": "application/json" });' },
-      { name: 'res.end(data)', desc: 'Send response and close connection', code: 'res.end(JSON.stringify({ message: "OK" }));' }
+      { name: 'http.createServer(callback)', desc: 'Create HTTP server', code: 'const server = http.createServer((req, res) => {\\\\n  res.end(\\"Hello\\");\\\\n});' },
+      { name: 'server.listen(port)', desc: 'Start listening on port', code: 'server.listen(3000, () => console.log(\\"Running\\"));' },
+      { name: 'res.writeHead(status, headers)', desc: 'Write response headers', code: 'res.writeHead(200, { \\"Content-Type\\": \\"application/json\\" });' },
+      { name: 'res.end(data)', desc: 'Send response and close connection', code: 'res.end(JSON.stringify({ message: \\"OK\\" }));' }
     ]
   },
   path: {
     title: 'Path Module',
     items: [
-      { name: 'path.join(...paths)', desc: 'Join path segments with platform separator', code: 'path.join(__dirname, "files", "data.txt")' },
-      { name: 'path.resolve(...paths)', desc: 'Resolve to absolute path', code: 'path.resolve("folder", "file.txt")' },
-      { name: 'path.basename(path)', desc: 'Get filename from path', code: 'path.basename("/user/local/file.txt") // "file.txt"' },
-      { name: 'path.dirname(path)', desc: 'Get directory from path', code: 'path.dirname("/user/local/file.txt") // "/user/local"' },
-      { name: 'path.extname(path)', desc: 'Get file extension', code: 'path.extname("file.txt") // ".txt"' }
+      { name: 'path.join(...paths)', desc: 'Join path segments with platform separator', code: 'path.join(__dirname, \\"files\\", \\"data.txt\\")' },
+      { name: 'path.resolve(...paths)', desc: 'Resolve to absolute path', code: 'path.resolve(\\"folder\\", \\"file.txt\\")' },
+      { name: 'path.basename(path)', desc: 'Get filename from path', code: 'path.basename(\\"/user/local/file.txt\\") // \\"file.txt\\"' },
+      { name: 'path.dirname(path)', desc: 'Get directory from path', code: 'path.dirname(\\"/user/local/file.txt\\") // \\"/user/local\\"' },
+      { name: 'path.extname(path)', desc: 'Get file extension', code: 'path.extname(\\"file.txt\\") // \\".txt\\"' }
     ]
   },
   events: {
     title: 'Events Module',
     items: [
       { name: 'new EventEmitter()', desc: 'Create event emitter instance', code: 'const emitter = new EventEmitter();' },
-      { name: 'emitter.on(event, listener)', desc: 'Register event listener', code: 'emitter.on("data", (data) => console.log(data));' },
-      { name: 'emitter.emit(event, ...args)', desc: 'Trigger event with arguments', code: 'emitter.emit("data", { value: 42 });' },
-      { name: 'emitter.once(event, listener)', desc: 'Listen once then remove', code: 'emitter.once("ready", () => console.log("Ready"));' },
-      { name: 'emitter.removeListener(event, listener)', desc: 'Remove specific listener', code: 'emitter.removeListener("data", handler);' }
+      { name: 'emitter.on(event, listener)', desc: 'Register event listener', code: 'emitter.on(\\"data\\", (data) => console.log(data));' },
+      { name: 'emitter.emit(event, ...args)', desc: 'Trigger event with arguments', code: 'emitter.emit(\\"data\\", { value: 42 });' },
+      { name: 'emitter.once(event, listener)', desc: 'Listen once then remove', code: 'emitter.once(\\"ready\\", () => console.log(\\"Ready\\"));' },
+      { name: 'emitter.removeListener(event, listener)', desc: 'Remove specific listener', code: 'emitter.removeListener(\\"data\\", handler);' }
     ]
   }
 };
@@ -374,24 +374,24 @@ function showTab(tab) {
 function render() {
   var tabButtons = Object.keys(tabs).map(function(key) {
     var active = key === currentTab ? ' active' : '';
-    return '<button class="tab' + active + '" onclick="showTab(\'' + key + '\')">' + tabs[key].title + '</button>';
+    return '<button class=\\"tab' + active + '\\" onclick=\\"showTab(\\'' + key + '\\');\\">' + tabs[key].title + '</button>';
   }).join('');
   
   var items = tabs[currentTab].items.map(function(item) {
-    return '<div class="api-item">' +
-      '<div class="api-name">' + item.name + '</div>' +
-      '<div class="api-desc">' + item.desc + '</div>' +
-      '<div class="code-snippet">' + item.code + '</div>' +
+    return '<div class=\\"api-item\\">' +
+      '<div class=\\"api-name\\">' + item.name + '</div>' +
+      '<div class=\\"api-desc\\">' + item.desc + '</div>' +
+      '<div class=\\"code-snippet\\">' + item.code + '</div>' +
       '</div>';
   }).join('');
   
   document.getElementById('output').innerHTML =
-    '<div class="container">' +
-    '<div class="header"><h2>Node.js API Reference</h2><p>Quick lookup for common Node.js built-in modules</p></div>' +
-    '<div class="tabs">' + tabButtons + '</div>' +
-    '<div class="content">' +
-    '<div class="api-section">' +
-    '<div class="api-title">' + tabs[currentTab].title + '<span class="api-badge">Built-in Module</span></div>' +
+    '<div class=\\"container\\">' +
+    '<div class=\\"header\\"><h2>Node.js API Reference</h2><p>Quick lookup for common Node.js built-in modules</p></div>' +
+    '<div class=\\"tabs\\">' + tabButtons + '</div>' +
+    '<div class=\\"content\\">' +
+    '<div class=\\"api-section\\">' +
+    '<div class=\\"api-title\\">' + tabs[currentTab].title + '<span class=\\"api-badge\\">Built-in Module</span></div>' +
     items +
     '</div>' +
     '</div>' +

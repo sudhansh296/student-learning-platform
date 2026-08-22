@@ -143,7 +143,31 @@ ORDER BY id ASC;`,
     {
       type: 'tryit',
       title: 'Pagination Simulator',
-      js: `const allUsers = Array.from({ length: 47 }, (_, i) => ({
+      js: `document.body.innerHTML = \`
+<style>
+body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; margin: 0; }
+h3 { color: #336791; margin: 0 0 4px 0; font-size: 15px; font-weight: 700; }
+#info { font-size: 12px; color: #718096; margin: 8px 0; }
+#sql { display: block; font-family: monospace; font-size: 12px; background: #1a3347; color: #90cdf4; padding: 8px 12px; border-radius: 6px; margin: 8px 0 12px 0; }
+.pager { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+button { padding: 7px 18px; background: #336791; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
+button:disabled { background: #a0aec0; cursor: not-allowed; }
+#page { font-size: 13px; color: #4a5568; font-weight: 600; }
+</style>
+<div>
+  <h3>📄 Pagination Simulator — LIMIT and OFFSET</h3>
+  <div id="info"></div>
+  <code id="sql"></code>
+  <div id="table"></div>
+  <div class="pager">
+    <button id="prev">← Previous</button>
+    <span id="page"></span>
+    <button id="next">Next →</button>
+  </div>
+</div>
+\`;
+
+const allUsers = Array.from({ length: 47 }, (_, i) => ({
   id: i + 1,
   name: ['Alice','Bob','Carol','Dan','Eve','Frank','Grace','Henry','Iris','Jack'][i % 10] + ' ' + String.fromCharCode(65 + (i % 26)),
   plan: ['free','pro','free','enterprise','pro'][i % 5],
@@ -182,14 +206,7 @@ function render() {
 document.getElementById('prev').addEventListener('click', () => { if (currentPage > 1) { currentPage--; render(); } });
 document.getElementById('next').addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; render(); } });
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 4px 0; font-size: 15px; font-weight: 700; }
-#info { font-size: 12px; color: #718096; margin: 8px 0; }
-#sql { display: block; font-family: monospace; font-size: 12px; background: #1a3347; color: #90cdf4; padding: 8px 12px; border-radius: 6px; margin: 8px 0 12px 0; }
-.pager { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
-button { padding: 7px 18px; background: #336791; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
-button:disabled { background: #a0aec0; cursor: not-allowed; }
-#page { font-size: 13px; color: #4a5568; font-weight: 600; }`
+      css: ``
     }
   ],
   exercises: [

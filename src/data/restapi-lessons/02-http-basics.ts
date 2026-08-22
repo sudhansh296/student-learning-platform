@@ -138,29 +138,31 @@ Date: Tue, 19 Aug 2026 14:30:00 GMT
     {
       type: 'tryit',
       title: 'HTTP Request and Response Builder',
-      js: `var methods = ['GET','POST','PUT','PATCH','DELETE'];
+      js: `document.body.innerHTML = '<div><h3>HTTP Request Builder</h3><div id=\\"form-area\\"></div><div id=\\"output\\"></div></div>';
+
+var methods = ['GET','POST','PUT','PATCH','DELETE'];
 var methodColors = { GET:'#10b981', POST:'#6366f1', PUT:'#f59e0b', PATCH:'#8b5cf6', DELETE:'#ef4444' };
 
 function buildUI() {
   var form = document.getElementById('form-area');
   form.innerHTML = [
-    '<div class="row">',
+    '<div class=\\"row\\">',
     '  <label>Method:</label>',
-    '  <select id="method-sel">' + methods.map(function(m) { return '<option>' + m + '</option>'; }).join('') + '</select>',
+    '  <select id=\\"method-sel\\">' + methods.map(function(m) { return '<option>' + m + '</option>'; }).join('') + '</select>',
     '</div>',
-    '<div class="row">',
+    '<div class=\\"row\\">',
     '  <label>URL:</label>',
-    '  <input id="url-inp" type="text" value="https://api.example.com/users" />',
+    '  <input id=\\"url-inp\\" type=\\"text\\" value=\\"https://api.example.com/users\\" />',
     '</div>',
-    '<div class="row">',
+    '<div class=\\"row\\">',
     '  <label>Header:</label>',
-    '  <input id="hdr-inp" type="text" placeholder="Authorization: Bearer token123" value="Authorization: Bearer mytoken123" />',
+    '  <input id=\\"hdr-inp\\" type=\\"text\\" placeholder=\\"Authorization: Bearer token123\\" value=\\"Authorization: Bearer mytoken123\\" />',
     '</div>',
-    '<div class="row" id="body-row">',
+    '<div class=\\"row\\" id=\\"body-row\\">',
     '  <label>Body:</label>',
-    '  <textarea id="body-inp" rows="3">{ "name": "Alice", "email": "alice@example.com" }</textarea>',
+    '  <textarea id=\\"body-inp\\" rows=\\"3\\">{ \\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" }</textarea>',
     '</div>',
-    '<button id="send-btn">Send Request</button>'
+    '<button id=\\"send-btn\\">Send Request</button>'
   ].join('');
 
   document.getElementById('method-sel').addEventListener('change', toggleBody);
@@ -184,32 +186,32 @@ function showResult() {
   var status = statusMap[method];
   var statusColor = (method === 'DELETE') ? '#6c757d' : '#10b981';
 
-  var reqHtml = '<div class="panel"><div class="panel-title" style="background:' + color + '">REQUEST</div>';
-  reqHtml += '<div class="code-line"><span class="method-badge" style="background:' + color + '">' + method + '</span> ' + escHtml(url) + ' HTTP/1.1</div>';
-  if (hdr) reqHtml += '<div class="code-line">' + escHtml(hdr) + '</div>';
-  reqHtml += '<div class="code-line">Content-Type: application/json</div>';
-  reqHtml += '<div class="code-line">Accept: application/json</div>';
+  var reqHtml = '<div class=\\"panel\\"><div class=\\"panel-title\\" style=\\"background:' + color + '\\">REQUEST</div>';
+  reqHtml += '<div class=\\"code-line\\"><span class=\\"method-badge\\" style=\\"background:' + color + '\\">' + method + '</span> ' + escHtml(url) + ' HTTP/1.1</div>';
+  if (hdr) reqHtml += '<div class=\\"code-line\\">' + escHtml(hdr) + '</div>';
+  reqHtml += '<div class=\\"code-line\\">Content-Type: application/json</div>';
+  reqHtml += '<div class=\\"code-line\\">Accept: application/json</div>';
   if (body && method !== 'GET' && method !== 'DELETE') {
-    reqHtml += '<div class="code-sep"></div><div class="code-line">' + escHtml(body) + '</div>';
+    reqHtml += '<div class=\\"code-sep\\"></div><div class=\\"code-line\\">' + escHtml(body) + '</div>';
   }
   reqHtml += '</div>';
 
   var resBody = method === 'GET'
-    ? '[\n  { "id": 1, "name": "Alice" },\n  { "id": 2, "name": "Bob" }\n]'
+    ? '[\\\\n  { \\"id\\": 1, \\"name\\": \\"Alice\\" },\\\\n  { \\"id\\": 2, \\"name\\": \\"Bob\\" }\\\\n]'
     : method === 'POST'
-    ? '{\n  "id": 42,\n  "name": "Alice",\n  "email": "alice@example.com"\n}'
+    ? '{\\\\n  \\"id\\": 42,\\\\n  \\"name\\": \\"Alice\\",\\\\n  \\"email\\": \\"alice@example.com\\"\\\\n}'
     : method === 'DELETE'
     ? '(no body)'
-    : '{\n  "id": 1,\n  "updated": true\n}';
+    : '{\\\\n  \\"id\\": 1,\\\\n  \\"updated\\": true\\\\n}';
 
-  var resHtml = '<div class="panel"><div class="panel-title" style="background:#334155">RESPONSE</div>';
-  resHtml += '<div class="code-line">HTTP/1.1 <span class="status-badge" style="background:' + statusColor + '">' + status + '</span></div>';
-  resHtml += '<div class="code-line">Content-Type: application/json</div>';
-  resHtml += '<div class="code-line">X-Request-Id: a1b2c3d4</div>';
-  resHtml += '<div class="code-sep"></div><div class="code-line">' + resBody + '</div>';
+  var resHtml = '<div class=\\"panel\\"><div class=\\"panel-title\\" style=\\"background:#334155\\">RESPONSE</div>';
+  resHtml += '<div class=\\"code-line\\">HTTP/1.1 <span class=\\"status-badge\\" style=\\"background:' + statusColor + '\\">' + status + '</span></div>';
+  resHtml += '<div class=\\"code-line\\">Content-Type: application/json</div>';
+  resHtml += '<div class=\\"code-line\\">X-Request-Id: a1b2c3d4</div>';
+  resHtml += '<div class=\\"code-sep\\"></div><div class=\\"code-line\\">' + resBody + '</div>';
   resHtml += '</div>';
 
-  document.getElementById('output').innerHTML = '<div class="panels-row">' + reqHtml + resHtml + '</div>';
+  document.getElementById('output').innerHTML = '<div class=\\"panels-row\\">' + reqHtml + resHtml + '</div>';
 }
 
 function escHtml(s) {

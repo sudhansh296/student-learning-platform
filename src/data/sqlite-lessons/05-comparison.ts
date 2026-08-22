@@ -120,7 +120,15 @@ db.pragma('mmap_size = 268435456');  // 256MB memory-mapped I/O
     {
       type: 'tryit',
       title: 'Database Selector Decision Tool',
-      js: `const questions = [
+      js: `document.body.innerHTML = \`
+  <div>
+    <h3>Which Database Should You Use?</h3>
+    <p>Answer a few questions to get a recommendation</p>
+    <div id="quiz"></div>
+  </div>
+\`;
+
+const questions = [
   {
     q: 'How many concurrent users will write data simultaneously?',
     opts: [

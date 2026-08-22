@@ -265,7 +265,9 @@ Browser fetch from evil.example.com:
     {
       type: 'tryit',
       title: 'Pagination Calculator',
-      js: `function calculate() {
+      js: `document.body.innerHTML = '<div><h3>Pagination Calculator</h3><div class=\\"inputs-row\\"><div class=\\"input-group\\"><label>Total Items</label><input id=\\"total-input\\" type=\\"number\\" value=\\"47\\" /></div><div class=\\"input-group\\"><label>Current Page</label><input id=\\"page-input\\" type=\\"number\\" value=\\"1\\" /></div><div class=\\"input-group\\"><label>Items Per Page</label><input id=\\"limit-input\\" type=\\"number\\" value=\\"10\\" /></div><button id=\\"calc-btn\\">Calculate</button></div><div id=\\"calc-output\\"></div></div>';
+
+function calculate() {
   var total  = Math.max(0, parseInt(document.getElementById('total-input').value) || 0);
   var page   = Math.max(1, parseInt(document.getElementById('page-input').value) || 1);
   var limit  = Math.max(1, parseInt(document.getElementById('limit-input').value) || 10);
@@ -283,12 +285,12 @@ Browser fetch from evil.example.com:
   var nextUrl = hasNext ? base + '&page=' + (page + 1) : null;
   var prevUrl = hasPrev ? base + '&page=' + (page - 1) : null;
 
-  var html = '<div class="calc-result">';
-  html += '<div class="result-row"><span class="result-label">Total pages</span><span class="result-val">' + totalPages + '</span></div>';
-  html += '<div class="result-row"><span class="result-label">Items on page ' + page + '</span><span class="result-val">' + (total === 0 ? 0 : (lastItem - firstItem + 1)) + ' (items ' + firstItem + ' to ' + lastItem + ')</span></div>';
-  html += '<div class="result-row"><span class="result-label">Current URL</span><code>' + currentUrl + '</code></div>';
-  if (prevUrl) html += '<div class="result-row"><span class="result-label">Prev page URL</span><code>' + prevUrl + '</code></div>';
-  if (nextUrl) html += '<div class="result-row"><span class="result-label">Next page URL</span><code>' + nextUrl + '</code></div>';
+  var html = '<div class=\\"calc-result\\">';
+  html += '<div class=\\"result-row\\"><span class=\\"result-label\\">Total pages</span><span class=\\"result-val\\">' + totalPages + '</span></div>';
+  html += '<div class=\\"result-row\\"><span class=\\"result-label\\">Items on page ' + page + '</span><span class=\\"result-val\\">' + (total === 0 ? 0 : (lastItem - firstItem + 1)) + ' (items ' + firstItem + ' to ' + lastItem + ')</span></div>';
+  html += '<div class=\\"result-row\\"><span class=\\"result-label\\">Current URL</span><code>' + currentUrl + '</code></div>';
+  if (prevUrl) html += '<div class=\\"result-row\\"><span class=\\"result-label\\">Prev page URL</span><code>' + prevUrl + '</code></div>';
+  if (nextUrl) html += '<div class=\\"result-row\\"><span class=\\"result-label\\">Next page URL</span><code>' + nextUrl + '</code></div>';
   html += '</div>';
 
   var maxButtons = Math.min(totalPages, 10);
@@ -296,14 +298,14 @@ Browser fetch from evil.example.com:
   var endPage = Math.min(totalPages, startPage + maxButtons - 1);
   if (endPage - startPage < maxButtons - 1) startPage = Math.max(1, endPage - maxButtons + 1);
 
-  html += '<div class="page-bar">';
-  if (hasPrev) html += '<button class="page-btn nav-btn" onclick="jumpTo(' + (page-1) + ')">prev</button>';
-  if (startPage > 1) html += '<span class="ellipsis">...</span>';
+  html += '<div class=\\"page-bar\\">';
+  if (hasPrev) html += '<button class=\\"page-btn nav-btn\\" onclick=\\"jumpTo(' + (page-1) + ')\\">prev</button>';
+  if (startPage > 1) html += '<span class=\\"ellipsis\\">...</span>';
   for (var p = startPage; p <= endPage; p++) {
-    html += '<button class="page-btn' + (p === page ? ' current' : '') + '" onclick="jumpTo(' + p + ')">' + p + '</button>';
+    html += '<button class=\\"page-btn' + (p === page ? ' current' : '') + '\\" onclick=\\"jumpTo(' + p + ')\\">' + p + '</button>';
   }
-  if (endPage < totalPages) html += '<span class="ellipsis">...</span>';
-  if (hasNext) html += '<button class="page-btn nav-btn" onclick="jumpTo(' + (page+1) + ')">next</button>';
+  if (endPage < totalPages) html += '<span class=\\"ellipsis\\">...</span>';
+  if (hasNext) html += '<button class=\\"page-btn nav-btn\\" onclick=\\"jumpTo(' + (page+1) + ')\\">next</button>';
   html += '</div>';
 
   document.getElementById('calc-output').innerHTML = html;
@@ -317,7 +319,9 @@ window.jumpTo = function(p) {
 document.getElementById('calc-btn').addEventListener('click', calculate);
 ['total-input','page-input','limit-input'].forEach(function(id) {
   document.getElementById(id).addEventListener('keydown', function(e) { if (e.key === 'Enter') calculate(); });
-});`,
+});
+
+calculate();`,
       css: `body { font-family: system-ui, sans-serif; padding: 14px; background: #f8fafc; }
 h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
 .inputs-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; align-items: flex-end; }

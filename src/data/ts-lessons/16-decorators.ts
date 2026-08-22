@@ -312,81 +312,64 @@ console.log(math.fibonacci(10)); // 55 (cache hit)`,
         .framework-badge { display: inline-block; background: #0f172a; border: 1px solid #334155; border-radius: 4px; padding: 3px 8px; font-size: 11px; color: #7dd3fc; margin-bottom: 6px; }
         .js-output { background: #042f2e; border: 1px solid #134e4a; border-radius: 6px; padding: 10px; font-size: 12px; font-family: monospace; color: #6ee7b7; margin: 6px 0; white-space: pre; }
       `,
-      js: `
-const decorators = {
-  Class: {
-    title: 'Class Decorator',
-    syntax: '@Entity("users")\\nclass User {\\n  name: string;\\n  email: string;\\n}',
-    framework: 'TypeORM / NestJS',
-    frameworkExample: '@Entity("users")\\nclass User {\\n  @PrimaryGeneratedColumn()\\n  id: number;\\n\\n  @Column({ type: "varchar" })\\n  name: string;\\n}',
-    jsOutput: '// TypeScript compiles to:\\nUser = __decorate(\\n  [Entity("users")],\\n  User\\n);\\n// Attaches __tableName = "users" to class',
-    description: 'Applied to the class constructor. Receives the constructor function. Used to register metadata or wrap the class. Runs once at class definition time.'
-  },
-  Method: {
-    title: 'Method Decorator',
-    syntax: 'class UserController {\\n  @Get("/users")\\n  findAll() {\\n    return users;\\n  }\\n}',
-    framework: 'NestJS',
-    frameworkExample: '@Controller("users")\\nclass UserController {\\n  @Get()\\n  findAll() { return this.service.findAll(); }\\n\\n  @Get(":id")\\n  findOne(@Param("id") id: string) { ... }\\n\\n  @Post()\\n  create(@Body() dto: CreateUserDto) { ... }\\n}',
-    jsOutput: '// TypeScript compiles to:\\nfindAll = __decorate(\\n  [Get("/users"),\\n   __metadata("design:type", Function)],\\n  UserController.prototype,\\n  "findAll",\\n  null\\n);',
-    description: 'Applied to a method on a class. Receives the prototype, method name, and property descriptor. Can wrap the original function. Decorators stack bottom-to-top.'
-  },
-  Property: {
-    title: 'Property Decorator',
-    syntax: 'class CreateUserDto {\\n  @IsEmail()\\n  @IsNotEmpty()\\n  email: string;\\n}',
-    framework: 'class-validator',
-    frameworkExample: 'import { IsEmail, IsNotEmpty, MinLength } from "class-validator";\\n\\nclass CreateUserDto {\\n  @IsNotEmpty()\\n  @MinLength(2)\\n  name: string;\\n\\n  @IsEmail()\\n  @IsNotEmpty()\\n  email: string;\\n\\n  @IsOptional()\\n  @IsInt()\\n  age?: number;\\n}',
-    jsOutput: '// TypeScript compiles to:\\n__decorate(\\n  [IsEmail(), IsNotEmpty(),\\n   __metadata("design:type", String)],\\n  CreateUserDto.prototype,\\n  "email",\\n  void 0\\n);',
-    description: 'Applied to a class property. Receives the prototype and property name. Cannot intercept reads/writes directly — instead stores metadata in a side map. class-validator uses this pattern.'
-  },
-  Parameter: {
-    title: 'Parameter Decorator',
-    syntax: 'class UserController {\\n  findOne(\\n    @Param("id") id: string\\n  ) { ... }\\n}',
-    framework: 'NestJS / Angular',
-    frameworkExample: '@Controller("users")\\nclass UserController {\\n  constructor(\\n    @InjectRepository(User)\\n    private repo: Repository<User>\\n  ) {}\\n\\n  @Get(":id")\\n  findOne(\\n    @Param("id") id: string,\\n    @Headers("authorization") token: string\\n  ) { return this.repo.findOne({ where: { id } }); }\\n}',
-    jsOutput: '// TypeScript compiles to:\\n__decorate(\\n  [\\n    __param(0, Param("id")),\\n    __metadata("design:paramtypes", [String])\\n  ],\\n  UserController.prototype,\\n  "findOne",\\n  null\\n);',
-    description: 'Applied to a parameter in a constructor or method. Receives the prototype, method name, and parameter index (0-based). Used by NestJS to map request data to parameters.'
-  }
+      js: `// TypeScript Decorators - console demo
+
+// Simulating @log method decorator
+function applyLog(obj, methodName) {
+  var original = obj[methodName];
+  obj[methodName] = function() {
+    var args = Array.prototype.slice.call(arguments);
+    console.log('[log] Calling ' + methodName + '(' + args.join(', ') + ')');
+    var result = original.apply(this, args);
+    console.log('[log] ' + methodName + ' returned: ' + JSON.stringify(result));
+    return result;
+  };
+}
+
+// Class with methods
+function UserService() {
+  this.users = [
+    { id: 1, name: 'Alice', email: 'alice@example.com' },
+    { id: 2, name: 'Bob', email: 'bob@example.com' },
+  ];
+}
+UserService.prototype.findById = function(id) {
+  return this.users.find(function(u) { return u.id === id; }) || null;
+};
+UserService.prototype.getAll = function() {
+  return this.users;
 };
 
-function highlight(code) {
-  return code
-    .replace(/(\/\/[^\n]*)/g, '<span class="cm">$1</span>')
-    .replace(/\\b(class|function|return|const|let|new|import|from|void|null|string|number|boolean)\\b/g, '<span class="kw">$1</span>')
-    .replace(/(@[A-Za-z]+)/g, '<span class="fn">$1</span>')
-    .replace(/("[^"]*")/g, '<span class="str">$1</span>');
-}
+// Apply @log decorator
+var svc = new UserService();
+applyLog(svc, 'findById');
+applyLog(svc, 'getAll');
 
-function render(key) {
-  const d = decorators[key];
-  document.getElementById('output').innerHTML =
-    '<h2>' + d.title + '</h2>' +
-    '<p style="font-size:13px;color:#94a3b8;margin:0 0 10px">' + d.description + '</p>' +
-    '<div class="panel">' +
-      '<div class="panel-label">TypeScript Syntax</div>' +
-      '<pre>' + highlight(d.syntax) + '</pre>' +
-    '</div>' +
-    '<div class="panel">' +
-      '<div class="panel-label">Real-world Example</div>' +
-      '<div class="framework-badge">' + d.framework + '</div>' +
-      '<pre>' + highlight(d.frameworkExample) + '</pre>' +
-    '</div>' +
-    '<div class="panel">' +
-      '<div class="panel-label">Compiled JavaScript Output</div>' +
-      '<div class="js-output">' + d.jsOutput + '</div>' +
-    '</div>';
-}
+console.log('=== @log Decorator Simulation ===');
+svc.findById(1);
+svc.findById(99);
 
-const tabs = document.querySelectorAll('.tab');
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    render(tab.dataset.key);
-  });
-});
+console.log('\\n=== @readonly Decorator ===');
+console.log('Prevents property reassignment at compile time:');
+console.log('  config.apiUrl = "evil.com" -> TS Error: readonly property');
 
-render('Class');
-document.querySelector('[data-key="Class"]').classList.add('active');
+console.log('\\n=== Decorator Factories (with args) ===');
+console.log('@MinLength(3) applied to username');
+console.log('@MinLength(8) applied to password');
+console.log('@Column({ type: "varchar", length: 100 }) applied to name');
+console.log('@Column({ type: "varchar", length: 255 }) applied to email');
+
+console.log('\\n=== Framework Decorators ===');
+var frameworkDecorators = [
+  'NestJS:   @Controller("/users") -- marks class as route controller',
+  'NestJS:   @Get(":id") / @Post() -- maps HTTP methods to handlers',
+  'NestJS:   @Injectable() -- marks class as DI provider',
+  'Angular:  @Component({ selector, template }) -- declares UI component',
+  'TypeORM:  @Entity("users") -- maps class to database table',
+  'TypeORM:  @Column({ type: "varchar" }) -- maps property to column',
+  'class-validator: @IsEmail() -- validates email format',
+];
+frameworkDecorators.forEach(function(d) { console.log('  ' + d); });
       `,
     },
   ],

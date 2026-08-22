@@ -184,7 +184,9 @@ app.get('/users/:id', (req, res) => {
     {
       type: 'tryit',
       title: 'Status Code Explorer',
-      js: `var codes = [
+      js: `document.body.innerHTML = '<div><h3>HTTP Status Codes</h3><input id=\\"search\\" placeholder=\\"Search codes...\\" /><div id=\\"grid\\"></div><div id=\\"detail\\"></div></div>';
+
+var codes = [
   { code: 200, name: 'OK', cat: '2xx', color: '#10b981', desc: 'Request succeeded. Used for GET, PUT, PATCH responses.', when: 'Return when a GET, PUT, or PATCH request completes successfully with a response body.' },
   { code: 201, name: 'Created', cat: '2xx', color: '#10b981', desc: 'A new resource was successfully created.', when: 'Return after a POST request successfully creates a new resource. Include a Location header.' },
   { code: 204, name: 'No Content', cat: '2xx', color: '#10b981', desc: 'Success but nothing to return in the body.', when: 'Return after a successful DELETE, or after PUT/PATCH when you choose not to return the updated resource.' },
@@ -207,10 +209,10 @@ app.get('/users/:id', (req, res) => {
 function render(list) {
   var grid = document.getElementById('grid');
   grid.innerHTML = list.map(function(c) {
-    return '<div class="code-card" style="border-top:3px solid ' + c.color + '" data-code="' + c.code + '">' +
-      '<div class="code-num" style="color:' + c.color + '">' + c.code + '</div>' +
-      '<div class="code-name">' + c.name + '</div>' +
-      '<div class="code-cat" style="color:' + c.color + '">' + c.cat + '</div>' +
+    return '<div class=\\"code-card\\" style=\\"border-top:3px solid ' + c.color + '\\" data-code=\\"' + c.code + '\\">' +
+      '<div class=\\"code-num\\" style=\\"color:' + c.color + '\\">' + c.code + '</div>' +
+      '<div class=\\"code-name\\">' + c.name + '</div>' +
+      '<div class=\\"code-cat\\" style=\\"color:' + c.color + '\\">' + c.cat + '</div>' +
       '</div>';
   }).join('');
   grid.querySelectorAll('.code-card').forEach(function(card) {
@@ -219,13 +221,13 @@ function render(list) {
       var item = codes.find(function(c) { return c.code === code; });
       if (!item) return;
       document.getElementById('detail').innerHTML =
-        '<div class="detail-header" style="background:' + item.color + '">' +
-        '<span class="detail-code">' + item.code + '</span> ' +
-        '<span class="detail-name">' + item.name + '</span>' +
+        '<div class=\\"detail-header\\" style=\\"background:' + item.color + '\\">' +
+        '<span class=\\"detail-code\\">' + item.code + '</span> ' +
+        '<span class=\\"detail-name\\">' + item.name + '</span>' +
         '</div>' +
-        '<div class="detail-body">' +
-        '<p class="detail-desc">' + item.desc + '</p>' +
-        '<div class="detail-when"><strong>When to use:</strong> ' + item.when + '</div>' +
+        '<div class=\\"detail-body\\">' +
+        '<p class=\\"detail-desc\\">' + item.desc + '</p>' +
+        '<div class=\\"detail-when\\"><strong>When to use:</strong> ' + item.when + '</div>' +
         '</div>';
     });
   });

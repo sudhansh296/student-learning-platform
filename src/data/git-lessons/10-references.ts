@@ -235,7 +235,14 @@ git commit -m "Upgrade React to v18 for concurrent features"`,
     {
       type: 'tryit',
       title: 'Searchable Git Cheat Sheet',
-      js: `const commands = [
+      js: `document.body.innerHTML = \`
+  <h3>Git Command Search</h3>
+  <input type="text" id="search" placeholder="Search commands by name, category, or description..." />
+  <span id="count"></span>
+  <div id="cmd-list"></div>
+\`;
+
+const commands = [
   { category: 'Setup', cmd: 'git init', desc: 'Initialize a new repository' },
   { category: 'Setup', cmd: 'git clone <url>', desc: 'Clone a remote repository' },
   { category: 'Setup', cmd: 'git config --global user.name', desc: 'Set your name globally' },
@@ -243,7 +250,7 @@ git commit -m "Upgrade React to v18 for concurrent features"`,
   { category: 'Basics', cmd: 'git status', desc: 'Show working directory and staging state' },
   { category: 'Basics', cmd: 'git add .', desc: 'Stage all changes' },
   { category: 'Basics', cmd: 'git add -p', desc: 'Interactively stage hunks' },
-  { category: 'Basics', cmd: 'git commit -m "msg"', desc: 'Commit with a message' },
+  { category: 'Basics', cmd: 'git commit -m \\"msg\\"', desc: 'Commit with a message' },
   { category: 'Basics', cmd: 'git commit --amend', desc: 'Rewrite the last commit' },
   { category: 'Basics', cmd: 'git diff', desc: 'Show unstaged changes' },
   { category: 'Basics', cmd: 'git diff --staged', desc: 'Show staged changes' },
@@ -269,7 +276,7 @@ git commit -m "Upgrade React to v18 for concurrent features"`,
   { category: 'Undo', cmd: 'git stash', desc: 'Shelve current changes' },
   { category: 'Undo', cmd: 'git stash pop', desc: 'Restore most recent stash' },
   { category: 'Tags', cmd: 'git tag', desc: 'List all tags' },
-  { category: 'Tags', cmd: 'git tag -a v1.0.0 -m "msg"', desc: 'Create annotated tag' },
+  { category: 'Tags', cmd: 'git tag -a v1.0.0 -m \\"msg\\"', desc: 'Create annotated tag' },
   { category: 'Tags', cmd: 'git push --tags', desc: 'Push all local tags to remote' }
 ];
 
@@ -284,15 +291,15 @@ function render(filter) {
   ) : commands;
 
   if (filtered.length === 0) {
-    list.innerHTML = '<div style="color:#aaa;text-align:center;padding:20px;font-size:13px">No commands match your search.</div>';
+    list.innerHTML = '<div style=\\"color:#aaa;text-align:center;padding:20px;font-size:13px\\">No commands match your search.</div>';
     return;
   }
 
   list.innerHTML = filtered.map(c => \`
-    <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:white;border-radius:6px;margin-bottom:4px">
-      <span style="background:\${catColors[c.category]||'#888'};color:white;font-size:9px;padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:2px;font-weight:700">\${c.category}</span>
-      <span style="font-family:monospace;font-size:12px;color:#1a1a1a;flex:1">\${c.cmd}</span>
-      <span style="font-size:11px;color:#6c757d;text-align:right">\${c.desc}</span>
+    <div style=\\"display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:white;border-radius:6px;margin-bottom:4px\\">
+      <span style=\\"background:\${catColors[c.category]||'#888'};color:white;font-size:9px;padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:2px;font-weight:700\\">\${c.category}</span>
+      <span style=\\"font-family:monospace;font-size:12px;color:#1a1a1a;flex:1\\">\${c.cmd}</span>
+      <span style=\\"font-size:11px;color:#6c757d;text-align:right\\">\${c.desc}</span>
     </div>
   \`).join('');
   document.getElementById('count').textContent = filtered.length + ' commands';

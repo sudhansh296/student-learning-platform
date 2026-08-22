@@ -180,7 +180,26 @@ DROP VIEW user_order_stats;`,
     {
       type: 'tryit',
       title: 'Subquery Concept Demo',
-      js: `const users = [
+      js: `document.body.innerHTML = \`
+<style>
+body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; margin: 0; }
+h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
+p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
+.layout { display: flex; gap: 16px; }
+#btns { width: 200px; flex-shrink: 0; }
+#result { flex: 1; min-width: 0; }
+</style>
+<div>
+  <h3>🔍 Subquery Concept Demo</h3>
+  <p>Explore different subquery patterns</p>
+  <div class="layout">
+    <div id="btns"></div>
+    <div id="result"></div>
+  </div>
+</div>
+\`;
+
+const users = [
   { id:1, name:'Alice Chen', email:'alice@example.com', plan:'pro' },
   { id:2, name:'Bob Smith', email:'bob@example.com', plan:'free' },
   { id:3, name:'Carol Davis', email:'carol@example.com', plan:'pro' },
@@ -233,12 +252,7 @@ function render() {
 
 window.setQ = function(k) { active = k; render(); };
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
-.layout { display: flex; gap: 16px; }
-#btns { width: 200px; flex-shrink: 0; }
-#result { flex: 1; min-width: 0; }`
+      css: ``
     }
   ],
   exercises: [

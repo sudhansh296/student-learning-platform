@@ -210,75 +210,149 @@ results.forEach(result => {
     },
     {
       type: 'tryit',
-      title: 'Try It: Fetching Posts from JSONPlaceholder',
-      css: `body { font-family: system-ui, sans-serif; padding: 16px; background: #f8fafc; }
-.card { background: white; border-radius: 10px; padding: 16px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,.06); }
-h2 { margin: 0 0 16px; font-size: 16px; color: #1e293b; }
-.post { border-left: 3px solid #2563eb; padding: 10px 14px; margin-bottom: 8px; background: #f8fafc; border-radius: 0 8px 8px 0; }
-.post-title { font-weight: 700; font-size: 14px; color: #1e293b; margin-bottom: 4px; }
-.post-body { font-size: 13px; color: #64748b; line-height: 1.5; }
-.spinner { text-align: center; padding: 30px; color: #64748b; font-size: 14px; }
-.error { color: #dc2626; background: #fef2f2; padding: 12px; border-radius: 8px; font-size: 14px; }
-button { padding: 8px 16px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; margin-right: 8px; }
-button:hover { background: #1d4ed8; }
-button:disabled { background: #93c5fd; cursor: default; }
-.user-sel { padding: 8px 12px; border: 1.5px solid #e5e7eb; border-radius: 8px; font-size: 13px; margin-right: 8px; }`,
-      jsx: `function App() {
-  const [posts, setPosts] = React.React.useState([]);
-  const [loading, setLoading] = React.React.useState(false);
-  const [error, setError] = React.React.useState(null);
-  const [userId, setUserId] = React.React.useState(1);
+      title: 'Try It: Hacker News Reader',
+      css: `body { font-family: system-ui, sans-serif; padding: 16px; background: #f6f0e8; margin: 0; }
+.header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+h2 { margin: 0; font-size: 17px; color: #1a1a1a; }
+.hn-logo { background: #ff6600; color: white; font-weight: 800; font-size: 13px; padding: 3px 8px; border-radius: 4px; margin-right: 6px; }
+.controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.tab { padding: 6px 12px; border: 1.5px solid #d4c9b5; border-radius: 6px; background: white; cursor: pointer; font-size: 12px; font-weight: 600; color: #666; }
+.tab.active { background: #ff6600; color: white; border-color: #ff6600; }
+.story { background: white; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid #e8dfd0; }
+.story-rank { font-size: 11px; color: #999; font-weight: 700; margin-bottom: 3px; }
+.story-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; line-height: 1.4; cursor: pointer; }
+.story-title:hover { color: #ff6600; }
+.story-meta { font-size: 11px; color: #888; display: flex; gap: 10px; flex-wrap: wrap; }
+.score { color: #ff6600; font-weight: 700; }
+.story-url { font-size: 10px; color: #aaa; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 300px; margin-top: 2px; }
+.skeleton { background: white; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; border: 1px solid #e8dfd0; }
+.skel-line { background: linear-gradient(90deg,#f0e8dc 25%,#e8dfd0 50%,#f0e8dc 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 4px; height: 14px; margin-bottom: 6px; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+.error { background: #fff1f0; border: 1px solid #ffccc7; border-radius: 10px; padding: 16px; color: #cf1322; text-align: center; font-size: 13px; }
+.load-more { width: 100%; padding: 10px; background: #ff6600; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; margin-top: 4px; }
+.load-more:disabled { opacity: .5; cursor: not-allowed; }
+.count-label { font-size: 12px; color: #888; text-align: center; padding: 8px 0; }`,
+      jsx: `const PAGE_SIZE = 5;
 
-  async function fetchPosts() {
-    setLoading(true);
+function Skeleton() {
+  return (
+    <div className="skeleton">
+      <div className="skel-line" style={{width:'70%'}} />
+      <div className="skel-line" style={{width:'40%',height:10}} />
+    </div>
+  );
+}
+
+function StoryItem({ story, rank }) {
+  if (!story) return null;
+  const domain = story.url ? new URL(story.url).hostname.replace('www.','') : '';
+  return (
+    <div className="story">
+      <div className="story-rank">#{rank}</div>
+      <div className="story-title" onClick={() => story.url && window.open(story.url,'_blank')}>
+        {story.title}
+      </div>
+      {domain && <div className="story-url">{domain}</div>}
+      <div className="story-meta">
+        <span className="score">▲ {story.score}</span>
+        <span>by {story.by}</span>
+        <span>💬 {story.descendants || 0} comments</span>
+        <span>{new Date(story.time*1000).toLocaleDateString()}</span>
+      </div>
+    </div>
+  );
+}
+
+function HackerNews() {
+  const [ids, setIds] = React.useState([]);
+  const [stories, setStories] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [initialLoad, setInitialLoad] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const [feedType, setFeedType] = React.useState('topstories');
+
+  const FEEDS = [
+    {key:'topstories',label:'Top'},
+    {key:'newstories',label:'New'},
+    {key:'beststories',label:'Best'},
+  ];
+
+  React.useEffect(() => {
+    let cancelled = false;
+    setStories([]);
+    setPage(0);
+    setInitialLoad(true);
     setError(null);
-    try {
-      const res = await fetch('https://jsonplaceholder.typicode.com/posts?userId=' + userId + '&_limit=4');
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      setPosts(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  React.React.useEffect(() => {
-    fetchPosts();
-  }, [userId]);
+    async function fetchIds() {
+      try {
+        const res = await fetch('https://hacker-news.firebaseio.com/v0/'+feedType+'.json');
+        if (!res.ok) throw new Error('Failed to fetch feed');
+        const data = await res.json();
+        if (!cancelled) { setIds(data.slice(0,30)); setInitialLoad(false); }
+      } catch(e) {
+        if (!cancelled) { setError(e.message); setInitialLoad(false); }
+      }
+    }
+    fetchIds();
+    return () => { cancelled = true; };
+  }, [feedType]);
+
+  React.useEffect(() => {
+    if (!ids.length || initialLoad) return;
+    const slice = ids.slice(page*PAGE_SIZE, (page+1)*PAGE_SIZE);
+    if (!slice.length) return;
+    let cancelled = false;
+    setLoading(true);
+
+    Promise.all(slice.map(id =>
+      fetch('https://hacker-news.firebaseio.com/v0/item/'+id+'.json').then(r=>r.json())
+    )).then(items => {
+      if (!cancelled) { setStories(prev => [...prev, ...items.filter(Boolean)]); setLoading(false); }
+    }).catch(e => {
+      if (!cancelled) { setError(e.message); setLoading(false); }
+    });
+
+    return () => { cancelled = true; };
+  }, [ids, page]);
+
+  const canLoadMore = stories.length < ids.length && !loading;
 
   return (
     <div>
-      <div className="card">
-        <h2>📡 Fetch Posts by User</h2>
-        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
-          <select className="user-sel" value={userId} onChange={e => setUserId(Number(e.target.value))}>
-            {[1,2,3,4,5].map(id => <option key={id} value={id}>User {id}</option>)}
-          </select>
-          <button onClick={fetchPosts} disabled={loading}>
-            {loading ? 'Loading...' : 'Refresh'}
-          </button>
+      <div className="header">
+        <div><span className="hn-logo">Y</span><b>Hacker News</b></div>
+        <div className="controls">
+          {FEEDS.map(f => (
+            <button key={f.key} className={"tab"+(feedType===f.key?' active':'')}
+              onClick={() => setFeedType(f.key)}>{f.label}</button>
+          ))}
         </div>
       </div>
 
-      {error && <div className="error">Error: {error}</div>}
+      {error && <div className="error">❌ {error}</div>}
 
-      {loading ? (
-        <div className="spinner">⏳ Fetching posts...</div>
-      ) : (
-        posts.map(post => (
-          <div key={post.id} className="post">
-            <div className="post-title">{post.title}</div>
-            <div className="post-body">{post.body.slice(0, 80)}...</div>
-          </div>
-        ))
+      {initialLoad
+        ? Array.from({length:5}).map((_,i) => <Skeleton key={i} />)
+        : stories.map((s,i) => <StoryItem key={s.id} story={s} rank={i+1} />)
+      }
+
+      {loading && !initialLoad && Array.from({length:3}).map((_,i) => <Skeleton key={'l'+i} />)}
+
+      {!initialLoad && !error && ids.length > 0 && (
+        <>
+          <div className="count-label">Showing {stories.length} of {ids.length} stories</div>
+          <button className="load-more" disabled={!canLoadMore} onClick={() => setPage(p=>p+1)}>
+            {canLoadMore ? 'Load More' : loading ? 'Loading...' : 'All loaded'}
+          </button>
+        </>
       )}
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+ReactDOM.createRoot(document.getElementById('root')).render(<HackerNews />);`,
     },
   ],
   exercises: [

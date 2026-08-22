@@ -143,12 +143,14 @@ GET /users?fields=id,name,email`,
     {
       type: 'tryit',
       title: 'REST URL Validator and Designer',
-      js: `var rules = [
-  { check: function(u) { return /^(https?:\\/\\/[^/]+)?\/api\/v[0-9]/.test(u); }, label: 'Versioned', points: 1 },
-  { check: function(u) { var path = u.replace(/^https?:\\/\\/[^/]+/, ''); return !/[A-Z]/.test(path); }, label: 'Lowercase path', points: 1 },
-  { check: function(u) { return !/\/(get|create|update|delete|fetch|list|add|remove)[A-Za-z]*/i.test(u); }, label: 'No verbs in path', points: 2 },
-  { check: function(u) { var segs = u.replace(/^https?:\\/\\/[^/]+/, '').replace(/\\?.*$/, '').split('/').filter(Boolean); var res = segs.filter(function(s) { return !/^[0-9]+$/.test(s) && !/^v[0-9]/.test(s) && s !== 'api'; }); return res.every(function(s) { return s.endsWith('s') || s.length < 4; }); }, label: 'Plural nouns', points: 1 },
-  { check: function(u) { return u.replace(/^https?:\\/\\/[^/]+/, '').replace(/\\?.*$/, '').split('/').filter(Boolean).length <= 5; }, label: 'Reasonable depth', points: 1 }
+      js: `document.body.innerHTML = '<div><h3>REST URL Validator</h3><div class=\\"input-row\\"><input id=\\"url-input\\" type=\\"text\\" placeholder=\\"/api/v1/users\\" value=\\"/api/v1/users\\" /><button id=\\"check-btn\\">Check URL</button></div><span class=\\"examples-label\\">Try examples:</span><div id=\\"examples\\"></div><div id=\\"result\\"></div></div>';
+
+var rules = [
+  { check: function(u) { return /^(https?:\\/\\/[^\\/]+)?\\/api\\/v[0-9]/.test(u); }, label: 'Versioned', points: 1 },
+  { check: function(u) { var path = u.replace(/^https?:\\/\\/[^\\/]+/, ''); return !/[A-Z]/.test(path); }, label: 'Lowercase path', points: 1 },
+  { check: function(u) { return !new RegExp('\\\\/(get|create|update|delete|fetch|list|add|remove)[A-Za-z]*', 'i').test(u); }, label: 'No verbs in path', points: 2 },
+  { check: function(u) { var segs = u.replace(/^https?:\\/\\/[^\\/]+/, '').replace(/\\?.*$/, '').split('\\/').filter(Boolean); var res = segs.filter(function(s) { return !/^[0-9]+$/.test(s) && !/^v[0-9]/.test(s) && s !== 'api'; }); return res.every(function(s) { return s.endsWith('s') || s.length < 4; }); }, label: 'Plural nouns', points: 1 },
+  { check: function(u) { return u.replace(/^https?:\\/\\/[^\\/]+/, '').replace(/\\?.*$/, '').split('\\/').filter(Boolean).length <= 5; }, label: 'Reasonable depth', points: 1 }
 ];
 
 function check() {
@@ -165,18 +167,18 @@ function check() {
   var rating = score >= maxScore ? 'Good' : score >= maxScore - 1 ? 'Acceptable' : 'Needs Work';
   var rColor = score >= maxScore ? '#10b981' : score >= maxScore - 1 ? '#f59e0b' : '#ef4444';
 
-  var html = '<div class="result-header" style="background:' + rColor + '">';
-  html += '<span class="rating">' + rating + '</span>';
-  html += '<span class="score">' + score + '/' + maxScore + ' points</span></div>';
-  html += '<div class="result-body">';
-  html += '<div class="url-display">' + escHtml(url) + '</div>';
+  var html = '<div class=\\"result-header\\" style=\\"background:' + rColor + '\\">';
+  html += '<span class=\\"rating\\">' + rating + '</span>';
+  html += '<span class=\\"score\\">' + score + '/' + maxScore + ' points</span></div>';
+  html += '<div class=\\"result-body\\">';
+  html += '<div class=\\"url-display\\">' + escHtml(url) + '</div>';
   if (passed.length) {
-    html += '<div class="section-title pass-title">Follows:</div>';
-    passed.forEach(function(p) { html += '<div class="rule-row pass-row"><span class="rule-icon">ok</span>' + p + '</div>'; });
+    html += '<div class=\\"section-title pass-title\\">Follows:</div>';
+    passed.forEach(function(p) { html += '<div class=\\"rule-row pass-row\\"><span class=\\"rule-icon\\">ok</span>' + p + '</div>'; });
   }
   if (failed.length) {
-    html += '<div class="section-title fail-title">Issues:</div>';
-    failed.forEach(function(f) { html += '<div class="rule-row fail-row"><span class="rule-icon">!</span>' + f + '</div>'; });
+    html += '<div class=\\"section-title fail-title\\">Issues:</div>';
+    failed.forEach(function(f) { html += '<div class=\\"rule-row fail-row\\"><span class=\\"rule-icon\\">!</span>' + f + '</div>'; });
   }
   html += '</div>';
   document.getElementById('result').innerHTML = html;

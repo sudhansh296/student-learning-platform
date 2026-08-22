@@ -181,7 +181,17 @@ CREATE INDEX idx_orders_user_id ON orders (user_id);`,
     {
       type: 'tryit',
       title: 'SQL Command Reference Search',
-      js: `const commands = [
+      js: `// Initialize HTML structure
+document.body.innerHTML = \`
+  <div style="padding:20px;font-family:system-ui,sans-serif;background:#f7fafc">
+    <h3 style="color:#336791;margin:0 0 8px 0;font-size:15px;font-weight:700">SQL Command Reference</h3>
+    <input type="text" id="search" placeholder="Search commands..." style="width:100%;padding:9px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:white;outline:none;margin-bottom:10px;box-sizing:border-box" />
+    <div id="count" style="font-size:12px;color:#718096;margin-bottom:12px;display:block"></div>
+    <div id="results" style="display:grid;gap:8px"></div>
+  </div>
+\`;
+
+const commands = [
   { cmd: 'SELECT', cat: 'DML', desc: 'Retrieve rows from a table', syntax: 'SELECT col1, col2 FROM table WHERE condition' },
   { cmd: 'INSERT', cat: 'DML', desc: 'Add new rows to a table', syntax: 'INSERT INTO table (col1, col2) VALUES (val1, val2)' },
   { cmd: 'UPDATE', cat: 'DML', desc: 'Modify existing rows', syntax: 'UPDATE table SET col = val WHERE condition' },
@@ -201,8 +211,8 @@ CREATE INDEX idx_orders_user_id ON orders (user_id);`,
   { cmd: 'SUM', cat: 'Aggregate', desc: 'Sum numeric values', syntax: 'SUM(amount)' },
   { cmd: 'AVG', cat: 'Aggregate', desc: 'Average of numeric values', syntax: 'AVG(price)' },
   { cmd: 'MIN / MAX', cat: 'Aggregate', desc: 'Minimum or maximum value', syntax: 'MIN(price), MAX(created_at)' },
-  { cmd: 'LIKE', cat: 'Operator', desc: 'Pattern match strings', syntax: 'WHERE email LIKE \'%@gmail.com\'' },
-  { cmd: 'IN', cat: 'Operator', desc: 'Match any value in a list', syntax: 'WHERE plan IN (\'pro\', \'enterprise\')' },
+  { cmd: 'LIKE', cat: 'Operator', desc: 'Pattern match strings', syntax: 'WHERE email LIKE %@gmail.com' },
+  { cmd: 'IN', cat: 'Operator', desc: 'Match any value in a list', syntax: 'WHERE plan IN (pro, enterprise)' },
   { cmd: 'BETWEEN', cat: 'Operator', desc: 'Inclusive range check', syntax: 'WHERE age BETWEEN 18 AND 65' },
   { cmd: 'IS NULL', cat: 'Operator', desc: 'Check for NULL value', syntax: 'WHERE phone IS NULL' },
   { cmd: 'EXISTS', cat: 'Operator', desc: 'Test if subquery returns any rows', syntax: 'WHERE EXISTS (SELECT 1 FROM orders WHERE ...)' },
@@ -232,12 +242,7 @@ function render() {
 
 document.getElementById('search').addEventListener('input', e => { search = e.target.value; render(); });
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 8px 0; font-size: 15px; font-weight: 700; }
-#search { width: 100%; padding: 9px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; background: white; outline: none; margin-bottom: 10px; box-sizing: border-box; }
-#search:focus { border-color: #336791; }
-#count { font-size: 12px; color: #718096; margin-bottom: 12px; display: block; }
-#results { display: grid; gap: 8px; }`
+      css: ``
     }
   ],
   exercises: [

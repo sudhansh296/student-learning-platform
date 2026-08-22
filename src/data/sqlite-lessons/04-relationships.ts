@@ -164,7 +164,24 @@ const tagsForArticle = db.prepare(\`
     {
       type: 'tryit',
       title: 'Relationship Visualizer',
-      js: `const users = [
+      js: `document.body.innerHTML = \`
+  <div>
+    <h3>One-to-Many: Users → Orders</h3>
+    <p>Click a user to see their related orders (JOIN)</p>
+    <div class="layout">
+      <div class="col">
+        <div class="col-title">Users Table</div>
+        <div id="users"></div>
+      </div>
+      <div class="col">
+        <div id="join-title">Orders (click user)</div>
+        <div id="orders"></div>
+      </div>
+    </div>
+  </div>
+\`;
+
+const users = [
   { id: 1, name: 'Alice Chen', email: 'alice@example.com' },
   { id: 2, name: 'Bob Smith', email: 'bob@example.com' },
   { id: 3, name: 'Carol Davis', email: 'carol@example.com' },

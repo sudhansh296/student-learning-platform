@@ -202,7 +202,9 @@ describe('User queries', () => {
     {
       type: 'tryit',
       title: 'Node.js SQLite Query Simulator',
-      js: `// Simulate a better-sqlite3 in-memory database in the browser
+      js: `document.body.innerHTML = '<div><h3>Node.js SQLite Query Simulator</h3><p>Simulate better-sqlite3 queries</p><div class="layout"><div id="btns"></div><div id="right"><code id="code"></code><div id="result"></div></div></div></div>';
+
+// Simulate a better-sqlite3 in-memory database in the browser
 const db = {
   users: [
     { id: 1, email: 'alice@example.com', name: 'Alice Chen', plan: 'pro' },

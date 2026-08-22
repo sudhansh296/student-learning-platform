@@ -19,18 +19,18 @@ export function PlaygroundBanner() {
               </div>
               <span className="text-xs font-extrabold uppercase tracking-widest text-green-400">Live Code Editor</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-3 leading-tight">
+            <h2 className="text-2xl md:text-3xl font-extrabold mb-3 leading-tight" style={{ color: '#ffffff' }}>
               Write Code. <span className="text-green-400">See Results.</span><br className="hidden md:block" />
-              Instantly in Your Browser.
+              <span style={{ color: '#ffffff' }}>Instantly in Your Browser.</span>
             </h2>
-            <p className="text-[14px] leading-relaxed mb-6 max-w-md" style={{ color:'#8b949e' }}>
+            <p className="text-[14px] leading-relaxed mb-6 max-w-md" style={{ color:'#b1bac4' }}>
               Built-in editor with HTML, CSS, and JavaScript tabs — live preview side-by-side.
               No installation. No account. Just open and code.
             </p>
             <div className="grid grid-cols-2 gap-2.5 mb-6">
               {[[<Play key="p" className="w-3.5 h-3.5"/>,'Live preview'],[<Terminal key="t" className="w-3.5 h-3.5"/>,'Console output'],
                 [<MonitorPlay key="m" className="w-3.5 h-3.5"/>,'Fullscreen mode'],[<Download key="d" className="w-3.5 h-3.5"/>,'Export to HTML']].map(([ic,lb],i) => (
-                <div key={i} className="flex items-center gap-2 text-[12px]" style={{ color:'#8b949e' }}>
+                <div key={i} className="flex items-center gap-2 text-[12px]" style={{ color:'#b1bac4' }}>
                   <span className="text-green-400">{ic as React.ReactNode}</span>{lb as string}
                 </div>
               ))}

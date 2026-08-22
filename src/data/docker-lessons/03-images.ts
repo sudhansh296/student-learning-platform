@@ -187,7 +187,9 @@ Deleted: sha256:96526aa774ef...`
     {
       type: 'tryit',
       title: 'Image Layer Visualizer',
-      js: `var layers = [
+      js: `document.body.innerHTML = '<div><h3>Docker Image Layers</h3><button id="inspect-btn">Inspect Image</button><div id="layer-stack"></div><div id="total-size"></div></div>';
+
+var layers = [
   { name: 'App Config', size: '2 MB', color: '#2496ED', detail: 'COPY .env.example /app/' },
   { name: 'App Code', size: '8 MB', color: '#17a2b8', detail: 'COPY . /app' },
   { name: 'npm Packages', size: '45 MB', color: '#28a745', detail: 'RUN npm ci --only=production' },

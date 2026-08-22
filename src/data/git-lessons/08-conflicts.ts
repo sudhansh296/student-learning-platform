@@ -149,9 +149,21 @@ git merge --abort`,
     {
       type: 'tryit',
       title: 'Conflict Resolver',
-      js: `const ours = '  return \`Hello, \${name}! Welcome back.\`;';
-const theirs = '  return \`Hi \${name}, good to see you!\`;';
-const both = '  return name === "admin"\n    ? \`Hello, \${name}! Welcome back.\`\n    : \`Hi \${name}, good to see you!\`;';
+      js: `document.body.innerHTML = \`
+  <h3>Conflict Resolution Simulator</h3>
+  <div class="buttons">
+    <button id="ours-btn">Accept Ours (HEAD)</button>
+    <button id="theirs-btn">Accept Theirs (feature)</button>
+    <button id="both-btn">Accept Both (combine)</button>
+    <button id="reset-btn">Show Conflict</button>
+  </div>
+  <div id="resolution-label"></div>
+  <pre id="code-display"></pre>
+\`;
+
+const ours = '  return \\\`Hello, \\\${name}! Welcome back.\\\`;';
+const theirs = '  return \\\`Hi \\\${name}, good to see you!\\\`;';
+const both = '  return name === \\"admin\\"\\n    ? \\\`Hello, \\\${name}! Welcome back.\\\`\\n    : \\\`Hi \\\${name}, good to see you!\\\`;';
 
 const conflicted = \`function getGreeting(name) {
 <<<<<<< HEAD

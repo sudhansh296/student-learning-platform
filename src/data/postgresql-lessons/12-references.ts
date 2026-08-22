@@ -263,7 +263,7 @@ const commands = [
   { cmd:'EXPLAIN', syntax:'EXPLAIN ANALYZE SELECT ...', desc:'Show query execution plan and timing', category:'Performance' },
   { cmd:'CREATE INDEX (partial)', syntax:'CREATE INDEX ON t(col) WHERE cond', desc:'Index only rows matching a condition', category:'Performance' },
   { cmd:'VACUUM', syntax:'VACUUM ANALYZE table', desc:'Reclaim dead row space and update stats', category:'Performance' },
-  { cmd:'JSONB operator', syntax:"metadata->>'key' or metadata @> '{\"k\":\"v\"}'", desc:'Query inside JSONB columns', category:'Advanced' },
+  { cmd:'JSONB operator', syntax:'metadata->>key or metadata @> {k:v}', desc:'Query inside JSONB columns', category:'Advanced' },
   { cmd:'FULL TEXT', syntax:"to_tsvector('english', text) @@ to_tsquery('word')", desc:'Full-text search on text columns', category:'Advanced' },
   { cmd:'ON CONFLICT', syntax:'INSERT ... ON CONFLICT (col) DO UPDATE SET col = EXCLUDED.col', desc:'Upsert: insert or update on conflict', category:'DML' }
 ];
@@ -282,7 +282,7 @@ function filter() {
 
 function hl(text, q) {
   if (!q) return text;
-  const safe = q.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  const safe = q.replace(/[-\\[\\]{}()*+?.,\\\\^$|#\\s]/g, '\\\\$&');
   const re = new RegExp('(' + safe + ')', 'gi');
   return text.replace(re, '<mark style="background:#fde047;border-radius:2px">$1</mark>');
 }

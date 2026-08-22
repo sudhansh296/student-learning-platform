@@ -263,7 +263,9 @@ server.listen(process.env.PORT || 3000);`,
     {
       type: 'tryit',
       title: 'Node.js Container Builder',
-      js: `var config = {
+      js: `document.body.innerHTML = '<div><h3>Node.js Container Builder</h3><div class="form-row"><label>Base Image: <select id="base-select"><option value="node:20-alpine">node:20-alpine</option><option value="node:20">node:20</option><option value="node:18-alpine">node:18-alpine</option></select></label><label>Port: <input type="text" id="port-input" value="3000" /></label><label>Entrypoint: <input type="text" id="entry-input" value="server.js" /></label><label><input type="checkbox" id="root-check" checked /> Use non-root user</label></div><div class="form-row"><input type="text" id="env-input" placeholder="Add ENV (e.g. NODE_ENV=production)" /><button id="add-env" class="btn">Add</button></div><div class="output-section"><div class="output-label">Generated Dockerfile</div><pre id="dockerfile-out"></pre></div><div class="output-section"><div class="output-label">Generated docker-compose.yml</div><pre id="compose-out"></pre></div></div>';
+
+var config = {
   baseImage: 'node:20-alpine',
   port: '3000',
   envVars: ['NODE_ENV=production'],
@@ -285,15 +287,15 @@ function generateDockerfile() {
   ].concat(
     config.envVars.map(function(e) { return 'ENV ' + e; })
   ).concat([
-    'ENTRYPOINT ["dumb-init", "--"]',
-    'CMD ["node", "' + config.entrypoint + '"]'
+    'ENTRYPOINT [\\"dumb-init\\", \\"--\\"]',
+    'CMD [\\"node\\", \\"' + config.entrypoint + '\\"]'
   ]).filter(function(l) { return l.length > 0; });
-  return lines.join('\n');
+  return lines.join('\\n');
 }
 
 function generateCompose() {
-  return 'services:\n  api:\n    build: .\n    ports:\n      - "' + config.port + ':' + config.port + '"\n    environment:\n' +
-    config.envVars.map(function(e) { return '      - ' + e; }).join('\n') + '\n    restart: unless-stopped';
+  return 'services:\\n  api:\\n    build: .\\n    ports:\\n      - \\"' + config.port + ':' + config.port + '\\"\\n    environment:\\n' +
+    config.envVars.map(function(e) { return '      - ' + e; }).join('\\n') + '\\n    restart: unless-stopped';
 }
 
 function render() {

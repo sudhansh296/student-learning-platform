@@ -450,7 +450,7 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "headers", catLabel: "Headers",
     risk: "Without security headers, browsers allow XSS payloads to run, pages to be framed (clickjacking), and content to be sniffed.",
     fix: "Add helmet as the first middleware in your Express app.",
-    code: "const helmet = require('helmet');\napp.use(helmet());"
+    code: "const helmet = require('helmet');\\napp.use(helmet());"
   },
   {
     title: "Configure CORS allowlist",
@@ -464,49 +464,49 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "auth", catLabel: "Auth",
     risk: "Without rate limiting, attackers can attempt millions of password combinations against your login endpoint.",
     fix: "Apply a strict rate limiter (e.g., 10 requests per 15 minutes) on /login, /register, and /password-reset.",
-    code: "const loginLimiter = rateLimit({ windowMs: 15*60*1000, max: 10 });\napp.post('/login', loginLimiter, loginHandler);"
+    code: "const loginLimiter = rateLimit({ windowMs: 15*60*1000, max: 10 });\\napp.post('/login', loginLimiter, loginHandler);"
   },
   {
     title: "Hash passwords with bcrypt",
     category: "auth", catLabel: "Auth",
     risk: "Plain text or fast-hashed (MD5/SHA1) passwords can be cracked in seconds using precomputed tables.",
     fix: "Use bcrypt with a cost factor of 12 or higher. Never store or log plain text passwords.",
-    code: "const hashed = await bcrypt.hash(password, 12);\nconst valid = await bcrypt.compare(input, hashed);"
+    code: "const hashed = await bcrypt.hash(password, 12);\\nconst valid = await bcrypt.compare(input, hashed);"
   },
   {
     title: "Validate all user input",
     category: "input", catLabel: "Input",
     risk: "Unvalidated input can lead to injection attacks, unexpected application behavior, or data corruption.",
     fix: "Use a schema validation library (Joi, Zod) to validate the type, format, and range of all incoming request data.",
-    code: "const schema = Joi.object({ email: Joi.string().email().required() });\nconst { error } = schema.validate(req.body);"
+    code: "const schema = Joi.object({ email: Joi.string().email().required() });\\nconst { error } = schema.validate(req.body);"
   },
   {
     title: "Use parameterized queries",
     category: "input", catLabel: "Input",
     risk: "String-concatenated SQL queries allow attackers to inject arbitrary SQL, bypassing authentication or deleting data.",
     fix: "Always use parameterized queries or an ORM. Never build queries by string concatenation with user input.",
-    code: "// Safe:\ndb.query('SELECT * FROM users WHERE id = $1', [userId]);\n// Unsafe:\ndb.query('SELECT * FROM users WHERE id = ' + userId);"
+    code: "// Safe:\\ndb.query('SELECT * FROM users WHERE id = $1', [userId]);\\n// Unsafe:\\ndb.query('SELECT * FROM users WHERE id = ' + userId);"
   },
   {
     title: "Avoid exec() with user input",
     category: "input", catLabel: "Input",
     risk: "child_process.exec() passes arguments through a shell, allowing attackers to chain commands with ; | && characters.",
     fix: "Use execFile() or spawn() which do not use a shell, or validate input against a strict allowlist.",
-    code: "// Safe:\nconst { execFile } = require('child_process');\nexecFile('convert', [userFile, output], callback);"
+    code: "// Safe:\\nconst { execFile } = require('child_process');\\nexecFile('convert', [userFile, output], callback);"
   },
   {
     title: "Store secrets in environment variables",
     category: "secrets", catLabel: "Secrets",
     risk: "Hardcoded secrets in source code are committed to git and visible to anyone with repo access, including after deletion.",
     fix: "Use process.env for all secrets. Add .env to .gitignore. Use your platform's secret manager in production.",
-    code: "// .env (never commit this)\nJWT_SECRET=a-long-random-string\n\n// Code\nconst secret = process.env.JWT_SECRET;"
+    code: "// .env (never commit this)\\nJWT_SECRET=a-long-random-string\\n\\n// Code\\nconst secret = process.env.JWT_SECRET;"
   },
   {
     title: "Add .env to .gitignore",
     category: "secrets", catLabel: "Secrets",
     risk: "Committed .env files expose all secrets in your git history -- even if deleted later, they remain accessible via git log.",
     fix: "Add .env, .env.local, .env.production to .gitignore before the first commit.",
-    code: "# .gitignore\n.env\n.env.*\n!.env.example"
+    code: "# .gitignore\\n.env\\n.env.*\\n!.env.example"
   },
   {
     title: "Use short JWT expiry times",
@@ -520,28 +520,28 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "auth", catLabel: "Auth",
     risk: "Tokens stored in localStorage are accessible to JavaScript, making them easy to steal via XSS.",
     fix: "Use httpOnly, secure, sameSite cookies to store tokens so they are invisible to JavaScript.",
-    code: "res.cookie('token', jwt, {\n  httpOnly: true,\n  secure: true,\n  sameSite: 'strict'\n});"
+    code: "res.cookie('token', jwt, {\\n  httpOnly: true,\\n  secure: true,\\n  sameSite: 'strict'\\n});"
   },
   {
     title: "Run npm audit regularly",
     category: "deps", catLabel: "Deps",
     risk: "Outdated packages may contain known vulnerabilities (CVEs) that attackers can exploit remotely.",
     fix: "Run npm audit in CI/CD. Fail builds on high severity. Use Dependabot or Renovate for automated updates.",
-    code: "# In CI:\nnpm audit --audit-level=high"
+    code: "# In CI:\\nnpm audit --audit-level=high"
   },
   {
     title: "Sanitize against prototype pollution",
     category: "input", catLabel: "Input",
-    risk: "JSON like {\"__proto__\":{\"isAdmin\":true}} can pollute Object.prototype, potentially bypassing authorization checks.",
+    risk: "JSON like {\\"__proto\\":{\\"isAdmin\\":true}} can pollute Object.prototype, potentially bypassing authorization checks.",
     fix: "Validate input with strict schemas. Avoid deep-merging user objects. Keep lodash updated.",
-    code: "// Block dangerous keys in Joi schema:\nJoi.object().unknown(false)\n  .pattern(/^((?!__proto__|constructor|prototype).)*$/, Joi.any());"
+    code: "// Block dangerous keys in Joi schema:\\nJoi.object().unknown(false)\\n  .pattern(/^((?!__proto__|constructor|prototype).)*$/, Joi.any());"
   },
   {
     title: "Use generic error messages in auth flows",
     category: "auth", catLabel: "Auth",
     risk: "Returning 'User not found' vs 'Wrong password' lets attackers enumerate valid email addresses.",
     fix: "Return the same error message and response time for both cases to prevent user enumeration.",
-    code: "// Always return the same message:\nreturn res.status(401).json({ error: 'Invalid credentials' });"
+    code: "// Always return the same message:\\nreturn res.status(401).json({ error: 'Invalid credentials' });"
   }
 ];
 
@@ -559,10 +559,10 @@ function render() {
   var barColor = pct < 33 ? '#ef4444' : pct < 66 ? '#f59e0b' : '#339933';
 
   var html = '<h1>Node.js Security Checklist</h1>';
-  html += '<p class="subtitle">Click any item to see the risk, fix, and example code.</p>';
-  html += '<div class="progress-bar-wrap"><div class="progress-bar" style="width:' + pct + '%;background:' + barColor + '"></div></div>';
-  html += '<div class="progress-label">' + count + ' / ' + total + ' items checked (' + pct + '%)</div>';
-  html += '<div class="checklist">';
+  html += '<p class=\\"subtitle\\">Click any item to see the risk, fix, and example code.</p>';
+  html += '<div class=\\"progress-bar-wrap\\"><div class=\\"progress-bar\\" style=\\"width:' + pct + '%;background:' + barColor + '\\"></div></div>';
+  html += '<div class=\\"progress-label\\">' + count + ' / ' + total + ' items checked (' + pct + '%)</div>';
+  html += '<div class=\\"checklist\\">';
 
   items.forEach(function(item, i) {
     var isChecked = !!checked[i];
@@ -570,20 +570,20 @@ function render() {
     var checkedClass = isChecked ? ' checked' : '';
     var openClass = isOpen ? ' open' : '';
 
-    html += '<div class="item' + checkedClass + openClass + '" id="item-' + i + '">';
-    html += '<div class="item-header" onclick="toggleOpen(' + i + ')">';
-    html += '<div class="checkbox" onclick="event.stopPropagation();toggleCheck(' + i + ')">';
-    html += '<svg class="check-icon" viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg>';
+    html += '<div class=\\"item' + checkedClass + openClass + '\\" id=\\"item-' + i + '\\">';
+    html += '<div class=\\"item-header\\" onclick=\\"toggleOpen(' + i + ')\\">';
+    html += '<div class=\\"checkbox\\" onclick=\\"event.stopPropagation();toggleCheck(' + i + ')\\">';
+    html += '<svg class=\\"check-icon\\" viewBox=\\"0 0 12 12\\"><polyline points=\\"1.5,6 4.5,9 10.5,3\\"/></svg>';
     html += '</div>';
-    html += '<span class="item-title">' + item.title + '</span>';
-    html += '<span class="category ' + getCatClass(item.category) + '">' + item.catLabel + '</span>';
+    html += '<span class=\\"item-title\\">' + item.title + '</span>';
+    html += '<span class=\\"category ' + getCatClass(item.category) + '\\">' + item.catLabel + '</span>';
     html += '</div>';
 
     if (isOpen) {
-      html += '<div class="detail">';
-      html += '<div class="detail-risk"><strong>Risk:</strong> ' + item.risk + '</div>';
-      html += '<div class="detail-fix"><strong>Fix:</strong> ' + item.fix + '</div>';
-      html += '<div class="detail-code">' + item.code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
+      html += '<div class=\\"detail\\">';
+      html += '<div class=\\"detail-risk\\"><strong>Risk:</strong> ' + item.risk + '</div>';
+      html += '<div class=\\"detail-fix\\"><strong>Fix:</strong> ' + item.fix + '</div>';
+      html += '<div class=\\"detail-code\\">' + item.code + '</div>';
       html += '</div>';
     }
 

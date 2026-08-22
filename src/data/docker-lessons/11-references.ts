@@ -252,7 +252,9 @@ alias dsprune='docker system prune -af'`,
     {
       type: 'tryit',
       title: 'Searchable Docker Command Reference',
-      js: `var commands = [
+      js: `document.body.innerHTML = '<div><h3>Searchable Docker Command Reference</h3><div class="search-bar"><input type="text" id="search-input" placeholder="Search commands... (e.g. container, volume, ps)" /><span id="result-count"></span></div><div id="cmd-list"></div></div>';
+
+var commands = [
   { category: 'Images', cmd: 'docker pull image:tag', desc: 'Download an image from a registry' },
   { category: 'Images', cmd: 'docker images', desc: 'List all locally stored images' },
   { category: 'Images', cmd: 'docker build -t name:tag .', desc: 'Build image from Dockerfile in current directory' },

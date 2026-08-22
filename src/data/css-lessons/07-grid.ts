@@ -148,53 +148,129 @@ footer  { grid-area: footer; }
 }
 .gallery .large { grid-row: span 2; }  /* tall image spans 2 rows */
 .gallery .wide  { grid-column: span 2; } /* wide image spans 2 cols */`},
-    {type:'tryit',title:'Try It: CSS Grid Layouts',
-     html:`<div class="demo">
-  <h1>CSS Grid Demo</h1>
-
-  <h3>1. Responsive Card Grid (auto-fit)</h3>
-  <div class="card-grid">
-    <div class="card">HTML</div>
-    <div class="card">CSS</div>
-    <div class="card">JavaScript</div>
-    <div class="card">React</div>
-    <div class="card">Node.js</div>
-    <div class="card">MongoDB</div>
+    {type:'tryit',title:'CSS Grid Layout Builder',
+     html:`<div id="app">
+  <div class="sidebar">
+    <h3>Grid Controls</h3>
+    <div class="control-group">
+      <label>Columns: <b id="colsVal">3</b></label>
+      <input type="range" id="cols" min="1" max="6" value="3" oninput="update()">
+    </div>
+    <div class="control-group">
+      <label>Rows: <b id="rowsVal">3</b></label>
+      <input type="range" id="rows" min="1" max="5" value="3" oninput="update()">
+    </div>
+    <div class="control-group">
+      <label>Gap: <b id="gapVal">16px</b></label>
+      <input type="range" id="gap" min="0" max="32" value="16" oninput="update()">
+    </div>
+    <div class="control-group">
+      <label>Template</label>
+      <select id="template" onchange="applyTemplate()">
+        <option value="">Custom</option>
+        <option value="equal">Equal Columns</option>
+        <option value="sidebar">Sidebar Layout</option>
+        <option value="holy-grail">Holy Grail</option>
+        <option value="card-grid">Auto-fit Cards</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Column sizes</label>
+      <input type="text" id="colSizes" value="1fr 1fr 1fr" oninput="update()" style="width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:12px;font-family:monospace;">
+    </div>
+    <div class="css-output">
+      <div style="font-size:10px;color:#8b949e;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;">Generated CSS</div>
+      <pre id="cssOut"></pre>
+      <button id="copyBtn" onclick="copyCss()">📋 Copy CSS</button>
+    </div>
   </div>
-
-  <h3>2. Named Areas Layout</h3>
-  <div class="page-layout">
-    <header>Header</header>
-    <aside>Sidebar</aside>
-    <main>Main Content</main>
-    <footer>Footer</footer>
-  </div>
-
-  <h3>3. Spanning Items</h3>
-  <div class="span-grid">
-    <div class="span-item full">Full width (span all)</div>
-    <div class="span-item">1</div>
-    <div class="span-item two-col">Span 2 cols</div>
-    <div class="span-item">2</div>
-    <div class="span-item">3</div>
-    <div class="span-item">4</div>
+  <div class="preview-area">
+    <div class="preview-header">
+      <span>Live Preview</span>
+      <span id="info"></span>
+    </div>
+    <div id="grid-preview"></div>
   </div>
 </div>`,
-     css:`body{font-family:system-ui,sans-serif;padding:20px;background:#f9fafb;}
-h1{color:#1e1e1e;margin-bottom:12px;}
-h3{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#6b7280;margin:20px 0 8px;}
-.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:4px;}
-.card{background:#2563eb;color:white;padding:20px;border-radius:10px;text-align:center;font-weight:700;}
-.page-layout{display:grid;grid-template-areas:"header header""sidebar main""footer footer";grid-template-columns:120px 1fr;grid-template-rows:40px 80px 40px;gap:6px;margin-bottom:4px;}
-.page-layout header{grid-area:header;background:#1e1e1e;color:white;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:700;}
-.page-layout aside{grid-area:sidebar;background:#7c3aed;color:white;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:13px;font-weight:700;}
-.page-layout main{grid-area:main;background:white;border:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:600;color:#374151;}
-.page-layout footer{grid-area:footer;background:#374151;color:white;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:700;}
-.span-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.span-item{background:#059669;color:white;padding:16px;border-radius:8px;text-align:center;font-weight:700;}
-.full{grid-column:1/-1;background:#dc2626;}
-.two-col{grid-column:span 2;background:#d97706;}`,
-     mode:'html'},
+     css:`*{box-sizing:border-box}body{font-family:system-ui,sans-serif;margin:0;padding:12px;background:#f8fafc;font-size:13px;}
+#app{display:grid;grid-template-columns:220px 1fr;gap:12px;height:calc(100vh - 24px);max-height:520px;}
+.sidebar{background:white;border-radius:12px;padding:14px;border:1px solid #e2e8f0;overflow-y:auto;}
+h3{margin:0 0 12px;font-size:13px;font-weight:800;color:#1e293b;text-transform:uppercase;letter-spacing:.06em;}
+.control-group{margin-bottom:12px;}
+label{display:block;font-size:11px;font-weight:600;color:#475569;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
+label b{color:#6366f1;}
+input[type=range]{width:100%;accent-color:#6366f1;height:4px;}
+select{width:100%;padding:6px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:12px;outline:none;}
+.css-output{background:#0d1117;border-radius:8px;padding:10px;margin-top:10px;}
+pre{font-size:10px;color:#7dd3fc;margin:0;white-space:pre-wrap;line-height:1.5;}
+#copyBtn{margin-top:6px;padding:4px 10px;background:#1f6feb;color:white;border:none;border-radius:5px;cursor:pointer;font-size:11px;font-weight:600;}
+.preview-area{background:white;border-radius:12px;border:1px solid #e2e8f0;display:flex;flex-direction:column;overflow:hidden;}
+.preview-header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid #e2e8f0;font-size:11px;font-weight:600;color:#475569;}
+#info{font-family:monospace;font-size:10px;color:#6366f1;background:#ede9fe;padding:2px 6px;border-radius:4px;}
+#grid-preview{flex:1;padding:14px;display:grid;align-content:start;}
+.grid-cell{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;min-height:60px;transition:all .2s;cursor:pointer;position:relative;}
+.grid-cell:hover{filter:brightness(1.1);transform:scale(1.02);}
+.cell-label{font-size:10px;opacity:.8;position:absolute;top:4px;left:6px;}
+.cell-num{font-size:16px;}
+.cell-1{background:linear-gradient(135deg,#6366f1,#818cf8);}
+.cell-2{background:linear-gradient(135deg,#0ea5e9,#38bdf8);}
+.cell-3{background:linear-gradient(135deg,#10b981,#34d399);}
+.cell-4{background:linear-gradient(135deg,#f59e0b,#fbbf24);}
+.cell-5{background:linear-gradient(135deg,#ef4444,#f87171);}
+.cell-6{background:linear-gradient(135deg,#8b5cf6,#a78bfa);}`,
+     js:`const colors = ['cell-1','cell-2','cell-3','cell-4','cell-5','cell-6'];
+
+function update() {
+  const cols = +document.getElementById('cols').value;
+  const rows = +document.getElementById('rows').value;
+  const gap  = +document.getElementById('gap').value;
+  const colSizes = document.getElementById('colSizes').value || ('1fr '.repeat(cols).trim());
+  document.getElementById('colsVal').textContent = cols;
+  document.getElementById('rowsVal').textContent = rows;
+  document.getElementById('gapVal').textContent = gap + 'px';
+
+  const total = cols * rows;
+  const grid  = document.getElementById('grid-preview');
+  grid.style.gridTemplateColumns = colSizes;
+  grid.style.gridTemplateRows = 'repeat('+rows+',1fr)';
+  grid.style.gap = gap + 'px';
+
+  grid.innerHTML = Array.from({length:total},(_,i)=>
+    '<div class="grid-cell '+colors[i%colors.length]+'">' +
+    '<span class="cell-label">item '+i+'</span>' +
+    '<span class="cell-num">'+(i+1)+'</span></div>'
+  ).join('');
+
+  document.getElementById('info').textContent = cols+'×'+rows+' grid';
+  document.getElementById('cssOut').textContent =
+    '.grid {\n  display: grid;\n  grid-template-columns: '+colSizes+';\n' +
+    '  grid-template-rows: repeat('+rows+', 1fr);\n  gap: '+gap+'px;\n}';
+}
+
+function applyTemplate() {
+  const t = document.getElementById('template').value;
+  const colsInput = document.getElementById('colSizes');
+  const colsRange = document.getElementById('cols');
+  const rowsRange = document.getElementById('rows');
+  if (t==='equal'){colsInput.value='1fr 1fr 1fr';colsRange.value=3;rowsRange.value=2;}
+  else if(t==='sidebar'){colsInput.value='250px 1fr';colsRange.value=2;rowsRange.value=3;}
+  else if(t==='holy-grail'){colsInput.value='200px 1fr 200px';colsRange.value=3;rowsRange.value=3;}
+  else if(t==='card-grid'){colsInput.value='repeat(auto-fit,minmax(120px,1fr))';colsRange.value=4;rowsRange.value=2;}
+  update();
+}
+
+function copyCss() {
+  const css = document.getElementById('cssOut').textContent;
+  navigator.clipboard.writeText(css).then(()=>{
+    const btn = document.getElementById('copyBtn');
+    btn.textContent='✅ Copied!';
+    setTimeout(()=>{btn.textContent='📋 Copy CSS';},1500);
+  });
+}
+
+window.update=update; window.applyTemplate=applyTemplate; window.copyCss=copyCss;
+update();`,
+     mode:'full'},
   ],
   exercises:[
     {id:'gr1',question:'What does grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) do?',type:'multiple-choice',options:['Creates exactly 200 columns','Creates responsive columns that are at least 200px and share remaining space','Creates one column of 200px','Nothing — invalid syntax'],correct:1,explanation:'auto-fit creates as many columns as fit, each at least 200px wide. On wide screens you get 4-5 columns, on mobile you get 1. This creates a responsive grid with NO media queries needed.'},

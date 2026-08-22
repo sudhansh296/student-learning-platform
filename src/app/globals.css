@@ -128,3 +128,17 @@ pre, code, kbd { font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monos
    ═══════════════════════════════════════════════════ */
 @keyframes ps { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.7)} }
 .pulse { animation: ps 2.4s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════
+   SCROLLING TICKER ANIMATION
+   ═══════════════════════════════════════════════════ */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-scroll-left {
+  animation: scroll-left 40s linear infinite;
+}
+.animate-scroll-left:hover {
+  animation-play-state: paused;
+}

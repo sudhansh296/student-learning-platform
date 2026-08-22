@@ -178,7 +178,40 @@ git help -w commit`,
     {
       type: 'tryit',
       title: '.gitconfig Builder',
-      js: `function generate() {
+      js: `document.body.innerHTML = \`
+  <h3>.gitconfig Generator</h3>
+  <div class="field">
+    <label>Your Name</label>
+    <input type="text" id="name" placeholder="John Doe" />
+  </div>
+  <div class="field">
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="john@example.com" />
+  </div>
+  <div class="field">
+    <label>Default Editor</label>
+    <select id="editor">
+      <option value="code --wait">VS Code</option>
+      <option value="nano">Nano</option>
+      <option value="vim">Vim</option>
+      <option value="emacs">Emacs</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Default Branch Name</label>
+    <select id="branch">
+      <option value="main">main</option>
+      <option value="master">master</option>
+    </select>
+  </div>
+  <button id="gen-btn">Generate .gitconfig</button>
+  <div id="preview-block">
+    <h4>Generated Configuration:</h4>
+    <pre id="preview"></pre>
+  </div>
+\`;
+
+function generate() {
   const name = document.getElementById('name').value.trim() || 'Your Name';
   const email = document.getElementById('email').value.trim() || 'you@example.com';
   const editor = document.getElementById('editor').value;

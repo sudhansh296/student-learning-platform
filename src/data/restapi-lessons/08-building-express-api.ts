@@ -276,7 +276,9 @@ DELETE /users/3 -> HTTP Status: 204`
     {
       type: 'tryit',
       title: 'In-Browser REST API Simulator',
-      js: `var users = [
+      js: `document.body.innerHTML = '<div><h3>In-Browser REST API Simulator</h3><div class=\\"sim-layout\\"><div class=\\"panel\\"><div class=\\"panel-title\\">REQUEST</div><div class=\\"request-form\\"><div class=\\"url-row\\"><select id=\\"method-select\\"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select><input id=\\"url-input\\" placeholder=\\"/users or /users/1\\" value=\\"/users\\" /></div><label class=\\"body-label\\">Request Body (JSON)</label><textarea id=\\"body-input\\" placeholder=\\"{ \\\\\\"name\\\\\\": \\\\\\"Alice\\\\\\" }\\"></textarea><button id=\\"send-btn\\">Send Request</button></div></div><div class=\\"panel\\"><div class=\\"panel-title\\">RESPONSE</div><div id=\\"response-panel\\"><span style=\\"color:#94a3b8\\">Send a request to see the response</span></div></div></div><div class=\\"collection-section\\"><div class=\\"collection-title\\">Current Users Collection</div><div id=\\"collection-state\\"></div></div></div>';
+
+var users = [
   { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'admin' },
   { id: 2, name: 'Bob Smith',     email: 'bob@example.com',   role: 'user' },
   { id: 3, name: 'Carol White',   email: 'carol@example.com', role: 'user' }
@@ -290,9 +292,9 @@ function respond(status, body) {
   var color = statusColors[status] || '#94a3b8';
   var statusNames = { 200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request', 404: 'Not Found' };
   var name = statusNames[status] || '';
-  var bodyHtml = body ? '<pre class="res-body">' + escHtml(JSON.stringify(body, null, 2)) + '</pre>' : '<span class="no-body">No response body</span>';
+  var bodyHtml = body ? '<pre class=\\"res-body\\">' + escHtml(JSON.stringify(body, null, 2)) + '</pre>' : '<span class=\\"no-body\\">No response body</span>';
   document.getElementById('response-panel').innerHTML =
-    '<div class="status-row"><span class="status-badge" style="background:' + color + '">' + status + ' ' + name + '</span></div>' + bodyHtml;
+    '<div class=\\"status-row\\"><span class=\\"status-badge\\" style=\\"background:' + color + '\\">' + status + ' ' + name + '</span></div>' + bodyHtml;
 }
 
 function handleRequest() {
@@ -300,7 +302,7 @@ function handleRequest() {
   var url = document.getElementById('url-input').value.trim();
   var bodyText = document.getElementById('body-input').value.trim();
 
-  var idMatch = url.match(/^\/users\/(\d+)$/);
+  var idMatch = url.match(new RegExp('^\\\\/users\\\\/(\\\\d+)$'));
   var isCollection = url === '/users' || url === '/users/';
 
   if (isCollection && method === 'GET') {
@@ -353,8 +355,8 @@ function handleRequest() {
 function renderCollection() {
   var el = document.getElementById('collection-state');
   el.innerHTML = users.map(function(u) {
-    return '<div class="user-row"><span class="user-id">#' + u.id + '</span><span class="user-name">' + escHtml(u.name) + '</span><span class="user-email">' + escHtml(u.email) + '</span><span class="user-role ' + u.role + '">' + u.role + '</span></div>';
-  }).join('') || '<span style="color:#94a3b8;font-size:12px">Collection is empty</span>';
+    return '<div class=\\"user-row\\"><span class=\\"user-id\\">#' + u.id + '</span><span class=\\"user-name\\">' + escHtml(u.name) + '</span><span class=\\"user-email\\">' + escHtml(u.email) + '</span><span class=\\"user-role ' + u.role + '\\">' + u.role + '</span></div>';
+  }).join('') || '<span style=\\"color:#94a3b8;font-size:12px\\">Collection is empty</span>';
 }
 
 document.getElementById('send-btn').addEventListener('click', handleRequest);

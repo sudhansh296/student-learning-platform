@@ -166,69 +166,126 @@ nested.flat(Infinity); // fully flattened
 // flatMap — map then flatten 1 level
 const sentences = ["Hello World", "Foo Bar"];
 sentences.flatMap(s => s.split(" ")); // ["Hello","World","Foo","Bar"]` },
-    { type: 'tryit', title: 'Try It: Array Methods Live',
+    { type: 'tryit', title: 'Student Grade Book',
       html: `<div id="app">
-  <h2>Array Methods Explorer</h2>
-  <p id="original"></p>
-  <div class="btns">
-    <button onclick="demo('map')">map() — double</button>
-    <button onclick="demo('filter')">filter() — evens only</button>
-    <button onclick="demo('reduce')">reduce() — sum</button>
-    <button onclick="demo('find')">find() — first>5</button>
-    <button onclick="demo('sort')">sort() — ascending</button>
-    <button onclick="demo('chain')">chain (filter+map)</button>
+  <div class="topbar">
+    <div>
+      <h2>📚 Student Grade Book</h2>
+      <p class="sub">map · filter · reduce · sort — all in action</p>
+    </div>
+    <div class="sort-row">
+      Sort: <select id="sortBy" onchange="renderTable()">
+        <option value="name">Name</option>
+        <option value="avg">Average</option>
+        <option value="grade">Grade</option>
+      </select>
+    </div>
   </div>
-  <div id="result"></div>
-  <h3 style="margin-top:16px">Custom Array Operations</h3>
-  <input id="customInput" placeholder="Enter comma-separated numbers: 3,1,4,1,5,9">
-  <button onclick="analyzeArray()" style="margin-top:6px">Analyze</button>
-  <div id="analysis"></div>
+  <form id="addForm" onsubmit="addStudent(event)">
+    <input id="sName" placeholder="Student name" required>
+    <input id="sScores" placeholder="Scores: 85,92,78" required>
+    <button type="submit">+ Add</button>
+  </form>
+  <div id="stats"></div>
+  <div id="table-wrap"></div>
 </div>`,
-      css: `#app{font-family:system-ui,sans-serif;padding:20px;max-width:520px;}
-h2{color:#1e1e1e;margin-bottom:8px;}h3{font-size:14px;color:#374151;}
-#original{background:#f1f5f9;padding:10px 14px;border-radius:8px;font-family:monospace;font-size:13px;margin-bottom:12px;}
-.btns{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
-button{padding:7px 14px;background:#2563eb;color:white;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;}
-button:hover{background:#1d4ed8;}
-#result{background:#f0fdf4;border:1px solid #86efac;padding:14px;border-radius:10px;font-family:monospace;font-size:13px;min-height:44px;}
-input{width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;outline:none;box-sizing:border-box;}
-#analysis{background:#eff6ff;border:1px solid #bfdbfe;padding:14px;border-radius:10px;font-size:13px;margin-top:8px;line-height:1.8;}`,
-      js: `const nums = [3,1,7,2,8,4,6,5,9,10];
-document.getElementById('original').textContent = 'Original: [' + nums.join(', ') + ']';
+      css: `*{box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:16px;background:#f0f4ff;margin:0;}
+#app{max-width:620px;margin:0 auto;}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+h2{margin:0 0 2px;font-size:18px;color:#1e293b;}
+.sub{margin:0;font-size:11px;color:#64748b;}
+.sort-row{display:flex;align-items:center;gap:6px;font-size:12px;color:#475569;font-weight:600;}
+select{padding:5px 8px;border:1px solid #e2e8f0;border-radius:6px;font-size:12px;}
+#addForm{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+input{padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;flex:1;min-width:120px;outline:none;}
+input:focus{border-color:#6366f1;}
+#addForm button{padding:8px 16px;background:#6366f1;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:700;white-space:nowrap;}
+#stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.stat-card{background:white;border-radius:10px;padding:10px 12px;text-align:center;border:1px solid #e2e8f0;}
+.stat-val{font-size:22px;font-weight:800;color:#6366f1;}
+.stat-lbl{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.05em;}
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+th{background:#6366f1;color:white;padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;}
+td{padding:9px 12px;font-size:13px;border-bottom:1px solid #f1f5f9;}
+tr:last-child td{border-bottom:none;}
+tr.top-row td{background:#f0fdf4;}
+tr.bot-row td{background:#fff1f2;}
+.grade{display:inline-block;padding:2px 8px;border-radius:999px;font-weight:700;font-size:12px;}
+.grade-A{background:#dcfce7;color:#15803d;}
+.grade-B{background:#dbeafe;color:#1d4ed8;}
+.grade-C{background:#fef9c3;color:#a16207;}
+.grade-D,.grade-F{background:#fee2e2;color:#b91c1c;}
+.del-btn{background:none;border:none;cursor:pointer;color:#cbd5e1;font-size:14px;padding:2px 6px;}
+.del-btn:hover{color:#ef4444;}`,
+      js: `let students = [
+  { id:1, name:'Alice Chen', scores:[92,88,95,90] },
+  { id:2, name:'Bob Martinez', scores:[75,68,80,72] },
+  { id:3, name:'Carol Jones', scores:[88,91,86,93] },
+  { id:4, name:'David Kim', scores:[55,62,58,60] },
+  { id:5, name:'Eve Taylor', scores:[98,96,99,97] },
+];
+let nextId = 6;
 
-const demos = {
-  map:    {label:'map() → double',      fn: a => a.map(n=>n*2)},
-  filter: {label:'filter() → evens',    fn: a => a.filter(n=>n%2===0)},
-  reduce: {label:'reduce() → sum',      fn: a => [a.reduce((s,n)=>s+n,0)]},
-  find:   {label:'find() → first > 5',  fn: a => [a.find(n=>n>5)]},
-  sort:   {label:'sort() → ascending',  fn: a => [...a].sort((x,y)=>x-y)},
-  chain:  {label:'filter evens then ×3',fn: a => a.filter(n=>n%2===0).map(n=>n*3)},
-};
+function avg(scores) { return scores.reduce((a,b)=>a+b,0)/scores.length; }
 
-function demo(op) {
-  const d = demos[op];
-  const result = d.fn(nums);
-  document.getElementById('result').textContent = d.label + ': [' + result.join(', ') + ']';
+function gradeOf(average) {
+  if (average >= 90) return 'A';
+  if (average >= 80) return 'B';
+  if (average >= 70) return 'C';
+  if (average >= 60) return 'D';
+  return 'F';
 }
 
-function analyzeArray() {
-  const raw = document.getElementById('customInput').value;
-  const arr = raw.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
-  if (!arr.length) return;
-  const sum   = arr.reduce((a,b)=>a+b,0);
-  const avg   = (sum/arr.length).toFixed(2);
-  const sorted = [...arr].sort((a,b)=>a-b);
-  document.getElementById('analysis').innerHTML = [
-    '<b>Array:</b> [' + arr.join(', ') + ']',
-    '<b>Length:</b> ' + arr.length,
-    '<b>Sum:</b> ' + sum,
-    '<b>Average:</b> ' + avg,
-    '<b>Min:</b> ' + Math.min(...arr) + ' · <b>Max:</b> ' + Math.max(...arr),
-    '<b>Sorted:</b> [' + sorted.join(', ') + ']',
-    '<b>Evens:</b> [' + arr.filter(n=>n%2===0).join(', ') + ']',
-    '<b>Odds:</b> [' + arr.filter(n=>n%2!==0).join(', ') + ']',
-  ].join('<br>');
-}`,
+function addStudent(e) {
+  e.preventDefault();
+  const name = document.getElementById('sName').value.trim();
+  const raw  = document.getElementById('sScores').value;
+  const scores = raw.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n) && n >= 0 && n <= 100);
+  if (!name || scores.length === 0) return;
+  students.push({ id: nextId++, name, scores });
+  document.getElementById('sName').value = '';
+  document.getElementById('sScores').value = '';
+  renderTable();
+}
+
+function deleteStudent(id) {
+  students = students.filter(s => s.id !== id);
+  renderTable();
+}
+
+function renderTable() {
+  const sortBy = document.getElementById('sortBy').value;
+  const withAvg = students.map(s => ({ ...s, avg: avg(s.scores), grade: gradeOf(avg(s.scores)) }));
+  const sorted = [...withAvg].sort((a,b) => sortBy==='name' ? a.name.localeCompare(b.name) : sortBy==='avg' ? b.avg - a.avg : a.grade.localeCompare(b.grade));
+  const topAvg = Math.max(...withAvg.map(s=>s.avg));
+  const botAvg = Math.min(...withAvg.map(s=>s.avg));
+  const classAvg = withAvg.reduce((s,x)=>s+x.avg,0)/withAvg.length || 0;
+  const passing  = withAvg.filter(s=>s.avg>=60).length;
+
+  document.getElementById('stats').innerHTML = [
+    '<div class="stat-card"><div class="stat-val">' + withAvg.length + '</div><div class="stat-lbl">Students</div></div>',
+    '<div class="stat-card"><div class="stat-val">' + classAvg.toFixed(1) + '</div><div class="stat-lbl">Class Avg</div></div>',
+    '<div class="stat-card"><div class="stat-val">' + passing + '</div><div class="stat-lbl">Passing</div></div>',
+    '<div class="stat-card"><div class="stat-val">' + gradeOf(classAvg) + '</div><div class="stat-lbl">Class Grade</div></div>',
+  ].join('');
+
+  document.getElementById('table-wrap').innerHTML =
+    '<table><thead><tr><th>Name</th><th>Scores</th><th>Average</th><th>Grade</th><th></th></tr></thead><tbody>' +
+    sorted.map(s => {
+      const isTop = s.avg === topAvg, isBot = s.avg === botAvg && withAvg.length > 1;
+      const cls = isTop ? 'top-row' : isBot ? 'bot-row' : '';
+      const gradeC = 'grade grade-' + s.grade;
+      return '<tr class="' + cls + '"><td>' + s.name + (isTop?' 🌟':isBot?' 📉':'') + '</td>' +
+             '<td style="font-family:monospace;font-size:11px">[' + s.scores.join(', ') + ']</td>' +
+             '<td><b>' + s.avg.toFixed(1) + '</b></td>' +
+             '<td><span class="' + gradeC + '">' + s.grade + '</span></td>' +
+             '<td><button class="del-btn" onclick="deleteStudent(' + s.id + ')">✕</button></td></tr>';
+    }).join('') + '</tbody></table>';
+}
+
+window.addStudent = addStudent;
+window.deleteStudent = deleteStudent;
+renderTable();`,
       mode: 'full' },
   ],
   exercises: [

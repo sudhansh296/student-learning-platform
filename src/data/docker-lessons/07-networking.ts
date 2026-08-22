@@ -202,7 +202,9 @@ docker run -d \
     {
       type: 'tryit',
       title: 'Network Topology Visualizer',
-      js: `var networks = {
+      js: `document.body.innerHTML = '<div><h3>Network Topology Visualizer</h3><div class="controls"><label>Add container to network:</label><select id="net-select"><option value="app-network">app-network</option><option value="cache-network">cache-network</option></select><select id="cont-select"><option value="api">api</option><option value="postgres">postgres</option><option value="redis">redis</option><option value="nginx">nginx</option></select><button id="add-btn">Connect</button></div><svg id="topology" width="420" height="280"></svg><div id="net-legend"></div></div>';
+
+var networks = {
   'app-network': { color: '#2496ED', containers: ['api', 'postgres'] },
   'cache-network': { color: '#28a745', containers: ['api', 'redis'] }
 };

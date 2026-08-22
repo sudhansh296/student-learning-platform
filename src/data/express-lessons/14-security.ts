@@ -298,23 +298,23 @@ function showHeaders() {
   scoreEl.textContent = 'Score: '+score+'/8';
   scoreEl.className = 'score-badge '+getScoreClass(score);
 
-  var lines = '<span class="h-status">HTTP/1.1 200 OK</span>\n';
-  lines += '<span style="color:#e2e8f0">Content-Type: application/json</span>\n';
-  lines += '<span style="color:#e2e8f0">Date: '+new Date().toUTCString()+'</span>\n\n';
-  lines += '<span style="color:#94a3b8">// Security Headers (via Helmet)</span>\n';
+  var lines = '<span class=\\"h-status\\">HTTP/1.1 200 OK</span>\\\\n';
+  lines += '<span style=\\"color:#e2e8f0\\">Content-Type: application/json</span>\\\\n';
+  lines += '<span style=\\"color:#e2e8f0\\">Date: '+new Date().toUTCString()+'</span>\\\\n\\\\n';
+  lines += '<span style=\\"color:#94a3b8\\">// Security Headers (via Helmet)</span>\\\\n';
 
   headers.forEach(function(h){
     if (h.key === 'X-Powered-By') {
       if (!h.enabled) {
-        lines += '<span class="h-present">// X-Powered-By: [REMOVED] - good</span>\n';
+        lines += '<span class=\\"h-present\\">// X-Powered-By: [REMOVED] - good</span>\\\\n';
       } else {
-        lines += '<span class="h-absent">X-Powered-By: Express  // exposes stack</span>\n';
+        lines += '<span class=\\"h-absent\\">X-Powered-By: Express  // exposes stack</span>\\\\n';
       }
     } else {
       if (h.enabled) {
-        lines += '<span class="h-present">'+h.key+': [enabled]</span>\n';
+        lines += '<span class=\\"h-present\\">'+h.key+': [enabled]</span>\\\\n';
       } else {
-        lines += '<span class="h-absent">// '+h.key+': [missing]</span>\n';
+        lines += '<span class=\\"h-absent\\">// '+h.key+': [missing]</span>\\\\n';
       }
     }
   });
@@ -324,20 +324,20 @@ function showHeaders() {
 
 var toggleHtml = '';
 headers.forEach(function(h,i){
-  toggleHtml += '<div class="toggle-row">';
-  toggleHtml += '<div><div class="toggle-label">'+h.key+'</div><div class="toggle-desc">'+h.desc+'</div></div>';
-  toggleHtml += '<label class="toggle"><input type="checkbox" id="toggle-'+i+'"'+(h.enabled?' checked':'')+' onchange="showHeaders()"><span class="slider"></span></label>';
+  toggleHtml += '<div class=\\"toggle-row\\">';
+  toggleHtml += '<div><div class=\\"toggle-label\\">'+h.key+'</div><div class=\\"toggle-desc\\">'+h.desc+'</div></div>';
+  toggleHtml += '<label class=\\"toggle\\"><input type=\\"checkbox\\" id=\\"toggle-'+i+'\\"'+(h.enabled?' checked':'')+' onchange=\\"showHeaders()\\"><span class=\\"slider\\"></span></label>';
   toggleHtml += '</div>';
 });
 
 document.getElementById('output').innerHTML =
-  '<div class="sec-demo">' +
-  '<div class="panel">' +
-  '<div class="panel-header"><span>Security Headers Checklist</span><span class="score-badge" id="scoreEl">Score: -/8</span></div>' +
-  '<div class="panel-body">' +
-  '<div class="toggle-list">'+toggleHtml+'</div>' +
-  '<button class="btn" onclick="showHeaders()">View Response Headers</button>' +
-  '<div class="response-panel" id="responsePanel"><span style="color:#888">Click "View Response Headers" to inspect the HTTP response...</span></div>' +
+  '<div class=\\"sec-demo\\">' +
+  '<div class=\\"panel\\">' +
+  '<div class=\\"panel-header\\"><span>Security Headers Checklist</span><span class=\\"score-badge\\" id=\\"scoreEl\\">Score: -/8</span></div>' +
+  '<div class=\\"panel-body\\">' +
+  '<div class=\\"toggle-list\\">'+toggleHtml+'</div>' +
+  '<button class=\\"btn\\" onclick=\\"showHeaders()\\">View Response Headers</button>' +
+  '<div class=\\"response-panel\\" id=\\"responsePanel\\"><span style=\\"color:#888\\">Click \\"View Response Headers\\" to inspect the HTTP response...</span></div>' +
   '</div>' +
   '</div>' +
   '</div>';

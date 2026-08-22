@@ -138,7 +138,23 @@ squash f4d1b33 Another typo fix
     {
       type: 'tryit',
       title: 'Merge vs Rebase Comparison',
-      js: `const views = {
+      js: `document.body.innerHTML = \`
+  <h3>Merge vs Rebase Visualizer</h3>
+  <div class="buttons">
+    <button id="merge-btn">Show Merge</button>
+    <button id="rebase-btn">Show Rebase</button>
+  </div>
+  <div id="view-label"></div>
+  <svg id="graph-svg"></svg>
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#888"></div>Common ancestor</div>
+    <div class="legend-item"><div class="dot" style="background:#F05032"></div>Main branch</div>
+    <div class="legend-item"><div class="dot" style="background:#2196F3"></div>Feature branch</div>
+    <div class="legend-item"><div class="dot" style="background:#4CAF50"></div>Merge commit</div>
+  </div>
+\`;
+
+const views = {
   merge: {
     label: 'After git merge (3-way)',
     nodes: [
@@ -174,14 +190,14 @@ function render() {
   v.edges.forEach(([from, to]) => {
     const a = v.nodes.find(n => n.id === from);
     const b = v.nodes.find(n => n.id === to);
-    edgeHTML += \`<line x1="\${a.x}" y1="\${a.y}" x2="\${b.x}" y2="\${b.y}" stroke="#ccc" stroke-width="2"/>\`;
+    edgeHTML += \`<line x1=\\"\${a.x}\\" y1=\\"\${a.y}\\" x2=\\"\${b.x}\\" y2=\\"\${b.y}\\" stroke=\\"#ccc\\" stroke-width=\\"2\\"/>\`;
   });
 
   let nodeHTML = '';
   v.nodes.forEach(n => {
-    nodeHTML += \`<circle cx="\${n.x}" cy="\${n.y}" r="18" fill="\${n.color}" />\`;
-    nodeHTML += \`<text x="\${n.x}" y="\${n.y+5}" text-anchor="middle" fill="white" font-size="12" font-weight="700">\${n.label}</text>\`;
-    if (n.head) nodeHTML += \`<text x="\${n.x}" y="\${n.y-26}" text-anchor="middle" fill="\${n.color}" font-size="10" font-weight="700">HEAD</text>\`;
+    nodeHTML += \`<circle cx=\\"\${n.x}\\" cy=\\"\${n.y}\\" r=\\"18\\" fill=\\"\${n.color}\\" />\`;
+    nodeHTML += \`<text x=\\"\${n.x}\\" y=\\"\${n.y+5}\\" text-anchor=\\"middle\\" fill=\\"white\\" font-size=\\"12\\" font-weight=\\"700\\">\${n.label}</text>\`;
+    if (n.head) nodeHTML += \`<text x=\\"\${n.x}\\" y=\\"\${n.y-26}\\" text-anchor=\\"middle\\" fill=\\"\${n.color}\\" font-size=\\"10\\" font-weight=\\"700\\">HEAD</text>\`;
   });
 
   svg.innerHTML = edgeHTML + nodeHTML;

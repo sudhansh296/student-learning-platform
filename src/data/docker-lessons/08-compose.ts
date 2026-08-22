@@ -244,7 +244,9 @@ docker compose --profile monitoring up -d`,
     {
       type: 'tryit',
       title: 'Compose Service Visualizer',
-      js: `var services = [
+      js: `document.body.innerHTML = '<div><h3>Compose Service Visualizer</h3><div class="btn-row"><button id="compose-up" class="compose-btn">docker compose up -d</button><button id="compose-down" class="compose-btn">docker compose down</button></div><div id="services-grid"></div></div>';
+
+var services = [
   { name: 'api',      image: 'myapp:latest',       status: 'stopped', color: '#2496ED', port: '3000', deps: ['db', 'cache'] },
   { name: 'db',       image: 'postgres:16-alpine',  status: 'stopped', color: '#336791', port: '5432', deps: [] },
   { name: 'cache',    image: 'redis:7-alpine',       status: 'stopped', color: '#dc3545', port: '6379', deps: [] }

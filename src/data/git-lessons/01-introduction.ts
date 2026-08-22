@@ -141,7 +141,9 @@ f4d1b33 Refactor authentication module
     {
       type: 'tryit',
       title: 'Commit History Visualizer',
-      js: `const commits = [
+      js: `document.body.innerHTML = '<div><h3>Commit History Timeline</h3><button id=\\"add-btn\\">+ Add Commit</button><div id=\\"commit-list\\"></div></div>';
+
+const commits = [
   { hash: 'a3f9c12', message: 'Fix login redirect on mobile', author: 'Alice', date: '2024-08-19' },
   { hash: 'b8e2a01', message: 'Add dark mode toggle', author: 'Bob', date: '2024-08-18' },
   { hash: 'f4d1b33', message: 'Refactor authentication module', author: 'Alice', date: '2024-08-17' },
@@ -153,11 +155,11 @@ let counter = 5;
 function render() {
   const list = document.getElementById('commit-list');
   list.innerHTML = commits.map((c, i) => \`
-    <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:8px;margin-bottom:8px">
-      <div style="background:#F05032;color:white;padding:4px 8px;border-radius:4px;font-family:monospace;font-size:11px;flex-shrink:0">\${c.hash}</div>
-      <div style="flex:1">
-        <div style="font-weight:600;font-size:14px;color:#1a1a1a">\${c.message}</div>
-        <div style="font-size:12px;color:#6c757d;margin-top:2px">\${c.author} &bull; \${c.date}</div>
+    <div style=\\"display:flex;align-items:flex-start;gap:12px;padding:14px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:8px;margin-bottom:8px\\">
+      <div style=\\"background:#F05032;color:white;padding:4px 8px;border-radius:4px;font-family:monospace;font-size:11px;flex-shrink:0\\">\${c.hash}</div>
+      <div style=\\"flex:1\\">
+        <div style=\\"font-weight:600;font-size:14px;color:#1a1a1a\\">\${c.message}</div>
+        <div style=\\"font-size:12px;color:#6c757d;margin-top:2px\\">\${c.author} &bull; \${c.date}</div>
       </div>
     </div>
   \`).join('');

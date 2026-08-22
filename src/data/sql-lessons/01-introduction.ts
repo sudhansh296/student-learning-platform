@@ -150,7 +150,18 @@ ORDER BY created_at DESC;`,
     {
       type: 'tryit',
       title: 'Relational Database Visualizer',
-      js: `const tables = {
+      js: `// Initialize HTML structure
+document.body.innerHTML = \`
+  <div style="padding:20px;font-family:system-ui,sans-serif;background:#f7fafc">
+    <h3 style="color:#336791;margin:0 0 6px 0;font-size:15px;font-weight:700">Database Tables</h3>
+    <p style="color:#718096;font-size:13px;margin:0 0 16px 0">Click tabs to switch between tables and explore the relational structure</p>
+    <div id="tabs"></div>
+    <div id="table-area"></div>
+    <div id="info" style="margin-top:10px"></div>
+  </div>
+\`;
+
+const tables = {
   users: {
     columns: ['id', 'name', 'email', 'plan'],
     rows: [
@@ -195,11 +206,7 @@ function render() {
 
 window.switchTab = function(name) { activeTable = name; render(); };
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-p { color: #718096; font-size: 13px; margin: 0 0 16px 0; }
-#tabs { margin-bottom: 12px; }
-#info { margin-top: 10px; }`
+      css: ``
     },
     {
       type: 'warning',

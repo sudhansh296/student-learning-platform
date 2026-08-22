@@ -183,74 +183,124 @@ function SearchComponent() {
     }
   }
 }`},
-    {type:'tryit',title:'Try It: Fetch API',
+    {type:'tryit',title:'GitHub User Explorer',
      html:`<div id="app">
-  <h2>🌐 Fetch API Live Demo</h2>
-  <div class="btns">
-    <button id="b1" onclick="fetchUser()">GET User</button>
-    <button id="b2" onclick="fetchPosts()">GET Posts</button>
-    <button id="b3" onclick="createPost()">POST New Post</button>
-    <button id="b4" onclick="fetchWithError()">Test Error</button>
+  <div class="header">
+    <h2>🐙 GitHub User Explorer</h2>
+    <p class="sub">Fetch API · loading/error states · real data</p>
   </div>
-  <div id="status"></div>
+  <form id="searchForm" onsubmit="searchUser(event)">
+    <div class="search-row">
+      <input id="username" placeholder="Enter GitHub username..." value="torvalds">
+      <button type="submit" id="searchBtn">Search</button>
+    </div>
+  </form>
+  <div class="quick-btns">
+    <span style="font-size:11px;color:#94a3b8">Try: </span>
+    <button class="q-btn" onclick="quickSearch('gaearon')">gaearon</button>
+    <button class="q-btn" onclick="quickSearch('sindresorhus')">sindresorhus</button>
+    <button class="q-btn" onclick="quickSearch('torvalds')">torvalds</button>
+    <button class="q-btn" onclick="quickSearch('notarealuser999xyz')">404 test</button>
+  </div>
   <div id="result"></div>
-  <div id="timing"></div>
 </div>`,
-     css:`#app{font-family:system-ui,sans-serif;padding:20px;max-width:540px;}
-h2{color:#1e1e1e;margin-bottom:12px;}
-.btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
-button{padding:9px 16px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;}
-button:disabled{background:#94a3b8;cursor:not-allowed;}
-#status{font-size:13px;color:#6b7280;height:18px;margin-bottom:6px;}
-#result{background:#0d1117;color:#e6edf3;padding:14px;border-radius:10px;font-family:monospace;font-size:12px;white-space:pre-wrap;min-height:80px;max-height:260px;overflow-y:auto;}
-#timing{font-size:11px;color:#22c55e;font-weight:700;margin-top:4px;}`,
-     js:`const setStatus = s => document.getElementById('status').textContent = s;
-const setResult = v => document.getElementById('result').textContent = typeof v==='object'?JSON.stringify(v,null,2):v;
-const setTime = ms => document.getElementById('timing').textContent = ms ? '⏱ ' + ms + 'ms' : '';
-const disable = v => document.querySelectorAll('button').forEach(b => b.disabled = v);
+     css:`*{box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:16px;background:#0d1117;color:white;margin:0;}
+#app{max-width:500px;margin:0 auto;}
+.header{text-align:center;margin-bottom:14px;}
+h2{margin:0 0 4px;font-size:20px;color:#e6edf3;}
+.sub{margin:0;font-size:11px;color:#8b949e;}
+.search-row{display:flex;gap:8px;margin-bottom:8px;}
+input{flex:1;padding:10px 14px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:14px;outline:none;}
+input:focus{border-color:#58a6ff;}
+button[type=submit]{padding:10px 18px;background:#238636;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:14px;}
+button[type=submit]:disabled{background:#2ea043;opacity:.6;cursor:not-allowed;}
+.quick-btns{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+.q-btn{padding:4px 10px;background:#21262d;color:#8b949e;border:1px solid #30363d;border-radius:6px;cursor:pointer;font-size:12px;}
+.q-btn:hover{color:#58a6ff;border-color:#58a6ff;}
+.profile{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:18px;}
+.profile-top{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;}
+.avatar{width:64px;height:64px;border-radius:50%;border:2px solid #30363d;flex-shrink:0;}
+.profile-info h3{margin:0 0 2px;font-size:17px;color:#e6edf3;}
+.login{color:#8b949e;font-size:13px;margin:0 0 4px;}
+.bio{color:#8b949e;font-size:12px;margin:0;line-height:1.5;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.stat-box{background:#21262d;border-radius:8px;padding:10px;text-align:center;border:1px solid #30363d;}
+.stat-n{font-size:20px;font-weight:700;color:#e6edf3;}
+.stat-l{font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:.05em;}
+.repos-title{font-size:12px;color:#8b949e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.repo{background:#21262d;border:1px solid #30363d;border-radius:8px;padding:10px 12px;margin-bottom:6px;}
+.repo-name{color:#58a6ff;font-size:13px;font-weight:600;margin-bottom:2px;}
+.repo-desc{color:#8b949e;font-size:11px;line-height:1.4;}
+.repo-meta{display:flex;gap:10px;margin-top:5px;font-size:11px;color:#8b949e;}
+.loading{text-align:center;padding:40px;color:#8b949e;}
+.loader{font-size:28px;display:inline-block;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error{background:#161b22;border:1px solid #f85149;border-radius:12px;padding:20px;text-align:center;color:#f85149;}`,
+     js:`let loading = false;
 
-async function run(label, fn) {
-  disable(true); setStatus('⏳ ' + label + '...'); setTime(0);
-  const t = Date.now();
-  try { const r = await fn(); setResult(r); setStatus('✅ Success!'); }
-  catch(e) { setResult('❌ Error: ' + e.message); setStatus('❌ Failed'); }
-  finally { setTime(Date.now()-t); disable(false); }
+async function searchUser(e) {
+  if (e) e.preventDefault();
+  if (loading) return;
+  const username = document.getElementById('username').value.trim();
+  if (!username) return;
+  loading = true;
+  const btn = document.getElementById('searchBtn');
+  btn.disabled = true; btn.textContent = '⏳';
+  document.getElementById('result').innerHTML =
+    '<div class="loading"><div class="loader">⏳</div><br>Fetching user data...</div>';
+  try {
+    const [userRes, reposRes] = await Promise.all([
+      fetch('https://api.github.com/users/' + username),
+      fetch('https://api.github.com/users/' + username + '/repos?sort=stars&per_page=4')
+    ]);
+    if (userRes.status === 404) throw new Error('User "' + username + '" not found');
+    if (!userRes.ok) throw new Error('GitHub API error: ' + userRes.status);
+    const user = await userRes.json();
+    const repos = await reposRes.json();
+    renderProfile(user, Array.isArray(repos) ? repos : []);
+  } catch(e) {
+    document.getElementById('result').innerHTML =
+      '<div class="error"><b>❌ ' + e.message + '</b><br><small style="color:#8b949e;font-size:12px">Try a real GitHub username</small></div>';
+  } finally {
+    loading = false; btn.disabled = false; btn.textContent = 'Search';
+  }
 }
 
-function fetchUser() {
-  run('GET /users/1', async () => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/users/1');
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.json();
-  });
+function renderProfile(user, repos) {
+  const reposHtml = repos.slice(0,4).map(r =>
+    '<div class="repo"><div class="repo-name">📦 ' + r.name + '</div>' +
+    (r.description ? '<div class="repo-desc">' + r.description.slice(0,80) + '</div>' : '') +
+    '<div class="repo-meta"><span>⭐ ' + r.stargazers_count + '</span>' +
+    (r.language ? '<span>· ' + r.language + '</span>' : '') + '</div></div>'
+  ).join('');
+
+  document.getElementById('result').innerHTML =
+    '<div class="profile">' +
+      '<div class="profile-top">' +
+        '<img class="avatar" src="' + user.avatar_url + '" alt="avatar">' +
+        '<div class="profile-info">' +
+          '<h3>' + (user.name || user.login) + '</h3>' +
+          '<p class="login">@' + user.login + '</p>' +
+          (user.bio ? '<p class="bio">' + user.bio + '</p>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="stats-grid">' +
+        '<div class="stat-box"><div class="stat-n">' + user.public_repos + '</div><div class="stat-l">Repos</div></div>' +
+        '<div class="stat-box"><div class="stat-n">' + user.followers + '</div><div class="stat-l">Followers</div></div>' +
+        '<div class="stat-box"><div class="stat-n">' + user.following + '</div><div class="stat-l">Following</div></div>' +
+      '</div>' +
+      (repos.length ? '<div class="repos-title">Top Repositories</div>' + reposHtml : '') +
+    '</div>';
 }
 
-function fetchPosts() {
-  run('GET /posts?_limit=3', async () => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=3');
-    const posts = await r.json();
-    return posts.map(p => ({ id:p.id, title:p.title.slice(0,40)+'...' }));
-  });
+function quickSearch(u) {
+  document.getElementById('username').value = u;
+  searchUser(null);
 }
 
-function createPost() {
-  run('POST /posts', async () => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title:'My New Post', body:'Content here', userId:1 }),
-    });
-    return r.json();
-  });
-}
-
-function fetchWithError() {
-  run('GET non-existent endpoint', async () => {
-    const r = await fetch('https://jsonplaceholder.typicode.com/nonexistent/999');
-    if (!r.ok) throw new Error(\`HTTP \${r.status}: \${r.statusText}\`);
-    return r.json();
-  });
-}`,mode:'full'},
+window.searchUser = searchUser;
+window.quickSearch = quickSearch;
+searchUser(null);`,mode:'full'},
   ],
   exercises:[{id:'fetch-1',question:'Why do you need to check response.ok after a fetch() call?',type:'multiple-choice',options:['You don\'t — fetch throws on any non-200 response','fetch() only rejects on network errors (no connection). A 404 or 500 still resolves — you must check response.ok','response.ok is deprecated','You should use response.status instead'],correct:1,explanation:'fetch() only throws (rejects) on network failures — no internet, CORS error, etc. A 404 Not Found or 500 Server Error are still "successful" HTTP responses from fetch\'s perspective. Always check response.ok or response.status to detect API errors.'}],
   quiz:[{id:'qfetch1',question:'What does AbortController allow you to do?',options:['Speed up requests','Cancel an in-progress fetch request','Add authentication','Retry failed requests'],correct:1,explanation:'AbortController lets you cancel pending fetch requests. Pass its signal to fetch\'s options: fetch(url, {signal: controller.signal}). Call controller.abort() to cancel. Useful for timeouts and when the user navigates away before a request completes.'}],

@@ -306,32 +306,32 @@ function showResponse(status, data) {
   var statusClass = status < 300 ? 'success' : 'error';
   var statusText = status + ' ' + (status === 200 ? 'OK' : status === 201 ? 'Created' : status === 204 ? 'No Content' : status === 400 ? 'Bad Request' : status === 404 ? 'Not Found' : 'Error');
   document.getElementById('response').innerHTML =
-    '<div class="status ' + statusClass + '">' + statusText + '</div>' +
-    '<div class="response-body">' + JSON.stringify(data, null, 2) + '</div>';
+    '<div class=\\"status ' + statusClass + '\\">' + statusText + '</div>' +
+    '<div class=\\"response-body\\">' + JSON.stringify(data, null, 2) + '</div>';
 }
 
 function renderResources() {
   var list = users.map(function(u) {
-    return '<div class="resource-item">{ id: ' + u.id + ', name: "' + u.name + '", email: "' + u.email + '" }</div>';
+    return '<div class=\\"resource-item\\">{ id: ' + u.id + ', name: \\"' + u.name + '\\", email: \\"' + u.email + '\\" }</div>';
   }).join('');
   document.getElementById('resources').innerHTML =
-    '<div class="resource-title">Current Resources (' + users.length + ' users)</div>' + list;
+    '<div class=\\"resource-title\\">Current Resources (' + users.length + ' users)</div>' + list;
 }
 
 document.getElementById('output').innerHTML =
-  '<div class="container">' +
-  '<div class="header"><h2>REST API Simulator</h2><p>Test CRUD operations with proper HTTP methods</p></div>' +
-  '<div class="controls">' +
-  '<select id="method" class="method-select"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>' +
-  '<input id="endpoint" class="endpoint-input" placeholder="/users" value="/users">' +
-  '<button class="send-btn" onclick="apiCall()">Send</button>' +
+  '<div class=\\"container\\">' +
+  '<div class=\\"header\\"><h2>REST API Simulator</h2><p>Test CRUD operations with proper HTTP methods</p></div>' +
+  '<div class=\\"controls\\">' +
+  '<select id=\\"method\\" class=\\"method-select\\"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>' +
+  '<input id=\\"endpoint\\" class=\\"endpoint-input\\" placeholder=\\"/users\\" value=\\"/users\\">' +
+  '<button class=\\"send-btn\\" onclick=\\"apiCall()\\">Send</button>' +
   '</div>' +
-  '<div class="body-section">' +
-  '<div class="label">Request Body (JSON for POST/PUT)</div>' +
-  '<textarea id="requestBody" class="json-input" placeholder=\'{"name":"Charlie","email":"charlie@example.com"}\'></textarea>' +
+  '<div class=\\"body-section\\">' +
+  '<div class=\\"label\\">Request Body (JSON for POST/PUT)</div>' +
+  '<textarea id=\\"requestBody\\" class=\\"json-input\\" placeholder=\\\'{\\"name\\":\\"Charlie\\",\\"email\\":\\"charlie@example.com\\"}\\\'></textarea>' +
   '</div>' +
-  '<div class="response" id="response"><div style="color:#94a3b8;font-size:13px">Click Send to make a request...</div></div>' +
-  '<div class="resources" id="resources"></div>' +
+  '<div class=\\"response\\" id=\\"response\\"><div style=\\"color:#94a3b8;font-size:13px\\">Click Send to make a request...</div></div>' +
+  '<div class=\\"resources\\" id=\\"resources\\"></div>' +
   '</div>';
 
 renderResources();`,

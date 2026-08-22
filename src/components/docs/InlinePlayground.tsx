@@ -43,11 +43,41 @@ export function InlinePlayground({
     const rid = runIdRef.current;
     const iid = instanceId.current;
     const isJsInHtml = h.trim() && !h.trim().startsWith('<') && !h.includes('</');
-    const body = isJsInHtml ? '' : (h || '');
+    const isJsOnly = !h.trim() && (j.trim().length > 0);
+    const body = isJsInHtml ? '' : (isJsOnly ? '<div id="__output" style="padding:16px;font-family:monospace;font-size:14px;line-height:1.6;color:#e6edf3;"></div>' : (h || ''));
     const script = isJsInHtml ? h : j;
+
+    // Extra CSS for JS-only output area
+    const jsOnlyCss = isJsOnly
+      ? 'body{background:#0d1117;margin:0;padding:0;}#__output{min-height:100vh;}'
+      : '';
+
+    // __append helper — only injected in JS-only mode
+    const appendHelper = isJsOnly ? `
+const __out=document.getElementById('__output');
+const __append=(cls,text)=>{
+  if(!__out)return;
+  const el=document.createElement('div');
+  el.style.cssText='padding:4px 8px;border-radius:4px;margin:3px 0;font-size:13px;';
+  el.style.background=cls==='e'?'#fef2f2':cls==='w'?'#fffbeb':'#f0fdf4';
+  el.style.color=cls==='e'?'#dc2626':cls==='w'?'#92400e':'#166534';
+  el.style.borderLeft='3px solid '+(cls==='e'?'#dc2626':cls==='w'?'#f59e0b':'#16a34a');
+  el.textContent=(cls==='e'?'✗ ':cls==='w'?'⚠ ':'▶ ')+text;
+  __out.appendChild(el);
+};` : '';
+
     // Intercept console methods — defined BEFORE user code so onclick handlers can use them
     // Do NOT wrap user code in IIFE — functions must be global for onclick attributes to work
-    const consolePatch = `
+    const consolePatch = isJsOnly ? `
+const __iid='${iid}',__rid=${rid};
+const __s=(t,a)=>window.parent.postMessage({_ip:__iid,rid:__rid,t,d:a.map(x=>typeof x==='object'?JSON.stringify(x,null,2):String(x)).join(' ')},'*');
+${appendHelper}
+const __L=console.log,__W=console.warn,__E=console.error;
+console.log=(...a)=>{__L(...a);const txt=a.map(x=>typeof x==='object'?JSON.stringify(x,null,2):String(x)).join(' ');__s('l',a);__append('l',txt)};
+console.warn=(...a)=>{__W(...a);const txt=a.map(x=>typeof x==='object'?JSON.stringify(x,null,2):String(x)).join(' ');__s('w',a);__append('w',txt)};
+console.error=(...a)=>{__E(...a);const txt=a.map(x=>typeof x==='object'?JSON.stringify(x,null,2):String(x)).join(' ');__s('e',a);__append('e',txt)};
+window.onerror=(m,_,ln)=>{const msg='❌ '+m+(ln?' (line '+ln+')':'');__s('e',[msg]);__append('e',msg);return false};
+` : `
 const __iid='${iid}',__rid=${rid};
 const __s=(t,a)=>window.parent.postMessage({_ip:__iid,rid:__rid,t,d:a.map(x=>typeof x==='object'?JSON.stringify(x,null,2):String(x)).join(' ')},'*');
 const __L=console.log,__W=console.warn,__E=console.error;
@@ -56,12 +86,33 @@ console.warn=(...a)=>{__W(...a);__s('w',a)};
 console.error=(...a)=>{__E(...a);__s('e',a)};
 window.onerror=(m,_,ln)=>{__s('e',['❌ '+m+(ln?' (line '+ln+')':'')]);return false};
 `;
+
+    // After user code runs, show a hint if #__output exists but is still empty
+    const noOutputObserver = isJsOnly ? `
+;(function(){
+  const __o=document.getElementById('__output');
+  if(!__o)return;
+  // Use MutationObserver to check after any microtasks settle
+  const __mo=new MutationObserver(()=>{});
+  __mo.observe(__o,{childList:true});
+  setTimeout(()=>{
+    __mo.disconnect();
+    if(__o.children.length===0){
+      const hint=document.createElement('div');
+      hint.style.cssText='padding:12px 16px;color:#8b949e;font-size:13px;font-style:italic;';
+      hint.textContent='No output — add console.log() to see results';
+      __o.appendChild(hint);
+    }
+  },0);
+})();` : '';
+
     return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<style>*{box-sizing:border-box}body{margin:0;padding:14px;font-family:system-ui,sans-serif;font-size:15px;line-height:1.6}${c}</style></head>
+<style>*{box-sizing:border-box}body{margin:0;padding:14px;font-family:system-ui,sans-serif;font-size:15px;line-height:1.6}${jsOnlyCss}${c}</style></head>
 <body>${body}<script>${consolePatch}
 try{
 ${script}
-}catch(e){__s('e',['❌ '+e.message]);}
+}catch(e){__s('e',['❌ '+e.message]);${isJsOnly ? "__append('e','❌ '+e.message);" : ''}}
+${noOutputObserver}
 </script></body></html>`;
   }, []);
 
@@ -152,16 +203,18 @@ ${script}
         </div>
 
         {/* Preview */}
-        <div className="flex flex-col w-1/2 bg-white">
-          <div className="flex items-center justify-between px-3 py-1.5 bg-[#f0f2f4] border-b border-[#d0d7de]">
-            <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Preview</span>
+        <div className="flex flex-col w-1/2" style={{ background: !html.trim() && js.trim() ? '#0d1117' : 'white' }}>
+          <div className="flex items-center justify-between px-3 py-1.5 border-b" style={{ background: !html.trim() && js.trim() ? '#161b22' : '#f0f2f4', borderColor: !html.trim() && js.trim() ? '#30363d' : '#d0d7de' }}>
+            <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: !html.trim() && js.trim() ? '#8b949e' : '#6b7280' }}>
+              {!html.trim() && js.trim() ? 'Output' : 'Preview'}
+            </span>
             <button onClick={run}
               className="flex items-center gap-1.5 px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-[11px] font-semibold rounded transition-colors">
               <Play className="w-3 h-3" /> Run ▶
             </button>
           </div>
           <iframe ref={iframeRef} className="flex-1 border-0 w-full" sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" title="preview" />
-          {logs.length > 0 && (
+          {logs.length > 0 && !(!html.trim() && js.trim()) && (
             <div className="border-t border-[#d0d7de] bg-[#f6f8fa] max-h-24 overflow-y-auto p-2">
               {logs.map((l, i) => (
                 <p key={i} className={`text-[11px] font-mono leading-snug ${l.startsWith('❌') ? 'text-red-600' : l.startsWith('⚠') ? 'text-yellow-700' : 'text-gray-700'}`}>{l}</p>

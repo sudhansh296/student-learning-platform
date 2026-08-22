@@ -272,7 +272,9 @@ deleteUser(1)           -> null (204 No Content)`
     {
       type: 'tryit',
       title: 'Searchable REST Cheat Sheet',
-      js: `var cards = [
+      js: `document.body.innerHTML = '<div><h3>Searchable REST Cheat Sheet</h3><div class=\\"search-row\\"><input id=\\"search-input\\" placeholder=\\"Search methods, status codes, headers...\\" /><span id=\\"count-label\\"></span></div><div id=\\"cards-grid\\"></div></div>';
+
+var cards = [
   { cat: 'Methods', name: 'GET', desc: 'Read a resource. Safe and idempotent. No request body. Returns 200.' },
   { cat: 'Methods', name: 'POST', desc: 'Create a resource. Sends JSON body. Returns 201 Created. Not idempotent.' },
   { cat: 'Methods', name: 'PUT', desc: 'Replace an entire resource. Sends full JSON body. Returns 200. Idempotent.' },
@@ -299,7 +301,7 @@ deleteUser(1)           -> null (204 No Content)`
   { cat: 'Patterns', name: 'Response Envelope', desc: '{ data: {...}, meta: {...} } — wrap all responses for extensibility.' },
   { cat: 'Patterns', name: 'Error Format', desc: '{ error: { code, message, details } } — consistent across all endpoints.' },
   { cat: 'Patterns', name: 'Pagination', desc: '?page=2&limit=20 — always paginate lists; include total and totalPages.' },
-  { cat: 'Patterns', name: 'ISO 8601 Dates', desc: '"2026-08-19T14:00:00Z" — always use ISO format for all date fields.' },
+  { cat: 'Patterns', name: 'ISO 8601 Dates', desc: '\\"2026-08-19T14:00:00Z\\" — always use ISO format for all date fields.' },
   { cat: 'Patterns', name: 'Versioning', desc: '/api/v1/users — prefix all routes with a version number.' },
   { cat: 'Patterns', name: 'Plural Nouns', desc: '/users not /user — always use plural nouns for collection endpoints.' },
   { cat: 'Tools', name: 'Postman', desc: 'GUI tool for building, testing, and sharing REST API request collections.' },
@@ -323,10 +325,10 @@ function render(list) {
   var grid = document.getElementById('cards-grid');
   grid.innerHTML = list.map(function(c) {
     var col = catColors[c.cat] || '#94a3b8';
-    return '<div class="ref-card" style="border-top:3px solid ' + col + '">' +
-      '<span class="ref-cat" style="background:' + col + '">' + c.cat + '</span>' +
-      '<div class="ref-name">' + escHtml(c.name) + '</div>' +
-      '<div class="ref-desc">' + escHtml(c.desc) + '</div>' +
+    return '<div class=\\"ref-card\\" style=\\"border-top:3px solid ' + col + '\\">' +
+      '<span class=\\"ref-cat\\" style=\\"background:' + col + '\\">' + c.cat + '</span>' +
+      '<div class=\\"ref-name\\">' + escHtml(c.name) + '</div>' +
+      '<div class=\\"ref-desc\\">' + escHtml(c.desc) + '</div>' +
       '</div>';
   }).join('');
   document.getElementById('count-label').textContent = list.length + ' items';

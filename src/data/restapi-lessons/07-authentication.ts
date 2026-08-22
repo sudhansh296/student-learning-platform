@@ -253,7 +253,9 @@ isTokenExpired("eyJ...expiredToken...") -> true`
     {
       type: 'tryit',
       title: 'JWT Decoder Tool',
-      js: `var SAMPLE_JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQyIiwibmFtZSI6IkFsaWNlIEpvaG5zb24iLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaXNzIjoiYXBpLmV4YW1wbGUuY29tIiwiaWF0IjoxNzI0MDc3MjAwLCJleHAiOjE3MjQwODA4MDB9.demo_signature_not_real';
+      js: `document.body.innerHTML = '<div><h3>JWT Decoder</h3><div class=\\"input-row\\"><input id=\\"jwt-input\\" type=\\"text\\" placeholder=\\"Paste JWT token here...\\" /><button id=\\"decode-btn\\">Decode</button><button id=\\"sample-btn\\">Load Sample</button></div><div id=\\"jwt-output\\"></div></div>';
+
+var SAMPLE_JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQyIiwibmFtZSI6IkFsaWNlIEpvaG5zb24iLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwicm9sZSI6ImFkbWluIiwiaXNzIjoiYXBpLmV4YW1wbGUuY29tIiwiaWF0IjoxNzI0MDc3MjAwLCJleHAiOjE3MjQwODA4MDB9.demo_signature_not_real';
 
 var CLAIM_DESCRIPTIONS = {
   sub: 'Subject - who this token represents',
@@ -291,7 +293,7 @@ function base64Decode(str) {
 function formatValue(key, val) {
   if ((key === 'iat' || key === 'exp' || key === 'nbf') && typeof val === 'number') {
     var d = new Date(val * 1000);
-    return escHtml(String(val)) + ' <span class="ts-human">(' + d.toUTCString() + ')</span>';
+    return escHtml(String(val)) + ' <span class=\\"ts-human\\">(' + d.toUTCString() + ')</span>';
   }
   return escHtml(JSON.stringify(val));
 }
@@ -300,13 +302,13 @@ function renderPanel(obj, title, color) {
   var rows = Object.keys(obj).map(function(k) {
     var desc = CLAIM_DESCRIPTIONS[k] || k;
     return '<tr>' +
-      '<td class="claim-key">' + escHtml(k) + '</td>' +
-      '<td class="claim-val">' + formatValue(k, obj[k]) + '</td>' +
-      '<td class="claim-desc">' + escHtml(desc) + '</td>' +
+      '<td class=\\"claim-key\\">' + escHtml(k) + '</td>' +
+      '<td class=\\"claim-val\\">' + formatValue(k, obj[k]) + '</td>' +
+      '<td class=\\"claim-desc\\">' + escHtml(desc) + '</td>' +
       '</tr>';
   }).join('');
-  return '<div class="jwt-panel"><div class="jwt-panel-title" style="background:' + color + '">' + title + '</div>' +
-    '<table class="claim-table"><thead><tr><th>Claim</th><th>Value</th><th>Description</th></tr></thead>' +
+  return '<div class=\\"jwt-panel\\"><div class=\\"jwt-panel-title\\" style=\\"background:' + color + '\\">' + title + '</div>' +
+    '<table class=\\"claim-table\\"><thead><tr><th>Claim</th><th>Value</th><th>Description</th></tr></thead>' +
     '<tbody>' + rows + '</tbody></table></div>';
 }
 
@@ -315,7 +317,7 @@ function decode() {
   var output = document.getElementById('jwt-output');
   var parts = input.split('.');
   if (parts.length !== 3) {
-    output.innerHTML = '<div class="decode-error">Invalid JWT format. A JWT must have exactly 3 parts separated by dots.</div>';
+    output.innerHTML = '<div class=\\"decode-error\\">Invalid JWT format. A JWT must have exactly 3 parts separated by dots.</div>';
     return;
   }
   try {
@@ -325,13 +327,13 @@ function decode() {
     if (payload.exp) {
       var now = Math.floor(Date.now() / 1000);
       expStatus = payload.exp < now
-        ? '<div class="exp-badge expired">Token has EXPIRED</div>'
-        : '<div class="exp-badge valid">Token is VALID (not expired)</div>';
+        ? '<div class=\\"exp-badge expired\\">Token has EXPIRED</div>'
+        : '<div class=\\"exp-badge valid\\">Token is VALID (not expired)</div>';
     }
-    output.innerHTML = expStatus + '<div class="panels-row">' + renderPanel(header, 'Header', '#6366f1') + renderPanel(payload, 'Payload', '#10b981') + '</div>' +
-      '<div class="sig-note"><span class="sig-label">Signature</span> ' + escHtml(parts[2].substring(0, 30)) + '... (verify with your server secret)</div>';
+    output.innerHTML = expStatus + '<div class=\\"panels-row\\">' + renderPanel(header, 'Header', '#6366f1') + renderPanel(payload, 'Payload', '#10b981') + '</div>' +
+      '<div class=\\"sig-note\\"><span class=\\"sig-label\\">Signature</span> ' + escHtml(parts[2].substring(0, 30)) + '... (verify with your server secret)</div>';
   } catch(e) {
-    output.innerHTML = '<div class="decode-error">Could not decode: ' + escHtml(e.message) + '</div>';
+    output.innerHTML = '<div class=\\"decode-error\\">Could not decode: ' + escHtml(e.message) + '</div>';
   }
 }
 

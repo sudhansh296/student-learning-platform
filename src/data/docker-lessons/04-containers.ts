@@ -184,7 +184,9 @@ b2c3d4e5f6a7   my-postgres  0.5%    42.1MiB / 15.55GiB   0.3%    1.2MB / 890kB  
     {
       type: 'tryit',
       title: 'Container Lifecycle Simulator',
-      js: `var containerState = 'stopped';
+      js: `document.body.innerHTML = '<div><h3>Container Lifecycle Simulator</h3><div id="container-card"><div class="card-header"><span class="card-name">my-app</span><span id="state-badge"><span id="state-label"></span></span></div><div id="state-desc"></div></div><div class="btn-row"><button id="btn-run" class="action-btn">Run</button><button id="btn-stop" class="action-btn">Stop</button><button id="btn-restart" class="action-btn">Restart</button><button id="btn-remove" class="action-btn">Remove</button></div><div id="log-output"></div></div>';
+
+var containerState = 'stopped';
 
 var stateConfig = {
   created:  { color: '#6c757d', bg: '#f8f9fa', label: 'Created',  desc: 'Container created but not started' },

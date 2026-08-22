@@ -153,51 +153,158 @@ ORDER BY plan;`,
     },
     {
       type: 'tryit',
-      title: 'Interactive Table Demo',
-      js: `const allRows = [
-  { id: 1, name: 'Alice Chen', email: 'alice@example.com', plan: 'pro', active: true },
-  { id: 2, name: 'Bob Smith', email: 'bob@example.com', plan: 'free', active: true },
-  { id: 3, name: 'Carol Davis', email: 'carol@example.com', plan: 'pro', active: false },
-  { id: 4, name: 'Dan Lee', email: 'dan@example.com', plan: 'free', active: true },
-  { id: 5, name: 'Eve Wilson', email: 'eve@example.com', plan: 'pro', active: true },
-];
+      title: 'SQL Query Runner — Interactive Table Demo',
+      js: `document.body.innerHTML = \`<div id="output"></div>\`;
 
-const queries = {
-  'SELECT *': allRows,
-  'SELECT name, email': allRows.map(r => ({ name: r.name, email: r.email })),
-  'DISTINCT plan': [...new Map(allRows.map(r => [r.plan, { plan: r.plan }])).values()],
-  'active=true only': allRows.filter(r => r.active),
+// ──────────────────────────────────────────────────────────────
+// In-memory SQL simulator: SELECT * / column list / WHERE / DISTINCT
+// ──────────────────────────────────────────────────────────────
+var DB = {
+  users: {
+    columns: ['id','first_name','last_name','email','plan','active','age'],
+    rows: [
+      [1,'Alice',  'Chen',   'alice@example.com',  'pro',  true,  28],
+      [2,'Bob',    'Smith',  'bob@example.com',    'free', true,  34],
+      [3,'Carol',  'Davis',  'carol@example.com',  'pro',  false, 22],
+      [4,'Dan',    'Lee',    'dan@example.com',    'free', true,  19],
+      [5,'Eve',    'Wilson', 'eve@example.com',    'pro',  true,  31],
+      [6,'Frank',  'Brown',  'frank@example.com',  'free', false, 45],
+    ]
+  },
+  orders: {
+    columns: ['id','user_id','product','amount','status','ordered_at'],
+    rows: [
+      [101, 1, 'Pro Subscription',   29.99, 'completed', '2024-01-15'],
+      [102, 1, 'Extra Storage',       9.99, 'completed', '2024-02-10'],
+      [103, 3, 'Pro Subscription',   29.99, 'pending',   '2024-03-01'],
+      [104, 5, 'Pro Subscription',   29.99, 'completed', '2024-03-05'],
+      [105, 2, 'Domain Name',        12.00, 'completed', '2024-03-08'],
+      [106, 4, 'Starter Pack',       49.00, 'cancelled', '2024-03-12'],
+    ]
+  }
 };
 
-let active = 'SELECT *';
+var QUERIES = [
+  { label: 'SELECT *',           sql: 'SELECT * FROM users;',                                    table:'users', cols:null,   where:null,    distinct:false },
+  { label: 'Column list',        sql: 'SELECT id, first_name, email, plan\\nFROM users;',         table:'users', cols:['id','first_name','email','plan'], where:null, distinct:false },
+  { label: 'WHERE active=true',  sql: 'SELECT *\\nFROM users\\nWHERE active = true;',              table:'users', cols:null,   where:function(r){return r[5]===true;},  distinct:false },
+  { label: 'WHERE plan=pro',     sql: 'SELECT id, first_name, plan\\nFROM users\\nWHERE plan = \\'pro\\';', table:'users', cols:['id','first_name','plan'], where:function(r){return r[4]==='pro';}, distinct:false },
+  { label: 'DISTINCT plans',     sql: 'SELECT DISTINCT plan\\nFROM users;',                       table:'users', cols:['plan'], where:null,   distinct:true },
+  { label: 'Alias: full_name',   sql: 'SELECT id,\\n  first_name || \\' \\' || last_name AS full_name,\\n  email\\nFROM users;', table:'users', cols:null, where:null, distinct:false, computed:true },
+  { label: 'All orders',         sql: 'SELECT *\\nFROM orders;',                                  table:'orders', cols:null,  where:null,    distinct:false },
+  { label: 'Completed orders',   sql: 'SELECT id, user_id, product, amount\\nFROM orders\\nWHERE status = \\'completed\\';', table:'orders', cols:['id','user_id','product','amount'], where:function(r){return r[4]==='completed';}, distinct:false },
+];
 
-function renderTable(rows) {
-  if (!rows.length) return '<p style="color:#718096;font-size:13px">No rows returned</p>';
-  const cols = Object.keys(rows[0]);
-  const head = cols.map(c => \`<th style="background:#336791;color:white;padding:7px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase">\${c}</th>\`).join('');
-  const body = rows.map((r, i) =>
-    \`<tr style="background:\${i%2===0?'#fff':'#f8fafc'}">\${cols.map(c => \`<td style="padding:7px 12px;font-size:12px;font-family:monospace;border-bottom:1px solid #e2e8f0">\${r[c]===null?'<span style="color:#a0aec0">NULL</span>':String(r[c])}</td>\`).join('')}</tr>\`
-  ).join('');
-  return \`<table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden"><thead><tr>\${head}</tr></thead><tbody>\${body}</tbody></table>\`;
+var activeIdx = 0;
+var insertCount = 0;
+
+function getRows(q) {
+  var tbl = DB[q.table];
+  var colDefs = tbl.columns;
+  var rows = tbl.rows.slice();
+  if (q.where) rows = rows.filter(q.where);
+  var outCols, outRows;
+  if (q.computed) {
+    // Build full_name alias
+    outCols = ['id', 'full_name', 'email'];
+    outRows = rows.map(function(r) {
+      return [r[0], r[1]+' '+r[2], r[3]];
+    });
+  } else if (q.cols) {
+    var idxMap = q.cols.map(function(c) { return colDefs.indexOf(c); });
+    outCols = q.cols;
+    outRows = rows.map(function(r) { return idxMap.map(function(i) { return r[i]; }); });
+  } else {
+    outCols = colDefs;
+    outRows = rows;
+  }
+  if (q.distinct) {
+    var seen = {};
+    outRows = outRows.filter(function(r) {
+      var key = JSON.stringify(r);
+      if (seen[key]) return false;
+      seen[key] = true; return true;
+    });
+  }
+  return { cols: outCols, rows: outRows };
+}
+
+function renderTable(cols, rows) {
+  if (!rows.length) return '<p style="color:#718096;font-size:13px;padding:8px 0">No rows returned</p>';
+  var head = cols.map(function(c) {
+    return '<th style="background:#1a3347;color:white;padding:7px 12px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap">'+c+'</th>';
+  }).join('');
+  var body = rows.map(function(row, i) {
+    return '<tr style="background:'+(i%2===0?'#fff':'#f8fafc')+'">' +
+      row.map(function(cell) {
+        var display = cell===null?'<span style="color:#a0aec0;font-style:italic">NULL</span>':
+                      typeof cell==='boolean'?'<span style="color:'+(cell?'#16a34a':'#dc2626')+';font-weight:700">'+(cell?'true':'false')+'</span>':
+                      String(cell);
+        return '<td style="padding:7px 12px;font-size:12px;font-family:monospace;border-bottom:1px solid #e2e8f0">'+display+'</td>';
+      }).join('') + '</tr>';
+  }).join('');
+  return '<table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:6px;overflow:hidden"><thead><tr>'+head+'</tr></thead><tbody>'+body+'</tbody></table>';
 }
 
 function render() {
-  document.getElementById('btns').innerHTML = Object.keys(queries).map(q =>
-    \`<button onclick="runQuery('\${q}')" style="padding:6px 14px;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;margin:3px;background:\${q===active?'#336791':'#e2e8f0'};color:\${q===active?'white':'#4a5568'}">\${q}</button>\`
-  ).join('');
-  const rows = queries[active];
-  document.getElementById('result').innerHTML = renderTable(rows);
-  document.getElementById('count').textContent = rows.length + ' row' + (rows.length !== 1 ? 's' : '') + ' returned';
+  // Tab buttons - create DOM elements instead of HTML strings
+  var tabsContainer = document.getElementById('tabs');
+  tabsContainer.innerHTML = '';
+  QUERIES.forEach(function(q, i) {
+    var btn = document.createElement('button');
+    btn.textContent = q.label;
+    btn.onclick = function() { selectQuery(i); };
+    btn.style.cssText = 'padding:5px 11px;border:none;border-radius:5px;cursor:pointer;font-size:11px;font-weight:700;margin:2px;background:'+(i===activeIdx?'#336791':'#e8f4fd')+';color:'+(i===activeIdx?'white':'#1a3347');
+    tabsContainer.appendChild(btn);
+  });
+
+  // SQL display
+  var q = QUERIES[activeIdx];
+  document.getElementById('sql-display').textContent = q.sql;
+
+  // Execute and render result
+  var result = getRows(q);
+  document.getElementById('result').innerHTML = renderTable(result.cols, result.rows);
+  document.getElementById('count').textContent = result.rows.length + ' row' + (result.rows.length!==1?'s':'') + ' returned (' + result.cols.length + ' col' + (result.cols.length!==1?'s':'')+')';
 }
 
-window.runQuery = function(q) { active = q; render(); };
+function addUser() {
+  insertCount++;
+  var names = [['Zara','Ahmed'],['Leo','Kumar'],['Maya','Patel'],['Kai','Johnson']];
+  var n = names[insertCount % names.length];
+  var row = [100+insertCount, n[0], n[1], n[0].toLowerCase()+'@example.com', insertCount%2===0?'pro':'free', true, 20+insertCount*3%20];
+  DB.users.rows.push(row);
+  document.getElementById('insert-status').textContent = '✅ INSERT: Added '+n[0]+' '+n[1]+' to users';
+  setTimeout(function(){document.getElementById('insert-status').textContent='';},2000);
+  if (activeIdx<4) render();
+}
+
+function selectQuery(i) { activeIdx = i; render(); }
+window.addUser = addUser;
+
+var outputHTML =
+  '<div style="padding:16px;font-family:system-ui,sans-serif;background:#f7fafc;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">' +
+      '<div>' +
+        '<h3 style="margin:0 0 2px;color:#336791;font-size:16px;font-weight:700">SQL Query Runner</h3>' +
+        '<p style="margin:0;color:#718096;font-size:12px">Click a query to execute it against the in-memory database</p>' +
+      '</div>' +
+      '<button onclick="addUser()" style="padding:6px 14px;background:#336791;color:white;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700">+ INSERT User</button>' +
+    '</div>' +
+    '<div id="tabs" style="margin-bottom:10px"></div>' +
+    '<div style="background:#1e1e2e;border-radius:8px;padding:12px 14px;margin-bottom:10px;">' +
+      '<div style="font-size:10px;color:#8b949e;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em">Executed SQL</div>' +
+      '<pre id="sql-display" style="margin:0;font-family:monospace;font-size:12px;color:#7dd3fc;white-space:pre-wrap"></pre>' +
+    '</div>' +
+    '<div id="result" style="overflow-x:auto"></div>' +
+    '<div id="count" style="font-size:11px;color:#718096;margin-top:6px;font-family:monospace"></div>' +
+    '<div id="insert-status" style="font-size:12px;color:#16a34a;font-weight:700;margin-top:4px;min-height:18px"></div>' +
+  '</div>';
+
+document.getElementById('output').innerHTML = outputHTML;
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-p { color: #718096; font-size: 13px; margin: 0 0 12px 0; }
-#btns { margin-bottom: 12px; }
-#count { font-size: 12px; color: #718096; margin-top: 8px; }`
-    }
+      css: ``,
+    },
   ],
   exercises: [
     {

@@ -339,7 +339,7 @@ function matches(row) {
 
 function highlight(text, search) {
   if (!search) return text;
-  const safe = search.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+  const safe = search.replace(/[-\\[\\]{}()*+?.,\\\\^$|#\\s]/g, '\\\\$&');
   const re = new RegExp('(' + safe + ')', 'gi');
   return text.replace(re, '<mark style="background:#fde047;border-radius:2px">$1</mark>');
 }

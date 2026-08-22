@@ -285,38 +285,38 @@ app.get('/login', function(req, res) {
 }
 
 document.getElementById('output').innerHTML =
-  '<div class="inspector">' +
-  '<div class="panel">' +
-  '<div class="panel-header">Request (req)</div>' +
-  '<div class="panel-body">' +
-  '<div class="input-group">' +
-  '<div class="label">Method</div>' +
-  '<select id="method" class="input"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>' +
+  '<div class=\\"inspector\\">' +
+  '<div class=\\"panel\\">' +
+  '<div class=\\"panel-header\\">Request (req)</div>' +
+  '<div class=\\"panel-body\\">' +
+  '<div class=\\"input-group\\">' +
+  '<div class=\\"label\\">Method</div>' +
+  '<select id=\\"method\\" class=\\"input\\"><option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option></select>' +
   '</div>' +
-  '<div class="input-group">' +
-  '<div class="label">URL</div>' +
-  '<input id="url" class="input" value="/users/123?sort=name" placeholder="/users/123?sort=name">' +
+  '<div class=\\"input-group\\">' +
+  '<div class=\\"label\\">URL</div>' +
+  '<input id=\\"url\\" class=\\"input\\" value=\\"/users/123?sort=name\\" placeholder=\\"/users/123?sort=name\\">' +
   '</div>' +
-  '<div class="input-group">' +
-  '<div class="label">Headers (key: value, one per line)</div>' +
-  '<textarea id="headers" class="textarea" placeholder="Authorization: Bearer token123">Authorization: Bearer abc123</textarea>' +
+  '<div class=\\"input-group\\">' +
+  '<div class=\\"label\\">Headers (key: value, one per line)</div>' +
+  '<textarea id=\\"headers\\" class=\\"textarea\\" placeholder=\\"Authorization: Bearer token123\\">Authorization: Bearer abc123</textarea>' +
   '</div>' +
-  '<div class="input-group">' +
-  '<div class="label">Body (JSON)</div>' +
-  '<textarea id="body" class="textarea" placeholder=\'{"name":"Alice"}\'></textarea>' +
+  '<div class=\\"input-group\\">' +
+  '<div class=\\"label\\">Body (JSON)</div>' +
+  '<textarea id=\\"body\\" class=\\"textarea\\" placeholder=\\\'{\\"name\\":\\"Alice\\"}\\\'></textarea>' +
   '</div>' +
-  '<button class="btn" onclick="sendRequest()">Send Request</button>' +
-  '<div style="margin-top:16px">' +
-  '<div class="label">Request Object</div>' +
-  '<div class="code-block" id="reqOutput">Click Send Request to see req object...</div>' +
+  '<button class=\\"btn\\" onclick=\\"sendRequest()\\">Send Request</button>' +
+  '<div style=\\"margin-top:16px\\">' +
+  '<div class=\\"label\\">Request Object</div>' +
+  '<div class=\\"code-block\\" id=\\"reqOutput\\">Click Send Request to see req object...</div>' +
   '</div>' +
   '</div>' +
   '</div>' +
-  '<div class="panel">' +
-  '<div class="panel-header">Response (res)</div>' +
-  '<div class="panel-body">' +
-  '<div class="label">Response</div>' +
-  '<div class="code-block" id="resOutput">Waiting for request...</div>' +
+  '<div class=\\"panel\\">' +
+  '<div class=\\"panel-header\\">Response (res)</div>' +
+  '<div class=\\"panel-body\\">' +
+  '<div class=\\"label\\">Response</div>' +
+  '<div class=\\"code-block\\" id=\\"resOutput\\">Waiting for request...</div>' +
   '</div>' +
   '</div>' +
   '</div>';`,

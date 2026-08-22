@@ -158,7 +158,22 @@ ORDER BY year DESC;`,
     {
       type: 'tryit',
       title: 'Aggregation Results Visualizer',
-      js: `const orders = [
+      js: `document.body.innerHTML = \`
+<style>
+body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; margin: 0; }
+h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
+p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
+#btns { margin-bottom: 14px; }
+</style>
+<div>
+  <h3>📊 Aggregation Results Visualizer</h3>
+  <p>Click a button to see different aggregation functions in action</p>
+  <div id="btns"></div>
+  <div id="result"></div>
+</div>
+\`;
+
+const orders = [
   { id:1, category:'Electronics', amount:299, plan:'pro' },
   { id:2, category:'Books', amount:35, plan:'free' },
   { id:3, category:'Electronics', amount:499, plan:'pro' },
@@ -210,10 +225,7 @@ function render() {
 
 window.setAgg = function(k) { active = k; render(); };
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
-#btns { margin-bottom: 14px; }`
+      css: ``
     }
   ],
   exercises: [

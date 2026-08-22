@@ -175,12 +175,21 @@ db.close();`,
     {
       type: 'tryit',
       title: 'Searchable SQLite Reference',
-      js: `const entries = [
+      js: `document.body.innerHTML = \`
+  <div>
+    <h3>SQLite Quick Reference</h3>
+    <input type="text" id="search" placeholder="Search commands, pragmas, SQL..." />
+    <span id="count"></span>
+    <div id="results"></div>
+  </div>
+\`;
+
+const entries = [
   { item: 'new Database(path)', cat: 'API', desc: 'Open/create a database file' },
-  { item: 'new Database(\':memory\')', cat: 'API', desc: 'Create an in-memory database (for tests)' },
-  { item: 'db.pragma(\'foreign_keys = ON\')', cat: 'PRAGMA', desc: 'Enable foreign key enforcement (do this every connection)' },
-  { item: 'db.pragma(\'journal_mode = WAL\')', cat: 'PRAGMA', desc: 'Enable WAL mode for better concurrency' },
-  { item: 'db.pragma(\'synchronous = NORMAL\')', cat: 'PRAGMA', desc: 'Faster writes, still crash-safe with WAL' },
+  { item: 'new Database(\\':memory\\')', cat: 'API', desc: 'Create an in-memory database (for tests)' },
+  { item: 'db.pragma(\\'foreign_keys = ON\\')', cat: 'PRAGMA', desc: 'Enable foreign key enforcement (do this every connection)' },
+  { item: 'db.pragma(\\'journal_mode = WAL\\')', cat: 'PRAGMA', desc: 'Enable WAL mode for better concurrency' },
+  { item: 'db.pragma(\\'synchronous = NORMAL\\')', cat: 'PRAGMA', desc: 'Faster writes, still crash-safe with WAL' },
   { item: 'db.exec(sql)', cat: 'API', desc: 'Execute multiple SQL statements at once, no result returned' },
   { item: 'db.prepare(sql)', cat: 'API', desc: 'Create a reusable prepared statement' },
   { item: 'stmt.run(params)', cat: 'API', desc: 'Execute INSERT/UPDATE/DELETE, returns { changes, lastInsertRowid }' },
@@ -195,7 +204,7 @@ db.close();`,
   { item: '.headers on', cat: 'CLI', desc: 'Show column names in output' },
   { item: '.dump', cat: 'CLI', desc: 'Export entire database as SQL statements' },
   { item: 'INTEGER PRIMARY KEY', cat: 'SQL', desc: 'Auto-incrementing integer ID (rowid alias)' },
-  { item: 'datetime(\'now\')', cat: 'SQL', desc: 'Current UTC timestamp as text' },
+  { item: 'datetime(\\'now\\')', cat: 'SQL', desc: 'Current UTC timestamp as text' },
   { item: 'ON CONFLICT DO UPDATE', cat: 'SQL', desc: 'UPSERT — insert or update on conflict (3.24+)' },
   { item: 'STRICT tables', cat: 'SQL', desc: 'Enable strict type checking per table (3.37+)' },
 ];

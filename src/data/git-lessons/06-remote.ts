@@ -171,7 +171,28 @@ git pull --rebase`,
     {
       type: 'tryit',
       title: 'Remote Sync Visualizer',
-      js: `const state = {
+      js: `document.body.innerHTML = \`
+  <h3>Git Remote Sync Simulator</h3>
+  <div id="status"></div>
+  <div class="cols">
+    <div class="col">
+      <div class="col-title">📁 Local Repository</div>
+      <div id="local-list"></div>
+    </div>
+    <div class="col">
+      <div class="col-title">☁️ Remote Repository (origin)</div>
+      <div id="remote-list"></div>
+    </div>
+  </div>
+  <div class="buttons">
+    <button id="commit-btn">💾 Commit Locally</button>
+    <button id="push-btn">⬆️ Push</button>
+    <button id="fetch-btn">⬇️ Fetch</button>
+    <button id="pull-btn">🔄 Pull</button>
+  </div>
+\`;
+
+const state = {
   local: ['a: Initial commit', 'b: Add navbar', 'c: Fix button style'],
   remote: ['a: Initial commit', 'b: Add navbar'],
   status: 'Local is 1 commit ahead of remote'
@@ -179,10 +200,10 @@ git pull --rebase`,
 
 function render() {
   document.getElementById('local-list').innerHTML = state.local.slice().reverse().map((c, i) =>
-    \`<div style="padding:8px 12px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:4px">\${c}</div>\`
+    \`<div style=\\"padding:8px 12px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:4px\\">\${c}</div>\`
   ).join('');
   document.getElementById('remote-list').innerHTML = state.remote.slice().reverse().map((c, i) =>
-    \`<div style="padding:8px 12px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:4px">\${c}</div>\`
+    \`<div style=\\"padding:8px 12px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:6px;font-family:monospace;font-size:12px;margin-bottom:4px\\">\${c}</div>\`
   ).join('');
   document.getElementById('status').textContent = state.status;
 }

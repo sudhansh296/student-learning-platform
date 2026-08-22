@@ -190,7 +190,22 @@ insertMany([
     {
       type: 'tryit',
       title: 'In-Browser CRUD Demo',
-      js: `let users = [
+      js: `document.body.innerHTML = \`
+  <div>
+    <h3>CRUD Demo: Users Table</h3>
+    <p>Simulate INSERT, UPDATE, and DELETE operations on an in-memory table</p>
+    <div class="btns">
+      <button id="insert-btn">INSERT</button>
+      <button id="update-btn">UPDATE</button>
+      <button id="delete-btn">DELETE</button>
+    </div>
+    <span id="count"></span>
+    <div id="table"></div>
+    <div id="log"></div>
+  </div>
+\`;
+
+let users = [
   { id: 1, email: 'alice@example.com', name: 'Alice Chen', plan: 'pro' },
   { id: 2, email: 'bob@example.com', name: 'Bob Smith', plan: 'free' },
 ];

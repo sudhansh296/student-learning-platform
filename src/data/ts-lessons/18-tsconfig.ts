@@ -458,6 +458,9 @@ class Dog extends Animal {
         .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #64748b; letter-spacing: 0.05em; margin-bottom: 6px; }
       `,
       js: `
+// Create the HTML structure
+document.body.innerHTML = '<h2>tsconfig.json Option Explorer</h2><div class="subtitle">Click any option to see details</div><div class="grid" id="grid"></div><div class="detail" id="detail"></div>';
+
 const options = [
   {
     name: 'target',
@@ -577,7 +580,7 @@ function impactClass(impact) {
 
 function highlight(code) {
   return code
-    .replace(/(\/\/[^\n]*)/g, '<span class="cm">$1</span>')
+    .replace(/(\\/\\/[^\\n]*)/g, '<span class="cm">$1</span>')
     .replace(/"(target|module|strict|outDir|rootDir|paths|baseUrl|declaration|sourceMap|esModuleInterop|skipLibCheck|composite|compilerOptions|strictNullChecks|noImplicitAny|declarationMap)"/g, '<span class="kw">"$1"</span>')
     .replace(/: (true|false)/g, ': <span class="bool">$1</span>')
     .replace(/("(?!compilerOptions|target|module|strict|outDir|rootDir|paths|baseUrl|declaration|sourceMap|esModuleInterop|skipLibCheck|composite|strictNullChecks|noImplicitAny|declarationMap)[^"]*")/g, '<span class="str">$1</span>');

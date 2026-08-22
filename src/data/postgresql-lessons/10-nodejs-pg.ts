@@ -339,13 +339,13 @@ module.exports = router;`,
     {
       type: 'tryit',
       title: 'pg Client Simulator',
-      js: `const output = document.getElementById('output');
+      js: `document.body.innerHTML = '<div id="output"></div>';
 
 const mockDB = {
   users: [
-    { id: 1, name: 'Alice Smith',  email: 'alice@example.com', created_at: '2024-01-15T10:30:00Z' },
-    { id: 2, name: 'Bob Jones',    email: 'bob@example.com',   created_at: '2024-02-20T14:15:00Z' },
-    { id: 3, name: 'Carol Wang',   email: 'carol@example.com', created_at: '2024-03-05T09:00:00Z' }
+    { id: 1, name: 'Alice Smith', email: 'alice@example.com', created_at: '2024-01-15T10:30:00Z' },
+    { id: 2, name: 'Bob Jones', email: 'bob@example.com', created_at: '2024-02-20T14:15:00Z' },
+    { id: 3, name: 'Carol Wang', email: 'carol@example.com', created_at: '2024-03-05T09:00:00Z' }
   ],
   nextId: 4
 };
@@ -353,111 +353,138 @@ const mockDB = {
 let termLines = [];
 
 function addLine(text, type) {
-  termLines.unshift({ text, type });
+  termLines.unshift({ text: text, type: type });
   if (termLines.length > 20) termLines.pop();
 }
 
 function fmtResult(rows, rowCount) {
-  if (rows.length === 0) return \`-- \${rowCount} row(s) affected --\`;
+  if (rows.length === 0) return '-- ' + rowCount + ' row(s) affected --';
   const cols = Object.keys(rows[0]);
-  const colW = cols.map(c => Math.max(c.length, ...rows.map(r => String(r[c]).length)));
+  const colW = cols.map(c => Math.max(c.length, Math.max(...rows.map(r => String(r[c]).length))));
   const header = cols.map((c,i) => c.padEnd(colW[i])).join(' | ');
-  const sep    = colW.map(w => '-'.repeat(w)).join('-+-');
-  const body   = rows.map(r => cols.map((c,i) => String(r[c]).padEnd(colW[i])).join(' | ')).join('\\n');
-  return header + '\\n' + sep + '\\n' + body + \`\\n(\${rows.length} row\${rows.length===1?'':'s'})\`;
+  const sep = colW.map(w => '-'.repeat(w)).join('-+-');
+  const body = rows.map(r => cols.map((c,i) => String(r[c]).padEnd(colW[i])).join(' | ')).join('\\n');
+  return header + '\\n' + sep + '\\n' + body + '\\n(' + rows.length + ' row' + (rows.length===1?'':'s') + ')';
 }
 
 function execQuery(q) {
   q = q.trim();
   addLine('> ' + q, 'cmd');
   try {
-    if (q.match(/^SELECT \\* FROM users$/i)) {
+    const upper = q.toUpperCase();
+    if (upper === 'SELECT * FROM USERS') {
       addLine(fmtResult(mockDB.users, mockDB.users.length), 'result');
-    } else if (q.match(/^SELECT \\* FROM users WHERE id = (\\d+)$/i)) {
-      const id = parseInt(q.match(/(\\d+)/)[1]);
-      const rows = mockDB.users.filter(u => u.id === id);
-      addLine(fmtResult(rows, rows.length), rows.length?'result':'warn');
-    } else if (q.match(/^INSERT INTO users/i)) {
-      const m = q.match(/VALUES \\('([^']+)',\\s*'([^']+)'\\)/i);
-      if (!m) { addLine('ERROR: syntax error in VALUES clause', 'error'); return; }
-      const [, name, email] = m;
-      if (mockDB.users.find(u => u.email === email)) {
-        addLine('ERROR: 23505 duplicate key violates unique constraint "users_email_key"', 'error');
+    } else if (upper.indexOf('SELECT * FROM USERS WHERE ID =') === 0) {
+      const match = q.match(/\\d+/);
+      if (match) {
+        const id = parseInt(match[0]);
+        const rows = mockDB.users.filter(u => u.id === id);
+        addLine(fmtResult(rows, rows.length), rows.length?'result':'warn');
+      }
+    } else if (upper.indexOf('INSERT INTO USERS') === 0) {
+      const valMatch = q.match(/VALUES\\s*\\(\\s*'([^']+)'\\s*,\\s*'([^']+)'\\s*\\)/i);
+      if (!valMatch) {
+        addLine('ERROR: syntax error in VALUES clause', 'error');
         return;
       }
-      const u = { id: mockDB.nextId++, name, email, created_at: new Date().toISOString() };
+      const name = valMatch[1];
+      const email = valMatch[2];
+      if (mockDB.users.find(u => u.email === email)) {
+        addLine('ERROR: 23505 duplicate key violates unique constraint users_email_key', 'error');
+        return;
+      }
+      const u = { id: mockDB.nextId++, name: name, email: email, created_at: new Date().toISOString() };
       mockDB.users.push(u);
       addLine('INSERT 0 1', 'success');
       addLine(fmtResult([u], 1), 'result');
-    } else if (q.match(/^DELETE FROM users WHERE id = (\\d+)$/i)) {
-      const id = parseInt(q.match(/(\\d+)/)[1]);
-      const before = mockDB.users.length;
-      mockDB.users = mockDB.users.filter(u => u.id !== id);
-      const deleted = before - mockDB.users.length;
-      addLine(deleted ? \`DELETE \${deleted}\` : 'DELETE 0 (no matching row)', deleted?'success':'warn');
-    } else if (q.match(/^SELECT COUNT\\(\\*\\) FROM users$/i)) {
+    } else if (upper.indexOf('DELETE FROM USERS WHERE ID =') === 0) {
+      const match = q.match(/\\d+/);
+      if (match) {
+        const id = parseInt(match[0]);
+        const before = mockDB.users.length;
+        mockDB.users = mockDB.users.filter(u => u.id !== id);
+        const deleted = before - mockDB.users.length;
+        addLine(deleted ? 'DELETE ' + deleted : 'DELETE 0 (no matching row)', deleted?'success':'warn');
+      }
+    } else if (upper.indexOf('SELECT COUNT') === 0) {
       addLine(fmtResult([{ count: mockDB.users.length }], 1), 'result');
     } else {
-      addLine('ERROR: unrecognized query (try: SELECT * FROM users, SELECT * FROM users WHERE id = 1, INSERT INTO users VALUES (\'name\',\'email\'), DELETE FROM users WHERE id = 1, SELECT COUNT(*) FROM users)', 'error');
+      addLine('ERROR: unrecognized query', 'error');
     }
   } catch(e) {
     addLine('ERROR: ' + e.message, 'error');
   }
 }
 
-const hints = [
-  "SELECT * FROM users",
-  "SELECT * FROM users WHERE id = 1",
-  "INSERT INTO users VALUES ('Dave','dave@ex.com')",
-  "DELETE FROM users WHERE id = 2",
-  "SELECT COUNT(*) FROM users"
-];
+const hints = ['SELECT * FROM users', 'SELECT * FROM users WHERE id = 1', 'INSERT INTO users VALUES (\\u0027Dave\\u0027,\\u0027dave@ex.com\\u0027)', 'DELETE FROM users WHERE id = 2', 'SELECT COUNT(*) FROM users'];
 let hintIdx = 0;
 
 function render() {
+  const output = document.getElementById('output');
   const typeColors = { cmd:'#79c0ff', result:'#e6edf3', success:'#7ee787', warn:'#f0883e', error:'#f85149' };
-  let termHtml = termLines.map(l =>
-    \`<div style="color:\${typeColors[l.type]||'#e6edf3'};white-space:pre;margin-bottom:2px">\${l.text}</div>\`
-  ).join('');
+  
+  let termHtml = '';
+  termLines.forEach(l => {
+    const color = typeColors[l.type] || '#e6edf3';
+    termHtml += '<div style="color:' + color + ';white-space:pre;margin-bottom:2px">' + l.text + '</div>';
+  });
+  
+  if (!termHtml) termHtml = '<div style="color:#484f58">-- Run a query below to see results --</div>';
 
-  output.innerHTML = \`
-    <div style="padding:16px;font-family:system-ui,sans-serif">
-      <h3 style="color:#336791;margin:0 0 4px">pg Query Simulator</h3>
-      <p style="color:#64748b;font-size:12px;margin:0 0 12px">Simulated node-postgres terminal</p>
-      <div style="background:#0d1117;border-radius:8px;overflow:hidden;margin-bottom:12px">
-        <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:#161b22;border-bottom:1px solid #30363d">
-          <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div>
-          <div style="width:10px;height:10px;border-radius:50%;background:#ffbd2e"></div>
-          <div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div>
-          <span style="color:#8b949e;font-size:11px;margin-left:8px;font-family:monospace">node-postgres simulator</span>
-        </div>
-        <div id="term-output" style="padding:12px 14px;font-family:monospace;font-size:12px;min-height:120px;max-height:200px;overflow-y:auto">
-          \${termHtml || '<div style="color:#484f58">-- Run a query below to see results --</div>'}
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <input id="query-input" type="text" placeholder="Type a SQL query..." value="\${hints[hintIdx % hints.length]}"
-          style="flex:1;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-family:monospace;font-size:12px"
-          onkeydown="if(event.key==='Enter')runQuery()" />
-        <button onclick="runQuery()" style="background:#336791;color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">Run</button>
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">
-        \${hints.map((h,i) => \`<button onclick="setHint(\${i})" style="background:#e2e8f0;color:#475569;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-family:monospace">\${h.length > 30 ? h.substring(0,30)+'...' : h}</button>\`).join('')}
-      </div>
-    </div>
-  \`;
+  let html = '<div style="padding:16px;font-family:system-ui,sans-serif">';
+  html += '<h3 style="color:#336791;margin:0 0 4px">pg Query Simulator</h3>';
+  html += '<p style="color:#64748b;font-size:12px;margin:0 0 12px">Simulated node-postgres terminal</p>';
+  html += '<div style="background:#0d1117;border-radius:8px;overflow:hidden;margin-bottom:12px">';
+  html += '<div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:#161b22;border-bottom:1px solid #30363d">';
+  html += '<div style="width:10px;height:10px;border-radius:50%;background:#ff5f57"></div>';
+  html += '<div style="width:10px;height:10px;border-radius:50%;background:#ffbd2e"></div>';
+  html += '<div style="width:10px;height:10px;border-radius:50%;background:#28c840"></div>';
+  html += '<span style="color:#8b949e;font-size:11px;margin-left:8px;font-family:monospace">node-postgres simulator</span>';
+  html += '</div>';
+  html += '<div style="padding:12px 14px;font-family:monospace;font-size:12px;min-height:120px;max-height:200px;overflow-y:auto">';
+  html += termHtml;
+  html += '</div></div>';
+  html += '<div style="display:flex;gap:8px;margin-bottom:10px">';
+  html += '<input id="query-input" type="text" placeholder="Type a SQL query..." value="' + hints[hintIdx % hints.length] + '" style="flex:1;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-family:monospace;font-size:12px" />';
+  html += '<button id="run-btn" style="background:#336791;color:white;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600">Run</button>';
+  html += '</div>';
+  html += '<div style="display:flex;gap:6px;flex-wrap:wrap" id="hints-container"></div>';
+  html += '</div>';
+  
+  output.innerHTML = html;
+
+  const hintsContainer = document.getElementById('hints-container');
+  hints.forEach((h, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = h.length > 30 ? h.substring(0,30)+'...' : h;
+    btn.style.cssText = 'background:#e2e8f0;color:#475569;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-family:monospace';
+    btn.onclick = function() { setHint(i); };
+    hintsContainer.appendChild(btn);
+  });
+
+  const runBtn = document.getElementById('run-btn');
+  if (runBtn) runBtn.onclick = runQuery;
+
+  const input = document.getElementById('query-input');
+  if (input) {
+    input.onkeydown = function(e) { if(e.key==='Enter') runQuery(); };
+  }
 }
 
-window.runQuery = function() {
+function runQuery() {
   const input = document.getElementById('query-input');
-  if (input && input.value.trim()) { execQuery(input.value); render(); }
-};
-window.setHint = function(i) {
+  if (input && input.value.trim()) {
+    execQuery(input.value);
+    render();
+  }
+}
+
+function setHint(i) {
   hintIdx = i;
   render();
   const input = document.getElementById('query-input');
   if (input) input.value = hints[i];
-};
+}
 
 render();`,
       css: ''

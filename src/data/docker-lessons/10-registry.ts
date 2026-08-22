@@ -222,7 +222,9 @@ docker scout compare myapp:1.0.0 myapp:1.1.0`,
     {
       type: 'tryit',
       title: 'Image Tagging and Push Simulator',
-      js: `var imageName = 'myapp';
+      js: `document.body.innerHTML = '<div><h3>Image Tagging and Push Simulator</h3><div class="form-grid"><div class="form-field"><label>Username</label><input type="text" id="img-user" value="devuser" /></div><div class="form-field"><label>Image Name</label><input type="text" id="img-name" value="myapp" /></div><div class="form-field"><label>Version</label><input type="text" id="img-version" value="1.0.0" /></div><button id="tag-btn" class="btn">Tag Image</button></div><div class="tags-section"><div class="tags-label">Tagged Images</div><div id="tags-container"></div></div><div class="btn-row" style="display:flex;gap:8px;margin-bottom:10px;"><button id="push-btn" class="btn">Push to Registry</button><button id="clear-btn" class="btn">Clear All</button></div><div id="push-log"></div><div id="success-panel"><div class="success-title">✓ Push successful!</div><div>Pull command:</div><code id="pull-cmd"></code></div></div>';
+
+var imageName = 'myapp';
 var imageVersion = '1.0.0';
 var username = 'devuser';
 var tags = [];

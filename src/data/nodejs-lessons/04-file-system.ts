@@ -173,9 +173,9 @@ loadConfig().then(config => {
 .btn-delete{background:#dc2626;}
 .output-box{background:#0f172a;border-radius:8px;padding:10px;margin-top:8px;font-family:monospace;font-size:12px;color:#4ade80;min-height:50px;}`,
       js: `var fs = {
-  'config.json': '{\n  "port": 3000,\n  "debug": true,\n  "db": "mongodb://localhost/mydb"\n}',
-  'README.md': '# My Node.js App\n\nA simple server application.\n\n## Usage\n\nnpm start',
-  'app.log': '2024-01-15T10:00:00Z - App started\n2024-01-15T10:01:00Z - Request GET /'
+  'config.json': '{\\n  \\"port\\": 3000,\\n  \\"debug\\": true,\\n  \\"db\\": \\"mongodb://localhost/mydb\\"\\n}',
+  'README.md': '# My Node.js App\\n\\nA simple server application.\\n\\n## Usage\\n\\nnpm start',
+  'app.log': '2024-01-15T10:00:00Z - App started\\n2024-01-15T10:01:00Z - Request GET /'
 };
 
 var activeFile = 'config.json';
@@ -188,9 +188,9 @@ function addLog(msg, color) {
 
 function readFile(name) {
   if (fs[name] !== undefined) {
-    addLog('readFile("' + name + '") => ' + fs[name].split('\n').length + ' lines', '#4ade80');
+    addLog('readFile(\\"' + name + '\\") => ' + fs[name].split('\\n').length + ' lines', '#4ade80');
   } else {
-    addLog('Error: ENOENT: no such file "' + name + '"', '#f87171');
+    addLog('Error: ENOENT: no such file \\"' + name + '\\"', '#f87171');
   }
   render();
 }
@@ -198,7 +198,7 @@ function readFile(name) {
 function writeFile(name, content) {
   var existed = fs[name] !== undefined;
   fs[name] = content;
-  addLog((existed ? 'writeFile' : 'created') + ' "' + name + '" (' + content.length + ' bytes)', '#4ade80');
+  addLog((existed ? 'writeFile' : 'created') + ' \\"' + name + '\\" (' + content.length + ' bytes)', '#4ade80');
   render();
 }
 
@@ -206,36 +206,36 @@ function deleteFile(name) {
   if (fs[name] !== undefined) {
     delete fs[name];
     if (activeFile === name) activeFile = Object.keys(fs)[0] || '';
-    addLog('unlink("' + name + '") => deleted', '#fbbf24');
+    addLog('unlink(\\"' + name + '\\") => deleted', '#fbbf24');
   } else {
-    addLog('Error: ENOENT: cannot unlink "' + name + '"', '#f87171');
+    addLog('Error: ENOENT: cannot unlink \\"' + name + '\\"', '#f87171');
   }
   render();
 }
 
 function render() {
   var fileList = Object.keys(fs).map(function(name) {
-    return '<div class="file-item' + (name === activeFile ? ' active' : '') + '" data-file="' + name + '">' +
-      '<span class="file-icon">' + (name.endsWith('.json') ? '{}' : name.endsWith('.log') ? '>>' : '#') + '</span>' +
+    return '<div class=\\"file-item' + (name === activeFile ? ' active' : '') + '\\" data-file=\\"' + name + '\\">' +
+      '<span class=\\"file-icon\\">' + (name.endsWith('.json') ? '{}' : name.endsWith('.log') ? '>>' : '#') + '</span>' +
       name + '</div>';
   }).join('');
 
   var editor = fs[activeFile] || '';
   var logHtml = outputLog.map(function(l) {
-    return '<div style="color:' + l.color + ';margin-bottom:4px">' + l.msg + '</div>';
-  }).join('') || '<span style="color:#666">Operations will appear here...</span>';
+    return '<div style=\\"color:' + l.color + ';margin-bottom:4px\\">' + l.msg + '</div>';
+  }).join('') || '<span style=\\"color:#666\\">Operations will appear here...</span>';
 
   document.getElementById('output').innerHTML =
-    '<div class="fs-panel">' +
-    '<div class="sidebar"><h3>Files</h3>' + fileList + '</div>' +
-    '<div class="main-area">' +
-    '<div style="margin-bottom:8px">' +
-    '<button class="btn btn-read" data-action="read">readFile()</button>' +
-    '<button class="btn btn-write" data-action="write">writeFile()</button>' +
-    '<button class="btn btn-delete" data-action="delete">unlink()</button>' +
+    '<div class=\\"fs-panel\\">' +
+    '<div class=\\"sidebar\\"><h3>Files</h3>' + fileList + '</div>' +
+    '<div class=\\"main-area\\">' +
+    '<div style=\\"margin-bottom:8px\\">' +
+    '<button class=\\"btn btn-read\\" data-action=\\"read\\">readFile()</button>' +
+    '<button class=\\"btn btn-write\\" data-action=\\"write\\">writeFile()</button>' +
+    '<button class=\\"btn btn-delete\\" data-action=\\"delete\\">unlink()</button>' +
     '</div>' +
-    '<div class="editor">' + editor.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' +
-    '<div class="output-box">' + logHtml + '</div>' +
+    '<div class=\\"editor\\">' + editor.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>' +
+    '<div class=\\"output-box\\">' + logHtml + '</div>' +
     '</div></div>';
 
   document.querySelectorAll('[data-file]').forEach(function(el) {
@@ -248,8 +248,8 @@ function render() {
       else if (action === 'write') {
         var ts = new Date().toISOString();
         var newContent = activeFile.endsWith('.log')
-          ? (fs[activeFile] || '') + ts + ' - Updated\n'
-          : (fs[activeFile] || '') + '\n// updated at ' + ts;
+          ? (fs[activeFile] || '') + ts + ' - Updated\\n'
+          : (fs[activeFile] || '') + '\\n// updated at ' + ts;
         writeFile(activeFile, newContent);
       } else if (action === 'delete') deleteFile(activeFile);
     });

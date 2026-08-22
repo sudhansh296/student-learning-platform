@@ -178,36 +178,38 @@ console.log(response2.status); // 404 — already deleted`,
     {
       type: 'tryit',
       title: 'HTTP Method Tester',
-      js: `var data = {
+      js: `document.body.innerHTML = '<div><h3>HTTP Methods Explorer</h3><div id=\\"buttons\\"></div><div id=\\"panel\\"></div></div>';
+
+var data = {
   GET: {
     color: '#10b981',
     url: 'GET /users  or  GET /users/1',
     body: '(no body)',
-    response: '{ "id": 1, "name": "Alice", "email": "alice@example.com" }',
+    response: '{ \\"id\\": 1, \\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" }',
     status: '200 OK',
     desc: 'Retrieves a resource or list. Safe and idempotent. All params go in the URL.'
   },
   POST: {
     color: '#6366f1',
     url: 'POST /users',
-    body: '{ "name": "Alice", "email": "alice@example.com" }',
-    response: '{ "id": 42, "name": "Alice", "email": "alice@example.com" }',
+    body: '{ \\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" }',
+    response: '{ \\"id\\": 42, \\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" }',
     status: '201 Created',
     desc: 'Creates a new resource. Not idempotent — sending twice creates two records.'
   },
   PUT: {
     color: '#f59e0b',
     url: 'PUT /users/1',
-    body: '{ "name": "Alice Johnson", "email": "alice@example.com", "role": "admin" }',
-    response: '{ "id": 1, "name": "Alice Johnson", "email": "alice@example.com", "role": "admin" }',
+    body: '{ \\"name\\": \\"Alice Johnson\\", \\"email\\": \\"alice@example.com\\", \\"role\\": \\"admin\\" }',
+    response: '{ \\"id\\": 1, \\"name\\": \\"Alice Johnson\\", \\"email\\": \\"alice@example.com\\", \\"role\\": \\"admin\\" }',
     status: '200 OK',
     desc: 'Replaces the full resource. Omitted fields are removed or nulled. Idempotent.'
   },
   PATCH: {
     color: '#8b5cf6',
     url: 'PATCH /users/1',
-    body: '{ "name": "Alice Johnson" }',
-    response: '{ "id": 1, "name": "Alice Johnson", "email": "alice@example.com" }',
+    body: '{ \\"name\\": \\"Alice Johnson\\" }',
+    response: '{ \\"id\\": 1, \\"name\\": \\"Alice Johnson\\", \\"email\\": \\"alice@example.com\\" }',
     status: '200 OK',
     desc: 'Updates only specified fields. Other fields remain unchanged. More surgical than PUT.'
   },
@@ -227,15 +229,15 @@ function show(method) {
   active = method;
   var d = data[method];
   document.getElementById('panel').innerHTML = [
-    '<div class="method-header" style="background:' + d.color + '">',
-    '  <span class="method-name">' + method + '</span>',
-    '  <span class="status-pill">' + d.status + '</span>',
+    '<div class=\\"method-header\\" style=\\"background:' + d.color + '\\">',
+    '  <span class=\\"method-name\\">' + method + '</span>',
+    '  <span class=\\"status-pill\\">' + d.status + '</span>',
     '</div>',
-    '<div class="panel-body">',
-    '  <div class="field"><span class="field-label">URL Pattern</span><code>' + d.url + '</code></div>',
-    '  <div class="field"><span class="field-label">Request Body</span><code>' + d.body + '</code></div>',
-    '  <div class="field"><span class="field-label">Response</span><code>' + d.response + '</code></div>',
-    '  <div class="field"><span class="field-label">Use Case</span><span class="desc">' + d.desc + '</span></div>',
+    '<div class=\\"panel-body\\">',
+    '  <div class=\\"field\\"><span class=\\"field-label\\">URL Pattern</span><code>' + d.url + '</code></div>',
+    '  <div class=\\"field\\"><span class=\\"field-label\\">Request Body</span><code>' + d.body + '</code></div>',
+    '  <div class=\\"field\\"><span class=\\"field-label\\">Response</span><code>' + d.response + '</code></div>',
+    '  <div class=\\"field\\"><span class=\\"field-label\\">Use Case</span><span class=\\"desc\\">' + d.desc + '</span></div>',
     '</div>'
   ].join('');
   document.querySelectorAll('.method-btn').forEach(function(btn) {

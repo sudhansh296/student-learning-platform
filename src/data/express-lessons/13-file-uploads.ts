@@ -310,16 +310,16 @@ function selectFile() {
   document.getElementById('valSize').textContent = formatSize(file.size);
   document.getElementById('valMime').textContent = file.mime;
   document.getElementById('valType').innerHTML = typeOk
-    ? '<span class="badge badge-pass">PASS</span>'
-    : '<span class="badge badge-fail">FAIL - type not allowed</span>';
+    ? '<span class=\\"badge badge-pass\\">PASS</span>'
+    : '<span class=\\"badge badge-fail\\">FAIL - type not allowed</span>';
   document.getElementById('valSize2').innerHTML = sizeOk
-    ? '<span class="badge badge-pass">PASS</span>'
-    : '<span class="badge badge-fail">FAIL - exceeds 5 MB</span>';
+    ? '<span class=\\"badge badge-pass\\">PASS</span>'
+    : '<span class=\\"badge badge-fail\\">FAIL - exceeds 5 MB</span>';
 
-  var reqFile = '// req.file object in your Express route\nreq.file = {\n  fieldname: "upload",\n  originalname: "'+file.name+'",\n  mimetype: "'+file.mime+'",\n  size: '+file.size+',\n  buffer: <Buffer ... > // memoryStorage\n};';
+  var reqFile = '// req.file object in your Express route\\nreq.file = {\\n  fieldname: \\"upload\\",\\n  originalname: \\"'+file.name+'\\",\\n  mimetype: \\"'+file.mime+'\\",\\n  size: '+file.size+',\\n  buffer: &lt;Buffer ... &gt; // memoryStorage\\n};';
 
   if (!typeOk || !sizeOk) {
-    reqFile = '// Upload rejected — file did not pass validation\n// Route handler would return 400 Bad Request';
+    reqFile = '// Upload rejected — file did not pass validation\\n// Route handler would return 400 Bad Request';
   }
 
   document.getElementById('reqFile').textContent = reqFile;
@@ -328,25 +328,24 @@ function selectFile() {
 }
 
 document.getElementById('output').innerHTML =
-  '<div class="upload-demo">' +
-  '<div class="panel">' +
-  '<div class="panel-header">File Upload Validator</div>' +
-  '<div class="panel-body">' +
-  '<div class="controls">' +
-  '<div class="ctrl-group"><span class="ctrl-label">File Type</span>' +
-  '<select id="fileType"><option value="image">Image (JPEG/PNG/WebP)</option><option value="document">Document (PDF/DOCX/TXT)</option></select></div>' +
-  '<button class="btn" onclick="selectFile()">Select File</button>' +
+  '<div class=\\"upload-demo\\">' +
+  '<div class=\\"panel\\">' +
+  '<div class=\\"panel-header\\">File Upload Validator</div>' +
+  '<div class=\\"panel-body\\">' +
+  '<div class=\\"controls\\">' +
+  '<div class=\\"ctrl-group\\"><span class=\\"ctrl-label\\">File Type</span>' +
+  '<select id=\\"fileType\\"><option value=\\"image\\">Image (JPEG/PNG/WebP)</option><option value=\\"document\\">Document (PDF/DOCX/TXT)</option></select></div>' +
+  '<button class=\\"btn\\" onclick=\\"selectFile()\\">Select File</button>' +
   '</div>' +
-  '<div class="upload-zone"><div class="upload-zone-text" id="uploadZoneText">Click "Select File" to generate a random file for validation</div></div>' +
-  '<div class="result-panel" id="resultPanel">' +
-  '<div class="val-title">Validation Results (Multer fileFilter + limits)</div>' +
-  '<div class="val-row"><span class="val-key">filename</span><span class="val-val" id="valName"></span></div>' +
-  '<div class="val-row"><span class="val-key">size</span><span class="val-val" id="valSize"></span></div>' +
-  '<div class="val-row"><span class="val-key">mimetype</span><span class="val-val" id="valMime"></span></div>' +
-  '<div class="val-row"><span class="val-key">type check</span><span id="valType"></span></div>' +
-  '<div class="val-row"><span class="val-key">size check (max 5 MB)</span><span id="valSize2"></span></div>' +
-  '<div class="req-file" id="reqFile"></div>' +
-  '</div>' +
+  '<div class=\\"upload-zone\\"><div class=\\"upload-zone-text\\" id=\\"uploadZoneText\\">Click \\"Select File\\" to generate a random file for validation</div></div>' +
+  '<div class=\\"result-panel\\" id=\\"resultPanel\\">' +
+  '<div class=\\"val-title\\">Validation Results (Multer fileFilter + limits)</div>' +
+  '<div class=\\"val-row\\"><span class=\\"val-key\\">filename</span><span class=\\"val-val\\" id=\\"valName\\"></span></div>' +
+  '<div class=\\"val-row\\"><span class=\\"val-key\\">size</span><span class=\\"val-val\\" id=\\"valSize\\"></span></div>' +
+  '<div class=\\"val-row\\"><span class=\\"val-key\\">mimetype</span><span class=\\"val-val\\" id=\\"valMime\\"></span></div>' +
+  '<div class=\\"val-row\\"><span class=\\"val-key\\">type check</span><span id=\\"valType\\"></span></div>' +
+  '<div class=\\"val-row\\"><span class=\\"val-key\\">size check (max 5 MB)</span><span id=\\"valSize2\\"></span></div>' +
+  '<div class=\\"req-file\\" id=\\"reqFile\\"></div>' +
   '</div>' +
   '</div>' +
   '</div>';`,

@@ -183,7 +183,9 @@ docker run -d \
     {
       type: 'tryit',
       title: 'Volume Persistence Demo',
-      js: `var volumeData = [];
+      js: `document.body.innerHTML = '<div><h3>Volume Persistence Demo</h3><div class="btn-row"><button id="write-btn" class="btn">Write to Volume (Container A)</button><button id="stop-a-btn" class="btn">Stop Container A</button><button id="start-b-btn" class="btn">Start Container B</button></div><div class="containers-row"><div id="cont-a" class="container-box"><div class="cont-label">Container A</div><div class="cont-name">container-a</div><div id="cont-a-status">Running</div></div><div id="cont-b" class="container-box"><div class="cont-label">Container B</div><div class="cont-name">container-b</div><div id="cont-b-status">Stopped</div></div></div><div id="volume-box"><div class="vol-label">Named Volume: mydata</div><div id="volume-data"></div></div><div id="event-log"></div></div>';
+
+var volumeData = [];
 var containerARunning = true;
 var containerBRunning = false;
 

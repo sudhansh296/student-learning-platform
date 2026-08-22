@@ -216,7 +216,31 @@ index 3d5f2a1..9b8c4e2 100644
     {
       type: 'tryit',
       title: 'Staging Area Simulator',
-      js: `const state = {
+      js: `document.body.innerHTML = \`
+  <h3>Git Workflow Simulator</h3>
+  <div class="buttons">
+    <button id="edit-btn">Edit File</button>
+    <button id="add-btn">git add</button>
+    <button id="commit-btn">git commit</button>
+  </div>
+  <div class="areas">
+    <div class="area">
+      <div class="area-title" style="color:#F05032">Working Directory</div>
+      <div class="area-list" id="working-list"></div>
+    </div>
+    <div class="area">
+      <div class="area-title" style="color:#2196F3">Staging Area</div>
+      <div class="area-list" id="staging-list"></div>
+    </div>
+    <div class="area">
+      <div class="area-title" style="color:#4CAF50">Repository</div>
+      <div class="area-list" id="repo-list"></div>
+    </div>
+  </div>
+  <div id="log"></div>
+\`;
+
+const state = {
   working: ['index.js (modified)', 'utils.js (modified)', 'README.md (new)'],
   staging: [],
   repo: ['app.js', 'styles.css']
@@ -227,8 +251,8 @@ function render() {
   ['working', 'staging', 'repo'].forEach(area => {
     const el = document.getElementById(area + '-list');
     el.innerHTML = state[area].length === 0
-      ? '<div style="color:#aaa;font-size:12px;text-align:center;padding:8px">empty</div>'
-      : state[area].map(f => \`<div style="background:\${colors[area]}22;border:1px solid \${colors[area]}66;color:\${colors[area]};padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace">\${f}</div>\`).join('');
+      ? '<div style=\\"color:#aaa;font-size:12px;text-align:center;padding:8px\\">empty</div>'
+      : state[area].map(f => \`<div style=\\"background:\${colors[area]}22;border:1px solid \${colors[area]}66;color:\${colors[area]};padding:6px 10px;border-radius:4px;font-size:12px;font-family:monospace\\">\${f}</div>\`).join('');
   });
   document.getElementById('add-btn').disabled = state.working.length === 0;
   document.getElementById('commit-btn').disabled = state.staging.length === 0;
@@ -262,7 +286,7 @@ document.getElementById('commit-btn').addEventListener('click', function() {
 function log(msg) {
   const logEl = document.getElementById('log');
   const time = new Date().toLocaleTimeString();
-  logEl.innerHTML = \`<div style="color:#F05032;font-size:11px">\${time}: \${msg}</div>\` + logEl.innerHTML;
+  logEl.innerHTML = \`<div style=\\"color:#F05032;font-size:11px\\">\${time}: \${msg}</div>\` + logEl.innerHTML;
 }
 
 render();`,

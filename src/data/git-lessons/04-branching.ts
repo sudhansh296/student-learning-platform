@@ -140,66 +140,160 @@ git checkout main`,
     {
       type: 'tryit',
       title: 'Branch Graph Visualizer',
-      js: `const state = {
-  mainCommits: ['9c7e204', 'f4d1b33'],
-  featureCommits: ['9c7e204', 'b8e2a01', 'a3f9c12'],
-  current: 'feature',
-  mainCounter: 3,
-  featureCounter: 4
-};
+      css: `*{box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:14px;background:#0d1117;color:#e6edf3;margin:0;}
+.title{font-size:14px;font-weight:800;color:#F05032;margin-bottom:12px;}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.ctrl-btn{padding:7px 14px;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;}
+.btn-commit-main{background:#F05032;color:white;}
+.btn-commit-feat{background:#2196F3;color:white;}
+.btn-switch{background:#30363d;color:#e6edf3;border:1px solid #484f58;}
+.btn-branch{background:#22863a;color:white;}
+.btn-merge{background:#6f42c1;color:white;}
+.btn-reset{background:#30363d;color:#8b949e;border:1px solid #484f58;font-size:11px;}
+.info-bar{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;background:#161b22;border-radius:8px;border:1px solid #30363d;}
+.info-item{font-size:11px;color:#8b949e;}<br>.info-val{color:#e6edf3;font-weight:700;font-family:monospace;}
+.graph-wrap{background:#161b22;border-radius:10px;border:1px solid #30363d;padding:14px;margin-bottom:10px;overflow-x:auto;}
+.branch-row{display:flex;align-items:center;gap:0;margin-bottom:4px;}
+.branch-label{width:120px;font-size:11px;font-weight:700;font-family:monospace;flex-shrink:0;}
+.graph-track{display:flex;align-items:center;gap:0;flex:1;}
+.commit-node{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-family:monospace;font-weight:700;color:white;flex-shrink:0;position:relative;cursor:default;}
+.commit-node.head{box-shadow:0 0 0 3px #161b22,0 0 0 5px currentColor;}
+.commit-line{height:2px;width:20px;flex-shrink:0;}
+.commit-label{position:absolute;top:30px;left:50%;transform:translateX(-50%);font-size:8px;font-family:monospace;color:#484f58;white-space:nowrap;}
+.branch-tip{font-size:9px;font-weight:800;padding:1px 5px;border-radius:3px;margin-left:6px;font-family:monospace;}
+.log-wrap{background:#161b22;border-radius:8px;border:1px solid #30363d;padding:8px 12px;max-height:110px;overflow-y:auto;}
+.log-title{font-size:10px;font-weight:700;color:#8b949e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.log-entry{font-size:11px;font-family:monospace;color:#8b949e;padding:1px 0;line-height:1.6;}
+.log-entry .lhash{color:#f0883e;}.log-entry .lbranch{color:#58a6ff;}.log-entry .lmsg{color:#c9d1d9;}
+.tip-box{background:#1f2937;border:1px solid #374151;border-radius:6px;padding:8px 12px;font-size:11px;color:#9ca3af;margin-top:8px;}
+.tip-box b{color:#d1d5db;}`,
+      js: `document.body.innerHTML = '<div id="output"></div>';
 
-function hexColor(hash) {
-  return '#' + hash.slice(0, 6);
+var MAIN_CLR='#F05032',FEAT_CLR='#2196F3',MERGE_CLR='#6f42c1';
+var mainCommits=[
+  {hash:'9c7e204',msg:'Initial project setup',branch:'main'},
+  {hash:'f4d1b33',msg:'Fix footer layout',branch:'main'},
+];
+var featCommits=[
+  {hash:'9c7e204',msg:'Initial project setup',branch:'main'},
+  {hash:'b8e2a01',msg:'Add login form HTML',branch:'feature/login'},
+  {hash:'a3f9c12',msg:'Add password validation',branch:'feature/login'},
+];
+var HEAD='feature';
+var log=[];
+var merged=false;
+
+function shortHash(h){return h.slice(0,7);}
+function randHash(){return Math.random().toString(16).slice(2,10);}
+
+function addLog(msg){log.unshift(msg);if(log.length>12)log.pop();}
+
+function commitToMain(){
+  if(HEAD!=='main'){addLog('<span class=\\"lmsg\\">⚠ Switch to main first</span>');render();return;}
+  var msgs=['Update README','Fix bug in parser','Improve performance','Refactor routes','Add unit tests'];
+  var h=randHash(),m=msgs[Math.floor(Math.random()*msgs.length)];
+  mainCommits.push({hash:h,msg:m,branch:'main'});
+  addLog('<span class=\\"lhash\\">'+shortHash(h)+'</span> <span class=\\"lbranch\\">(main)</span> <span class=\\"lmsg\\">'+m+'</span>');
+  render();
 }
 
-function render() {
-  const main = document.getElementById('main-branch');
-  const feature = document.getElementById('feature-branch');
-
-  const makeCommit = (hash, isHead, color) =>
-    \`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-      <div style="width:32px;height:32px;border-radius:50%;background:\${color};display:flex;align-items:center;justify-content:center;font-size:9px;font-family:monospace;color:white;font-weight:700;\${isHead?'box-shadow:0 0 0 3px #fff,0 0 0 5px '+color:''}">\${hash.slice(0,4)}</div>
-      \${isHead?'<span style="background:'+color+';color:white;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700">HEAD</span>':''}
-    </div>\`;
-
-  const headOnMain = state.current === 'main';
-  const headOnFeature = state.current === 'feature';
-
-  main.innerHTML = state.mainCommits.slice().reverse().map((h, i, arr) =>
-    makeCommit(h, headOnMain && i === arr.length - 1, '#F05032')
-  ).join('<div style="width:2px;height:8px;background:#F05032;margin-left:15px;margin-bottom:6px"></div>');
-
-  feature.innerHTML = state.featureCommits.slice().reverse().map((h, i, arr) =>
-    makeCommit(h, headOnFeature && i === arr.length - 1, '#2196F3')
-  ).join('<div style="width:2px;height:8px;background:#2196F3;margin-left:15px;margin-bottom:6px"></div>');
-
-  document.getElementById('current-label').textContent = 'Current branch: ' + state.current;
+function commitToFeat(){
+  if(HEAD!=='feature'){addLog('<span class=\\"lmsg\\">⚠ Switch to feature/login first</span>');render();return;}
+  var msgs=['Add login API call','Handle auth errors','Add remember-me','Write login tests','Style login form'];
+  var h=randHash(),m=msgs[Math.floor(Math.random()*msgs.length)];
+  featCommits.push({hash:h,msg:m,branch:'feature/login'});
+  addLog('<span class=\\"lhash\\">'+shortHash(h)+'</span> <span class=\\"lbranch\\">(feature/login)</span> <span class=\\"lmsg\\">'+m+'</span>');
+  render();
 }
 
-document.getElementById('new-feature-btn').addEventListener('click', function() {
-  if (state.current !== 'feature') return;
-  const hash = Math.random().toString(16).slice(2, 10);
-  state.featureCommits.push(hash);
-  state.featureCounter++;
+function switchBranch(){
+  HEAD=HEAD==='main'?'feature':'main';
+  addLog('<span class=\\"lmsg\\">🔀 Switched to <b>'+( HEAD==='main'?'main':'feature/login')+'</b></span>');
   render();
-});
+}
 
-document.getElementById('switch-btn').addEventListener('click', function() {
-  state.current = state.current === 'main' ? 'feature' : 'main';
+function mergeBranch(){
+  if(HEAD!=='main'){addLog('<span class=\\"lmsg\\">⚠ Switch to main before merging</span>');render();return;}
+  if(merged){addLog('<span class=\\"lmsg\\">Already merged!</span>');render();return;}
+  var h=randHash();
+  mainCommits.push({hash:h,msg:'Merge branch feature/login',branch:'merge'});
+  merged=true;
+  addLog('<span class=\\"lhash\\">'+shortHash(h)+'</span> <span class=\\"lbranch\\">(main)</span> <span class=\\"lmsg\\">Merge branch \\'feature/login\\'</span>');
   render();
-});
+}
+
+function resetAll(){
+  mainCommits=[
+    {hash:'9c7e204',msg:'Initial project setup',branch:'main'},
+    {hash:'f4d1b33',msg:'Fix footer layout',branch:'main'},
+  ];
+  featCommits=[
+    {hash:'9c7e204',msg:'Initial project setup',branch:'main'},
+    {hash:'b8e2a01',msg:'Add login form HTML',branch:'feature/login'},
+    {hash:'a3f9c12',msg:'Add password validation',branch:'feature/login'},
+  ];
+  HEAD='feature';log=[];merged=false;
+  render();
+}
+
+function renderCommitRow(commits,color,label,isHead){
+  var nodes=commits.map(function(c,i){
+    var isMerge=c.branch==='merge';
+    var clr=isMerge?MERGE_CLR:color;
+    var isH=isHead&&i===commits.length-1;
+    var line=i<commits.length-1?'<div class=\\"commit-line\\" style=\\"background:'+clr+'\\"></div>':'';
+    return '<div class=\\"commit-node'+(isH?' head':'')+'\\" style=\\"background:'+clr+';color:'+clr+'\\" title=\\"'+c.hash+': '+c.msg+'\\">'
+      +'<span style=\\"color:white\\">'+c.hash.slice(0,4)+'</span>'
+      +(isH?'<div class=\\"commit-label\\" style=\\"color:'+clr+'\\">HEAD</div>':'')
+      +'</div>'+line;
+  }).join('');
+  var tipStyle='background:'+color+'22;color:'+color+';border:1px solid '+color+'44';
+  var tip='<span class=\\"branch-tip\\" style=\\"'+tipStyle+'\\">'+label+'</span>';
+  return '<div class=\\"branch-row\\">'
+    +'<div class=\\"branch-label\\" style=\\"color:'+color+'\\">'+label+'</div>'
+    +'<div class=\\"graph-track\\">'+nodes+tip+(isHead?'<span class=\\"branch-tip\\" style=\\"background:#58a6ff22;color:#58a6ff;border:1px solid #58a6ff44;margin-left:4px\\">HEAD</span>':'')+'</div>'
+  +'</div>';
+}
+
+function render(){
+  var mainIsHead=HEAD==='main',featIsHead=HEAD==='feature';
+  var graph=renderCommitRow(mainCommits,MAIN_CLR,'main',mainIsHead)
+    +renderCommitRow(featCommits,FEAT_CLR,'feature/login',featIsHead);
+
+  var logHtml=log.length?log.map(function(l){return '<div class=\\"log-entry\\">'+l+'</div>';}).join('')
+    :'<div class=\\"log-entry\\" style=\\"color:#484f58\\">No operations yet — use the buttons above</div>';
+
+  document.getElementById('output').innerHTML=
+    '<div class=\\"title\\">🌿 Git Branch Graph</div>'+
+    '<div class=\\"controls\\">'+
+      '<button class=\\"ctrl-btn btn-commit-main\\" id=\\"btn-commit-main\\">💾 Commit to main</button>'+
+      '<button class=\\"ctrl-btn btn-commit-feat\\" id=\\"btn-commit-feat\\">💾 Commit to feature</button>'+
+      '<button class=\\"ctrl-btn btn-switch\\" id=\\"btn-switch\\">⇄ Switch Branch</button>'+
+      '<button class=\\"ctrl-btn btn-merge\\" id=\\"btn-merge\\">⑂ Merge → main</button>'+
+      '<button class=\\"ctrl-btn btn-reset\\" id=\\"btn-reset\\">↺ Reset</button>'+
+    '</div>'+
+    '<div class=\\"info-bar\\">'+
+      '<span class=\\"info-item\\">HEAD → <span class=\\"info-val\\">'+(HEAD==='main'?'main':'feature/login')+'</span></span>'+
+      '<span class=\\"info-item\\">main commits: <span class=\\"info-val\\">'+mainCommits.length+'</span></span>'+
+      '<span class=\\"info-item\\">feature commits: <span class=\\"info-val\\">'+featCommits.length+'</span></span>'+
+      '<span class=\\"info-item\\">merged: <span class=\\"info-val\\" style=\\"color:'+(merged?'#22863a':'#8b949e')+'\\">'+(merged?'yes':'no')+'</span></span>'+
+    '</div>'+
+    '<div class=\\"graph-wrap\\">'+graph+'</div>'+
+    '<div class=\\"log-wrap\\">'+
+      '<div class=\\"log-title\\">Operation Log</div>'+logHtml+
+    '</div>'+
+    '<div class=\\"tip-box\\"><b>git switch -c feature/login</b> — creates &amp; switches<br>'+
+    '<b>git commit -m \\"msg\\"</b> — saves a snapshot<br>'+
+    '<b>git merge feature/login</b> — merges into current branch</div>';
+  
+  document.getElementById('btn-commit-main').onclick=commitToMain;
+  document.getElementById('btn-commit-feat').onclick=commitToFeat;
+  document.getElementById('btn-switch').onclick=switchBranch;
+  document.getElementById('btn-merge').onclick=mergeBranch;
+  document.getElementById('btn-reset').onclick=resetAll;
+}
 
 render();`,
-      css: `body { padding: 16px; font-family: system-ui, sans-serif; background: #f0f2f5; }
-h3 { color: #F05032; margin: 0 0 12px 0; font-size: 15px; }
-.branches { display: flex; gap: 20px; margin-bottom: 16px; }
-.branch-col { flex: 1; background: white; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
-.branch-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 10px; }
-#current-label { font-size: 12px; color: #555; margin-bottom: 12px; font-weight: 600; }
-.buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-button { padding: 8px 14px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; }
-#new-feature-btn { background: #2196F3; color: white; }
-#switch-btn { background: #F05032; color: white; }`
     },
     {
       type: 'warning',

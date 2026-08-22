@@ -250,57 +250,44 @@ function Layout({ children, sidebar }: React.PropsWithChildren<LayoutProps>) {
       type: 'tryit',
       title: 'Try It: Typed React Patterns',
       css: `body{font-family:system-ui,sans-serif;padding:20px;} .btn{padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600;margin-right:6px;margin-bottom:6px;} .primary{background:#3b82f6;color:white;} .secondary{background:#e5e7eb;color:#374151;} .danger{background:#ef4444;color:white;} .card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-top:10px;} .result{font-size:13px;color:#374151;margin-top:8px;padding:8px;background:#f0fdf4;border-radius:4px;}`,
-      js: `// Typed React patterns — shown in plain JS with React
+      js: `// TypeScript with React - Typed Patterns Demo
 
-function Button({ label, onClick, variant, disabled }) {
-  return React.createElement('button', {
-    className: 'btn ' + (variant || 'primary'),
-    onClick: onClick,
-    disabled: !!disabled,
-  }, label);
-}
+// 1. Typed Props Interface
+console.log('=== Typed Props Interface ===');
+console.log('interface ButtonProps {');
+console.log('  label: string;           // required');
+console.log('  onClick: () => void;     // required');
+console.log('  variant?: "primary" | "secondary" | "danger";  // optional union');
+console.log('  disabled?: boolean;      // optional');
+console.log('}');
+console.log('TypeScript checks: <Button /> -> Error: missing required "label" prop');
 
-function TypedForm() {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [submitted, setSubmitted] = React.useState(false);
+// 2. useState generic types
+console.log('\\n=== useState<T> Generic Types ===');
+var stateExamples = [
+  'useState("Alice")             -> inferred: string',
+  'useState<User | null>(null)   -> explicit: User | null',
+  'useState<User[]>([])          -> explicit: User[]',
+  'useState(false)               -> inferred: boolean',
+  'useState<string | null>(null) -> explicit: string | null',
+];
+stateExamples.forEach(function(ex) { console.log('  ' + ex); });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (name && email) setSubmitted(true);
-  };
+// 3. React event handler types
+console.log('\\n=== React Event Handler Types ===');
+var eventTypes = [
+  'onChange  -> React.ChangeEvent<HTMLInputElement>  -> e.target.value: string',
+  'onSubmit  -> React.FormEvent<HTMLFormElement>     -> e.preventDefault()',
+  'onClick   -> React.MouseEvent<HTMLButtonElement>  -> e.stopPropagation()',
+  'onKeyDown -> React.KeyboardEvent<HTMLInputElement>-> e.key: string',
+];
+eventTypes.forEach(function(t) { console.log('  ' + t); });
 
-  if (submitted) {
-    return React.createElement('div', { className: 'card' },
-      React.createElement('p', null, 'Submitted!'),
-      React.createElement('p', { className: 'result' }, 'Name: ' + name),
-      React.createElement('p', { className: 'result' }, 'Email: ' + email),
-      React.createElement(Button, { label: 'Reset', onClick: () => setSubmitted(false), variant: 'secondary' })
-    );
-  }
-
-  return React.createElement('form', { onSubmit: handleSubmit },
-    React.createElement('div', { style: { marginBottom: '10px' } },
-      React.createElement('input', {
-        style: { padding: '8px', border: '1px solid #e2e8f0', borderRadius: '6px', marginRight: '8px', fontSize: '13px' },
-        value: name,
-        onChange: e => setName(e.target.value),
-        placeholder: 'Name'
-      }),
-      React.createElement('input', {
-        style: { padding: '8px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '13px' },
-        value: email,
-        onChange: e => setEmail(e.target.value),
-        placeholder: 'Email'
-      })
-    ),
-    React.createElement(Button, { label: 'Submit', onClick: () => {}, variant: 'primary' }),
-    React.createElement(Button, { label: 'Cancel', onClick: () => {}, variant: 'secondary' }),
-    React.createElement(Button, { label: 'Delete', onClick: () => {}, variant: 'danger', disabled: true })
-  );
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(TypedForm));`,
+// 4. useRef types
+console.log('\\n=== useRef<T> Types ===');
+console.log('  DOM ref:     useRef<HTMLInputElement>(null) -> current: HTMLInputElement | null');
+console.log('  Mutable ref: useRef<number>(0)             -> current: number (no re-render)');
+console.log('  Usage: inputRef.current?.focus() -- optional chain for safety');`,
     },
   ],
   exercises: [

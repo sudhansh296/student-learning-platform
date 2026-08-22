@@ -339,8 +339,8 @@ ZREM leaderboard "dave"
     cmds: [
       ['ZADD key score member', 'Add or update a member'],
       ['ZREVRANGE key 0 N', 'Top N members descending'],
-      ['ZSCORE key member', 'Get a member\'s score'],
-      ['ZRANK key member', 'Get a member\'s rank (0-based)'],
+      ['ZSCORE key member', 'Get a member\\'s score'],
+      ['ZRANK key member', 'Get a member\\'s rank (0-based)'],
     ]
   }
 ];

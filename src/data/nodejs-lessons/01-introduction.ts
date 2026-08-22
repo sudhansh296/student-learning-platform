@@ -144,31 +144,31 @@ function runCmd(cmd) {
   var outputs = {
     'node --version': 'v20.11.0',
     'npm --version': '10.2.4',
-    'node -e "console.log(process.platform)"': 'linux',
-    'node -e "console.log(2 + 2)"': '4',
-    'node -e "console.log(typeof require)"': 'function',
-    'node -e "console.log(process.memoryUsage().heapUsed)"': '4823040'
+    'node -e \\"console.log(process.platform)\\"': 'linux',
+    'node -e \\"console.log(2 + 2)\\"': '4',
+    'node -e \\"console.log(typeof require)\\"': 'function',
+    'node -e \\"console.log(process.memoryUsage().heapUsed)\\"': '4823040'
   };
   addLine(cmd, outputs[cmd] || 'command executed');
 }
 
 function render() {
   var termLines = lines.map(function(l) {
-    return '<div><span class="prompt">$</span>' + l.cmd + '</div>' +
-      '<div class="output">' + l.out + '</div>';
+    return '<div><span class=\\"prompt\\">$</span>' + l.cmd + '</div>' +
+      '<div class=\\"output\\">' + l.out + '</div>';
   }).join('');
   document.getElementById('output').innerHTML =
-    '<div class="btn-row">' +
-    '<button class="btn" data-cmd="node --version">node --version</button>' +
-    '<button class="btn" data-cmd="npm --version">npm --version</button>' +
-    '<button class="btn secondary" data-cmd=\'node -e "console.log(process.platform)"\'>process.platform</button>' +
-    '<button class="btn secondary" data-cmd=\'node -e "console.log(2 + 2)"\'>node -e "2+2"</button>' +
-    '<button class="btn secondary" data-cmd=\'node -e "console.log(typeof require)"\'>typeof require</button>' +
-    '<button class="btn secondary" data-cmd=\'node -e "console.log(process.memoryUsage().heapUsed)"\'>heapUsed</button>' +
+    '<div class=\\"btn-row\\">' +
+    '<button class=\\"btn\\" data-cmd=\\"node --version\\">node --version</button>' +
+    '<button class=\\"btn\\" data-cmd=\\"npm --version\\">npm --version</button>' +
+    '<button class=\\"btn secondary\\" data-cmd=\\"node -e &quot;console.log(process.platform)&quot;\\">process.platform</button>' +
+    '<button class=\\"btn secondary\\" data-cmd=\\"node -e &quot;console.log(2 + 2)&quot;\\">node -e \\"2+2\\"</button>' +
+    '<button class=\\"btn secondary\\" data-cmd=\\"node -e &quot;console.log(typeof require)&quot;\\">typeof require</button>' +
+    '<button class=\\"btn secondary\\" data-cmd=\\"node -e &quot;console.log(process.memoryUsage().heapUsed)&quot;\\">heapUsed</button>' +
     '</div>' +
-    '<div class="terminal">' +
-    '<div class="term-header"><div class="dot" style="background:#ff5f57"></div><div class="dot" style="background:#ffbd2e"></div><div class="dot" style="background:#28c840"></div><span class="term-title">node terminal</span></div>' +
-    '<div class="term-body">' + (termLines || '<span style="color:#666">Click a command to run it...</span>') + '</div>' +
+    '<div class=\\"terminal\\">' +
+    '<div class=\\"term-header\\"><div class=\\"dot\\" style=\\"background:#ff5f57\\"></div><div class=\\"dot\\" style=\\"background:#ffbd2e\\"></div><div class=\\"dot\\" style=\\"background:#28c840\\"></div><span class=\\"term-title\\">node terminal</span></div>' +
+    '<div class=\\"term-body\\">' + (termLines || '<span style=\\"color:#666\\">Click a command to run it...</span>') + '</div>' +
     '</div>';
   document.querySelectorAll('.btn').forEach(function(btn) {
     btn.addEventListener('click', function() {

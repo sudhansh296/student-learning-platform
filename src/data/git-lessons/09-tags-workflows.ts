@@ -172,7 +172,19 @@ feat(auth): add Google OAuth provider`,
     {
       type: 'tryit',
       title: 'Semantic Versioning Calculator',
-      js: `let version = { major: 1, minor: 0, patch: 0 };
+      js: `document.body.innerHTML = \`
+  <h3>Semantic Versioning Simulator</h3>
+  <div id="version-display"></div>
+  <div class="buttons">
+    <button id="major-btn">MAJOR (Breaking)</button>
+    <button id="minor-btn">MINOR (Feature)</button>
+    <button id="patch-btn">PATCH (Fix)</button>
+  </div>
+  <div id="history-title">Version History</div>
+  <div id="version-history"></div>
+\`;
+
+let version = { major: 1, minor: 0, patch: 0 };
 const history = ['1.0.0 (initial release)'];
 
 function versionString() {
@@ -182,7 +194,7 @@ function versionString() {
 function render() {
   document.getElementById('version-display').textContent = versionString();
   document.getElementById('version-history').innerHTML = history.slice().reverse().map((v, i) =>
-    \`<div style="padding:6px 10px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:4px;font-family:monospace;font-size:12px">\${v}</div>\`
+    \`<div style=\\"padding:6px 10px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:4px;font-family:monospace;font-size:12px\\">\${v}</div>\`
   ).join('');
 }
 

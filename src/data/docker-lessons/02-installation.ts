@@ -177,7 +177,9 @@ docker.io/library/postgres:16-alpine`
     {
       type: 'tryit',
       title: 'Docker Command Simulator',
-      js: `var outputs = {
+      js: `document.body.innerHTML = '<div><h3>Docker Command Simulator</h3><div id="btn-row"></div><button id="clear-btn">Clear Terminal</button><div id="terminal"><div style="color:#484f58;font-size:12px;font-family:monospace">Click a command button above to simulate running it...</div></div></div>';
+
+var outputs = {
   'docker version': \`Client: Docker Engine - Community
  Version:           26.0.0
  API version:       1.45

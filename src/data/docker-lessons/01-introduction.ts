@@ -166,7 +166,9 @@ docker.io/library/node:20-alpine`
     {
       type: 'tryit',
       title: 'Container vs VM Comparison Visualizer',
-      js: `var mode = 'containers';
+      js: `document.body.innerHTML = '<div><h3 id="viz-title"></h3><button id="toggle-btn"></button><div id="viz"></div></div>';
+
+var mode = 'containers';
 
 function render() {
   var container = document.getElementById('viz');

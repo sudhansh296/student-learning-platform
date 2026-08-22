@@ -143,7 +143,28 @@ Content-Type: application/json; charset=utf-8`
     {
       type: 'tryit',
       title: 'REST API Request-Response Visualizer',
-      js: `var state = 'idle';
+      js: `document.body.innerHTML = '<div>' +
+  '<h3>REST API Request-Response Cycle</h3>' +
+  '<button id=\\"req-btn\\">Send Request</button>' +
+  '<div class=\\"boxes\\">' +
+  '<div class=\\"box client\\"><div class=\\"box-icon\\">💻</div><div class=\\"box-label\\">CLIENT</div></div>' +
+  '<div class=\\"arrows\\">' +
+  '<div class=\\"arrow-row\\"><div class=\\"arrow-track\\"><div class=\\"arrow-fill req-fill\\" id=\\"req-arrow\\"></div></div><span class=\\"arrow-label\\">→ REQUEST</span></div>' +
+  '<div class=\\"arrow-row\\"><div class=\\"arrow-track\\"><div class=\\"arrow-fill res-fill\\" id=\\"res-arrow\\"></div></div><span class=\\"arrow-label\\">← RESPONSE</span></div>' +
+  '</div>' +
+  '<div class=\\"box api\\"><div class=\\"box-icon\\">🔌</div><div class=\\"box-label\\">API</div></div>' +
+  '<div class=\\"arrows\\">' +
+  '<div class=\\"arrow-row\\"><div class=\\"arrow-track\\"><div class=\\"arrow-fill req-fill\\"></div></div></div>' +
+  '<div class=\\"arrow-row\\"><div class=\\"arrow-track\\"><div class=\\"arrow-fill res-fill\\"></div></div></div>' +
+  '</div>' +
+  '<div class=\\"box server\\"><div class=\\"box-icon\\">🖥️</div><div class=\\"box-label\\">SERVER</div></div>' +
+  '</div>' +
+  '<div class=\\"data-panel\\" id=\\"req-data\\"><strong>Request Data</strong><pre>GET /api/users HTTP/1.1\\\\nHost: api.example.com\\\\nAuthorization: Bearer token123</pre></div>' +
+  '<div class=\\"data-panel\\" id=\\"res-data\\"><strong>Response Data</strong><pre>HTTP/1.1 200 OK\\\\nContent-Type: application/json\\\\n\\\\n{ \\"users\\": [...] }</pre></div>' +
+  '<div id=\\"status-msg\\" style=\\"color:#64748b;\\">Ready to send request</div>' +
+  '</div>';
+
+var state = 'idle';
 
 function setStatus(msg, color) {
   var el = document.getElementById('status-msg');

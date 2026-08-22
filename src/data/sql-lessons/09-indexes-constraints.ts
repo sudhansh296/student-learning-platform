@@ -163,7 +163,47 @@ ALTER TABLE orders
     {
       type: 'tryit',
       title: 'Index Performance Comparison',
-      js: `const TABLE_SIZE = 100000;
+      js: `document.body.innerHTML = \`
+<style>
+body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; margin: 0; }
+h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
+p { color: #718096; font-size: 13px; margin: 0 0 16px 0; }
+.metric { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
+.metric-val { font-weight: 700; font-family: monospace; color: #1a202c; }
+.bar-wrap { margin: 16px 0 8px 0; background: #e2e8f0; border-radius: 4px; height: 20px; overflow: hidden; }
+#bar { height: 20px; border-radius: 4px; transition: width .4s, background .3s; min-width: 4px; }
+#bar-label { font-size: 11px; color: #718096; }
+#toggle { padding: 9px 18px; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; margin: 12px 0 16px; }
+#plan { font-family: monospace; font-size: 11px; background: #1a3347; color: #90cdf4; padding: 8px 12px; border-radius: 6px; display: block; }
+#status { font-size: 14px; margin-bottom: 14px; display: block; }
+</style>
+<div>
+  <h3>⚡ Index Performance Comparison</h3>
+  <p>Simulating query performance on a table with 100,000 rows</p>
+  <span id="status"></span>
+  <div class="metric">
+    <span>Rows Scanned</span>
+    <span class="metric-val" id="rows-scanned"></span>
+  </div>
+  <div class="metric">
+    <span>Rows Found</span>
+    <span class="metric-val" id="rows-found"></span>
+  </div>
+  <div class="metric">
+    <span>Execution Time</span>
+    <span class="metric-val" id="exec-time"></span>
+  </div>
+  <div class="bar-wrap">
+    <div id="bar"></div>
+  </div>
+  <div id="bar-label"></div>
+  <button id="toggle"></button>
+  <h3 style="margin-top:20px">Query Plan</h3>
+  <code id="plan"></code>
+</div>
+\`;
+
+const TABLE_SIZE = 100000;
 
 function simulateQuery(useIndex, filterType) {
   const start = performance.now();
@@ -211,17 +251,7 @@ function render() {
 
 document.getElementById('toggle').addEventListener('click', () => { showIndex = !showIndex; render(); });
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-p { color: #718096; font-size: 13px; margin: 0 0 16px 0; }
-.metric { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
-.metric-val { font-weight: 700; font-family: monospace; color: #1a202c; }
-.bar-wrap { margin: 16px 0 8px 0; background: #e2e8f0; border-radius: 4px; height: 20px; overflow: hidden; }
-#bar { height: 20px; border-radius: 4px; transition: width .4s, background .3s; min-width: 4px; }
-#bar-label { font-size: 11px; color: #718096; }
-#toggle { padding: 9px 18px; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; margin: 12px 0 16px; }
-#plan { font-family: monospace; font-size: 11px; background: #1a3347; color: #90cdf4; padding: 8px 12px; border-radius: 6px; display: block; }
-#status { font-size: 14px; margin-bottom: 14px; display: block; }`
+      css: ``
     }
   ],
   exercises: [

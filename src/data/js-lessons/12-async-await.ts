@@ -187,72 +187,111 @@ async function loadDashboard(userId) {
   ]);
   return { user, posts, stats };
 }`},
-    {type:'tryit',title:'Try It: Async/Await with Real API',
+    {type:'tryit',title:'Weather Dashboard',
      html:`<div id="app">
-  <h2>🌐 Live API Demo (async/await)</h2>
-  <div class="btns">
-    <button id="btn1" onclick="loadUser()">Load Random User</button>
-    <button id="btn2" onclick="loadPost()">Load Random Post</button>
-    <button id="btn3" onclick="loadBoth()">Load Both (Parallel)</button>
+  <div class="header">
+    <h2>🌤 Weather Dashboard</h2>
+    <p class="sub">async/await · loading states · error handling</p>
   </div>
-  <div id="status"></div>
-  <div id="result"></div>
-  <div id="time"></div>
+  <div class="city-tabs" id="cityTabs"></div>
+  <div id="main"></div>
 </div>`,
-     css:`#app{font-family:system-ui,sans-serif;padding:20px;max-width:520px;}
-h2{color:#1e1e1e;margin-bottom:12px;}
-.btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
-button{padding:9px 16px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px;}
-button:disabled{background:#94a3b8;cursor:not-allowed;}
-#status{font-size:13px;color:#6b7280;height:18px;margin-bottom:6px;}
-#result{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;font-size:13px;min-height:60px;font-family:monospace;white-space:pre-wrap;word-break:break-word;}
-#time{font-size:12px;color:#22c55e;font-weight:700;margin-top:6px;}`,
-     js:`const setStatus = msg => document.getElementById('status').textContent = msg;
-const setResult = obj => document.getElementById('result').textContent = JSON.stringify(obj, null, 2);
-const setTime   = ms  => document.getElementById('time').textContent = ms ? \`⏱ Completed in \${ms}ms\` : '';
-const setAll    = (s,r) => { setStatus(s); if(r) setResult(r); };
-const disable   = v  => document.querySelectorAll('button').forEach(b => b.disabled = v);
+     css:`*{box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:16px;background:linear-gradient(135deg,#0f172a,#1e3a5f);min-height:100vh;margin:0;}
+#app{max-width:520px;margin:0 auto;}
+.header{text-align:center;color:white;margin-bottom:16px;}
+h2{margin:0 0 4px;font-size:20px;}
+.sub{margin:0;font-size:11px;color:#94a3b8;}
+.city-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;justify-content:center;}
+.city-btn{padding:7px 14px;border:1.5px solid rgba(255,255,255,.2);border-radius:999px;background:transparent;color:white;cursor:pointer;font-size:13px;font-weight:600;transition:all .15s;}
+.city-btn.active{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.5);}
+.card{background:rgba(255,255,255,.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:20px;color:white;}
+.city-name{font-size:24px;font-weight:800;margin-bottom:2px;}
+.condition{font-size:14px;color:#94a3b8;margin-bottom:16px;}
+.temp-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.temp-main{font-size:56px;font-weight:800;line-height:1;}
+.temp-feel{font-size:13px;color:#94a3b8;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.metric{background:rgba(255,255,255,.08);border-radius:12px;padding:10px;text-align:center;}
+.metric-val{font-size:18px;font-weight:700;}
+.metric-lbl{font-size:10px;color:#94a3b8;margin-top:2px;text-transform:uppercase;letter-spacing:.05em;}
+.weather-icon{font-size:52px;line-height:1;}
+.loading{text-align:center;padding:40px;color:rgba(255,255,255,.6);}
+.spinner{font-size:32px;display:inline-block;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-card{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);}
+.forecast{display:flex;gap:6px;margin-top:14px;overflow-x:auto;padding-bottom:4px;}
+.fday{background:rgba(255,255,255,.07);border-radius:10px;padding:8px 10px;text-align:center;flex-shrink:0;min-width:62px;}
+.fday-name{font-size:10px;color:#94a3b8;margin-bottom:4px;}
+.fday-icon{font-size:18px;}
+.fday-temp{font-size:12px;font-weight:700;margin-top:2px;}`,
+     js:`const cities = [
+  { name:'New York', country:'US', lat:40.71, lon:-74.01 },
+  { name:'London', country:'GB', lat:51.51, lon:-0.13 },
+  { name:'Tokyo', country:'JP', lat:35.68, lon:139.69 },
+  { name:'Sydney', country:'AU', lat:-33.87, lon:151.21 },
+  { name:'Paris', country:'FR', lat:48.86, lon:2.35 },
+];
 
-async function loadUser() {
-  disable(true); setStatus('Fetching user...'); setTime(0);
-  const t = Date.now();
-  try {
-    const res  = await fetch('https://randomuser.me/api/');
-    const data = await res.json();
-    const u    = data.results[0];
-    setAll('✅ User loaded!', { name: u.name.first + ' ' + u.name.last, email: u.email, country: u.location.country });
-    setTime(Date.now() - t);
-  } catch(e) { setAll('❌ ' + e.message); }
-  finally { disable(false); }
+const MOCK_DATA = {
+  'New York':  { temp:22, feels:20, humidity:62, wind:14, uv:5, visibility:16, condition:'Partly Cloudy', icon:'⛅', forecast:[{d:'Mon',i:'☀',t:'24°'},{d:'Tue',i:'🌧',t:'18°'},{d:'Wed',i:'⛅',t:'21°'},{d:'Thu',i:'☀',t:'26°'},{d:'Fri',i:'🌤',t:'23°'}] },
+  'London':    { temp:14, feels:12, humidity:78, wind:22, uv:2, visibility:10, condition:'Overcast',       icon:'☁',  forecast:[{d:'Mon',i:'🌧',t:'12°'},{d:'Tue',i:'☁',t:'14°'},{d:'Wed',i:'🌦',t:'15°'},{d:'Thu',i:'☁',t:'13°'},{d:'Fri',i:'⛅',t:'16°'}] },
+  'Tokyo':     { temp:28, feels:31, humidity:80, wind:8,  uv:7, visibility:20, condition:'Humid & Sunny',  icon:'☀',  forecast:[{d:'Mon',i:'⛅',t:'27°'},{d:'Tue',i:'🌦',t:'24°'},{d:'Wed',i:'☀',t:'30°'},{d:'Thu',i:'☀',t:'29°'},{d:'Fri',i:'⛅',t:'26°'}] },
+  'Sydney':    { temp:19, feels:17, humidity:55, wind:18, uv:4, visibility:25, condition:'Clear Sky',      icon:'🌤', forecast:[{d:'Mon',i:'☀',t:'22°'},{d:'Tue',i:'🌤',t:'20°'},{d:'Wed',i:'⛅',t:'18°'},{d:'Thu',i:'🌧',t:'15°'},{d:'Fri',i:'🌤',t:'21°'}] },
+  'Paris':     { temp:17, feels:15, humidity:70, wind:10, uv:3, visibility:18, condition:'Light Drizzle',  icon:'🌦', forecast:[{d:'Mon',i:'🌧',t:'14°'},{d:'Tue',i:'🌦',t:'16°'},{d:'Wed',i:'⛅',t:'18°'},{d:'Thu',i:'☀',t:'20°'},{d:'Fri',i:'⛅',t:'17°'}] },
+};
+
+let activeCity = 'New York';
+
+function fakeDelay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function fetchWeather(cityName) {
+  setLoading();
+  await fakeDelay(700 + Math.random() * 400);
+  if (!MOCK_DATA[cityName]) throw new Error('City not found');
+  return MOCK_DATA[cityName];
 }
 
-async function loadPost() {
-  disable(true); setStatus('Fetching post...'); setTime(0);
-  const t = Date.now();
-  try {
-    const id  = Math.ceil(Math.random() * 100);
-    const res = await fetch(\`https://jsonplaceholder.typicode.com/posts/\${id}\`);
-    const post = await res.json();
-    setAll('✅ Post loaded!', { id: post.id, title: post.title, body: post.body.slice(0,80)+'...' });
-    setTime(Date.now() - t);
-  } catch(e) { setAll('❌ ' + e.message); }
-  finally { disable(false); }
+function setLoading() {
+  document.getElementById('main').innerHTML =
+    '<div class="card loading"><div class="spinner">⏳</div><br>Fetching weather data...<br><small style="color:#64748b">async/await in action</small></div>';
 }
 
-async function loadBoth() {
-  disable(true); setStatus('Loading both in parallel...'); setTime(0);
-  const t = Date.now();
+async function loadCity(cityName) {
+  activeCity = cityName;
+  renderTabs();
   try {
-    const [userData, postData] = await Promise.all([
-      fetch('https://randomuser.me/api/').then(r => r.json()),
-      fetch('https://jsonplaceholder.typicode.com/posts/1').then(r => r.json()),
-    ]);
-    const u = userData.results[0];
-    setAll('✅ Both loaded in parallel!', { user: u.name.first + ' ' + u.name.last, postTitle: postData.title });
-    setTime(Date.now() - t);
-  } catch(e) { setAll('❌ ' + e.message); }
-  finally { disable(false); }
-}`,mode:'full'},
+    const w = await fetchWeather(cityName);
+    const forecast = w.forecast.map(f => '<div class="fday"><div class="fday-name">'+f.d+'</div><div class="fday-icon">'+f.i+'</div><div class="fday-temp">'+f.t+'</div></div>').join('');
+    document.getElementById('main').innerHTML =
+      '<div class="card">' +
+        '<div class="city-name">'+cityName+'</div>' +
+        '<div class="condition">'+w.condition+'</div>' +
+        '<div class="temp-row">' +
+          '<div><div class="temp-main">'+w.temp+'°C</div><div class="temp-feel">Feels like '+w.feels+'°C</div></div>' +
+          '<div class="weather-icon">'+w.icon+'</div>' +
+        '</div>' +
+        '<div class="metrics">' +
+          '<div class="metric"><div class="metric-val">'+w.humidity+'%</div><div class="metric-lbl">Humidity</div></div>' +
+          '<div class="metric"><div class="metric-val">'+w.wind+'</div><div class="metric-lbl">Wind km/h</div></div>' +
+          '<div class="metric"><div class="metric-val">'+w.uv+'</div><div class="metric-lbl">UV Index</div></div>' +
+          '<div class="metric"><div class="metric-val">'+w.visibility+'</div><div class="metric-lbl">Visib km</div></div>' +
+        '</div>' +
+        '<div class="forecast">'+forecast+'</div>' +
+      '</div>';
+  } catch(e) {
+    document.getElementById('main').innerHTML = '<div class="card error-card"><b>❌ Error: '+e.message+'</b><br><small style="color:#fca5a5">Check your async error handling</small></div>';
+  }
+}
+
+function renderTabs() {
+  document.getElementById('cityTabs').innerHTML = cities.map(c =>
+    '<button class="city-btn'+(c.name===activeCity?' active':'')+'" onclick="loadCity(\''+c.name+'\')">'+c.name+'</button>'
+  ).join('');
+}
+
+window.loadCity = loadCity;
+renderTabs();
+loadCity('New York');`,mode:'full'},
   ],
   exercises:[
     {id:'as-1',question:'What does an async function always return?',type:'multiple-choice',options:['A regular value','A Promise','undefined','A callback'],correct:1,explanation:'Every async function automatically wraps its return value in a Promise. Even if you return a plain number, the caller receives Promise.resolve(42). This allows using .then() or await on any async function call.'},

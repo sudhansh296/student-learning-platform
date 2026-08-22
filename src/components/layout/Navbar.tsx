@@ -5,49 +5,13 @@ import { Search, Menu, X, ChevronDown, Terminal, BookOpen } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { searchTechnologies } from '@/data/technologies';
 
-// grouped learn menu — renders as a wide multi-column dropdown
-const learnGroups = [
-  {
-    heading: 'Core Languages',
-    items: [
-      { label:'HTML',       href:'/html',                        desc:'Structure & semantics' },
-      { label:'CSS',        href:'/css',                         desc:'Styling & layouts' },
-      { label:'JavaScript', href:'/js',                          desc:'Complete JS tutorial' },
-      { label:'TypeScript', href:'/learn/typescript/introduction',desc:'Typed JavaScript' },
-    ],
-  },
-  {
-    heading: 'Frontend',
-    items: [
-      { label:'React',   href:'/learn/react/introduction',   desc:'UI library by Meta' },
-      { label:'Next.js', href:'/learn/nextjs/introduction',  desc:'Full-stack React framework' },
-    ],
-  },
-  {
-    heading: 'Backend',
-    items: [
-      { label:'Node.js',    href:'/learn/nodejs/introduction',    desc:'Server-side JavaScript' },
-      { label:'Express.js', href:'/learn/express/introduction',   desc:'Fast Node.js framework' },
-      { label:'REST APIs',  href:'/learn/rest-api/01-introduction',desc:'API design & HTTP' },
-    ],
-  },
-  {
-    heading: 'Databases',
-    items: [
-      { label:'MongoDB',    href:'/learn/mongodb/introduction',       desc:'Document NoSQL database' },
-      { label:'PostgreSQL', href:'/learn/postgresql/01-introduction', desc:'Powerful SQL database' },
-      { label:'SQLite',     href:'/learn/sqlite/01-introduction',     desc:'Embedded lightweight database' },
-      { label:'Redis',      href:'/learn/redis/01-introduction',      desc:'In-memory cache and pub/sub' },
-      { label:'All databases', href:'/databases',                     desc:'SQL vs NoSQL guide' },
-    ],
-  },
-  {
-    heading: 'DevOps & Tools',
-    items: [
-      { label:'Git',    href:'/learn/git/01-introduction',    desc:'Version control' },
-      { label:'Docker', href:'/learn/docker/01-introduction', desc:'Containers & deployment' },
-    ],
-  },
+// 5 category buttons — each navigates directly to its page
+const learnCategories = [
+  { label: 'Core Languages', href: '/learn/core',     emoji: '💻' },
+  { label: 'Frontend',       href: '/learn/frontend', emoji: '🎨' },
+  { label: 'Backend',        href: '/learn/backend',  emoji: '⚙️' },
+  { label: 'Databases',      href: '/databases',      emoji: '🗄️' },
+  { label: 'DevOps & Tools', href: '/learn/devops',   emoji: '🚀' },
 ];
 
 const navItems = [
@@ -127,27 +91,27 @@ export function Navbar() {
                     </button>
 
                     {drop === 'Learn' && (
-                      <div className="absolute top-full left-0 mt-1.5 z-50 rounded-2xl py-4 px-2"
-                        style={{ background: 'var(--card)', border: '1px solid var(--line)', boxShadow: '0 8px 32px rgba(0,0,0,.14)', width: 580 }}>
-                        <div className="grid grid-cols-3 gap-x-2 gap-y-1">
-                          {learnGroups.map(group => (
-                            <div key={group.heading} className="px-2">
-                              <p className="text-[10px] font-extrabold uppercase tracking-widest mb-2 px-2"
-                                style={{ color: 'var(--text-3)' }}>{group.heading}</p>
-                              {group.items.map(c => (
-                                <Link key={c.href} href={c.href} onClick={() => setDrop(null)}
-                                  className="block px-2 py-2 rounded-lg transition-colors mb-0.5"
-                                  style={{ color: 'var(--text)' }}
-                                  onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = 'var(--bg-section)')}
-                                  onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '')}>
-                                  <p className="text-[13px] font-semibold leading-tight">{c.label}</p>
-                                  <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-3)' }}>{c.desc}</p>
-                                </Link>
-                              ))}
-                            </div>
+                      <div className="absolute top-full left-0 mt-1.5 z-50 rounded-xl py-3 px-3"
+                        style={{ background: 'var(--card)', border: '1px solid var(--line)', boxShadow: '0 8px 32px rgba(0,0,0,.14)', minWidth: 320 }}>
+                        <p className="text-[10px] font-bold uppercase tracking-widest px-1 mb-2" style={{ color: 'var(--text-3)' }}>Browse by category</p>
+                        <div className="flex flex-col gap-1">
+                          {learnCategories.map(cat => (
+                            <Link
+                              key={cat.href}
+                              href={cat.href}
+                              onClick={() => setDrop(null)}
+                              className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
+                              style={{ color: 'var(--text)' }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--bg-section)'; }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = ''; }}
+                            >
+                              <span className="text-xl">{cat.emoji}</span>
+                              <span className="text-[13px] font-semibold">{cat.label}</span>
+                              <ChevronDown className="w-3.5 h-3.5 -rotate-90 ml-auto" style={{ color: 'var(--text-3)' }} />
+                            </Link>
                           ))}
                         </div>
-                        <div className="mt-3 mx-2 pt-3" style={{ borderTop: '1px solid var(--line)' }}>
+                        <div className="mt-2 pt-2" style={{ borderTop: '1px solid var(--line)' }}>
                           <Link href="/learn" onClick={() => setDrop(null)}
                             className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-[12px] font-semibold transition-colors"
                             style={{ background: '#eff6ff', color: '#2563eb' }}

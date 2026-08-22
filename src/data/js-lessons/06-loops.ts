@@ -159,71 +159,151 @@ const result = numbers
   .map(n => n ** 2)             // square them: [4,16,36,64,100]
   .reduce((acc, n) => acc + n, 0); // sum: 220
 console.log(result); // 220` },
-    { type: 'tryit', title: 'Try It: Loops in Action',
+    { type: 'tryit', title: 'Bubble Sort Visualizer',
       html: `<div id="app">
-  <h2>Loop Visualizer</h2>
-  <div class="controls">
-    <label>Start: <input id="start" type="number" value="1" style="width:60px"></label>
-    <label>End: <input id="end" type="number" value="10" style="width:60px"></label>
-    <label>Step: <input id="step" type="number" value="1" style="width:60px"></label>
-    <button onclick="runLoop()">Run Loop</button>
+  <div class="header">
+    <h2>Bubble Sort Visualizer</h2>
+    <p class="subtitle">Watch loops and comparisons bring sorting to life</p>
   </div>
-  <div id="output"></div>
-  <hr style="margin:16px 0;border-color:#e5e7eb">
-  <h3>FizzBuzz (classic programming challenge)</h3>
-  <button onclick="fizzBuzz()">Run FizzBuzz 1-30</button>
-  <div id="fizz-output" class="fizz-grid"></div>
+  <div class="controls">
+    <button id="btn-new" onclick="generateArray()">🎲 New Array</button>
+    <button id="btn-sort" onclick="startSort()">▶ Start Sort</button>
+    <button id="btn-step" onclick="stepSort()">⏭ Step</button>
+    <button id="btn-reset" onclick="resetSort()">↺ Reset</button>
+  </div>
+  <div class="stats">
+    <span class="stat">Comparisons: <b id="comparisons">0</b></span>
+    <span class="stat">Swaps: <b id="swaps">0</b></span>
+    <span class="stat">Pass: <b id="pass">0</b></span>
+    <span class="stat" id="status-text">Ready</span>
+  </div>
+  <div id="bars-container"></div>
+  <div class="legend">
+    <span class="dot comparing"></span> Comparing
+    <span class="dot swapped"></span> Swapped
+    <span class="dot sorted"></span> Sorted
+    <span class="dot normal"></span> Unsorted
+  </div>
+  <div id="log"></div>
 </div>`,
-      css: `#app{font-family:system-ui,sans-serif;padding:20px;max-width:540px;}
-h2{color:#1e1e1e;margin-bottom:12px;}h3{font-size:14px;color:#374151;margin:0 0 10px;}
-.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:12px;}
-label{font-size:13px;color:#374151;}
-input[type=number]{padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:14px;outline:none;margin-left:4px;}
-button{padding:9px 18px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;}
-#output{background:#0d1117;color:#3fb950;padding:14px;border-radius:10px;font-family:monospace;font-size:13px;white-space:pre-wrap;min-height:50px;max-height:180px;overflow-y:auto;}
-.fizz-grid{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}
-.fizz-item{padding:4px 8px;border-radius:6px;font-size:12px;font-weight:600;}
-.fizz-fizz{background:#eff6ff;color:#1d4ed8;}
-.fizz-buzz{background:#fef3c7;color:#d97706;}
-.fizz-fizzbuzz{background:#fef2f2;color:#dc2626;}
-.fizz-num{background:#f3f4f6;color:#374151;}`,
-      js: `function runLoop() {
-  const start = parseInt(document.getElementById('start').value);
-  const end   = parseInt(document.getElementById('end').value);
-  const step  = parseInt(document.getElementById('step').value) || 1;
-  const lines = [];
-  let count = 0;
-  for (let i = start; i <= end; i += step) {
-    lines.push('i = ' + i);
-    count++;
-    if (count > 100) { lines.push('... (limited to 100 iterations)'); break; }
-  }
-  lines.push('\\nTotal iterations: ' + count);
-  document.getElementById('output').textContent = lines.join('\\n');
+      css: `*{box-sizing:border-box}
+body{font-family:system-ui,sans-serif;padding:16px;background:#f8fafc;margin:0;}
+#app{max-width:600px;margin:0 auto;}
+.header{text-align:center;margin-bottom:12px;}
+h2{color:#1e293b;margin:0 0 4px;font-size:18px;}
+.subtitle{color:#64748b;font-size:12px;margin:0;}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;justify-content:center;}
+button{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;transition:all .15s;}
+#btn-new{background:#6366f1;color:white;}
+#btn-sort{background:#22c55e;color:white;}
+#btn-step{background:#f59e0b;color:white;}
+#btn-reset{background:#64748b;color:white;}
+button:hover{filter:brightness(1.1);transform:translateY(-1px);}
+button:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px;justify-content:center;}
+.stat{background:white;border:1px solid #e2e8f0;border-radius:8px;padding:5px 12px;font-size:12px;color:#475569;}
+.stat b{color:#1e293b;}
+#status-text{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8;font-weight:600;}
+#bars-container{display:flex;align-items:flex-end;gap:3px;height:160px;background:white;border-radius:12px;padding:12px;border:1px solid #e2e8f0;margin-bottom:10px;}
+.bar{flex:1;border-radius:4px 4px 0 0;transition:height .2s,background .2s;position:relative;min-width:8px;}
+.bar.normal{background:#94a3b8;}
+.bar.comparing{background:#6366f1;}
+.bar.swapped{background:#f59e0b;}
+.bar.sorted{background:#22c55e;}
+.bar-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:#64748b;font-weight:600;}
+.legend{display:flex;gap:12px;font-size:11px;color:#64748b;margin-bottom:8px;flex-wrap:wrap;justify-content:center;}
+.dot{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:3px;}
+.dot.comparing{background:#6366f1;}
+.dot.swapped{background:#f59e0b;}
+.dot.sorted{background:#22c55e;}
+.dot.normal{background:#94a3b8;}
+#log{background:#0d1117;color:#7dd3fc;font-family:monospace;font-size:11px;padding:8px 12px;border-radius:8px;max-height:80px;overflow-y:auto;white-space:pre-wrap;}`,
+      js: `let arr = [], steps = [], stepIdx = 0, sortedUpto = -1, autoInterval = null, comparisons = 0, swaps = 0, pass = 0;
+
+function generateArray() {
+  stopAuto();
+  arr = Array.from({length: 16}, () => Math.floor(Math.random() * 90) + 10);
+  steps = []; stepIdx = 0; sortedUpto = -1; comparisons = 0; swaps = 0; pass = 0;
+  updateStats(); setStatus('Ready — click Start Sort or Step');
+  renderBars(arr, -1, -1);
+  document.getElementById('log').textContent = '';
 }
 
-function fizzBuzz() {
-  const container = document.getElementById('fizz-output');
-  container.innerHTML = '';
-  for (let i = 1; i <= 30; i++) {
-    const div = document.createElement('div');
-    div.className = 'fizz-item';
-    if (i % 15 === 0) {
-      div.textContent = 'FizzBuzz';
-      div.classList.add('fizz-fizzbuzz');
-    } else if (i % 3 === 0) {
-      div.textContent = 'Fizz';
-      div.classList.add('fizz-fizz');
-    } else if (i % 5 === 0) {
-      div.textContent = 'Buzz';
-      div.classList.add('fizz-buzz');
-    } else {
-      div.textContent = i;
-      div.classList.add('fizz-num');
+function buildSteps(a) {
+  const s = [], n = a.length;
+  const tmp = [...a];
+  for (let p = 0; p < n - 1; p++) {
+    let swapped = false;
+    for (let i = 0; i < n - 1 - p; i++) {
+      s.push({type:'compare', i, j:i+1, arr:[...tmp], pass:p+1});
+      if (tmp[i] > tmp[i+1]) {
+        [tmp[i],tmp[i+1]] = [tmp[i+1],tmp[i]];
+        s.push({type:'swap', i, j:i+1, arr:[...tmp], pass:p+1});
+        swapped = true;
+      }
     }
-    container.appendChild(div);
+    s.push({type:'pass_done', sorted: n-1-p, arr:[...tmp], pass:p+1});
+    if (!swapped) break;
   }
-}`,
+  s.push({type:'done', arr:[...tmp]});
+  return s;
+}
+
+function renderBars(a, hi, hj, sortedFrom) {
+  const c = document.getElementById('bars-container');
+  const max = Math.max(...a);
+  c.innerHTML = a.map((v,i) => {
+    let cls = 'normal';
+    if (sortedFrom !== undefined && i >= sortedFrom) cls = 'sorted';
+    if (i === hi) cls = 'comparing';
+    if (i === hj) cls = 'swapped';
+    const h = Math.max(12, Math.round((v/max)*130));
+    return '<div class="bar ' + cls + '" style="height:' + h + 'px"><span class="bar-label">' + v + '</span></div>';
+  }).join('');
+}
+
+function stepSort() {
+  if (!steps.length) { steps = buildSteps([...arr]); stepIdx = 0; }
+  if (stepIdx >= steps.length) { setStatus('✅ Sorted!'); return; }
+  const s = steps[stepIdx++];
+  if (s.type === 'compare') { comparisons++; pass = s.pass; renderBars(s.arr, s.i, s.j, arr.length - s.pass); log('Pass ' + s.pass + ': compare[' + s.i + ']=' + s.arr[s.i] + ' vs [' + s.j + ']=' + s.arr[s.j]); setStatus('Comparing index ' + s.i + ' and ' + s.j); }
+  else if (s.type === 'swap') { swaps++; renderBars(s.arr, s.j, s.i, arr.length - s.pass); log('  → Swap! ' + s.arr[s.j] + ' ↔ ' + s.arr[s.i]); setStatus('Swapping!'); }
+  else if (s.type === 'pass_done') { sortedUpto = s.sorted; renderBars(s.arr, -1, -1, sortedUpto); log('Pass ' + s.pass + ' done — position ' + sortedUpto + ' sorted'); setStatus('Pass ' + s.pass + ' complete'); }
+  else if (s.type === 'done') { renderBars(s.arr, -1, -1, 0); setStatus('✅ Fully sorted!'); stopAuto(); log('=== Sorting complete! ' + comparisons + ' comparisons, ' + swaps + ' swaps ==='); }
+  updateStats();
+}
+
+function startSort() {
+  if (autoInterval) { stopAuto(); return; }
+  if (!steps.length) steps = buildSteps([...arr]);
+  document.getElementById('btn-sort').textContent = '⏸ Pause';
+  autoInterval = setInterval(() => { if (stepIdx >= steps.length) stopAuto(); else stepSort(); }, 120);
+}
+
+function stopAuto() { clearInterval(autoInterval); autoInterval = null; document.getElementById('btn-sort').textContent = '▶ Start Sort'; }
+
+function resetSort() {
+  stopAuto();
+  steps = []; stepIdx = 0; comparisons = 0; swaps = 0; pass = 0; sortedUpto = -1;
+  updateStats(); renderBars(arr, -1, -1); setStatus('Reset — ready');
+  document.getElementById('log').textContent = '';
+}
+
+function updateStats() {
+  document.getElementById('comparisons').textContent = comparisons;
+  document.getElementById('swaps').textContent = swaps;
+  document.getElementById('pass').textContent = pass;
+}
+
+function setStatus(msg) { document.getElementById('status-text').textContent = msg; }
+
+function log(msg) {
+  const el = document.getElementById('log');
+  el.textContent += msg + '\\n';
+  el.scrollTop = el.scrollHeight;
+}
+
+generateArray();`,
       mode: 'full' },
   ],
   exercises: [

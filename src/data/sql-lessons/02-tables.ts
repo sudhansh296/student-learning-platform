@@ -159,7 +159,17 @@ ALTER TABLE users DROP COLUMN bio;`,
     {
       type: 'tryit',
       title: 'SQL Data Types Showcase',
-      js: `const types = [
+      js: `// Initialize HTML structure
+document.body.innerHTML = \`
+  <div style="padding:20px;font-family:system-ui,sans-serif;background:#f7fafc">
+    <h3 style="color:#336791;margin:0 0 6px 0;font-size:15px;font-weight:700">SQL Data Types Reference</h3>
+    <p style="color:#718096;font-size:13px;margin:0 0 14px 0">Click category filters to explore different types of SQL data</p>
+    <div id="filters"></div>
+    <div id="grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px"></div>
+  </div>
+\`;
+
+const types = [
   { name: 'INTEGER', category: 'Numeric', example: '42', note: 'Whole numbers' },
   { name: 'DECIMAL(10,2)', category: 'Numeric', example: '19.99', note: 'Exact decimals (money)' },
   { name: 'FLOAT', category: 'Numeric', example: '3.14159', note: 'Approx. floating point' },
@@ -193,11 +203,7 @@ function render() {
 
 window.setFilter = function(c) { filter = c; render(); };
 render();`,
-      css: `body { padding: 20px; font-family: system-ui, sans-serif; background: #f7fafc; }
-h3 { color: #336791; margin: 0 0 6px 0; font-size: 15px; font-weight: 700; }
-p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
-#filters { margin-bottom: 12px; }
-#grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }`
+      css: ``
     }
   ],
   exercises: [

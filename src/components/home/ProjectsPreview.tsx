@@ -1,62 +1,208 @@
 import Link from 'next/link';
-import { ArrowRight, Clock } from 'lucide-react';
+import { ArrowRight, Clock, Play, Code2, Globe } from 'lucide-react';
 
 const projects = [
-  { title: 'To-Do List App',        diff: 'beginner',     time: '2–4 hrs',  techs: ['HTML', 'CSS', 'JS'],              desc: 'Task manager with add, complete, delete. Persist with localStorage.', accent: '#10B981' },
-  { title: 'REST API with Node.js', diff: 'intermediate', time: '8–12 hrs', techs: ['Node.js', 'Express', 'MongoDB'],  desc: 'Full CRUD API with JWT auth, middleware, error handling.',             accent: '#3B82F6' },
-  { title: 'Real-time Chat App',    diff: 'advanced',     time: '20–30 hrs',techs: ['React', 'Socket.io', 'Node.js'],  desc: 'Live group chat with rooms, typing indicators, message history.',      accent: '#8B5CF6' },
+  {
+    slug: 'todo-app',
+    title: 'Task Manager App',
+    diff: 'beginner',
+    time: '4-6 hrs',
+    techs: ['HTML', 'CSS', 'JS'],
+    desc: 'Full task manager with priorities, categories, due dates, filters, dark mode and localStorage.',
+    accent: '#10B981',
+    type: 'frontend',
+    features: ['Live preview', 'Dark mode', 'localStorage'],
+  },
+  {
+    slug: 'quiz-app',
+    title: 'Web Dev Quiz App',
+    diff: 'beginner',
+    time: '4-6 hrs',
+    techs: ['HTML', 'CSS', 'JS'],
+    desc: '30 questions with timer, difficulty levels, animated score ring and answer review mode.',
+    accent: '#7C3AED',
+    type: 'frontend',
+    features: ['30 questions', 'Timer ring', 'Review mode'],
+  },
+  {
+    slug: 'weather-app',
+    title: 'Weather Dashboard',
+    diff: 'beginner',
+    time: '3-5 hrs',
+    techs: ['HTML', 'CSS', 'JS'],
+    desc: 'Live weather with 5-day forecast, hourly chart, AQI bar, unit toggle and dark mode.',
+    accent: '#0EA5E9',
+    type: 'frontend',
+    features: ['Live preview', 'AQI chart', 'Unit toggle'],
+  },
+  {
+    slug: 'expense-tracker',
+    title: 'Expense Tracker',
+    diff: 'intermediate',
+    time: '6-8 hrs',
+    techs: ['HTML', 'CSS', 'JS'],
+    desc: 'Track income and expenses with category charts, filters, inline edit and savings rate.',
+    accent: '#F59E0B',
+    type: 'frontend',
+    features: ['Live preview', 'Bar charts', 'Savings rate'],
+  },
+  {
+    slug: 'blog-platform',
+    title: 'Blog Platform',
+    diff: 'intermediate',
+    time: '8-12 hrs',
+    techs: ['HTML', 'CSS', 'JS'],
+    desc: 'Full blog with read/write posts, category filter, search, view counts and dark mode.',
+    accent: '#6366F1',
+    type: 'frontend',
+    features: ['Live preview', 'Write posts', 'View counts'],
+  },
+  {
+    slug: 'ecommerce',
+    title: 'E-commerce Store',
+    diff: 'advanced',
+    time: '30-50 hrs',
+    techs: ['HTML', 'CSS', 'JS'],
+    desc: 'Amazon-style store with 20 products, cart, wishlist, 3-step checkout, auth and dark mode.',
+    accent: '#EF4444',
+    type: 'frontend',
+    features: ['Live preview', '20 products', 'Checkout flow'],
+  },
 ];
 
-const diffS: Record<string, { bg: string; color: string }> = {
-  beginner:     { bg: '#f0fdf4', color: '#15803d' },
-  intermediate: { bg: '#eff6ff', color: '#1d4ed8' },
-  advanced:     { bg: '#f5f3ff', color: '#6d28d9' },
+const diffConfig: Record<string, { label: string; bg: string; color: string }> = {
+  beginner:     { label: 'Beginner',     bg: '#f0fdf4', color: '#15803d' },
+  intermediate: { label: 'Intermediate', bg: '#eff6ff', color: '#1d4ed8' },
+  advanced:     { label: 'Advanced',     bg: '#fef3c7', color: '#b45309' },
+};
+
+const typeIcon: Record<string, React.ReactNode> = {
+  frontend: <Play className="w-3 h-3" />,
+  backend:  <Code2 className="w-3 h-3" />,
+  fullstack:<Globe className="w-3 h-3" />,
 };
 
 export function ProjectsPreview() {
   return (
-    <section className="py-12" style={{ background: 'var(--bg)', borderBottom: '1px solid var(--line)' }}>
+    <section className="py-16" style={{ background: 'var(--bg)', borderBottom: '1px solid var(--line)' }}>
       <div className="max-w-screen-xl mx-auto px-4 lg:px-6">
-        <div className="flex items-end justify-between mb-6">
+
+        {/* Header */}
+        <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="text-xl font-extrabold" style={{ color: 'var(--text)' }}>Build Real Projects</h2>
-            <p className="text-[13px] mt-0.5" style={{ color: 'var(--text-3)' }}>The fastest way to learn is by building something real</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: '#2563eb' }}>
+              Build Real Projects
+            </p>
+            <h2 className="text-2xl font-extrabold tracking-tight" style={{ color: 'var(--text)' }}>
+              Learn by building
+            </h2>
+            <p className="text-[14px] mt-1" style={{ color: 'var(--text-3)' }}>
+              Each project runs live in your browser — edit, break, and rebuild it.
+            </p>
           </div>
-          <Link href="/projects" className="flex items-center gap-1.5 text-[13px] font-bold hover:underline underline-offset-2" style={{ color: '#2563eb' }}>
-            All projects <ArrowRight className="w-3.5 h-3.5" />
+          <Link
+            href="/projects"
+            className="hidden sm:flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-lg transition-colors"
+            style={{ color: '#2563eb', border: '1px solid #2563eb20', background: '#2563eb08' }}
+          >
+            View all 11 projects <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {projects.map(p => (
-            <div key={p.title}
-              className="relative flex flex-col p-5 rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-0.5"
-              style={{ background: 'var(--card)', border: '1px solid var(--line)' }}>
-              <div className="absolute top-0 inset-x-0 h-0.5 rounded-t-2xl" style={{ background: p.accent }} />
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <h3 className="font-bold text-sm" style={{ color: 'var(--text)' }}>{p.title}</h3>
-                <span className="flex items-center gap-1 text-[11px] shrink-0" style={{ color: 'var(--text-3)' }}>
-                  <Clock className="w-3 h-3" />{p.time}
-                </span>
-              </div>
-              <p className="text-[13px] leading-relaxed mb-4 flex-1" style={{ color: 'var(--text-2)' }}>{p.desc}</p>
-              <div className="flex items-center justify-between">
+        {/* Grid — 3 cols on large, 2 on medium, 1 on small */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {projects.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/projects/${p.slug}`}
+              className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+              style={{ background: 'var(--card)', border: '1px solid var(--line)', textDecoration: 'none' }}
+            >
+              {/* Color top bar */}
+              <div className="h-1 w-full shrink-0" style={{ background: p.accent }} />
+
+              {/* Colored header band */}
+              <div
+                className="px-5 pt-5 pb-4"
+                style={{ background: `${p.accent}12` }}
+              >
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-[15px] leading-snug group-hover:underline underline-offset-2"
+                    style={{ color: 'var(--text)' }}>
+                    {p.title}
+                  </h3>
+                  <span
+                    className="flex items-center gap-1 text-[10px] font-semibold shrink-0 px-2 py-0.5 rounded-full"
+                    style={{ background: diffConfig[p.diff].bg, color: diffConfig[p.diff].color }}
+                  >
+                    {diffConfig[p.diff].label}
+                  </span>
+                </div>
+
+                {/* Tech badges */}
                 <div className="flex gap-1.5 flex-wrap">
                   {p.techs.map(t => (
-                    <span key={t} className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md"
-                      style={{ background: 'var(--bg-section)', color: 'var(--text-2)', border: '1px solid var(--line)' }}>
+                    <span
+                      key={t}
+                      className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-md"
+                      style={{ background: 'var(--bg-section)', color: 'var(--text-2)', border: '1px solid var(--line)' }}
+                    >
                       {t}
                     </span>
                   ))}
                 </div>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full capitalize"
-                  style={{ background: diffS[p.diff].bg, color: diffS[p.diff].color }}>
-                  {p.diff}
-                </span>
               </div>
-            </div>
+
+              {/* Body */}
+              <div className="px-5 py-4 flex-1 flex flex-col">
+                <p className="text-[13px] leading-relaxed mb-4 flex-1" style={{ color: 'var(--text-2)' }}>
+                  {p.desc}
+                </p>
+
+                {/* Feature pills */}
+                <div className="flex gap-2 flex-wrap mb-4">
+                  {p.features.map(f => (
+                    <span
+                      key={f}
+                      className="text-[11px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1"
+                      style={{ background: `${p.accent}15`, color: p.accent, border: `1px solid ${p.accent}30` }}
+                    >
+                      {f === 'Live preview' && typeIcon[p.type]}
+                      {f}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Footer row */}
+                <div className="flex items-center justify-between pt-3"
+                  style={{ borderTop: '1px solid var(--line)' }}>
+                  <span className="flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-3)' }}>
+                    <Clock className="w-3 h-3" />
+                    {p.time}
+                  </span>
+                  <span
+                    className="flex items-center gap-1 text-[12px] font-bold transition-colors"
+                    style={{ color: p.accent }}
+                  >
+                    Open Project <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
+
+        {/* Mobile CTA */}
+        <div className="mt-6 flex justify-center sm:hidden">
+          <Link
+            href="/projects"
+            className="flex items-center gap-1.5 text-[13px] font-bold px-5 py-2.5 rounded-lg"
+            style={{ color: '#2563eb', border: '1px solid #2563eb40', background: '#2563eb08' }}
+          >
+            View all 11 projects <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
       </div>
     </section>
   );

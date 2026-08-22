@@ -210,7 +210,9 @@ CMD ["node", "dist/server.js"]`,
     {
       type: 'tryit',
       title: 'Dockerfile Builder',
-      js: `var dockerfile = [];
+      js: `document.body.innerHTML = '<div><h3>Dockerfile Builder</h3><div class="controls"><select id="instr-select"><option value="FROM">FROM</option><option value="WORKDIR">WORKDIR</option><option value="COPY">COPY</option><option value="RUN">RUN</option><option value="ENV">ENV</option><option value="EXPOSE">EXPOSE</option><option value="CMD">CMD</option></select><input type="text" id="instr-value" placeholder="node:20-alpine" /><button id="add-btn" class="btn">Add</button><button id="load-btn" class="btn">Load Example</button><button id="reset-btn" class="btn">Reset</button></div><pre id="dockerfile-preview"></pre></div>';
+
+var dockerfile = [];
 var instructions = {
   FROM:    function(v) { return 'FROM ' + v; },
   WORKDIR: function(v) { return 'WORKDIR ' + v; },
@@ -218,7 +220,7 @@ var instructions = {
   RUN:     function(v) { return 'RUN ' + v; },
   ENV:     function(v) { return 'ENV ' + v; },
   EXPOSE:  function(v) { return 'EXPOSE ' + v; },
-  CMD:     function(v) { return 'CMD ["' + v.split(' ').join('", "') + '"]'; }
+  CMD:     function(v) { return 'CMD [' + v.split(' ').map(function(p) { return '\\"' + p + '\\"'; }).join(', ') + ']'; }
 };
 
 var defaults = {
@@ -237,7 +239,7 @@ function renderDockerfile() {
     pre.textContent = '# Your Dockerfile will appear here...';
     return;
   }
-  pre.textContent = dockerfile.join('\n');
+  pre.textContent = dockerfile.join('\\n');
 }
 
 document.getElementById('add-btn').addEventListener('click', function() {
@@ -263,7 +265,7 @@ document.getElementById('load-btn').addEventListener('click', function() {
     'COPY . .',
     'ENV NODE_ENV=production',
     'EXPOSE 3000',
-    'CMD ["node", "server.js"]'
+    'CMD [\\"node\\", \\"server.js\\"]'
   ];
   renderDockerfile();
 });

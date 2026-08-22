@@ -161,7 +161,7 @@ console.log('Uptime:', Math.round(os.uptime() / 3600), 'hours');`,
 .result{background:#0f172a;border-radius:8px;padding:10px;font-family:monospace;font-size:12px;color:#4ade80;min-height:30px;}
 .method-badge{display:inline-block;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-right:6px;}`,
       js: `function pathJoin(parts) {
-  return parts.filter(Boolean).join('/').replace(/\/+/g, '/');
+  return parts.filter(Boolean).join('/').replace(/\\/+/g, '/');
 }
 function pathDirname(p) {
   var idx = p.lastIndexOf('/');
@@ -181,11 +181,11 @@ function runDemo(type) {
   var inputEl = document.getElementById('path-input');
   var p = inputEl ? inputEl.value : '/users/alex/documents/notes.txt';
   var results = {
-    dirname: 'path.dirname("' + p + '") => ' + pathDirname(p),
-    basename: 'path.basename("' + p + '") => ' + pathBasename(p),
-    extname: 'path.extname("' + p + '") => ' + pathExtname(p),
-    join: 'path.join(__dirname, "data", "file.json") => /app/data/file.json',
-    parse: 'path.parse("' + p + '") => { dir: "' + pathDirname(p) + '", base: "' + pathBasename(p) + '", ext: "' + pathExtname(p) + '", name: "' + pathBasename(p).replace(pathExtname(p), '') + '" }'
+    dirname: 'path.dirname(\\"' + p + '\\") => ' + pathDirname(p),
+    basename: 'path.basename(\\"' + p + '\\") => ' + pathBasename(p),
+    extname: 'path.extname(\\"' + p + '\\") => ' + pathExtname(p),
+    join: 'path.join(__dirname, \\"data\\", \\"file.json\\") => /app/data/file.json',
+    parse: 'path.parse(\\"' + p + '\\") => { dir: \\"' + pathDirname(p) + '\\", base: \\"' + pathBasename(p) + '\\", ext: \\"' + pathExtname(p) + '\\", name: \\"' + pathBasename(p).replace(pathExtname(p), '') + '\\" }'
   };
   var box = document.getElementById('result-box');
   if (box) box.textContent = results[type] || '';
@@ -193,18 +193,18 @@ function runDemo(type) {
 
 function render() {
   document.getElementById('output').innerHTML =
-    '<div class="card">' +
+    '<div class=\\"card\\">' +
     '<h3>Try path methods on a file path</h3>' +
-    '<div class="input-row"><input id="path-input" value="/users/alex/documents/notes.txt" />' +
+    '<div class=\\"input-row\\"><input id=\\"path-input\\" value=\\"/users/alex/documents/notes.txt\\" />' +
     '</div>' +
-    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">' +
-    '<button class="btn" data-type="dirname">dirname</button>' +
-    '<button class="btn" data-type="basename">basename</button>' +
-    '<button class="btn" data-type="extname">extname</button>' +
-    '<button class="btn" data-type="join">join example</button>' +
-    '<button class="btn" data-type="parse">parse</button>' +
+    '<div style=\\"display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px\\">' +
+    '<button class=\\"btn\\" data-type=\\"dirname\\">dirname</button>' +
+    '<button class=\\"btn\\" data-type=\\"basename\\">basename</button>' +
+    '<button class=\\"btn\\" data-type=\\"extname\\">extname</button>' +
+    '<button class=\\"btn\\" data-type=\\"join\\">join example</button>' +
+    '<button class=\\"btn\\" data-type=\\"parse\\">parse</button>' +
     '</div>' +
-    '<div class="result" id="result-box">Click a method to see its output...</div>' +
+    '<div class=\\"result\\" id=\\"result-box\\">Click a method to see its output...</div>' +
     '</div>';
 
   document.querySelectorAll('[data-type]').forEach(function(btn) {

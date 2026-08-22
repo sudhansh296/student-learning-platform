@@ -175,7 +175,20 @@ f4d1b33 HEAD@{2}: commit: Refactor authentication`
     {
       type: 'tryit',
       title: 'Undo Operations Simulator',
-      js: `const initial = [
+      js: `document.body.innerHTML = \`
+  <h3>Git Undo Simulator</h3>
+  <div id="status-msg"></div>
+  <span id="staged-badge"></span>
+  <div class="buttons">
+    <button id="restore-btn">git restore</button>
+    <button id="soft-btn">git reset --soft</button>
+    <button id="hard-btn">git reset --hard</button>
+    <button id="revert-btn">git revert</button>
+  </div>
+  <div id="commit-list"></div>
+\`;
+
+const initial = [
   { hash: 'a3f9c12', msg: 'Add dark mode', modified: false },
   { hash: 'b8e2a01', msg: 'Fix login', modified: false },
   { hash: 'f4d1b33', msg: 'Initial setup', modified: false }
@@ -188,10 +201,10 @@ let status = 'Clean working directory.';
 function render() {
   const list = document.getElementById('commit-list');
   list.innerHTML = commits.map((c, i) =>
-    \`<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:6px;margin-bottom:5px">
-      <span style="background:#F05032;color:white;padding:2px 7px;border-radius:4px;font-family:monospace;font-size:10px">\${c.hash.slice(0,7)}</span>
-      <span style="font-size:13px;\${c.modified?'color:#F05032;font-style:italic':''}">\${c.msg}\${c.modified?' (modified)':''}</span>
-      \${i===0?'<span style="margin-left:auto;background:#4CAF50;color:white;font-size:10px;padding:2px 6px;border-radius:4px">HEAD</span>':''}
+    \`<div style=\\"display:flex;align-items:center;gap:10px;padding:10px 12px;background:\${i===0?'#fff5f2':'#f8f9fa'};border:1px solid \${i===0?'#F05032':'#dee2e6'};border-radius:6px;margin-bottom:5px\\">
+      <span style=\\"background:#F05032;color:white;padding:2px 7px;border-radius:4px;font-family:monospace;font-size:10px\\">\${c.hash.slice(0,7)}</span>
+      <span style=\\"font-size:13px;\${c.modified?'color:#F05032;font-style:italic':''}\\">\${c.msg}\${c.modified?' (modified)':''}</span>
+      \${i===0?'<span style=\\"margin-left:auto;background:#4CAF50;color:white;font-size:10px;padding:2px 6px;border-radius:4px\\">HEAD</span>':''}
     </div>\`
   ).join('');
   document.getElementById('status-msg').textContent = status;
@@ -210,7 +223,7 @@ document.getElementById('soft-btn').addEventListener('click', function() {
   if (commits.length <= 1) { status = 'Nothing to reset.'; render(); return; }
   staged = true;
   const removed = commits.shift();
-  status = 'git reset --soft: commit "' + removed.msg + '" undone, changes kept staged.';
+  status = 'git reset --soft: commit \\"' + removed.msg + '\\" undone, changes kept staged.';
   render();
 });
 
@@ -218,13 +231,13 @@ document.getElementById('hard-btn').addEventListener('click', function() {
   if (commits.length <= 1) { status = 'Nothing to reset.'; render(); return; }
   const removed = commits.shift();
   staged = false;
-  status = 'git reset --hard: commit "' + removed.msg + '" and all changes permanently removed.';
+  status = 'git reset --hard: commit \\"' + removed.msg + '\\" and all changes permanently removed.';
   render();
 });
 
 document.getElementById('revert-btn').addEventListener('click', function() {
   const hash = Math.random().toString(16).slice(2, 9);
-  commits.unshift({ hash, msg: 'Revert "' + commits[0].msg + '"', modified: false });
+  commits.unshift({ hash, msg: 'Revert \\"' + commits[0].msg + '\\"', modified: false });
   status = 'git revert: new undo commit created safely. History preserved.';
   render();
 });

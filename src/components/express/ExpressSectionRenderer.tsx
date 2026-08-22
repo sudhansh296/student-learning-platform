@@ -18,31 +18,22 @@ function CopyCodeBtn({ code }: { code: string }) {
 
 function ExpressPlayground({ js, css, title }: { js: string; css: string; title?: string }) {
   const [code, setCode] = useState(js);
-  const [blobUrl, setBlobUrl] = useState('');
   const [fullscreen, setFullscreen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const prevUrl = useRef('');
 
-  const makeUrl = useCallback((j: string, c: string) => {
-    if (prevUrl.current) URL.revokeObjectURL(prevUrl.current);
-    const html = '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
-      '<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;font-size:14px;line-height:1.6}' + c + '</style>' +
-      '</head><body><div id="output"></div><script>' + j + '<\/script></body></html>';
-    const bytes = new TextEncoder().encode(html);
-    const blob = new Blob([bytes], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    prevUrl.current = url;
-    return url;
+  const buildDoc = useCallback((j: string, c: string) => {
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;font-size:14px;line-height:1.6}${c}</style>
+</head><body><div id="output"></div><script>
+window.onerror=(m,_,ln)=>{document.body.innerHTML+='<p style="color:red;font-size:12px;padding:8px">Error: '+m+'</p>';return false};
+try{${j}}catch(e){document.body.innerHTML+='<p style="color:red;font-size:12px;padding:8px">Error: '+e.message+'</p>';}
+<\/script></body></html>`;
   }, []);
 
-  useEffect(() => {
-    setBlobUrl(makeUrl(js, css));
-    return () => { if (prevUrl.current) URL.revokeObjectURL(prevUrl.current); };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [srcDoc, setSrcDoc] = useState(() => buildDoc(js, css));
 
-  const run = () => setBlobUrl(makeUrl(code, css));
-  const reset = () => { setCode(js); setBlobUrl(makeUrl(js, css)); };
+  const run = () => setSrcDoc(buildDoc(code, css));
+  const reset = () => { setCode(js); setSrcDoc(buildDoc(js, css)); };
   const copy = async () => { await navigator.clipboard.writeText(code).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 1800); };
 
   return (
@@ -83,8 +74,8 @@ function ExpressPlayground({ js, css, title }: { js: string; css: string; title?
                 <Play className="w-3 h-3" /> Run
               </button>
             </div>
-            {blobUrl
-              ? <iframe src={blobUrl} className="flex-1 border-0 w-full bg-white" sandbox="allow-scripts allow-same-origin" title="Express Preview" />
+            {srcDoc
+              ? <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white" sandbox="allow-scripts allow-same-origin" title="Express Preview" />
               : <div className="flex-1 bg-gray-50 flex items-center justify-center text-xs text-gray-400">Loading preview...</div>
             }
           </div>

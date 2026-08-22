@@ -223,89 +223,130 @@ const [user,    setUser]    = useState(null);         // null`,
     },
     {
       type: 'tryit',
-      title: 'Try It: useState Counter and Todo',
-      css: `body { font-family: system-ui, sans-serif; padding: 20px; background: #f8fafc; }
-.section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
-h3 { margin: 0 0 12px; font-size: 15px; color: #374151; }
-.counter-row { display: flex; align-items: center; gap: 12px; }
-.count-num { font-size: 32px; font-weight: 800; min-width: 60px; text-align: center; }
-button { padding: 8px 14px; background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; }
-.btn-red { background: #dc2626; }
-.btn-gray { background: #6b7280; }
-.input-row { display: flex; gap: 8px; margin-bottom: 12px; }
-input { flex: 1; padding: 8px 12px; border: 1.5px solid #e5e7eb; border-radius: 6px; font-size: 14px; outline: none; }
-input:focus { border-color: #2563eb; }
-ul { list-style: none; padding: 0; margin: 0; }
-li { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 6px; margin-bottom: 4px; background: #f9fafb; font-size: 14px; }
-.del-btn { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 16px; padding: 2px 6px; }
-.del-btn:hover { color: #dc2626; }`,
-      jsx: `function CounterSection() {
-  const [count, setCount] = React.useState(0);
-  const color = count > 0 ? '#16a34a' : count < 0 ? '#dc2626' : '#2563eb';
+      title: 'Try It: Kanban Task Board',
+      css: `body { font-family: system-ui, sans-serif; padding: 16px; background: #f0f4ff; }
+h2 { margin: 0 0 14px; font-size: 17px; color: #1e293b; }
+.board { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.col { background: white; border-radius: 12px; padding: 12px; border: 1px solid #e2e8f0; min-height: 260px; }
+.col-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.col-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.col-count { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 999px; }
+.col-todo .col-title { color: #6366f1; } .col-todo .col-count { background: #ede9fe; color: #6d28d9; }
+.col-progress .col-title { color: #f59e0b; } .col-progress .col-count { background: #fef3c7; color: #d97706; }
+.col-done .col-title { color: #22c55e; } .col-done .col-count { background: #dcfce7; color: #15803d; }
+.task { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; font-size: 13px; color: #1e293b; }
+.task-row { display: flex; align-items: flex-start; gap: 4px; }
+.task-text { flex: 1; line-height: 1.4; }
+.task-btns { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+.tb { background: none; border: none; cursor: pointer; font-size: 10px; padding: 2px 4px; border-radius: 3px; color: #94a3b8; }
+.tb:hover { background: #e2e8f0; color: #475569; }
+.tb.del { color: #fca5a5; } .tb.del:hover { background: #fee2e2; color: #dc2626; }
+.add-row { display: flex; gap: 6px; margin-top: 8px; }
+.add-row input { flex: 1; padding: 6px 8px; border: 1.5px solid #e2e8f0; border-radius: 6px; font-size: 12px; outline: none; }
+.add-row input:focus { border-color: #6366f1; }
+.add-row button { padding: 6px 10px; background: #6366f1; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 700; }
+.empty { color: #cbd5e1; font-size: 11px; text-align: center; padding: 20px 0; }`,
+      jsx: `const COLS = ['Todo', 'In Progress', 'Done'];
+const COL_KEYS = ['todo', 'progress', 'done'];
 
+const INITIAL = {
+  todo:     [{id:1,text:'Learn React hooks'},{id:2,text:'Build a todo app'},{id:3,text:'Study useEffect'}],
+  progress: [{id:4,text:'Master useState'},{id:5,text:'CSS Grid layout'}],
+  done:     [{id:6,text:'Set up dev environment'},{id:7,text:'Learn JSX syntax'}],
+};
+
+function TaskCard({ task, colIdx, onMove, onDelete }) {
   return (
-    <div className="section">
-      <h3>Counter (useState)</h3>
-      <div className="counter-row">
-        <button className="btn-red" onClick={() => setCount(prev => prev - 1)}>−</button>
-        <div className="count-num" style={{ color }}>{count}</div>
-        <button onClick={() => setCount(prev => prev + 1)}>+</button>
-        <button className="btn-gray" onClick={() => setCount(0)}>Reset</button>
+    <div className="task">
+      <div className="task-row">
+        <span className="task-text">{task.text}</span>
+        <div className="task-btns">
+          {colIdx > 0 && <button className="tb" onClick={() => onMove(task.id, colIdx, colIdx-1)}>◀</button>}
+          {colIdx < COLS.length-1 && <button className="tb" onClick={() => onMove(task.id, colIdx, colIdx+1)}>▶</button>}
+          <button className="tb del" onClick={() => onDelete(task.id, colIdx)}>✕</button>
+        </div>
       </div>
     </div>
   );
 }
 
-function TodoSection() {
-  const [todos, setTodos] = React.useState(['Learn React', 'Build something']);
+function Column({ colIdx, tasks, onMove, onDelete, onAdd }) {
   const [input, setInput] = React.useState('');
+  const key = COL_KEYS[colIdx];
+  const colors = ['col-todo','col-progress','col-done'];
 
-  function addTodo() {
-    const trimmed = input.trim();
-    if (!trimmed) return;
-    setTodos(prev => [...prev, trimmed]);
+  function handleAdd(e) {
+    e.preventDefault();
+    if (!input.trim()) return;
+    onAdd(colIdx, input.trim());
     setInput('');
   }
 
-  function removeTodo(i) {
-    setTodos(prev => prev.filter((_, idx) => idx !== i));
+  return (
+    <div className={"col " + colors[colIdx]}>
+      <div className="col-header">
+        <span className="col-title">{COLS[colIdx]}</span>
+        <span className="col-count">{tasks.length}</span>
+      </div>
+      {tasks.length === 0 && <div className="empty">Drop tasks here</div>}
+      {tasks.map(t => (
+        <TaskCard key={t.id} task={t} colIdx={colIdx} onMove={onMove} onDelete={onDelete} />
+      ))}
+      <form className="add-row" onSubmit={handleAdd}>
+        <input value={input} onChange={e => setInput(e.target.value)} placeholder="Add task..." />
+        <button type="submit">+</button>
+      </form>
+    </div>
+  );
+}
+
+function KanbanBoard() {
+  const [board, setBoard] = React.useState(INITIAL);
+  const [nextId, setNextId] = React.useState(8);
+
+  function moveTask(taskId, fromIdx, toIdx) {
+    const fromKey = COL_KEYS[fromIdx], toKey = COL_KEYS[toIdx];
+    setBoard(prev => {
+      const task = prev[fromKey].find(t => t.id === taskId);
+      return {
+        ...prev,
+        [fromKey]: prev[fromKey].filter(t => t.id !== taskId),
+        [toKey]: [...prev[toKey], task],
+      };
+    });
   }
 
-  return (
-    <div className="section">
-      <h3>Todo List (array state)</h3>
-      <div className="input-row">
-        <input
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && addTodo()}
-          placeholder="New todo..."
-        />
-        <button onClick={addTodo}>Add</button>
-      </div>
-      <ul>
-        {todos.map((t, i) => (
-          <li key={i}>
-            {t}
-            <button className="del-btn" onClick={() => removeTodo(i)}>✕</button>
-          </li>
-        ))}
-      </ul>
-      {todos.length === 0 && <p style={{ color: '#9ca3af', fontSize: 13 }}>No todos yet!</p>}
-    </div>
-  );
-}
+  function deleteTask(taskId, colIdx) {
+    const key = COL_KEYS[colIdx];
+    setBoard(prev => ({ ...prev, [key]: prev[key].filter(t => t.id !== taskId) }));
+  }
 
-function App() {
+  function addTask(colIdx, text) {
+    const key = COL_KEYS[colIdx];
+    setBoard(prev => ({ ...prev, [key]: [...prev[key], { id: nextId, text }] }));
+    setNextId(n => n + 1);
+  }
+
+  const total = COL_KEYS.reduce((s,k) => s + board[k].length, 0);
+  const done  = board.done.length;
+
   return (
     <div>
-      <CounterSection />
-      <TodoSection />
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
+        <h2>⚛️ Kanban Board (useState)</h2>
+        <span style={{fontSize:12,color:'#64748b',fontWeight:600}}>{done}/{total} done</span>
+      </div>
+      <div className="board">
+        {COL_KEYS.map((_, i) => (
+          <Column key={i} colIdx={i} tasks={board[COL_KEYS[i]]}
+            onMove={moveTask} onDelete={deleteTask} onAdd={addTask} />
+        ))}
+      </div>
     </div>
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+ReactDOM.createRoot(document.getElementById('root')).render(<KanbanBoard />);`,
     },
   ],
   exercises: [

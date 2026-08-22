@@ -176,37 +176,37 @@ INCR page_views
     icon: 'C', label: 'Caching',
     desc: 'Store the result of expensive database queries or API responses in Redis. The next request gets served from memory in under a millisecond instead of waiting for the database.',
     fit: 'Redis is ideal because it is fast, supports TTL so stale data auto-expires, and a single SET/GET is all you need.',
-    cmd: 'SET cache:user:42 \'{"name":"Alice","email":"a@b.com"}\' EX 300\nGET cache:user:42'
+    cmd: 'SET cache:user:42 \\'{\"name\":\"Alice\",\"email\":\"a@b.com\"}\\' EX 300\\nGET cache:user:42'
   },
   {
     icon: 'S', label: 'Sessions',
     desc: 'User login sessions are short-lived, frequently accessed, and need fast lookup. Storing them in Redis with a TTL means they auto-expire on logout or inactivity.',
     fit: 'Redis TTL eliminates manual cleanup. The in-memory storage means session lookups never touch the main database.',
-    cmd: 'SET session:xyz123 \'{"userId":42,"role":"admin"}\' EX 1800\nGET session:xyz123\nDEL session:xyz123'
+    cmd: 'SET session:xyz123 \\'{\"userId\":42,\"role\":\"admin\"}\\' EX 1800\\nGET session:xyz123\\nDEL session:xyz123'
   },
   {
     icon: 'R', label: 'Rate Limiting',
     desc: 'Count how many requests a client makes in a sliding window. Atomic INCR ensures no race conditions even under high concurrency.',
     fit: 'INCR is atomic and returns the new value in one operation. EXPIRE sets the window duration. No locks, no transactions needed.',
-    cmd: 'INCR rate:192.168.1.1\nEXPIRE rate:192.168.1.1 60\n# Check if over limit: GET rate:192.168.1.1'
+    cmd: 'INCR rate:192.168.1.1\\nEXPIRE rate:192.168.1.1 60\\n# Check if over limit: GET rate:192.168.1.1'
   },
   {
     icon: 'L', label: 'Leaderboards',
     desc: 'A Sorted Set keeps players ranked by score. Scores update instantly, and you can query any range of the leaderboard in O(log N) time.',
     fit: 'ZADD adds or updates a player score. ZREVRANGE retrieves the top N players in order. Redis handles all the sorting automatically.',
-    cmd: 'ZADD leaderboard 4200 "alice"\nZADD leaderboard 3800 "bob"\nZREVRANGE leaderboard 0 9 WITHSCORES'
+    cmd: 'ZADD leaderboard 4200 \"alice\"\\nZADD leaderboard 3800 \"bob\"\\nZREVRANGE leaderboard 0 9 WITHSCORES'
   },
   {
     icon: 'P', label: 'Pub/Sub',
     desc: 'Broadcast real-time events to any number of subscribers. Services subscribe to channels and receive messages the instant they are published.',
     fit: 'Redis Pub/Sub delivers messages in real time with microsecond latency. Ideal for notifications, live feeds, and inter-service events.',
-    cmd: '# Subscriber (runs in separate connection)\nSUBSCRIBE notifications\n\n# Publisher\nPUBLISH notifications "New order placed: #1042"'
+    cmd: '# Subscriber (runs in separate connection)\\nSUBSCRIBE notifications\\n\\n# Publisher\\nPUBLISH notifications \"New order placed: #1042\"'
   },
   {
     icon: 'J', label: 'Job Queues',
     desc: 'Use a Redis List as a queue. Producers push jobs onto the list. Worker processes block on BRPOP — they wait until a job arrives and process it immediately.',
     fit: 'BRPOP is atomic and blocking, so workers do not busy-loop. If the queue is empty, the worker sleeps until work arrives.',
-    cmd: '# Producer\nLPUSH jobs:email \'{"to":"user@example.com","subject":"Welcome"}\'\n\n# Worker (blocks until item available)\nBRPOP jobs:email 0'
+    cmd: '# Producer\\nLPUSH jobs:email \\'{\"to\":\"user@example.com\",\"subject\":\"Welcome\"}?\\'\\n\\n# Worker (blocks until item available)\\nBRPOP jobs:email 0'
   }
 ];
 

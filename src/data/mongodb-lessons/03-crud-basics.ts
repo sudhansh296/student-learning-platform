@@ -290,106 +290,271 @@ db.users.drop()`,
     {
       type: 'tryit',
       title: 'MongoDB CRUD Playground',
-      css: `body{font-family:system-ui,sans-serif;padding:16px;margin:0;background:linear-gradient(135deg,#001E2B 0%,#003d4d 100%);}
-.container{max-width:900px;margin:0 auto;}
-.header{text-align:center;color:#00ED64;font-size:28px;font-weight:700;margin-bottom:6px;}
-.subtitle{text-align:center;color:#fff;font-size:14px;margin-bottom:16px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px;}
-.btn{background:#00ED64;color:#001E2B;border:none;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:600;font-size:13px;text-align:center;}
-.btn:hover{background:#00ff70;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,237,100,0.3);}
-.btn.delete{background:#ef4444;}
-.btn.delete:hover{background:#dc2626;}
-.output-box{background:#fff;border-radius:10px;padding:16px;margin-top:12px;box-shadow:0 4px 20px rgba(0,237,100,0.2);}
-.doc{background:#f8f9fa;border:2px solid #00ED64;border-radius:6px;padding:10px;margin:8px 0;font-family:monospace;font-size:12px;}
-.doc-header{font-weight:700;color:#001E2B;margin-bottom:4px;}
-.count{background:#00ED64;color:#001E2B;padding:4px 10px;border-radius:4px;font-weight:700;font-size:14px;display:inline-block;margin-bottom:8px;}
-.label{font-weight:600;color:#001E2B;font-size:14px;margin-bottom:6px;}`,
-      js: `var users = [
-  { _id: 1, name: "Alice", age: 28, city: "Boston", skills: ["JavaScript"] },
-  { _id: 2, name: "Bob", age: 32, city: "NYC", skills: ["Python", "SQL"] },
-  { _id: 3, name: "Carol", age: 25, city: "Boston", skills: ["React"] }
+      css: `*{box-sizing:border-box}body{font-family:system-ui,sans-serif;padding:0;margin:0;background:#001E2B;}
+#app{display:grid;grid-template-columns:260px 1fr;min-height:100vh;max-height:600px;}
+.sidebar{background:#002333;border-right:1px solid #0f3d4a;padding:14px;overflow-y:auto;}
+.main{padding:14px;overflow-y:auto;background:#001E2B;}
+.sidebar-title{color:#00ED64;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.op-section{margin-bottom:14px;}
+.op-label{color:#9ec5d0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.op-btn{display:block;width:100%;text-align:left;padding:7px 10px;border:none;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;margin-bottom:3px;transition:all .12s;}
+.op-btn:hover{filter:brightness(1.15);}
+.op-btn.create{background:#00ED6422;color:#00ED64;border:1px solid #00ED6444;}
+.op-btn.read{background:#3b82f622;color:#60a5fa;border:1px solid #3b82f644;}
+.op-btn.update{background:#f59e0b22;color:#fbbf24;border:1px solid #f59e0b44;}
+.op-btn.delete{background:#ef444422;color:#f87171;border:1px solid #ef444444;}
+.op-btn.active{filter:brightness(1.3);font-weight:800;}
+.form-group{margin-bottom:8px;}
+.form-label{display:block;color:#9ec5d0;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
+.form-input{width:100%;padding:6px 8px;background:#002333;border:1px solid #0f3d4a;border-radius:5px;color:#e2f0f5;font-size:12px;font-family:monospace;outline:none;}
+.form-input:focus{border-color:#00ED64;}
+.run-btn{width:100%;padding:8px;background:#00ED64;color:#001E2B;border:none;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;margin-top:6px;}
+.run-btn:hover{background:#00ff70;}
+.section-title{color:#00ED64;font-size:13px;font-weight:700;margin-bottom:8px;}
+.cmd-box{background:#002333;border:1px solid #0f3d4a;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#7dd3fc;margin-bottom:10px;white-space:pre-wrap;}
+.result-box{background:#002333;border:1px solid #0f3d4a;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;color:#a7f3d0;margin-bottom:10px;white-space:pre-wrap;min-height:40px;}
+.result-label{font-size:10px;color:#9ec5d0;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.docs-title{color:#9ec5d0;font-size:11px;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;}
+.doc-card{background:#002333;border:1px solid #0f3d4a;border-radius:6px;padding:8px 10px;margin-bottom:5px;font-family:monospace;font-size:11px;}
+.doc-id{color:#f59e0b;font-size:10px;margin-bottom:3px;}
+.doc-field{color:#9ec5d0;}
+.doc-val{color:#a7f3d0;}
+.doc-skills{color:#60a5fa;}
+.highlight{border-color:#00ED64!important;background:#001e0a!important;}
+.deleted{opacity:.35;text-decoration:line-through;}
+.badge{display:inline-block;padding:1px 6px;border-radius:999px;font-size:9px;font-weight:700;margin-left:4px;}
+.badge-new{background:#00ED6433;color:#00ED64;}
+.badge-upd{background:#f59e0b33;color:#fbbf24;}
+.op-count{font-size:10px;color:#6b8a94;margin-top:6px;}`,
+      js: `var idCounter = 4;
+var highlightId = null;
+var activeOp = 'insertOne';
+var opCounts = { insertOne:0, find:0, updateOne:0, deleteOne:0 };
+
+var db = [
+  { _id: 1, name:'Alice Johnson', email:'alice@example.com', age:28, city:'Boston', skills:['JavaScript','Python'], _state:'' },
+  { _id: 2, name:'Bob Smith',     email:'bob@example.com',   age:32, city:'NYC',    skills:['Java','SQL'],          _state:'' },
+  { _id: 3, name:'Carol White',   email:'carol@example.com', age:25, city:'Boston', skills:['React','MongoDB'],     _state:'' }
 ];
 
-function render() {
-  var html = '<div class="container">' +
-    '<div class="header">MongoDB CRUD Operations</div>' +
-    '<div class="subtitle">Click buttons to perform Create, Read, Update, Delete operations</div>' +
-    '<div class="grid">' +
-    '<button class="btn" onclick="insertUser()">Insert User</button>' +
-    '<button class="btn" onclick="findAll()">Find All</button>' +
-    '<button class="btn" onclick="findBoston()">Find Boston</button>' +
-    '<button class="btn" onclick="updateAge()">Update Age</button>' +
-    '<button class="btn" onclick="addSkill()">Add Skill</button>' +
-    '<button class="btn delete" onclick="deleteUser()">Delete User</button>' +
-    '</div>' +
-    '<div class="output-box">' +
-    '<div class="label">Collection: users</div>' +
-    '<div class="count">Documents: ' + users.length + '</div>';
-  
-  users.forEach(function(u) {
-    html += '<div class="doc">' +
-      '<div class="doc-header">_id: ' + u._id + '</div>' +
-      'name: "' + u.name + '", age: ' + u.age + ', city: "' + u.city + '"<br>' +
-      'skills: [' + u.skills.map(function(s) { return '"' + s + '"'; }).join(', ') + ']' +
-      '</div>';
+function setActive(op) {
+  activeOp = op;
+  var panels = { insertOne:'panelInsert', find:'panelFind', updateOne:'panelUpdate', deleteOne:'panelDelete' };
+  ['panelInsert','panelFind','panelUpdate','panelDelete'].forEach(function(p){
+    var el = document.getElementById(p);
+    if(el) el.style.display = 'none';
   });
-  
-  html += '</div></div>';
-  document.getElementById('output').innerHTML = html;
-}
-
-function insertUser() {
-  var newId = users.length > 0 ? Math.max.apply(null, users.map(function(u) { return u._id; })) + 1 : 1;
-  users.push({
-    _id: newId,
-    name: "User" + newId,
-    age: 20 + newId,
-    city: "Seattle",
-    skills: ["MongoDB"]
+  var target = document.getElementById(panels[op]);
+  if(target) target.style.display = 'block';
+  ['btnInsert','btnFind','btnUpdate','btnDelete'].forEach(function(b){
+    var el = document.getElementById(b);
+    if(el) el.classList.remove('active');
   });
-  render();
+  var btnMap = { insertOne:'btnInsert', find:'btnFind', updateOne:'btnUpdate', deleteOne:'btnDelete' };
+  var btn = document.getElementById(btnMap[op]);
+  if(btn) btn.classList.add('active');
+  renderCmd();
 }
 
-function findAll() {
-  alert("db.users.find()\\n\\nReturned " + users.length + " documents");
+function getCmd() {
+  var cmds = {
+    insertOne: function(){
+      var n=v('iName'), e=v('iEmail'), a=v('iAge'), c=v('iCity'), sk=v('iSkills');
+      return 'db.users.insertOne({\\n  name: "'+n+'",\\n  email: "'+e+'",\\n  age: '+a+',\\n  city: "'+c+'",\\n  skills: ['+sk.split(',').map(function(s){return '"'+s.trim()+'"';}).join(', ')+']\\n});';
+    },
+    find: function(){
+      var f = v('fFilter');
+      var parsed = {};
+      try { if(f&&f!=='{}') parsed=JSON.parse(f); } catch(e){}
+      var keys = Object.keys(parsed);
+      if(!keys.length) return 'db.users.find();';
+      return 'db.users.find({\\n  '+keys.map(function(k){return k+': '+JSON.stringify(parsed[k]);}).join(',\\n  ')+'\\n});';
+    },
+    updateOne: function(){
+      var f=v('uFilter'), op=v('uOperator'), field=v('uField'), val=v('uValue');
+      return 'db.users.updateOne(\\n  { '+f+' },\\n  { '+op+': { '+field+': '+JSON.stringify(isNaN(val)?val:Number(val))+' } }\\n);';
+    },
+    deleteOne: function(){
+      var f=v('dFilter');
+      return 'db.users.deleteOne({ '+f+' });';
+    }
+  };
+  return cmds[activeOp]();
 }
 
-function findBoston() {
-  var bostonUsers = users.filter(function(u) { return u.city === "Boston"; });
-  alert("db.users.find({ city: \\"Boston\\" })\\n\\nFound " + bostonUsers.length + " users in Boston");
+function v(id){ var el=document.getElementById(id); return el?el.value:''; }
+
+function renderCmd() {
+  var el = document.getElementById('cmdDisplay');
+  if(el) el.textContent = getCmd();
 }
 
-function updateAge() {
-  if (users.length > 0) {
-    users[0].age += 1;
-    alert("db.users.updateOne({ name: \\"" + users[0].name + "\\" }, { $inc: { age: 1 } })\\n\\nIncremented age to " + users[0].age);
-    render();
+function runOp() {
+  opCounts[activeOp]++;
+  var resultEl = document.getElementById('resultDisplay');
+  highlightId = null;
+
+  if(activeOp==='insertOne'){
+    var n=v('iName'),e=v('iEmail'),a=parseInt(v('iAge'))||20,c=v('iCity'),sk=v('iSkills');
+    var newDoc={ _id:++idCounter, name:n||'New User', email:e||'user@example.com', age:a, city:c||'Unknown', skills:sk.split(',').map(function(s){return s.trim();}).filter(Boolean), _state:'new' };
+    db.push(newDoc);
+    highlightId = newDoc._id;
+    if(resultEl) resultEl.textContent = '{\\n  acknowledged: true,\\n  insertedId: '+newDoc._id+'\\n}';
   }
-}
-
-function addSkill() {
-  if (users.length > 0) {
-    users[0].skills.push("MongoDB");
-    alert("db.users.updateOne({ name: \\"" + users[0].name + "\\" }, { $push: { skills: \\"MongoDB\\" } })\\n\\nAdded skill");
-    render();
+  else if(activeOp==='find'){
+    var filterStr = v('fFilter');
+    var filter = {};
+    try { if(filterStr&&filterStr!=='{}') filter=JSON.parse(filterStr); } catch(e){}
+    var keys = Object.keys(filter);
+    var matches = db.filter(function(doc){
+      if(doc._state==='deleted') return false;
+      return keys.every(function(k){
+        if(k==='age'&&typeof filter[k]==='object'){
+          var op=Object.keys(filter[k])[0];
+          if(op==='$gte') return doc[k]>=filter[k][op];
+          if(op==='$lte') return doc[k]<=filter[k][op];
+          if(op==='$gt')  return doc[k]>filter[k][op];
+          if(op==='$lt')  return doc[k]<filter[k][op];
+        }
+        return String(doc[k])===String(filter[k]);
+      });
+    });
+    if(resultEl) resultEl.textContent = 'Found '+matches.length+' document(s):\\n'+matches.map(function(d){return '{ _id:'+d._id+', name:"'+d.name+'", age:'+d.age+', city:"'+d.city+'" }';}).join('\\n');
   }
-}
-
-function deleteUser() {
-  if (users.length > 0) {
-    var deleted = users.pop();
-    alert("db.users.deleteOne({ _id: " + deleted._id + " })\\n\\nDeleted user: " + deleted.name);
-    render();
+  else if(activeOp==='updateOne'){
+    var fStr=v('uFilter'), op=v('uOperator'), field=v('uField'), val=v('uValue');
+    var parts=fStr.replace(/"/g,'').split(':');
+    var fk=parts[0]?parts[0].trim():'name', fv=parts[1]?parts[1].trim():'';
+    var idx=db.findIndex(function(d){ return d._state!=='deleted' && String(d[fk])===String(fv); });
+    if(idx===-1){
+      if(resultEl) resultEl.textContent='{ acknowledged: true, matchedCount: 0, modifiedCount: 0 }';
+    } else {
+      var numVal = isNaN(val)?val:Number(val);
+      if(op==='$set') db[idx][field]=numVal;
+      else if(op==='$inc') db[idx][field]=(Number(db[idx][field])||0)+Number(val);
+      else if(op==='$push'){ if(!Array.isArray(db[idx][field]))db[idx][field]=[]; db[idx][field].push(val); }
+      else if(op==='$unset') delete db[idx][field];
+      db[idx]._state='updated';
+      highlightId=db[idx]._id;
+      if(resultEl) resultEl.textContent='{ acknowledged: true, matchedCount: 1, modifiedCount: 1 }';
+    }
   }
+  else if(activeOp==='deleteOne'){
+    var fStr=v('dFilter');
+    var parts=fStr.replace(/"/g,'').split(':');
+    var fk=parts[0]?parts[0].trim():'name', fv=parts[1]?parts[1].trim():'';
+    var idx=db.findIndex(function(d){ return d._state!=='deleted' && String(d[fk])===String(fv); });
+    if(idx===-1){
+      if(resultEl) resultEl.textContent='{ acknowledged: true, deletedCount: 0 }';
+    } else {
+      db[idx]._state='deleted';
+      highlightId=db[idx]._id;
+      if(resultEl) resultEl.textContent='{ acknowledged: true, deletedCount: 1 }';
+    }
+  }
+
+  renderDocs();
+  renderOpCount();
 }
 
-render();
-window.insertUser = insertUser;
-window.findAll = findAll;
-window.findBoston = findBoston;
-window.updateAge = updateAge;
-window.addSkill = addSkill;
-window.deleteUser = deleteUser;`,
+function renderDocs(){
+  var list = document.getElementById('docList');
+  if(!list) return;
+  var active = db.filter(function(d){return d._state!=='deleted';});
+  var html = '<div class="docs-title"><span>Collection: users <span style="color:#6b8a94">('+active.length+' docs)</span></span></div>';
+  db.forEach(function(doc){
+    var hi = doc._id===highlightId;
+    var cls = 'doc-card'+(hi?' highlight':'')+(doc._state==='deleted'?' deleted':'');
+    var badge = doc._state==='new'?'<span class="badge badge-new">NEW</span>':doc._state==='updated'?'<span class="badge badge-upd">UPDATED</span>':'';
+    var skills = Array.isArray(doc.skills)?doc.skills:[];
+    html += '<div class="'+cls+'">'+
+      '<div class="doc-id">_id: '+doc._id+badge+'</div>'+
+      '<div><span class="doc-field">name:</span> <span class="doc-val">"'+doc.name+'"</span>  '+
+      '<span class="doc-field">age:</span> <span class="doc-val">'+(doc.age||'?')+'</span>  '+
+      '<span class="doc-field">city:</span> <span class="doc-val">'+(doc.city||'?')+'</span></div>'+
+      (skills.length?'<div><span class="doc-field">skills:</span> <span class="doc-skills">['+skills.map(function(s){return '"'+s+'"';}).join(', ')+']</span></div>':'')+
+    '</div>';
+  });
+  list.innerHTML = html;
+}
+
+function renderOpCount(){
+  var el = document.getElementById('opCount');
+  if(el) el.textContent = 'Operations — insert:'+opCounts.insertOne+' find:'+opCounts.find+' update:'+opCounts.updateOne+' delete:'+opCounts.deleteOne;
+}
+
+document.getElementById('output').innerHTML =
+'<div id=\\"app\\">'+
+  '<div class=\\"sidebar\\">'+
+    '<div class=\\"sidebar-title\\">MongoDB CRUD</div>'+
+    '<div class=\\"op-section\\">'+
+      '<div class=\\"op-label\\">Create</div>'+
+      '<button id=\\"btnInsert\\" class=\\"op-btn create active\\" onclick=\\"setActive(\\'insertOne\\')\\">insertOne()</button>'+
+    '</div>'+
+    '<div class=\\"op-section\\">'+
+      '<div class=\\"op-label\\">Read</div>'+
+      '<button id=\\"btnFind\\" class=\\"op-btn read\\" onclick=\\"setActive(\\'find\\')\\">find()</button>'+
+    '</div>'+
+    '<div class=\\"op-section\\">'+
+      '<div class=\\"op-label\\">Update</div>'+
+      '<button id=\\"btnUpdate\\" class=\\"op-btn update\\" onclick=\\"setActive(\\'updateOne\\')\\">updateOne()</button>'+
+    '</div>'+
+    '<div class=\\"op-section\\">'+
+      '<div class=\\"op-label\\">Delete</div>'+
+      '<button id=\\"btnDelete\\" class=\\"op-btn delete\\" onclick=\\"setActive(\\'deleteOne\\')\\">deleteOne()</button>'+
+    '</div>'+
+    '<div id=\\"panelInsert\\">'+
+      '<div class=\\"op-label\\" style=\\"margin-top:8px\\">Parameters</div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">name</label><input id=\\"iName\\" class=\\"form-input\\" value=\\"Dave Brown\\"></div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">email</label><input id=\\"iEmail\\" class=\\"form-input\\" value=\\"dave@example.com\\"></div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">age</label><input id=\\"iAge\\" class=\\"form-input\\" value=\\"29\\" type=\\"number\\"></div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">city</label><input id=\\"iCity\\" class=\\"form-input\\" value=\\"Seattle\\"></div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">skills (comma-sep)</label><input id=\\"iSkills\\" class=\\"form-input\\" value=\\"TypeScript, Node.js\\"></div>'+
+      '<button class=\\"run-btn\\" onclick=\\"runOp()\\">▶ Run insertOne()</button>'+
+    '</div>'+
+    '<div id=\\"panelFind\\" style=\\"display:none\\">'+
+      '<div class=\\"op-label\\" style=\\"margin-top:8px\\">Filter (JSON)</div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">filter</label><input id=\\"fFilter\\" class=\\"form-input\\" value=\\\'{\\\\\\"city\\\\\\":\\\\\\"Boston\\\\\\"}\\\'></div>'+
+      '<div style=\\"font-size:10px;color:#6b8a94;margin-bottom:6px\\">Try: {} | {\\\\\\"city\\\\\\":\\\\\\"NYC\\\\\\"} | {\\\\\\"age\\\\\\":{\\\\\\"$gte\\\\\\":28}}</div>'+
+      '<button class=\\"run-btn\\" onclick=\\"runOp()\\">▶ Run find()</button>'+
+    '</div>'+
+    '<div id=\\"panelUpdate\\" style=\\"display:none\\">'+
+      '<div class=\\"op-label\\" style=\\"margin-top:8px\\">Update Params</div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">filter (field:value)</label><input id=\\"uFilter\\" class=\\"form-input\\" value=\\\'name:\\\\\\"Alice Johnson\\\\\\"\\\'></div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">operator</label>'+
+        '<select id=\\"uOperator\\" class=\\"form-input\\"><option value=\\"$set\\">$set</option><option value=\\"$inc\\">$inc</option><option value=\\"$push\\">$push</option><option value=\\"$unset\\">$unset</option></select>'+
+      '</div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">field</label><input id=\\"uField\\" class=\\"form-input\\" value=\\"age\\"></div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">value</label><input id=\\"uValue\\" class=\\"form-input\\" value=\\"29\\"></div>'+
+      '<button class=\\"run-btn\\" onclick=\\"runOp()\\">▶ Run updateOne()</button>'+
+    '</div>'+
+    '<div id=\\"panelDelete\\" style=\\"display:none\\">'+
+      '<div class=\\"op-label\\" style=\\"margin-top:8px\\">Filter</div>'+
+      '<div class=\\"form-group\\"><label class=\\"form-label\\">filter (field:value)</label><input id=\\"dFilter\\" class=\\"form-input\\" value=\\\'name:\\\\\\"Bob Smith\\\\\\"\\\'></div>'+
+      '<button class=\\"run-btn\\" style=\\"background:#ef4444;color:white\\" onclick=\\"runOp()\\">▶ Run deleteOne()</button>'+
+    '</div>'+
+    '<div id=\\"opCount\\" class=\\"op-count\\"></div>'+
+  '</div>'+
+  '<div class=\\"main\\">'+
+    '<div class=\\"section-title\\">Command Preview</div>'+
+    '<div id=\\"cmdDisplay\\" class=\\"cmd-box\\"></div>'+
+    '<div class=\\"result-label\\">Result</div>'+
+    '<div id=\\"resultDisplay\\" class=\\"result-box\\">Click Run to execute operation...</div>'+
+    '<div id=\\"docList\\"></div>'+
+  '</div>'+
+'</div>';
+
+['iName','iEmail','iAge','iCity','iSkills','fFilter','uFilter','uOperator','uField','uValue','dFilter'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener('input', renderCmd);
+  if(el) el.addEventListener('change', renderCmd);
+});
+setActive('insertOne');
+renderDocs();
+renderOpCount();
+
+window.setActive=setActive;
+window.runOp=runOp;`,
     },
   ],
   exercises: [

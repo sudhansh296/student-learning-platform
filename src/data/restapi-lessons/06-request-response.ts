@@ -219,34 +219,36 @@ POST /users    -> { data: { id: 43, name: 'Bob', email: 'bob@example.com' }, met
     {
       type: 'tryit',
       title: 'JSON Response Formatter and Validator',
-      js: `function escHtml(s) {
+      js: `document.body.innerHTML = '<div><h3>JSON Response Validator</h3><div class=\\"toolbar\\"><button id=\\"format-btn\\">Format + Validate</button><span id=\\"validation-status\\" class=\\"status-badge\\"></span></div><div id=\\"samples\\"></div><div class=\\"panels\\"><div class=\\"panel\\"><div class=\\"panel-label\\">Input JSON</div><textarea id=\\"json-input\\" placeholder=\\"Paste JSON here...\\"></textarea></div><div class=\\"panel\\"><div class=\\"panel-label\\">Formatted Output</div><div id=\\"json-output\\"><span style=\\"color:#94a3b8\\">Enter JSON and click Format + Validate</span></div></div></div><div class=\\"hint\\">Hint: Press Ctrl+Enter in the input to validate</div></div>';
+
+function escHtml(s) {
   return String(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/\\"/g, '&quot;');
 }
 
 function syntaxHighlight(json) {
   var escaped = escHtml(json);
   return escaped.replace(
-    /("(\\\\u[a-zA-Z0-9]{4}|\\\\[^u]|[^\\\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
+    /(\\\"(\\\\\\\\u[a-zA-Z0-9]{4}|\\\\\\\\[^u]|[^\\\\\\\\\\\"])*\\\"(\\s*:)?|\\b(true|false|null)\\b|-?\\d+(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)/g,
     function(match) {
       var cls = 'num';
-      if (/^"/.test(match)) {
+      if (/^\\"/.test(match)) {
         cls = /:$/.test(match) ? 'key' : 'str';
       } else if (/true|false/.test(match)) {
         cls = 'bool';
       } else if (/null/.test(match)) {
         cls = 'null';
       }
-      return '<span class="' + cls + '">' + match + '</span>';
+      return '<span class=\\"' + cls + '\\">' + match + '</span>';
     }
   );
 }
 
 function findLineOfError(text, pos) {
-  var lines = text.substring(0, pos).split('\n');
+  var lines = text.substring(0, pos).split('\\\\n');
   return lines.length;
 }
 
@@ -256,7 +258,7 @@ function validate() {
   var status = document.getElementById('validation-status');
 
   if (!input) {
-    output.innerHTML = '<span style="color:#94a3b8">Enter JSON on the left and click Format + Validate</span>';
+    output.innerHTML = '<span style=\\"color:#94a3b8\\">Enter JSON on the left and click Format + Validate</span>';
     status.textContent = '';
     status.className = 'status-badge';
     return;
@@ -269,8 +271,8 @@ function validate() {
     status.textContent = 'Valid JSON';
     status.className = 'status-badge valid';
   } catch (e) {
-    output.innerHTML = '<span style="color:#ef4444">' + escHtml(e.message) + '</span>';
-    var match = e.message.match(/position (\d+)/);
+    output.innerHTML = '<span style=\\"color:#ef4444\\">' + escHtml(e.message) + '</span>';
+    var match = e.message.match(/position (\\d+)/);
     if (match) {
       var lineNum = findLineOfError(input, parseInt(match[1]));
       status.textContent = 'Invalid JSON - error near line ' + lineNum;
@@ -289,19 +291,19 @@ document.getElementById('json-input').addEventListener('keydown', function(e) {
 var samples = [
   {
     label: 'Success',
-    json: '{"data":{"id":42,"name":"Alice Johnson","email":"alice@example.com","createdAt":"2026-08-19T14:00:00Z"},"meta":{"requestId":"req_abc123","timestamp":"2026-08-19T14:22:31Z"}}'
+    json: '{\\"data\\":{\\"id\\":42,\\"name\\":\\"Alice Johnson\\",\\"email\\":\\"alice@example.com\\",\\"createdAt\\":\\"2026-08-19T14:00:00Z\\"},\\"meta\\":{\\"requestId\\":\\"req_abc123\\",\\"timestamp\\":\\"2026-08-19T14:22:31Z\\"}}'
   },
   {
     label: 'Error',
-    json: '{"error":{"code":"VALIDATION_ERROR","message":"Validation failed","details":[{"field":"email","issue":"invalid format"}]}}'
+    json: '{\\"error\\":{\\"code\\":\\"VALIDATION_ERROR\\",\\"message\\":\\"Validation failed\\",\\"details\\":[{\\"field\\":\\"email\\",\\"issue\\":\\"invalid format\\"}]}}'
   },
   {
     label: 'List',
-    json: '{"data":[{"id":1,"name":"Alice"},{"id":2,"name":"Bob"}],"meta":{"pagination":{"total":2,"page":1,"limit":10}}}'
+    json: '{\\"data\\":[{\\"id\\":1,\\"name\\":\\"Alice\\"},{\\"id\\":2,\\"name\\":\\"Bob\\"}],\\"meta\\":{\\"pagination\\":{\\"total\\":2,\\"page\\":1,\\"limit\\":10}}}'
   },
   {
     label: 'Bad JSON',
-    json: '{"name": "Alice", "email": "alice@example.com" "role": "admin"}'
+    json: '{\\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" \\"role\\": \\"admin\\"}'
   }
 ];
 

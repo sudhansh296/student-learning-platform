@@ -145,7 +145,9 @@ SELECT * FROM users;
     {
       type: 'tryit',
       title: 'SQLite vs PostgreSQL Comparison',
-      js: `const features = [
+      js: `document.body.innerHTML = '<div><h3>SQLite vs PostgreSQL</h3><p>Compare features and see which database fits different use cases</p><div id="tabs"></div><div id="content"></div></div>';
+
+const features = [
   { feature: 'Setup time', sqlite: 'Instant', pg: '5-15 minutes' },
   { feature: 'Concurrent writes', sqlite: 'One at a time', pg: 'Multiple simultaneous' },
   { feature: 'Network access', sqlite: 'Local only', pg: 'Remote clients supported' },

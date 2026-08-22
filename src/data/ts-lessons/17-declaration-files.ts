@@ -274,231 +274,97 @@ export {};`,
     },
     {
       type: 'tryit',
-      title: 'Try It: Declaration File Visualizer',
-      css: `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;padding:16px;}h2{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:12px;}.controls{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;}.controls label{font-size:12px;color:#94a3b8;font-weight:600;}.controls select{background:#1e293b;color:#f1f5f9;border:1px solid #334155;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer;}.panes{display:grid;grid-template-columns:1fr 1fr;gap:12px;}.pane{background:#1e293b;border:1px solid #334155;border-radius:8px;overflow:hidden;}.pane-header{background:#0f172a;padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid #334155;}.js-header{color:#f59e0b;}.dts-header{color:#60a5fa;}.code-block{padding:14px;font-family:monospace;font-size:12px;line-height:1.7;white-space:pre;overflow-x:auto;}.kw{color:#c084fc;}.fn{color:#34d399;}.type{color:#60a5fa;}.str{color:#fbbf24;}.comment{color:#64748b;font-style:italic;}.param{color:#f97316;}.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;vertical-align:middle;}.badge-js{background:#78350f;color:#fcd34d;}.badge-dts{background:#1e3a5f;color:#93c5fd;}@media(max-width:600px){.panes{grid-template-columns:1fr;}}`,
-      js: `const examples = {
-  function: {
-    label: 'Function Library',
-    js: [
-      {t:'comment',v:'// math-utils.js (plain JavaScript, no types)'},
-      {t:'nl'},
-      {t:'kw',v:'function '},{t:'fn',v:'add'},{t:'plain',v:'(a, b) {'},
-      {t:'nl'},{t:'plain',v:'  '},{t:'kw',v:'return '},{t:'plain',v:'a + b;'},
-      {t:'nl'},{t:'plain',v:'}'},
-      {t:'nl'},
-      {t:'kw',v:'function '},{t:'fn',v:'multiply'},{t:'plain',v:'(a, b) {'},
-      {t:'nl'},{t:'plain',v:'  '},{t:'kw',v:'return '},{t:'plain',v:'a * b;'},
-      {t:'nl'},{t:'plain',v:'}'},
-      {t:'nl'},
-      {t:'kw',v:'function '},{t:'fn',v:'clamp'},{t:'plain',v:'(val, min, max) {'},
-      {t:'nl'},{t:'plain',v:'  '},{t:'kw',v:'return '},{t:'plain',v:'Math.min(Math.max(val, min), max);'},
-      {t:'nl'},{t:'plain',v:'}'},
-      {t:'nl'},
-      {t:'plain',v:'module.exports = { '},{t:'fn',v:'add'},{t:'plain',v:', '},{t:'fn',v:'multiply'},{t:'plain',v:', '},{t:'fn',v:'clamp'},{t:'plain',v:' };'},
-    ],
-    dts: [
-      {t:'comment',v:'// math-utils.d.ts (hand-written declaration file)'},
-      {t:'nl'},
-      {t:'kw',v:'declare module '},{t:'str',v:"'math-utils'"},{t:'plain',v:' {'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'export declare function '},{t:'fn',v:'add'},
-      {t:'plain',v:'('},{t:'param',v:'a'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:', '},{t:'param',v:'b'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:'): '},{t:'type',v:'number'},{t:'plain',v:';'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'export declare function '},{t:'fn',v:'multiply'},
-      {t:'plain',v:'('},{t:'param',v:'a'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:', '},{t:'param',v:'b'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:'): '},{t:'type',v:'number'},{t:'plain',v:';'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'export declare function '},{t:'fn',v:'clamp'},
-      {t:'plain',v:'('},{t:'param',v:'val'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:', '},{t:'param',v:'min'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:', '},{t:'param',v:'max'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:'): '},{t:'type',v:'number'},{t:'plain',v:';'},
-      {t:'nl'},{t:'plain',v:'}'},
-    ]
-  },
-  class: {
-    label: 'Class Library',
-    js: [
-      {t:'comment',v:'// event-bus.js (plain JavaScript class)'},
-      {t:'nl'},
-      {t:'kw',v:'class '},{t:'type',v:'EventBus'},{t:'plain',v:' {'},
-      {t:'nl'},{t:'plain',v:'  constructor() {'},
-      {t:'nl'},{t:'plain',v:'    this._handlers = {};'},
-      {t:'nl'},{t:'plain',v:'  }'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'fn',v:'on'},{t:'plain',v:'(event, handler) {'},
-      {t:'nl'},{t:'plain',v:'    (this._handlers[event] ??= []).push(handler);'},
-      {t:'nl'},{t:'plain',v:'    '},{t:'kw',v:'return this'},{t:'plain',v:';'},
-      {t:'nl'},{t:'plain',v:'  }'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'fn',v:'emit'},{t:'plain',v:'(event, data) {'},
-      {t:'nl'},{t:'plain',v:'    (this._handlers[event] ?? []).forEach(h => h(data));'},
-      {t:'nl'},{t:'plain',v:'  }'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'fn',v:'off'},{t:'plain',v:'(event, handler) {'},
-      {t:'nl'},{t:'plain',v:'    this._handlers[event] = (this._handlers[event] ?? [])'},
-      {t:'nl'},{t:'plain',v:'      .filter(h => h !== handler);'},
-      {t:'nl'},{t:'plain',v:'  }'},
-      {t:'nl'},{t:'plain',v:'}'},
-      {t:'nl'},
-      {t:'plain',v:'module.exports = { '},{t:'type',v:'EventBus'},{t:'plain',v:' };'},
-    ],
-    dts: [
-      {t:'comment',v:'// event-bus.d.ts'},
-      {t:'nl'},
-      {t:'kw',v:'declare module '},{t:'str',v:"'event-bus'"},{t:'plain',v:' {'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'export declare class '},{t:'type',v:'EventBus'},
-      {t:'plain',v:'<'},{t:'type',v:'Events'},{t:'plain',v:' extends '},{t:'type',v:'Record'},
-      {t:'plain',v:'<'},{t:'type',v:'string'},{t:'plain',v:', '},{t:'type',v:'unknown'},
-      {t:'plain',v:'> = '},{t:'type',v:'Record'},{t:'plain',v:'<'},{t:'type',v:'string'},{t:'plain',v:', '},{t:'type',v:'unknown'},{t:'plain',v:'>> {'},
-      {t:'nl'},{t:'plain',v:'    constructor();'},
-      {t:'nl'},
-      {t:'plain',v:'    '},{t:'fn',v:'on'},
-      {t:'plain',v:'<'},{t:'type',v:'K'},{t:'plain',v:' extends keyof '},{t:'type',v:'Events'},
-      {t:'plain',v:'>('},{t:'param',v:'event'},{t:'plain',v:': '},{t:'type',v:'K'},
-      {t:'plain',v:', '},{t:'param',v:'handler'},{t:'plain',v:': (data: Events[K]) => '},{t:'type',v:'void'},
-      {t:'plain',v:'): '},{t:'kw',v:'this'},{t:'plain',v:';'},
-      {t:'nl'},
-      {t:'plain',v:'    '},{t:'fn',v:'emit'},
-      {t:'plain',v:'<'},{t:'type',v:'K'},{t:'plain',v:' extends keyof '},{t:'type',v:'Events'},
-      {t:'plain',v:'>('},{t:'param',v:'event'},{t:'plain',v:': '},{t:'type',v:'K'},
-      {t:'plain',v:', '},{t:'param',v:'data'},{t:'plain',v:': Events[K]): '},{t:'type',v:'void'},{t:'plain',v:';'},
-      {t:'nl'},
-      {t:'plain',v:'    '},{t:'fn',v:'off'},
-      {t:'plain',v:'<'},{t:'type',v:'K'},{t:'plain',v:' extends keyof '},{t:'type',v:'Events'},
-      {t:'plain',v:'>('},{t:'param',v:'event'},{t:'plain',v:': '},{t:'type',v:'K'},
-      {t:'plain',v:', '},{t:'param',v:'handler'},{t:'plain',v:': (data: Events[K]) => '},{t:'type',v:'void'},
-      {t:'plain',v:'): '},{t:'type',v:'void'},{t:'plain',v:';'},
-      {t:'nl'},{t:'plain',v:'  }'},
-      {t:'nl'},{t:'plain',v:'}'},
-    ]
-  },
-  namespace: {
-    label: 'Namespace Library',
-    js: [
-      {t:'comment',v:'// validator.js (namespace-style UMD library)'},
-      {t:'nl'},
-      {t:'kw',v:'var '},{t:'type',v:'Validator'},{t:'plain',v:' = {};'},
-      {t:'nl'},
-      {t:'type',v:'Validator'},{t:'plain',v:'.'},{t:'fn',v:'isEmail'},{t:'plain',v:' = function(str) {'},
-      {t:'nl'},{t:'plain',v:'  '},{t:'kw',v:'return '},{t:'plain',v:'/^[^@]+@[^@]+\\.[^@]+$/.test(str);'},
-      {t:'nl'},{t:'plain',v:'};'},
-      {t:'nl'},
-      {t:'type',v:'Validator'},{t:'plain',v:'.'},{t:'fn',v:'isUrl'},{t:'plain',v:' = function(str) {'},
-      {t:'nl'},{t:'plain',v:'  try { new URL(str); '},{t:'kw',v:'return true'},{t:'plain',v:'; }'},
-      {t:'nl'},{t:'plain',v:'  catch { '},{t:'kw',v:'return false'},{t:'plain',v:'; }'},
-      {t:'nl'},{t:'plain',v:'};'},
-      {t:'nl'},
-      {t:'type',v:'Validator'},{t:'plain',v:'.string = {};'},
-      {t:'nl'},
-      {t:'type',v:'Validator'},{t:'plain',v:'.string.'},{t:'fn',v:'minLength'},{t:'plain',v:' = function(str, min) {'},
-      {t:'nl'},{t:'plain',v:'  '},{t:'kw',v:'return '},{t:'plain',v:'str.length >= min;'},
-      {t:'nl'},{t:'plain',v:'};'},
-    ],
-    dts: [
-      {t:'comment',v:'// validator.d.ts (ambient namespace declaration)'},
-      {t:'nl'},
-      {t:'kw',v:'declare namespace '},{t:'type',v:'Validator'},{t:'plain',v:' {'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'function '},{t:'fn',v:'isEmail'},{t:'plain',v:'('},
-      {t:'param',v:'str'},{t:'plain',v:': '},{t:'type',v:'string'},{t:'plain',v:'): '},{t:'type',v:'boolean'},{t:'plain',v:';'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'function '},{t:'fn',v:'isUrl'},{t:'plain',v:'('},
-      {t:'param',v:'str'},{t:'plain',v:': '},{t:'type',v:'string'},{t:'plain',v:'): '},{t:'type',v:'boolean'},{t:'plain',v:';'},
-      {t:'nl'},
-      {t:'nl'},
-      {t:'plain',v:'  '},{t:'kw',v:'namespace '},{t:'fn',v:'string'},{t:'plain',v:' {'},
-      {t:'nl'},
-      {t:'plain',v:'    '},{t:'kw',v:'function '},{t:'fn',v:'minLength'},{t:'plain',v:'('},
-      {t:'param',v:'str'},{t:'plain',v:': '},{t:'type',v:'string'},{t:'plain',v:', '},
-      {t:'param',v:'min'},{t:'plain',v:': '},{t:'type',v:'number'},{t:'plain',v:'): '},{t:'type',v:'boolean'},{t:'plain',v:';'},
-      {t:'nl'},{t:'plain',v:'  }'},
-      {t:'nl'},{t:'plain',v:'}'},
-    ]
-  }
-};
+      title: 'Try It: Declaration File Explorer',
+      css: `*{box-sizing:border-box;margin:0;padding:0;}body{font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh;padding:16px;}h2{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:12px;}pre{background:#1e293b;border:1px solid#334155;border-radius:8px;padding:14px;font-family:monospace;font-size:12px;line-height:1.7;white-space:pre;overflow-x:auto;}`,
+      js: `// Declaration Files (.d.ts) - console demo
 
-function renderTokens(tokens) {
-  return tokens.map(tok => {
-    if (tok.t === 'nl') return '\n';
-    const cls = tok.t === 'plain' ? '' : ' class="' + tok.t + '"';
-    return '<span' + cls + '>' + tok.v.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</span>';
-  }).join('');
-}
+console.log('=== What .d.ts Files Are ===');
+console.log('Declaration files contain ONLY type information -- no runtime code');
+console.log('They tell TypeScript the shape of existing JavaScript libraries');
+console.log('TypeScript uses them for autocomplete and compile-time type checking');
 
-function render(key) {
-  const ex = examples[key];
-  document.getElementById('js-code').innerHTML = renderTokens(ex.js);
-  document.getElementById('dts-code').innerHTML = renderTokens(ex.dts);
-}
+console.log('\\n=== Example: @types/express declares ===');
+var expressDecls = [
+  'declare function express(): Express',
+  'interface Express { get(path: string, handler: RequestHandler): this }',
+  'interface Request { body: any; params: Record<string, string>; query: any }',
+  'interface Response { json(body: any): this; status(code: number): this }',
+];
+expressDecls.forEach(function(d) { console.log('  ' + d); });
 
-const sel = document.createElement('select');
-Object.entries(examples).forEach(([k, v]) => {
-  const opt = document.createElement('option');
-  opt.value = k; opt.textContent = v.label;
-  sel.appendChild(opt);
+console.log('\\n=== Writing Your Own .d.ts ===');
+var ownDecls = [
+  '// my-utils.d.ts',
+  'export declare function formatDate(date: Date, locale?: string): string;',
+  'export declare function slugify(text: string): string;',
+  'export declare const VERSION: string;',
+  'export declare interface Config { apiUrl: string; timeout: number; }',
+];
+ownDecls.forEach(function(line) { console.log('  ' + line); });
+
+console.log('\\n=== Module Augmentation ===');
+var augmentation = [
+  '// Extend Express Request with custom user property',
+  'declare module "express-serve-static-core" {',
+  '  interface Request {',
+  '    user?: { id: string; email: string; role: string };',
+  '  }',
+  '}',
+  '// Now req.user is typed in ALL route handlers',
+];
+augmentation.forEach(function(line) { console.log('  ' + line); });
+
+console.log('\\n=== @types/* Packages ===');
+var packages = ['node', 'react', 'express', 'jest', 'lodash'];
+packages.forEach(function(pkg) {
+  console.log('  npm i -D @types/' + pkg + '  ->  adds types for ' + pkg);
 });
-sel.addEventListener('change', () => render(sel.value));
 
-const controls = document.createElement('div');
-controls.className = 'controls';
-const lbl = document.createElement('label');
-lbl.textContent = 'Example:';
-controls.appendChild(lbl);
-controls.appendChild(sel);
-
-const panes = document.createElement('div');
-panes.className = 'panes';
-panes.innerHTML =
-  '<div class="pane"><div class="pane-header js-header">JavaScript <span class="badge badge-js">.js</span></div><pre class="code-block" id="js-code"></pre></div>' +
-  '<div class="pane"><div class="pane-header dts-header">Declaration File <span class="badge badge-dts">.d.ts</span></div><pre class="code-block" id="dts-code"></pre></div>';
-
-const h = document.createElement('h2');
-h.textContent = 'Declaration File Visualizer';
-
-document.getElementById('output').appendChild(h);
-document.getElementById('output').appendChild(controls);
-document.getElementById('output').appendChild(panes);
-
-render('function');`,
+console.log('\\n=== typeRoots & types in tsconfig ===');
+console.log('  "typeRoots": ["./node_modules/@types", "./src/types"]');
+console.log('  "types": ["node", "jest"]  // allowlist -- only these @types included');
+`,
     },
   ],
   exercises: [
     {
       id: 'ts-dts-ex1',
-      question: 'You want to add type information for a plain JavaScript npm package that has no bundled types and no @types/* package on npm. What is the correct approach?',
+      question: 'You install a JavaScript library from npm that has no @types package available. TypeScript shows errors on every import from this library. What is the quickest way to make TypeScript accept the imports without full type safety?',
       type: 'multiple-choice',
       options: [
-        'Rename the package\'s .js files to .ts files and add type annotations',
-        'Write a .d.ts file for the package and reference it via typeRoots or a path mapping in tsconfig',
-        'Add // @ts-ignore comments wherever you import the package',
-        'Downgrade to TypeScript 3.x which does not require types for all modules',
+        'Create a minimal .d.ts file: declare module "library-name";',
+        'Add "noImplicitAny": false to tsconfig.json',
+        'Import it using require() instead of import',
+        'Add the library to the "exclude" array in tsconfig.json',
       ],
-      correct: 1,
-      explanation: 'When a package ships no types and has no @types/* package, you write a .d.ts file yourself. Place it in a local types directory (e.g. src/types/module-name.d.ts or a vendor-types/ folder) and configure typeRoots in tsconfig to include that directory. This gives the compiler full type information without modifying the package.',
+      correct: 0,
+      explanation: 'Creating a minimal ambient module declaration with "declare module" tells TypeScript that the module exists and exports an implicit any. This lets you import it without errors while you either write full type definitions later or continue using it untyped. Setting noImplicitAny to false would weaken type checking project-wide, not just for this library. Excluding the library would prevent TypeScript from compiling files that import it.',
     },
     {
       id: 'ts-dts-ex2',
-      question: 'What is module augmentation used for in TypeScript?',
+      question: 'You are publishing a TypeScript library to npm and want consumers to get full type information. Which tsconfig option must be enabled?',
       type: 'multiple-choice',
       options: [
-        'Splitting a large module into multiple files',
-        'Adding new types or properties to an existing module declaration without modifying the original .d.ts file',
-        'Converting a CommonJS module to ES module syntax',
-        'Removing incorrect types from a third-party @types package',
+        '"sourceMap": true',
+        '"declaration": true',
+        '"composite": true',
+        '"esModuleInterop": true',
       ],
       correct: 1,
-      explanation: 'Module augmentation lets you extend an existing declaration without touching its source. The most common use case is extending Express Request to include properties added by middleware (like req.user from auth middleware). You create a .d.ts file that imports the module and uses declare module to re-open and extend its interfaces.',
+      explanation: '"declaration": true makes the TypeScript compiler emit .d.ts type declaration files alongside the compiled .js output. These .d.ts files contain the type signatures for all exported functions, classes, and interfaces. When other developers install your package, TypeScript reads these declaration files to provide IntelliSense and type checking. Without declaration files, consumers of your library lose all type information and see everything as "any".',
     },
     {
       id: 'ts-dts-ex3',
-      question: 'Which tsconfig.json option acts as an allowlist to control exactly which @types packages the compiler includes?',
+      question: 'What does the "typeRoots" compiler option in tsconfig.json control?',
       type: 'multiple-choice',
       options: [
-        '"typeRoots"',
-        '"include"',
-        '"types"',
-        '"lib"',
+        'The directories where ambient .d.ts files will be written when compiled',
+        'The directories TypeScript searches for @types/* packages and ambient type declarations',
+        'The root directory of your TypeScript source files',
+        'The directory where type errors are logged during compilation',
       ],
-      correct: 2,
-      explanation: '"types" in compilerOptions is the allowlist. When you set "types": ["node", "jest"], only those two @types packages are included — all others installed in node_modules/@types are ignored. This prevents unexpected globals from leaking into your project. "typeRoots" controls where TypeScript looks for @types directories, while "lib" controls built-in type bundles (DOM, ES2022, etc.).',
+      correct: 1,
+      explanation: '"typeRoots" is an array of directories where TypeScript looks for ambient type declarations, typically ["./node_modules/@types"] by default. When you install @types/node or @types/react, they go into node_modules/@types/. You can add custom directories to typeRoots if you store your own ambient .d.ts files outside node_modules, such as "./src/types". If typeRoots is not set, TypeScript automatically includes all @types/* packages.',
     },
   ],
   quiz: [

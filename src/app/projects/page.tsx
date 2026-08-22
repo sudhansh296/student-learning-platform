@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Clock, Code2, ArrowRight } from 'lucide-react';
+import { Clock, ArrowRight, Terminal } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -27,6 +27,17 @@ const projects = [
     technologies: ['HTML', 'CSS', 'JavaScript', 'REST API'],
     description: 'Fetch real-time weather data from an API and display it with a clean UI.',
     learnings: ['Fetch API', 'Async/Await', 'JSON parsing', 'API keys', 'Error handling'],
+  },
+  {
+    id: 'calculator',
+    title: 'Scientific Calculator',
+    slug: 'calculator',
+    difficulty: 'beginner',
+    estimatedTime: '3–5 hours',
+    technologies: ['HTML', 'CSS', 'JavaScript'],
+    description: 'Fully working calculator with Standard, Scientific (sin/cos/tan/log/√), and Programmer (HEX/OCT/BIN) modes. Memory functions, history, and keyboard support.',
+    learnings: ['DOM manipulation', 'Math functions', 'Event listeners', 'CSS Grid layout', 'State management'],
+    playgroundKey: 'calculator',
   },
   {
     id: 'quiz-app',
@@ -79,6 +90,17 @@ const projects = [
     learnings: ['Express routing', 'MongoDB CRUD', 'Middleware', 'JWT authentication', 'Error handling'],
   },
   {
+    id: 'country-explorer',
+    title: 'Country Explorer',
+    slug: 'country-explorer',
+    difficulty: 'advanced',
+    estimatedTime: '8–12 hours',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'REST API'],
+    description: 'Fetch 195 countries from a REST API and display them with search, region filter, sort by name/population, and a detail modal showing languages, currencies, and borders.',
+    learnings: ['Fetch API + async/await', 'REST API integration', 'Search & filter logic', 'Dynamic card grid', 'Modal UI pattern'],
+    playgroundKey: 'fetch',
+  },
+  {
     id: 'ecommerce',
     title: 'E-commerce Store',
     slug: 'ecommerce',
@@ -106,11 +128,13 @@ const difficultyConfig = {
   advanced: { label: 'Advanced', color: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 border-orange-200 dark:border-orange-800' },
 };
 
+type Project = typeof projects[0] & { playgroundKey?: string };
+
 export default function ProjectsPage() {
   const grouped = {
-    beginner: projects.filter(p => p.difficulty === 'beginner'),
-    intermediate: projects.filter(p => p.difficulty === 'intermediate'),
-    advanced: projects.filter(p => p.difficulty === 'advanced'),
+    beginner: projects.filter(p => p.difficulty === 'beginner') as Project[],
+    intermediate: projects.filter(p => p.difficulty === 'intermediate') as Project[],
+    advanced: projects.filter(p => p.difficulty === 'advanced') as Project[],
   };
 
   return (
@@ -122,7 +146,7 @@ export default function ProjectsPage() {
         </p>
       </div>
 
-      {(Object.entries(grouped) as [keyof typeof grouped, typeof projects][]).map(([level, items]) => (
+      {(Object.entries(grouped) as [keyof typeof grouped, Project[]][]).map(([level, items]) => (
         <section key={level} className="mb-12">
           <div className="flex items-center gap-3 mb-5">
             <span className={`text-xs font-semibold px-3 py-1 rounded-full border capitalize ${difficultyConfig[level].color}`}>
@@ -138,7 +162,14 @@ export default function ProjectsPage() {
                 className="group flex flex-col p-5 rounded-xl border border-border bg-background hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-md transition-all duration-200"
               >
                 <div className="flex items-start justify-between gap-2 mb-3">
-                  <h3 className="font-bold text-foreground text-base leading-snug">{project.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold text-foreground text-base leading-snug">{project.title}</h3>
+                    {project.playgroundKey && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 border border-green-200 dark:border-green-800 whitespace-nowrap">
+                        Live
+                      </span>
+                    )}
+                  </div>
                   <span className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap shrink-0">
                     <Clock className="w-3 h-3" />
                     {project.estimatedTime}
@@ -162,7 +193,7 @@ export default function ProjectsPage() {
                 </div>
 
                 {/* Learnings */}
-                <div>
+                <div className="mb-4">
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
                     You will learn
                   </p>
@@ -180,6 +211,15 @@ export default function ProjectsPage() {
                     )}
                   </ul>
                 </div>
+
+                {/* Button — All projects go to detail page first */}
+                <Link
+                  href={'/projects/' + project.slug}
+                  className="mt-auto flex items-center justify-center gap-1.5 w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors"
+                >
+                  Open Project
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             ))}
           </div>
