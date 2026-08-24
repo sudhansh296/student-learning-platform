@@ -95,7 +95,7 @@ export function JSLessonClient({ lesson, allLessons, chapters, prev, next }: Pro
 
           <Breadcrumb items={[
             { label: 'Learn', href: '/learn' },
-            { label: 'JavaScript', href: '/learn/javascript' },
+            { label: 'JavaScript', href: '/js' },
             { label: lesson.title }
           ]} />
 

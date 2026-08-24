@@ -1391,7 +1391,11 @@ export function PlaygroundClient() {
   function decodeParam(key: string): string {
     const val = searchParams.get(key);
     if (!val) return '';
-    try { return decodeURIComponent(escape(atob(decodeURIComponent(val)))); } catch { return ''; }
+    try {
+      return decodeURIComponent(
+        atob(decodeURIComponent(val)).split('').map(c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0')).join('')
+      );
+    } catch { return ''; }
   }
 
   const urlHtml = decodeParam('html');
@@ -1434,7 +1438,7 @@ export function PlaygroundClient() {
 
   const runCurrent = useCallback(() => run(html, css, js), [html, css, js, run]);
 
-  useEffect(() => { run(initHtml, urlCss || tpl.css, urlJs || tpl.js); }, []); // eslint-disable-line
+  useEffect(() => { run(initHtml, urlCss || tpl.css, urlJs || tpl.js); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handler = (e: MessageEvent) => {

@@ -14,8 +14,16 @@ const learnCategories = [
   { label: 'DevOps & Tools', href: '/learn/devops',   emoji: '🚀' },
 ];
 
+const mernStack = [
+  { label: 'MongoDB',    href: '/learn/mongodb',  emoji: '🍃', desc: 'NoSQL Database' },
+  { label: 'Express.js', href: '/learn/express',  emoji: '⚡', desc: 'Backend Framework' },
+  { label: 'React',      href: '/learn/react',    emoji: '⚛️', desc: 'Frontend Library' },
+  { label: 'Node.js',    href: '/learn/nodejs',   emoji: '💚', desc: 'JavaScript Runtime' },
+];
+
 const navItems = [
   { label:'Learn',        href:'/learn',       isLearn: true },
+  { label:'MERN Stack',   href:'/mern',        isMern: true },
   { label:'Technologies', href:'/technologies' },
   { label:'Databases',    href:'/databases' },
   { label:'Roadmaps',     href:'/roadmaps' },
@@ -123,6 +131,53 @@ export function Navbar() {
                       </div>
                     )}
                   </>
+                ) : item.isMern ? (
+                  <>
+                    <button onClick={() => setDrop(drop === 'MERN' ? null : 'MERN')}
+                      className="flex items-center gap-1 px-3.5 py-2 rounded-lg text-[13px] font-medium transition-colors"
+                      style={{ color: drop==='MERN' ? '#10b981' : 'var(--text-2)', background: drop==='MERN' ? '#d1fae5' : 'transparent' }}
+                      onMouseEnter={e => { if (drop !== 'MERN') (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-section)'; }}
+                      onMouseLeave={e => { if (drop !== 'MERN') (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; }}>
+                      MERN Stack
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${drop === 'MERN' ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {drop === 'MERN' && (
+                      <div className="absolute top-full left-0 mt-1.5 z-50 rounded-xl py-3 px-3"
+                        style={{ background: 'var(--card)', border: '1px solid var(--line)', boxShadow: '0 8px 32px rgba(0,0,0,.14)', minWidth: 280 }}>
+                        <p className="text-[10px] font-bold uppercase tracking-widest px-1 mb-2" style={{ color: 'var(--text-3)' }}>Full-Stack Development</p>
+                        <div className="flex flex-col gap-1">
+                          {mernStack.map(tech => (
+                            <Link
+                              key={tech.href}
+                              href={tech.href}
+                              onClick={() => setDrop(null)}
+                              className="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
+                              style={{ color: 'var(--text)' }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--bg-section)'; }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = ''; }}
+                            >
+                              <span className="text-xl">{tech.emoji}</span>
+                              <div className="flex-1">
+                                <p className="text-[13px] font-semibold">{tech.label}</p>
+                                <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-3)' }}>{tech.desc}</p>
+                              </div>
+                              <ChevronDown className="w-3.5 h-3.5 -rotate-90" style={{ color: 'var(--text-3)' }} />
+                            </Link>
+                          ))}
+                        </div>
+                        <div className="mt-2 pt-2" style={{ borderTop: '1px solid var(--line)' }}>
+                          <Link href="/mern" onClick={() => setDrop(null)}
+                            className="flex items-center justify-center gap-1.5 py-2 rounded-lg text-[12px] font-semibold transition-colors"
+                            style={{ background: '#d1fae5', color: '#047857' }}
+                            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#a7f3d0')}
+                            onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.background = '#d1fae5')}>
+                            View MERN Guide <ChevronDown className="w-3 h-3 -rotate-90" />
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </>
                 ) : item.children ? (
                   <>
                     <button onClick={() => setDrop(drop===item.label ? null : item.label)}
@@ -191,7 +246,14 @@ export function Navbar() {
                     <ul className="max-h-72 overflow-y-auto py-1">
                       {res.map((r,i) => (
                         <li key={i}>
-                          <Link href={r.type==='topic'&&r.technologySlug ? `/learn/${r.technologySlug}/${r.slug}` : `/learn/${r.slug}`}
+                          <Link href={
+                            r.type==='topic'&&r.technologySlug
+                              ? r.technologySlug === 'html' ? `/html/${r.slug}`
+                                : r.technologySlug === 'css' ? `/css/${r.slug}`
+                                : r.technologySlug === 'javascript' ? `/js/${r.slug}`
+                                : `/learn/${r.technologySlug}/${r.slug}`
+                              : `/learn/${r.slug}`
+                          }
                             onClick={() => { setSOpen(false); setQ(''); }}
                             className="flex items-start gap-3 px-4 py-2.5 transition-colors"
                             style={{ borderBottom:'1px solid var(--line)' }}

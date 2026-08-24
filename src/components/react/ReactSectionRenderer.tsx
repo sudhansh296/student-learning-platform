@@ -10,7 +10,7 @@ function OpenInEditorBtn({ code }: { code: string }) {
     try {
       // Detect if this is React JSX code
       const isReact = /ReactDOM\.createRoot|React\.(useState|useEffect)|<[A-Z]/.test(code);
-      const encoded = btoa(unescape(encodeURIComponent(code)));
+      const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
       // Send as js — playground auto-detects React and loads CDN Babel
       window.open(`/playground?js=${encodeURIComponent(encoded)}`, '_blank');
     } catch { window.open('/playground', '_blank'); }
@@ -29,7 +29,6 @@ function ReactPlayground({ jsx, css, title }: { jsx: string; css: string; title?
   const [code, setCode] = useState(jsx);
   const [styles, setStyles] = useState(css);
   const [tab, setTab] = useState<'jsx' | 'css'>('jsx');
-  const [srcDoc, setSrcDoc] = useState('');
   const [fullscreen, setFullscreen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -46,8 +45,8 @@ try{${j}}catch(e){document.getElementById('root').innerHTML='<pre style="color:r
 </script></body></html>`;
   }, []);
 
-  // Auto-run on mount
-  useState(() => { setSrcDoc(buildDoc(jsx, css)); });
+  // Auto-run on mount — initialize srcDoc with the built document directly
+  const [srcDoc, setSrcDoc] = useState(() => buildDoc(jsx, css));
 
   const run = () => setSrcDoc(buildDoc(code, styles));
   const reset = () => { setCode(jsx); setStyles(css); setSrcDoc(buildDoc(jsx, css)); };

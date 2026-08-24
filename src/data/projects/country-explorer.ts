@@ -260,8 +260,9 @@ function setSort(key) {
 // Load countries from REST API
 async function loadCountries() {
   try {
-    console.log('Fetching countries from REST API...');
-    var res = await fetch('https://restcountries.com/v3.1/all');
+    var apiUrl = (window.__APP_ORIGIN__ || '') + '/api/countries';
+    console.log('Fetching countries from:', apiUrl);
+    var res = await fetch(apiUrl);
     console.log('Response status:', res.status, res.statusText);
     
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -370,7 +371,7 @@ export const countryExplorerProject: Project = {
       js: `async function loadCountries() {
   try {
     // Fetch data from REST API
-    var res = await fetch('https://restcountries.com/v3.1/all');
+    var res = await fetch('/api/countries');
     
     // Check if request was successful
     if (!res.ok) {
@@ -392,7 +393,7 @@ export const countryExplorerProject: Project = {
 }
 
 // Alternative: using .then() syntax
-fetch('https://restcountries.com/v3.1/all')
+fetch('/api/countries')
   .then(res => res.json())
   .then(data => {
     allCountries = data;

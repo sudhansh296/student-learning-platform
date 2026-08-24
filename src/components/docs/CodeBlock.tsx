@@ -134,7 +134,7 @@ export function CodeBlock({ code, language = 'javascript', filename, output, sho
 }
 
 // Simple syntax highlighting via regex
-function renderSyntax(line: string, lang: string): React.ReactNode {
-  // For now, return plain text — syntax highlighting can be enhanced with a library
-  return line || '\n';
+function renderSyntax(line: string, _lang: string): React.ReactNode {
+  // Return non-breaking space for empty lines to preserve line height
+  return line || '\u00A0';
 }

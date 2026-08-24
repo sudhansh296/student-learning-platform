@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 const cats = [
-  { icon: '🌐', label: 'HTML',        href: '/learn/html',        color: '#E34F26' },
-  { icon: '🎨', label: 'CSS',         href: '/learn/css',         color: '#264DE4' },
+  { icon: '🌐', label: 'HTML',        href: '/html',              color: '#E34F26' },
+  { icon: '🎨', label: 'CSS',         href: '/css',               color: '#264DE4' },
   { icon: '⚡', label: 'JavaScript',  href: '/js',                color: '#F7DF1E' },
   { icon: '🔷', label: 'TypeScript',  href: '/learn/typescript',  color: '#3178C6' },
   { icon: '⚛️', label: 'React',       href: '/learn/react',       color: '#61DAFB' },

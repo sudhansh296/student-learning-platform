@@ -1,6 +1,6 @@
 ﻿import { NextResponse } from 'next/server';
 
-const HEADERS = { 'Access-Control-Allow-Origin': '*', 'Cache-Control': 'public, s-maxage=3600' };
+const HEADERS = { 'Cache-Control': 'public, s-maxage=3600' };
 
 type Country = {
   name: { common: string; official: string };
@@ -222,6 +222,40 @@ const COUNTRIES: Country[] = [
   { name:{common:'San Marino',official:'Republic of San Marino'}, capital:['City of San Marino'], population:34017, region:'Europe', subregion:'Southern Europe', flags:flag('sm'), languages:lang('Italian'), currencies:cur('Euro','EUR'), borders:['ITA'], area:61 },
 ];
 
-export async function GET() {
-  return NextResponse.json(COUNTRIES, { headers: HEADERS });
+// ─── In-memory rate limiter (60 req / 60 s per IP) ──────────────────────────
+const rateLimitMap = new Map<string, { count: number; reset: number }>();
+const RATE_LIMIT = 60;
+const RATE_WINDOW_MS = 60_000;
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.reset) {
+    rateLimitMap.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
+
+// ─── Deduplicate by common name ───────────────────────────────────────────────
+const UNIQUE_COUNTRIES = Array.from(
+  new Map(COUNTRIES.map(c => [c.name.common, c])).values()
+);
+
+export async function GET(request: Request) {
+  const ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
+    request.headers.get('x-real-ip') ??
+    '127.0.0.1';
+
+  if (!checkRateLimit(ip)) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': '60' } }
+    );
+  }
+
+  return NextResponse.json(UNIQUE_COUNTRIES, { headers: HEADERS });
 }

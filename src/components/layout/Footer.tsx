@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { BookOpen, Terminal } from 'lucide-react';
 
 const cols = [
-  { title: 'Core',       links: [{ l: 'HTML', h: '/learn/html' }, { l: 'CSS', h: '/learn/css' }, { l: 'JavaScript', h: '/js' }, { l: 'TypeScript', h: '/learn/typescript' }] },
+  { title: 'Core',       links: [{ l: 'HTML', h: '/html' }, { l: 'CSS', h: '/css' }, { l: 'JavaScript', h: '/js' }, { l: 'TypeScript', h: '/learn/typescript' }] },
   { title: 'Frameworks', links: [{ l: 'React', h: '/learn/react' }, { l: 'Next.js', h: '/learn/nextjs' }, { l: 'Node.js', h: '/learn/nodejs' }, { l: 'Express.js', h: '/learn/express' }] },
   { title: 'Databases',  links: [{ l: 'MongoDB', h: '/learn/mongodb' }, { l: 'PostgreSQL', h: '/learn/postgresql' }, { l: 'Databases Guide', h: '/databases' }] },
   { title: 'Resources',  links: [{ l: 'Roadmaps', h: '/roadmaps' }, { l: 'Interview Prep', h: '/interview' }, { l: 'Projects', h: '/projects' }, { l: 'Compare Tech', h: '/compare' }, { l: 'Dev Tools', h: '/tools' }] },

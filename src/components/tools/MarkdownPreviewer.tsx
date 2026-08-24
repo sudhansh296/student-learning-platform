@@ -30,18 +30,34 @@ console.log(greet("Developer"));
 **Happy coding! 🚀**
 `;
 
+function escHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function safeUrl(url: string): string {
+  // Only allow http, https, and relative URLs — block javascript: and data:
+  const trimmed = url.trim();
+  if (/^(https?:\/\/|\/)/i.test(trimmed)) return trimmed;
+  return '#';
+}
+
 function renderMd(md: string): string {
   return md
-    .replace(/^### (.+)/gm, '<h3 style="font-size:16px;font-weight:700;margin:16px 0 8px;color:#1e1e1e">$1</h3>')
-    .replace(/^## (.+)/gm, '<h2 style="font-size:20px;font-weight:700;margin:20px 0 8px;color:#1e1e1e;border-bottom:2px solid #e5e7eb;padding-bottom:6px">$1</h2>')
-    .replace(/^# (.+)/gm, '<h1 style="font-size:28px;font-weight:800;margin:0 0 16px;color:#1e1e1e">$1</h1>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    .replace(/`([^`]+)`/g, '<code style="background:#f4f4f4;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;color:#dc2626">$1</code>')
-    .replace(/```[\w]*\n?([\s\S]*?)```/g, '<pre style="background:#0d1117;color:#e6edf3;padding:16px;border-radius:8px;overflow:auto;font-family:monospace;font-size:13px;margin:12px 0"><code>$1</code></pre>')
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:#2563eb;text-decoration:underline">$1</a>')
-    .replace(/^> (.+)/gm, '<blockquote style="border-left:3px solid #e5e7eb;padding:8px 16px;color:#6b7280;margin:12px 0;font-style:italic">$1</blockquote>')
-    .replace(/^- (.+)/gm, '<li style="margin:4px 0;color:#374151">$1</li>')
+    .replace(/^### (.+)/gm, (_, t) => `<h3 style="font-size:16px;font-weight:700;margin:16px 0 8px;color:#1e1e1e">${escHtml(t)}</h3>`)
+    .replace(/^## (.+)/gm, (_, t) => `<h2 style="font-size:20px;font-weight:700;margin:20px 0 8px;color:#1e1e1e;border-bottom:2px solid #e5e7eb;padding-bottom:6px">${escHtml(t)}</h2>`)
+    .replace(/^# (.+)/gm, (_, t) => `<h1 style="font-size:28px;font-weight:800;margin:0 0 16px;color:#1e1e1e">${escHtml(t)}</h1>`)
+    .replace(/\*\*(.+?)\*\*/g, (_, t) => `<strong>${escHtml(t)}</strong>`)
+    .replace(/\*(.+?)\*/g, (_, t) => `<em>${escHtml(t)}</em>`)
+    .replace(/```[\w]*\n?([\s\S]*?)```/g, (_, c) => `<pre style="background:#0d1117;color:#e6edf3;padding:16px;border-radius:8px;overflow:auto;font-family:monospace;font-size:13px;margin:12px 0"><code>${escHtml(c)}</code></pre>`)
+    .replace(/`([^`]+)`/g, (_, c) => `<code style="background:#f4f4f4;padding:2px 6px;border-radius:4px;font-family:monospace;font-size:13px;color:#dc2626">${escHtml(c)}</code>`)
+    .replace(/\[(.+?)\]\((.+?)\)/g, (_, text, url) => `<a href="${safeUrl(url)}" style="color:#2563eb;text-decoration:underline">${escHtml(text)}</a>`)
+    .replace(/^> (.+)/gm, (_, t) => `<blockquote style="border-left:3px solid #e5e7eb;padding:8px 16px;color:#6b7280;margin:12px 0;font-style:italic">${escHtml(t)}</blockquote>`)
+    .replace(/^- (.+)/gm, (_, t) => `<li style="margin:4px 0;color:#374151">${escHtml(t)}</li>`)
     .replace(/---/g, '<hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0">')
     .replace(/\n\n/g, '</p><p style="margin:0 0 12px;color:#374151;line-height:1.6">')
     .replace(/\n/g, '<br>');

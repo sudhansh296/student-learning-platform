@@ -29,7 +29,6 @@ export function LoremIpsum() {
     if (type === 'paragraphs') {
       result = Array.from({ length: count }, () => generateParagraph()).join('\n\n');
     } else if (type === 'sentences') {
-      const s = generateSentence();
       result = Array.from({ length: count }, () => {
         const sent = generateSentence();
         return sent.charAt(0).toUpperCase() + sent.slice(1) + '.';

@@ -6,7 +6,7 @@ import { InlinePlayground } from '@/components/docs/InlinePlayground';
 
 function OpenInEditorButton({ code, language }: { code: string; language: string }) {
   const handleClick = () => {
-    const encoded = btoa(unescape(encodeURIComponent(code)));
+    const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
     const param = language === 'css' ? 'css' : language === 'javascript' || language === 'js' ? 'js' : 'html';
     window.open(`/playground?${param}=${encodeURIComponent(encoded)}`, '_blank');
   };

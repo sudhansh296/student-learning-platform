@@ -118,9 +118,9 @@ export function ExerciseBlock({ exercises }: { exercises: Exercise[] }) {
                   />
                   {!isAnswered && (
                     <button
-                      onClick={() => {
-                        const inp = document.querySelector(`[data-ex="${ex.id}"]`) as HTMLInputElement;
-                        setAnswers(a => ({ ...a, [ex.id]: (answers[ex.id] as string) || '' }));
+                    onClick={(e) => {
+                        const input = e.currentTarget.previousElementSibling as HTMLInputElement;
+                        setAnswers(a => ({ ...a, [ex.id]: input.value.trim() }));
                       }}
                       className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
                     >

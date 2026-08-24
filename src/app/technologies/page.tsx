@@ -50,7 +50,12 @@ export default function TechnologiesPage() {
                 {techs.map(tech => (
                   <Link
                     key={tech.id}
-                    href={tech.id === 'html' ? '/html' : `/learn/${tech.slug}`}
+                    href={
+                      tech.id === 'html' ? '/html' :
+                      tech.id === 'css' ? '/css' :
+                      tech.id === 'javascript' ? '/js' :
+                      `/learn/${tech.slug}`
+                    }
                     className="group flex flex-col p-5 rounded-xl border border-border bg-background hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-md transition-all duration-200"
                   >
                     <div className="flex items-center gap-3 mb-3">

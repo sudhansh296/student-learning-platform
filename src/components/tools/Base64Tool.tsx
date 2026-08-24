@@ -10,12 +10,18 @@ export function Base64Tool() {
   function convert() {
     try {
       if (mode === 'encode') {
-        setOutput(btoa(input));
+        // UTF-8 safe encoding
+        const bytes = new TextEncoder().encode(input);
+        const binary = Array.from(bytes).map(b => String.fromCharCode(b)).join('');
+        setOutput(btoa(binary));
       } else {
-        setOutput(atob(input));
+        // UTF-8 safe decoding
+        const binary = atob(input.trim());
+        const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+        setOutput(new TextDecoder().decode(bytes));
       }
     } catch {
-      setOutput('Error: Invalid input for decoding');
+      setOutput(mode === 'encode' ? 'Error: Could not encode input' : 'Error: Invalid Base64 input');
     }
   }
 

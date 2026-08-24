@@ -82,6 +82,9 @@ export interface Roadmap {
   difficulty: Difficulty;
   estimatedTime: string;
   nodes: RoadmapNode[];
+  icon?: string;
+  color?: string;
+  steps?: Array<{ phase: string; color: string; items?: string[] }>;
 }
 
 export interface InterviewQuestion {

@@ -36,7 +36,12 @@ export default function LearnPage() {
                 {techs.map(tech => (
                   <Link
                     key={tech.id}
-                    href={`/learn/${tech.slug}`}
+                    href={
+                      tech.id === 'html' ? '/html' :
+                      tech.id === 'css' ? '/css' :
+                      tech.id === 'javascript' ? '/js' :
+                      `/learn/${tech.slug}`
+                    }
                     className="group flex items-center gap-3 p-4 rounded-xl border border-border bg-background hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-sm transition-all"
                   >
                     <div className="w-9 h-9 rounded-lg flex items-center justify-center text-xl shrink-0" style={{ backgroundColor: tech.bgColor }}>

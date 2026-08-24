@@ -122,7 +122,7 @@ ${noOutputObserver}
     setLogs([]);
   }, [html, css, js, buildDoc]);
 
-  useEffect(() => { run(); }, []); // eslint-disable-line
+  useEffect(() => { run(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const iid = instanceId.current;

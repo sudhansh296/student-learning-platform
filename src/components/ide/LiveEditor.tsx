@@ -61,6 +61,7 @@ export function LiveEditor({
 <body>
 ${h}
 <script>
+window.__APP_ORIGIN__ = ${JSON.stringify(typeof window !== 'undefined' ? window.location.origin : '')};
 // Capture console.log
 (function(){
   const orig = console.log;

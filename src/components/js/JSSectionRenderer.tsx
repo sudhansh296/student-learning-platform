@@ -15,13 +15,13 @@ function titleToExplanation(title: string, language: string): string {
 function OpenInEditorBtn({ code, language }: { code: string; language: string }) {
   const handleClick = () => {
     try {
-      const encoded = btoa(unescape(encodeURIComponent(code)));
+      const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
       const param = language === 'css' ? 'css' : language === 'html' ? 'html' : 'js';
       // For React/JSX code, also pass html=<div id="root"> so it has a mount point
       const isJsx = language === 'jsx' || language === 'tsx' ||
         /ReactDOM\.(createRoot|render)|return\s*\(\s*<|<[A-Z]\w*\s*\/>/.test(code);
       if (isJsx) {
-        const rootHtml = btoa(unescape(encodeURIComponent('<div id="root"></div>')));
+        const rootHtml = btoa(encodeURIComponent('<div id="root"></div>').replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
         window.open(`/playground?js=${encodeURIComponent(encoded)}&html=${encodeURIComponent(rootHtml)}`, '_blank');
       } else {
         window.open(`/playground?${param}=${encodeURIComponent(encoded)}`, '_blank');

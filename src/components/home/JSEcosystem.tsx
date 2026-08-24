@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 const stack = [
-  { n: '01', label: 'HTML',           icon: '🌐', desc: 'Structure',       color: '#E34F26', href: '/learn/html',       hi: false },
-  { n: '02', label: 'CSS',            icon: '🎨', desc: 'Styling',         color: '#264DE4', href: '/learn/css',        hi: false },
+  { n: '01', label: 'HTML',           icon: '🌐', desc: 'Structure',       color: '#E34F26', href: '/html',             hi: false },
+  { n: '02', label: 'CSS',            icon: '🎨', desc: 'Styling',         color: '#264DE4', href: '/css',              hi: false },
   { n: '03', label: 'JavaScript',     icon: '⚡', desc: 'Core language',   color: '#F7DF1E', href: '/js',               hi: true  },
   { n: '04', label: 'TypeScript',     icon: '🔷', desc: 'Type safety',     color: '#3178C6', href: '/learn/typescript', hi: false },
   { n: '05', label: 'React',          icon: '⚛️', desc: 'UI library',      color: '#61DAFB', href: '/learn/react',      hi: false },

@@ -8,7 +8,7 @@ import { CodeBlock } from '@/components/docs/CodeBlock';
 function OpenInEditorBtn({ code }: { code: string }) {
   const handleClick = () => {
     try {
-      const encoded = btoa(unescape(encodeURIComponent(code)));
+      const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
       // Send as js — playground auto-detects TypeScript syntax and compiles with CDN typescript.js
       window.open(`/playground?js=${encodeURIComponent(encoded)}`, '_blank');
     } catch { window.open('/playground', '_blank'); }
@@ -25,7 +25,6 @@ function OpenInEditorBtn({ code }: { code: string }) {
 
 function TsPlayground({ js, css, title }: { js: string; css: string; title?: string }) {
   const [code, setCode] = useState(js);
-  const [srcDoc, setSrcDoc] = useState('');
   const [fullscreen, setFullscreen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -40,7 +39,8 @@ if(__logs.length){const p=document.createElement('pre');p.style.cssText='backgro
 </script></body></html>`;
   }, []);
 
-  useState(() => { setSrcDoc(buildDoc(js, css)); });
+  // Auto-run on mount — initialize srcDoc with the built document directly
+  const [srcDoc, setSrcDoc] = useState(() => buildDoc(js, css));
 
   const run = () => setSrcDoc(buildDoc(code, css));
   const reset = () => { setCode(js); setSrcDoc(buildDoc(js, css)); };

@@ -94,13 +94,13 @@ export default async function RoadmapDetailPage({ params }: Props) {
           </p>
           <div className="flex gap-3 flex-wrap">
             <Link
-              href="/learn/html"
+              href="/html"
               className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors"
             >
               Start with HTML
             </Link>
             <Link
-              href="/learn/javascript"
+              href="/js"
               className="px-4 py-2 rounded-lg border border-border bg-background hover:bg-muted/60 text-sm font-medium text-foreground transition-colors"
             >
               Jump to JavaScript

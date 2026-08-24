@@ -23,7 +23,6 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => {
-        console.log('Theme toggle clicked. Current:', theme);
         setTheme(isDark ? 'light' : 'dark');
       }}
       className="w-9 h-9 rounded-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95"

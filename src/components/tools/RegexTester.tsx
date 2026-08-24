@@ -19,14 +19,24 @@ export function RegexTester() {
   }, [pattern, flags, testString]);
 
   const highlighted = useMemo(() => {
-    if (!pattern || !result.isValid || result.matches.length === 0) return testString;
+    const escapeHtml = (s: string) =>
+      s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    if (!pattern || !result.isValid || result.matches.length === 0) return escapeHtml(testString);
     try {
-      return testString.replace(
-        new RegExp(pattern, flags.includes('g') ? flags : flags + 'g'),
-        match => `<mark class="bg-yellow-200 dark:bg-yellow-800 text-foreground rounded px-0.5">${match}</mark>`
-      );
+      const parts: string[] = [];
+      let lastIndex = 0;
+      const re = new RegExp(pattern, flags.includes('g') ? flags : flags + 'g');
+      let m: RegExpExecArray | null;
+      while ((m = re.exec(testString)) !== null) {
+        parts.push(escapeHtml(testString.slice(lastIndex, m.index)));
+        parts.push(`<mark class="bg-yellow-200 dark:bg-yellow-800 text-foreground rounded px-0.5">${escapeHtml(m[0])}</mark>`);
+        lastIndex = m.index + m[0].length;
+        if (m[0].length === 0) re.lastIndex++; // avoid infinite loop on zero-width matches
+      }
+      parts.push(escapeHtml(testString.slice(lastIndex)));
+      return parts.join('');
     } catch {
-      return testString;
+      return escapeHtml(testString);
     }
   }, [pattern, flags, testString, result]);
 
