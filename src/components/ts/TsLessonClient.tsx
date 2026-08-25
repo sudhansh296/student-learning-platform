@@ -113,7 +113,7 @@ export function TsLessonClient({ lesson, allLessons, chapters, prev, next }: Pro
           {lesson.exercises.length > 0 && <ExerciseBlock exercises={lesson.exercises} />}
           {lesson.quiz.length > 0 && <QuizBlock questions={lesson.quiz} title={`${lesson.title} — Quiz`} />}
 
-          <div className="mt-8 grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {prev ? (
               <Link href={`/learn/typescript/${prev.slug}`}
                 className="group flex items-center gap-3 p-4 rounded-xl border border-border bg-background hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-sm transition-all">

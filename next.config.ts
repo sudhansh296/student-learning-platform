@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
 
@@ -8,40 +10,43 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
-          // Prevent clickjacking — only allow same origin to frame this site
-          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           // Prevent MIME-type sniffing
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           // Control referrer information
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-          // Disable browser features not needed by this app
+          // Disable features not needed
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
-          // HSTS — force HTTPS for 1 year (enable when deployed on HTTPS)
-          { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
-          // Content Security Policy
+          // Prevent clickjacking
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // HSTS — only in production (dev runs on HTTP)
+          ...(isDev ? [] : [
+            { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+          ]),
+          // CSP — permissive enough for a learning platform with code playgrounds
           {
             key: 'Content-Security-Policy',
             value: [
+              // Allow everything from self by default
               "default-src 'self'",
-              // Scripts: allow self + inline + CDN scripts for TypeScript/Babel/React in playground
-              // unsafe-eval needed in dev (React) and in playground (ts.transpileModule, new Function)
-              `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com`,
-              // Styles: allow self + inline (needed for Tailwind CSS-in-JS)
+              // Scripts: allow inline + eval (needed by React dev, ts.transpileModule, new Function)
+              // + CDN sources for TypeScript compiler, React, Babel in playground iframes
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com",
+              // Styles: allow inline (Tailwind, component styles)
               "style-src 'self' 'unsafe-inline'",
-              // Images: allow self, data URIs, and flagcdn for country flags
-              "img-src 'self' data: https://flagcdn.com",
-              // Fonts: allow self
-              "font-src 'self'",
-              // iframes: allow self only (sandboxed iframes use srcdoc, not src)
-              "frame-src 'self'",
-              // Connections: allow self + CDN fetches from playground iframes
+              // Images: self + data URIs + country flags CDN
+              "img-src 'self' data: blob: https://flagcdn.com https://*.flagcdn.com",
+              // Fonts: self only (Next.js self-hosts Google Fonts at build time)
+              "font-src 'self' data:",
+              // Frames: self (srcdoc iframes) + allow external live demo iframes
+              "frame-src 'self' https:",
+              // Connections: self + CDNs (for playground iframes fetching scripts) + our own API
               "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com",
-              // Prevent this site from being framed by others
-              "frame-ancestors 'self'",
-              // Block all object/embed/plugin elements
+              // Workers: none needed
+              "worker-src 'none'",
+              // No plugins/flash
               "object-src 'none'",
-              // Upgrade HTTP requests to HTTPS
-              "upgrade-insecure-requests",
+              // Prevent this site from being framed by external sites (clickjacking protection)
+              "frame-ancestors 'self'",
             ].join('; '),
           },
         ],

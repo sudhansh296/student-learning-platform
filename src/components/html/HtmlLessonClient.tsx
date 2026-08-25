@@ -142,7 +142,7 @@ export function HtmlLessonClient({ lesson, allLessons, chapters, prev, next }: P
           )}
 
           {/* Prev / Next */}
-          <div className="mt-8 grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {prev ? (
               <Link href={`/html/${prev.slug}`}
                 className="group flex items-center gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5"

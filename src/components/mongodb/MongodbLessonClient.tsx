@@ -139,7 +139,7 @@ export default function MongodbLessonClient({ lesson, allLessons }: Props) {
           )}
 
           {/* Prev / Next */}
-          <div className="mt-8 grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {prevLesson ? (
               <Link href={`/learn/mongodb/${prevLesson.slug}`}
                 className="group flex items-center gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5"

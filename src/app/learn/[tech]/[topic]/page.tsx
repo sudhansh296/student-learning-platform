@@ -115,7 +115,7 @@ export default async function TopicPage({ params }: Props) {
           </div>
 
           {/* Prev/Next navigation */}
-          <div className="mt-6 grid grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {prevTopic ? (
               <Link
                 href={`/learn/${technology.slug}/${prevTopic.slug}`}

@@ -94,7 +94,7 @@ export default function PostgresqlLessonClient({ lesson, allLessons }: Props) {
           <PostgresqlSectionRenderer sections={lesson.sections} />
           {lesson.exercises?.length > 0 && <ExerciseBlock exercises={lesson.exercises} />}
           {lesson.quiz?.length > 0 && <QuizBlock questions={lesson.quiz} title={`${lesson.title} - Quiz`} />}
-          <div className="mt-8 grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {prevLesson ? (
               <Link href={`/learn/postgresql/${prevLesson.slug}`} className="group flex items-center gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5" style={{ border: '1px solid var(--line)', background: 'var(--card)' }}>
                 <ChevronLeft className="w-5 h-5 shrink-0" style={{ color: 'var(--text-3)' }} />

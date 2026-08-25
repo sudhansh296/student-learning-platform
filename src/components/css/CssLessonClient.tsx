@@ -102,7 +102,7 @@ export function CssLessonClient({ lesson, allLessons, chapters, prev, next }: Pr
           {lesson.exercises && lesson.exercises.length > 0 && <ExerciseBlock exercises={lesson.exercises}/>}
           {lesson.quiz && lesson.quiz.length > 0 && <QuizBlock questions={lesson.quiz} title={`${lesson.title} Quiz`}/>}
 
-          <div className="mt-8 grid grid-cols-2 gap-4">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {prev ? (
               <Link href={`/css/${prev.slug}`}
                 className="group flex items-center gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5"

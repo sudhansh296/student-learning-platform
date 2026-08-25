@@ -1536,9 +1536,9 @@ export function PlaygroundClient() {
       </div>
 
       {/* Main */}
-      <div className="flex flex-1 min-h-0">
+      <div className="flex flex-col md:flex-row flex-1 min-h-0">
         {/* Editor */}
-        <div className="flex flex-col w-1/2 border-r border-[#30363d]">
+        <div className="flex flex-col w-full md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 200 }}>
           <div className="flex items-center bg-[#0d1117] border-b border-[#30363d]">
             {(['html','css','js'] as const).map(t => (
               <button key={t} onClick={() => setTab(t)} className={tabCls(t)}>{t.toUpperCase()}</button>
@@ -1563,7 +1563,7 @@ export function PlaygroundClient() {
         </div>
 
         {/* Preview + Console */}
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-full md:w-1/2" style={{ minHeight: 200 }}>
           <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-200 shrink-0">
             <div className="flex items-center gap-1.5">
               <div className="flex gap-1">
