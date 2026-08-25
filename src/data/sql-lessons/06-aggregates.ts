@@ -49,7 +49,7 @@ export const lesson06: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'The GROUP BY rule: every column in your SELECT list must either be inside an aggregate function OR be listed in the GROUP BY clause. This rule exists because the database needs to know how to produce a single output row per group — it can aggregate a column, or it can group by it, but it cannot return multiple different values for a non-grouped column.'
+      content: 'The GROUP BY rule: every column in your SELECT list must either be inside an aggregate function OR be listed in the GROUP BY clause. This rule exists because the database needs to know how to produce a single output row per group - it can aggregate a column, or it can group by it, but it cannot return multiple different values for a non-grouped column.'
     },
     {
       type: 'note',
@@ -71,7 +71,7 @@ export const lesson06: SqlLesson = {
     {
       type: 'analogy',
       title: 'WHERE vs HAVING',
-      content: 'Imagine organizing a library fundraiser. WHERE is the bouncer at the door — it decides which books are allowed in before you start counting. HAVING is the final audit — after you have counted and grouped everything, it removes groups that do not meet your criteria. You cannot count first and then apply the bouncer; the bouncer must act first.'
+      content: 'Imagine organizing a library fundraiser. WHERE is the bouncer at the door - it decides which books are allowed in before you start counting. HAVING is the final audit - after you have counted and grouped everything, it removes groups that do not meet your criteria. You cannot count first and then apply the bouncer; the bouncer must act first.'
     },
     {
       type: 'heading',
@@ -81,7 +81,7 @@ export const lesson06: SqlLesson = {
       type: 'list',
       title: 'Mistakes to avoid with aggregation:',
       items: [
-        'Putting aggregate conditions in WHERE instead of HAVING: WHERE COUNT(*) > 5 is invalid — use HAVING COUNT(*) > 5',
+        'Putting aggregate conditions in WHERE instead of HAVING: WHERE COUNT(*) > 5 is invalid - use HAVING COUNT(*) > 5',
         'Selecting non-grouped columns: SELECT name, COUNT(*) FROM orders GROUP BY status omits name from GROUP BY and is invalid',
         'Forgetting that AVG ignores NULLs: if 3 of 10 rows have NULL salary, AVG(salary) divides by 7 not 10',
         'Using COUNT(column) when you mean COUNT(*): COUNT(phone) counts non-null phones, not total users',

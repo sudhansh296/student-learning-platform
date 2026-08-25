@@ -1,4 +1,4 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 
 export const htmlSemanticLesson: HtmlLesson = {
   id: 'html-semantic',
@@ -8,13 +8,13 @@ export const htmlSemanticLesson: HtmlLesson = {
   order: 13,
   difficulty: 'intermediate',
   readingTime: 12,
-  description: 'Learn semantic HTML5 elements — header, nav, main, section, article, aside, footer — and why they matter for SEO and accessibility.',
+  description: 'Learn semantic HTML5 elements - header, nav, main, section, article, aside, footer - and why they matter for SEO and accessibility.',
   sections: [
     { type: 'text', content: 'Semantic HTML means using HTML elements that carry meaning about the content they contain. Instead of using <div> for everything, you use elements that describe their purpose: <header>, <nav>, <main>, <article>, <section>, <aside>, <footer>. This makes your code readable to humans, browsers, search engines, and assistive technologies.' },
-    { type: 'analogy', title: 'Think of a newspaper', content: 'A newspaper has a masthead (header), navigation (table of contents), main stories (articles), sidebars (aside), and a footer. HTML5 semantic elements mirror this structure. A <div> is like blank paper — it has no meaning. A <article> tells everyone "this is a self-contained story."' },
+    { type: 'analogy', title: 'Think of a newspaper', content: 'A newspaper has a masthead (header), navigation (table of contents), main stories (articles), sidebars (aside), and a footer. HTML5 semantic elements mirror this structure. A <div> is like blank paper - it has no meaning. A <article> tells everyone "this is a self-contained story."' },
     { type: 'heading', content: 'Non-Semantic vs Semantic HTML' },
-    { type: 'code', language: 'html',       content: 'Semantic elements describe their purpose — header, nav, main, article, aside, footer. They replace generic divs with meaningful labels. Screen readers use them to navigate. Search engines use them to understand content hierarchy and importance.',
-      code: `<!-- NON-SEMANTIC — div soup. What does each section mean? Nobody knows. -->
+    { type: 'code', language: 'html',       content: 'Semantic elements describe their purpose - header, nav, main, article, aside, footer. They replace generic divs with meaningful labels. Screen readers use them to navigate. Search engines use them to understand content hierarchy and importance.',
+      code: `<!-- NON-SEMANTIC - div soup. What does each section mean? Nobody knows. -->
 <div id="header">
   <div id="logo">WebDev Atlas</div>
   <div id="nav">...</div>
@@ -25,7 +25,7 @@ export const htmlSemanticLesson: HtmlLesson = {
 </div>
 <div id="footer">...</div>
 
-<!-- SEMANTIC — immediately readable. Purpose is clear. -->
+<!-- SEMANTIC - immediately readable. Purpose is clear. -->
 <header>
   <h1>WebDev Atlas</h1>
   <nav>...</nav>
@@ -52,13 +52,13 @@ export const htmlSemanticLesson: HtmlLesson = {
       ['<summary>', 'Summary/heading for <details>', 'The visible clickable title of <details>'],
     ]},
     { type: 'heading', content: 'Building a Complete Page Layout' },
-    { type: 'code', language: 'html',       content: 'article is for self-contained content that makes sense on its own — a blog post or product card. section groups related content within a page. main contains the unique page content. aside holds related but non-essential content like sidebars or related links.',
+    { type: 'code', language: 'html',       content: 'article is for self-contained content that makes sense on its own - a blog post or product card. section groups related content within a page. main contains the unique page content. aside holds related but non-essential content like sidebars or related links.',
       code: `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebDev Atlas — Learn HTML</title>
+  <title>WebDev Atlas - Learn HTML</title>
 </head>
 <body>
 
@@ -74,7 +74,7 @@ export const htmlSemanticLesson: HtmlLesson = {
     </nav>
   </header>
 
-  <!-- Primary page content — ONE per page -->
+  <!-- Primary page content - ONE per page -->
   <main>
 
     <!-- A self-contained article -->
@@ -125,8 +125,8 @@ export const htmlSemanticLesson: HtmlLesson = {
 
 </body>
 </html>` },
-    { type: 'heading', content: 'The <details> and <summary> Elements — Native Accordion' },
-    { type: 'code', language: 'html',       content: 'These inline elements add specific meaning to phrases. mark highlights text. time wraps dates with a machine-readable datetime attribute. abbr defines abbreviations — hovering shows the full form. cite wraps titles of creative works. code shows inline code snippets.',
+    { type: 'heading', content: 'The <details> and <summary> Elements - Native Accordion' },
+    { type: 'code', language: 'html',       content: 'These inline elements add specific meaning to phrases. mark highlights text. time wraps dates with a machine-readable datetime attribute. abbr defines abbreviations - hovering shows the full form. cite wraps titles of creative works. code shows inline code snippets.',
       code: `<!-- No JavaScript needed! Native browser accordion -->
 <details>
   <summary>What is HTML?</summary>
@@ -161,7 +161,7 @@ export const htmlSemanticLesson: HtmlLesson = {
   <article>
     <h1>Semantic HTML5</h1>
     <p>Published: <time datetime="2026-08-17">August 17, 2026</time></p>
-    <p>Semantic HTML uses elements that <strong>describe their meaning</strong> — not just their appearance. This improves SEO, accessibility, and code readability.</p>
+    <p>Semantic HTML uses elements that <strong>describe their meaning</strong> - not just their appearance. This improves SEO, accessibility, and code readability.</p>
 
     <section>
       <h2>Why It Matters</h2>
@@ -227,8 +227,8 @@ footer { background: #1e1e1e; color: #6b7280; text-align: center; padding: 20px;
       mode: 'html' },
   ],
   exercises: [
-    { id: 'sem1', question: 'How many <main> elements should a page have?', type: 'multiple-choice', options: ['As many as needed', 'Two — one for mobile, one for desktop', 'Exactly one', 'None — use <div id="main">'], correct: 2, explanation: 'A page should have exactly ONE <main> element. It represents the primary content. Screen readers use it to skip to main content directly.' },
-    { id: 'sem2', question: 'What is <article> best used for?', type: 'multiple-choice', options: ['Any block of content', 'Self-contained content that could stand alone (blog post, news article)', 'Navigation links', 'Page footer'], correct: 1, explanation: '<article> represents content that is self-contained and independently distributable — like a blog post, product card, or forum comment.' },
+    { id: 'sem1', question: 'How many <main> elements should a page have?', type: 'multiple-choice', options: ['As many as needed', 'Two - one for mobile, one for desktop', 'Exactly one', 'None - use <div id="main">'], correct: 2, explanation: 'A page should have exactly ONE <main> element. It represents the primary content. Screen readers use it to skip to main content directly.' },
+    { id: 'sem2', question: 'What is <article> best used for?', type: 'multiple-choice', options: ['Any block of content', 'Self-contained content that could stand alone (blog post, news article)', 'Navigation links', 'Page footer'], correct: 1, explanation: '<article> represents content that is self-contained and independently distributable - like a blog post, product card, or forum comment.' },
   ],
   quiz: [{ id: 'sq1', question: 'Which element creates a native show/hide accordion WITHOUT JavaScript?', options: ['<accordion>', '<toggle>', '<details>', '<collapse>'], correct: 2, explanation: '<details> with <summary> creates a native browser accordion. Click summary to toggle the content. No JavaScript needed!' }],
 };

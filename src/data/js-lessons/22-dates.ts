@@ -1,15 +1,15 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsDatesLesson: JSLesson = {
   id:'js-dates',title:'Dates & Times',slug:'dates',chapter:'basics',order:23,difficulty:'beginner',readingTime:10,
-  description:'Work with dates and times using the Date object — create, format, compare, and calculate time differences.',
+  description:'Work with dates and times using the Date object - create, format, compare, and calculate time differences.',
   sections:[
-    {type:'text',content:'The JavaScript Date object represents a single point in time stored as milliseconds since January 1, 1970 UTC (Unix epoch). Dates are tricky — timezones, formatting, and calculations all have gotchas. Modern projects often use a library like date-fns or dayjs, but understanding the native Date object is essential.'},
+    {type:'text',content:'The JavaScript Date object represents a single point in time stored as milliseconds since January 1, 1970 UTC (Unix epoch). Dates are tricky - timezones, formatting, and calculations all have gotchas. Modern projects often use a library like date-fns or dayjs, but understanding the native Date object is essential.'},
     {type:'heading',content:'Creating Dates'},
-    {type:'example',title:'All ways to create a Date',content:'new Date() with no arguments gives you right now. The most reliable way to create a specific date is from an ISO 8601 string: "2026-08-17T14:30:00Z". Be careful creating dates from (year, month, day) — months are 0-indexed (0=January, 11=December). Date.now() returns raw milliseconds and is the fastest way to get the current timestamp for measuring performance.',language:'javascript',code:`// Current date and time
+    {type:'example',title:'All ways to create a Date',content:'new Date() with no arguments gives you right now. The most reliable way to create a specific date is from an ISO 8601 string: "2026-08-17T14:30:00Z". Be careful creating dates from (year, month, day) - months are 0-indexed (0=January, 11=December). Date.now() returns raw milliseconds and is the fastest way to get the current timestamp for measuring performance.',language:'javascript',code:`// Current date and time
 const now = new Date();
 console.log(now); // 2026-08-17T...
 
-// From string (ISO 8601 — recommended format)
+// From string (ISO 8601 - recommended format)
 const d1 = new Date("2026-08-17");           // date only
 const d2 = new Date("2026-08-17T14:30:00");  // date + time
 const d3 = new Date("2026-08-17T14:30:00Z"); // UTC
@@ -22,17 +22,17 @@ const d5 = new Date(2026, 7, 17, 14, 30, 0); // Aug 17 2026 14:30:00
 const d6 = new Date(0);           // Jan 1 1970
 const d7 = new Date(1723896000000); // some date
 
-// Date.now() — current time as milliseconds (fastest!)
+// Date.now() - current time as milliseconds (fastest!)
 const ms = Date.now();
 console.log(ms); // e.g. 1723896000000`},
     {type:'heading',content:'Getting Date Parts'},
-    {type:'example',title:'Extracting date/time components',content:'Each getter method returns one piece of the date. Remember getMonth() returns 0–11 (add 1 to display it). getDay() returns 0–6 where 0 is Sunday. getDate() (not getDay) gives the day of the month. Set methods let you change individual parts — setDate(getDate() + 7) adds exactly one week to any date.',language:'javascript',code:`const d = new Date("2026-08-17T14:30:45");
+    {type:'example',title:'Extracting date/time components',content:'Each getter method returns one piece of the date. Remember getMonth() returns 0-11 (add 1 to display it). getDay() returns 0-6 where 0 is Sunday. getDate() (not getDay) gives the day of the month. Set methods let you change individual parts - setDate(getDate() + 7) adds exactly one week to any date.',language:'javascript',code:`const d = new Date("2026-08-17T14:30:45");
 
 // Get methods (LOCAL time)
 d.getFullYear();    // 2026
-d.getMonth();       // 7 (August — 0-indexed!)
+d.getMonth();       // 7 (August - 0-indexed!)
 d.getDate();        // 17 (day of month, 1-31)
-d.getDay();         // 1 (Monday — 0=Sun, 1=Mon, 6=Sat)
+d.getDay();         // 1 (Monday - 0=Sun, 1=Mon, 6=Sat)
 d.getHours();       // 14
 d.getMinutes();     // 30
 d.getSeconds();     // 45
@@ -50,7 +50,7 @@ date.setMonth(11); // December
 date.setDate(25);  // 25th
 // Result: December 25, 2030`},
     {type:'heading',content:'Formatting Dates'},
-    {type:'example',title:'Converting dates to strings',content:'toISOString() is the best format for storing dates in databases or sending them over APIs — it is always UTC and universally parseable. For displaying dates to users, use Intl.DateTimeFormat which respects the user\'s locale and timezone. Different locales format dates very differently — American MM/DD/YYYY vs German DD.MM.YYYY vs Japanese YYYY/MM/DD.',language:'javascript',code:`const d = new Date("2026-08-17T14:30:00");
+    {type:'example',title:'Converting dates to strings',content:'toISOString() is the best format for storing dates in databases or sending them over APIs - it is always UTC and universally parseable. For displaying dates to users, use Intl.DateTimeFormat which respects the user\'s locale and timezone. Different locales format dates very differently - American MM/DD/YYYY vs German DD.MM.YYYY vs Japanese YYYY/MM/DD.',language:'javascript',code:`const d = new Date("2026-08-17T14:30:00");
 
 // Built-in methods
 d.toString();         // "Mon Aug 17 2026 14:30:00 GMT+0000"
@@ -61,7 +61,7 @@ d.toLocaleDateString(); // "8/17/2026" (locale-dependent)
 d.toLocaleTimeString(); // "2:30:00 PM" (locale-dependent)
 d.toLocaleString();     // "8/17/2026, 2:30:00 PM"
 
-// Intl.DateTimeFormat — best for user-facing dates
+// Intl.DateTimeFormat - best for user-facing dates
 const formatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric", month: "long", day: "numeric",
   hour: "2-digit", minute: "2-digit", timeZoneName: "short"
@@ -80,7 +80,7 @@ function formatDate(date) {
   return \`\${y}-\${m}-\${day}\`; // "2026-08-17"
 }`},
     {type:'heading',content:'Date Calculations'},
-    {type:'example',title:'Time differences and date math',content:'Date objects support subtraction — subtracting two dates gives you the difference in milliseconds. Divide by 1000 for seconds, by 86400000 for days. To add days to a date, clone it first (new Date(date)) so you do not mutate the original, then use setDate(getDate() + n). Always compare dates using < or > or getTime() — never use == because two different Date objects are never reference-equal.',language:'javascript',code:`// Time difference in milliseconds
+    {type:'example',title:'Time differences and date math',content:'Date objects support subtraction - subtracting two dates gives you the difference in milliseconds. Divide by 1000 for seconds, by 86400000 for days. To add days to a date, clone it first (new Date(date)) so you do not mutate the original, then use setDate(getDate() + n). Always compare dates using < or > or getTime() - never use == because two different Date objects are never reference-equal.',language:'javascript',code:`// Time difference in milliseconds
 const start = new Date("2026-01-01");
 const end   = new Date("2026-08-17");
 const diffMs = end - start; // milliseconds difference

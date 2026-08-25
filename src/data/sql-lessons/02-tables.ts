@@ -24,7 +24,7 @@ export const lesson02: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'Table and column names should be lowercase with underscores (snake_case) in most SQL conventions. Names are case-insensitive in most databases, but consistent casing prevents confusion. Avoid reserved SQL keywords as names — if you must use them, wrap the name in double quotes.'
+      content: 'Table and column names should be lowercase with underscores (snake_case) in most SQL conventions. Names are case-insensitive in most databases, but consistent casing prevents confusion. Avoid reserved SQL keywords as names - if you must use them, wrap the name in double quotes.'
     },
     {
       type: 'heading',
@@ -75,7 +75,7 @@ export const lesson02: SqlLesson = {
         'UNIQUE: no two rows can have the same value in this column (NULLs may be allowed)',
         'DEFAULT value: if no value is provided on INSERT, use this default',
         'CHECK (condition): reject any value where the condition is false',
-        'REFERENCES table(col): foreign key — value must exist in another table',
+        'REFERENCES table(col): foreign key - value must exist in another table',
         'SERIAL / AUTO_INCREMENT: automatically generate an incrementing integer ID'
       ]
     },
@@ -101,7 +101,7 @@ export const lesson02: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'NULL represents the absence of a value — it is not zero, not an empty string, it is "unknown" or "not applicable". SQL handles NULL specially: NULL compared to anything (even itself) returns NULL, not true or false. This trips up many developers.'
+      content: 'NULL represents the absence of a value - it is not zero, not an empty string, it is "unknown" or "not applicable". SQL handles NULL specially: NULL compared to anything (even itself) returns NULL, not true or false. This trips up many developers.'
     },
     {
       type: 'text',
@@ -110,7 +110,7 @@ export const lesson02: SqlLesson = {
     {
       type: 'warning',
       title: 'NULL Is Not Zero or Empty',
-      content: 'The expression NULL = NULL evaluates to NULL (not true). To check for NULL, always use IS NULL or IS NOT NULL — never use = NULL. This is one of the most common SQL mistakes beginners make.'
+      content: 'The expression NULL = NULL evaluates to NULL (not true). To check for NULL, always use IS NULL or IS NOT NULL - never use = NULL. This is one of the most common SQL mistakes beginners make.'
     },
     {
       type: 'heading',
@@ -118,7 +118,7 @@ export const lesson02: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'After a table is created, you can modify its structure using ALTER TABLE. You can add new columns, drop existing columns, rename columns, change data types, or add and drop constraints. In production databases, ALTER TABLE on large tables requires care — some operations lock the table and can cause downtime.'
+      content: 'After a table is created, you can modify its structure using ALTER TABLE. You can add new columns, drop existing columns, rename columns, change data types, or add and drop constraints. In production databases, ALTER TABLE on large tables requires care - some operations lock the table and can cause downtime.'
     },
     {
       type: 'example',
@@ -257,7 +257,7 @@ render();`,
         'VARCHAR stores numbers, TEXT stores strings',
         'VARCHAR has a configurable maximum length while TEXT is unlimited',
         'TEXT is faster than VARCHAR for all operations',
-        'There is no difference — they are identical'
+        'There is no difference - they are identical'
       ],
       correct: 1,
       explanation: 'VARCHAR(n) stores variable-length strings up to n characters. TEXT (or CLOB in some databases) stores strings of unlimited length. In practice, PostgreSQL treats them similarly in storage, but the explicit limit in VARCHAR can serve as a soft data validation.'

@@ -419,7 +419,7 @@ function runOp() {
         return String(doc[k])===String(filter[k]);
       });
     });
-    if(resultEl) resultEl.textContent = 'Found '+matches.length+' document(s):\\n'+matches.map(function(d){return '{ _id:'+d._id+', name:"'+d.name+'", age:'+d.age+', city:"'+d.city+'" }';}).join('\\n');
+    if(resultEl) resultEl.textContent = 'Found '+matches.length+' document(s):\ '+matches.map(function(d){return '{ _id:'+d._id+', name:"'+d.name+'", age:'+d.age+', city:"'+d.city+'" }';}).join('\ ');
   }
   else if(activeOp==='updateOne'){
     var fStr=v('uFilter'), op=v('uOperator'), field=v('uField'), val=v('uValue');
@@ -480,7 +480,7 @@ function renderDocs(){
 
 function renderOpCount(){
   var el = document.getElementById('opCount');
-  if(el) el.textContent = 'Operations — insert:'+opCounts.insertOne+' find:'+opCounts.find+' update:'+opCounts.updateOne+' delete:'+opCounts.deleteOne;
+  if(el) el.textContent = 'Operations - insert:'+opCounts.insertOne+' find:'+opCounts.find+' update:'+opCounts.updateOne+' delete:'+opCounts.deleteOne;
 }
 
 document.getElementById('output').innerHTML =

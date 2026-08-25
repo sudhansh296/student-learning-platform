@@ -71,7 +71,7 @@ async function writeExamples() {
   await fsp.writeFile('output.txt', 'Hello, Node.js!', 'utf8');
 
   // Append to a file (creates if not exists)
-  await fsp.appendFile('log.txt', new Date().toISOString() + ' - App started\n');
+  await fsp.appendFile('log.txt', new Date().toISOString() + ' - App started ');
 
   // Write JSON
   const data = { users: ['Alice', 'Bob'], count: 2 };
@@ -139,7 +139,7 @@ async function loadConfig() {
 // Write application logs
 async function log(message) {
   const timestamp = new Date().toISOString();
-  const entry = timestamp + ' ' + message + '\n';
+  const entry = timestamp + ' ' + message + ' ';
   const logPath = path.join(__dirname, 'app.log');
   await fsp.appendFile(logPath, entry, 'utf8');
 }
@@ -188,7 +188,7 @@ function addLog(msg, color) {
 
 function readFile(name) {
   if (fs[name] !== undefined) {
-    addLog('readFile(\\"' + name + '\\") => ' + fs[name].split('\\n').length + ' lines', '#4ade80');
+    addLog('readFile(\\"' + name + '\\") => ' + fs[name].split('\ ').length + ' lines', '#4ade80');
   } else {
     addLog('Error: ENOENT: no such file \\"' + name + '\\"', '#f87171');
   }
@@ -248,7 +248,7 @@ function render() {
       else if (action === 'write') {
         var ts = new Date().toISOString();
         var newContent = activeFile.endsWith('.log')
-          ? (fs[activeFile] || '') + ts + ' - Updated\\n'
+          ? (fs[activeFile] || '') + ts + ' - Updated\ '
           : (fs[activeFile] || '') + '\\n// updated at ' + ts;
         writeFile(activeFile, newContent);
       } else if (action === 'delete') deleteFile(activeFile);

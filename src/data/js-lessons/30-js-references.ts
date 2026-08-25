@@ -1,10 +1,10 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsReferencesLesson: JSLesson = {
   id:'js-references',title:'JavaScript Quick Reference',slug:'js-references',chapter:'reference',order:31,difficulty:'beginner',readingTime:10,
-  description:'Complete JavaScript quick reference — all built-in methods, operators, keywords, and common patterns in one place.',
+  description:'Complete JavaScript quick reference - all built-in methods, operators, keywords, and common patterns in one place.',
   sections:[
     {type:'heading',content:'Array Methods Reference'},
-    {type:'example',title:'Complete array methods',content:'This is your go-to cheat sheet for every array method. Mutating methods change the original array — push, pop, splice, sort, reverse. Non-mutating methods return a new array or value — map, filter, reduce, slice, find. As a rule: prefer non-mutating methods in React and functional code. Use the ES2023 toSorted(), toReversed(), and toSpliced() for guaranteed immutability.',language:'javascript',code:`// MUTATING (change original array)
+    {type:'example',title:'Complete array methods',content:'This is your go-to cheat sheet for every array method. Mutating methods change the original array - push, pop, splice, sort, reverse. Non-mutating methods return a new array or value - map, filter, reduce, slice, find. As a rule: prefer non-mutating methods in React and functional code. Use the ES2023 toSorted(), toReversed(), and toSpliced() for guaranteed immutability.',language:'javascript',code:`// MUTATING (change original array)
 arr.push(...items)          // add to end, returns new length
 arr.pop()                   // remove from end, returns removed item
 arr.unshift(...items)       // add to start, returns new length
@@ -48,7 +48,7 @@ Array.isArray(value)        // true/false
 Array.from(iterable, mapFn) // create from iterable
 Array.of(...values)         // create from values`},
     {type:'heading',content:'String Methods Reference'},
-    {type:'example',title:'Complete string methods',content:'Strings in JavaScript are immutable — every method returns a NEW string, the original is never changed. The most-used methods are includes(), slice(), split(), replace()/replaceAll(), trim(), and padStart(). For searching and extracting with patterns, use match() and matchAll() with a regex. Remember: startsWith and endsWith accept a position argument for checking from a specific index.',language:'javascript',code:`str.length                  // character count
+    {type:'example',title:'Complete string methods',content:'Strings in JavaScript are immutable - every method returns a NEW string, the original is never changed. The most-used methods are includes(), slice(), split(), replace()/replaceAll(), trim(), and padStart(). For searching and extracting with patterns, use match() and matchAll() with a regex. Remember: startsWith and endsWith accept a position argument for checking from a specific index.',language:'javascript',code:`str.length                  // character count
 str[i] / str.at(i)         // access character (at supports negative)
 str.charAt(i)              // character at index
 str.charCodeAt(i)          // UTF-16 code at index
@@ -69,7 +69,7 @@ str.slice(start, end)       // extract (negative ok)
 str.substring(start, end)   // extract (no negative)
 str.split(separator, limit) // string to array
 
-// MODIFY (returns new string — strings are immutable)
+// MODIFY (returns new string - strings are immutable)
 str.replace(search, replacement)   // replace first
 str.replaceAll(search, replacement) // replace all (ES2021)
 str.toUpperCase()           // ALL CAPS
@@ -86,7 +86,7 @@ str.normalize(form)         // Unicode normalization
 String.fromCharCode(...codes)     // from UTF-16 codes
 String.fromCodePoint(...points)   // from Unicode code points`},
     {type:'heading',content:'Object Methods Reference'},
-    {type:'example',title:'Object static methods',content:'Object static methods are called on Object itself, not on instances. Object.keys/values/entries are the three you will use daily for looping objects. Object.assign() does a shallow copy — great for merging configs. Object.freeze() creates immutable objects. Object.create() is the low-level way to set up prototype chains manually. Object.defineProperty() gives you full control over property behavior.',language:'javascript',code:`// CREATION
+    {type:'example',title:'Object static methods',content:'Object static methods are called on Object itself, not on instances. Object.keys/values/entries are the three you will use daily for looping objects. Object.assign() does a shallow copy - great for merging configs. Object.freeze() creates immutable objects. Object.create() is the low-level way to set up prototype chains manually. Object.defineProperty() gives you full control over property behavior.',language:'javascript',code:`// CREATION
 Object.create(proto, descriptors)   // create with specific prototype
 Object.assign(target, ...sources)   // copy properties (shallow)
 Object.fromEntries(entries)         // from [key,value] pairs
@@ -111,13 +111,13 @@ Object.defineProperty(obj, key, descriptor)     // define with descriptor
 Object.defineProperties(obj, descriptors)       // define multiple
 Object.getOwnPropertyDescriptor(obj, key)       // get descriptor`},
     {type:'heading',content:'Promise Methods Reference'},
-    {type:'example',title:'Promise static methods',content:'Promise.all() is for when ALL must succeed — fails immediately if any one fails. Promise.allSettled() is for when you want ALL results regardless of failure — returns an array with status for each. Promise.race() gives you the first one to finish (resolved or rejected). Promise.any() gives you the first one to succeed (ignores rejections until all fail). The timeout and retry patterns shown are used in every real application.',language:'javascript',code:`Promise.resolve(value)      // create resolved Promise
+    {type:'example',title:'Promise static methods',content:'Promise.all() is for when ALL must succeed - fails immediately if any one fails. Promise.allSettled() is for when you want ALL results regardless of failure - returns an array with status for each. Promise.race() gives you the first one to finish (resolved or rejected). Promise.any() gives you the first one to succeed (ignores rejections until all fail). The timeout and retry patterns shown are used in every real application.',language:'javascript',code:`Promise.resolve(value)      // create resolved Promise
 Promise.reject(reason)      // create rejected Promise
 
-// Wait for ALL — rejects if any rejects
+// Wait for ALL - rejects if any rejects
 Promise.all([p1, p2, p3])   // → [v1, v2, v3] or first rejection
 
-// Wait for ALL — never rejects, reports each status
+// Wait for ALL - never rejects, reports each status
 Promise.allSettled([p1, p2]) // → [{status, value/reason}, ...]
 
 // First settled wins (resolve or reject)
@@ -147,7 +147,7 @@ async function retry(fn, times = 3) {
   }
 }`},
     {type:'heading',content:'JavaScript Operators Quick Reference'},
-    {type:'example',title:'All operators at a glance',content:'Always use === and !== (strict equality) over == and != — loose equality has unintuitive type coercion. The ?? operator only falls back for null/undefined, while || falls back for any falsy value including 0 and "". Optional chaining ?. prevents crashes from null/undefined property access. The logical assignment operators (&&=, ||=, ??=) are shorthand for conditional assignment.',language:'javascript',code:`// ARITHMETIC
+    {type:'example',title:'All operators at a glance',content:'Always use === and !== (strict equality) over == and != - loose equality has unintuitive type coercion. The ?? operator only falls back for null/undefined, while || falls back for any falsy value including 0 and "". Optional chaining ?. prevents crashes from null/undefined property access. The logical assignment operators (&&=, ||=, ??=) are shorthand for conditional assignment.',language:'javascript',code:`// ARITHMETIC
 + - * / % **          // add, sub, mul, div, modulo, power
 ++ --                  // increment, decrement (prefix/postfix)
 
@@ -203,11 +203,11 @@ input:focus{border-color:#2563eb;}
   {name:'reduce',sig:'arr.reduce(fn, init)',desc:'Accumulate to single value',type:'Array'},
   {name:'find',sig:'arr.find(fn)',desc:'First element matching condition',type:'Array'},
   {name:'forEach',sig:'arr.forEach(fn)',desc:'Iterate without return value',type:'Array'},
-  {name:'includes',sig:'arr.includes(val)',desc:'Check if value exists — true/false',type:'Array'},
+  {name:'includes',sig:'arr.includes(val)',desc:'Check if value exists - true/false',type:'Array'},
   {name:'flat',sig:'arr.flat(depth)',desc:'Flatten nested arrays',type:'Array'},
   {name:'slice',sig:'arr.slice(start, end)',desc:'Extract portion without mutating',type:'Array'},
   {name:'splice',sig:'arr.splice(start, del, ...add)',desc:'Remove/insert at position (mutates)',type:'Array'},
-  {name:'sort',sig:'arr.sort((a,b) => a-b)',desc:'Sort in place — always provide comparator for numbers',type:'Array'},
+  {name:'sort',sig:'arr.sort((a,b) => a-b)',desc:'Sort in place - always provide comparator for numbers',type:'Array'},
   {name:'indexOf',sig:'str.indexOf(search)',desc:'First occurrence index or -1',type:'String'},
   {name:'slice',sig:'str.slice(start, end)',desc:'Extract substring',type:'String'},
   {name:'replace',sig:'str.replace(search, replacement)',desc:'Replace first occurrence',type:'String'},
@@ -221,8 +221,8 @@ input:focus{border-color:#2563eb;}
   {name:'entries',sig:'Object.entries(obj)',desc:'Array of [key, value] pairs',type:'Object'},
   {name:'assign',sig:'Object.assign(target, ...src)',desc:'Copy properties from sources to target',type:'Object'},
   {name:'freeze',sig:'Object.freeze(obj)',desc:'Make object immutable',type:'Object'},
-  {name:'all',sig:'Promise.all([p1,p2])',desc:'Wait for all — fails fast if any rejects',type:'Promise'},
-  {name:'allSettled',sig:'Promise.allSettled([p1,p2])',desc:'Wait for all — never rejects',type:'Promise'},
+  {name:'all',sig:'Promise.all([p1,p2])',desc:'Wait for all - fails fast if any rejects',type:'Promise'},
+  {name:'allSettled',sig:'Promise.allSettled([p1,p2])',desc:'Wait for all - never rejects',type:'Promise'},
   {name:'race',sig:'Promise.race([p1,p2])',desc:'Resolve with first settled',type:'Promise'},
 ];
 

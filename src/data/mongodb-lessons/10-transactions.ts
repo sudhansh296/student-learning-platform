@@ -352,7 +352,7 @@ function render() {
     '<div class="label">Transfer from Alice to Bob:</div>' +
     '<input type="number" id="amount" class="input" placeholder="Enter amount" min="1" />' +
     '<button class="btn" onclick="transfer()">Execute Transaction</button>' +
-    '<div class="log">' + logs.join('\\n') + '</div>' +
+    '<div class="log">' + logs.join('\ ') + '</div>' +
     '</div>' +
     '</div>';
 }

@@ -10,9 +10,9 @@ export const htmlTablesLesson: HtmlLesson = {
   readingTime: 12,
   description: 'Build data tables with rows, columns, headers, spanning cells, captions, and proper accessibility.',
   sections: [
-    { type: 'text', content: 'HTML tables are used to display tabular data — data that belongs in rows and columns. Use tables for things like schedules, pricing comparison, sports scores, financial data. Do NOT use tables for page layout — that\'s what CSS Flexbox and Grid are for.' },
+    { type: 'text', content: 'HTML tables are used to display tabular data - data that belongs in rows and columns. Use tables for things like schedules, pricing comparison, sports scores, financial data. Do NOT use tables for page layout - that\'s what CSS Flexbox and Grid are for.' },
     { type: 'heading', content: 'Basic Table Structure' },
-    { type: 'code', language: 'html',       content: 'A table is built from rows and cells. table is the outer container. tr creates a row. td creates a data cell. th creates a header cell — bold and centered by default. Every row must have the same number of cells for the table to display correctly.',
+    { type: 'code', language: 'html',       content: 'A table is built from rows and cells. table is the outer container. tr creates a row. td creates a data cell. th creates a header cell - bold and centered by default. Every row must have the same number of cells for the table to display correctly.',
       code: `<!-- A table needs: table > tr > td  -->
 <table>
   <tr>                     <!-- tr = table row -->
@@ -24,7 +24,7 @@ export const htmlTablesLesson: HtmlLesson = {
     <td>Row 2, Cell 2</td>
   </tr>
 </table>` },
-    { type: 'heading', content: 'Table Headers — <th>' },
+    { type: 'heading', content: 'Table Headers - <th>' },
     { type: 'code', language: 'html',       content: 'Use th elements for column headers instead of td. th is bold and centered by default, and tells screen readers this cell is a header. Adding scope="col" on th explicitly links it to its column for better accessibility.',
       code: `<!-- th = table header cell (bold and centered by default) -->
 <table>
@@ -84,7 +84,7 @@ export const htmlTablesLesson: HtmlLesson = {
   </tfoot>
 </table>` },
     { type: 'heading', content: 'Spanning Columns and Rows' },
-    { type: 'code', language: 'html',       content: 'colspan merges cells horizontally — the cell spans across multiple columns. rowspan merges cells vertically — the cell spans multiple rows. When you use rowspan, the spanned rows have one fewer td since the merged cell covers that space.',
+    { type: 'code', language: 'html',       content: 'colspan merges cells horizontally - the cell spans across multiple columns. rowspan merges cells vertically - the cell spans multiple rows. When you use rowspan, the spanned rows have one fewer td since the merged cell covers that space.',
       code: `<!-- colspan: merge cells horizontally -->
 <table>
   <tr>
@@ -112,7 +112,7 @@ export const htmlTablesLesson: HtmlLesson = {
     <td>Room 101</td>
   </tr>
   <tr>
-    <!-- No td for subject — already spanned above -->
+    <!-- No td for subject - already spanned above -->
     <td>Mrs. Lee</td>
     <td>Room 203</td>
   </tr>
@@ -178,7 +178,7 @@ tfoot td { background: #f4f4f4; font-size: 14px; border-top: 2px solid #e5e7eb; 
       mode: 'html' },
   ],
   exercises: [
-    { id: 'tbl1', question: 'Which element defines a table header cell (bold, centered)?', type: 'multiple-choice', options: ['<td>', '<th>', '<tr>', '<thead>'], correct: 1, explanation: '<th> (table header) creates a header cell — bold and centered by default. <td> creates regular data cells.' },
+    { id: 'tbl1', question: 'Which element defines a table header cell (bold, centered)?', type: 'multiple-choice', options: ['<td>', '<th>', '<tr>', '<thead>'], correct: 1, explanation: '<th> (table header) creates a header cell - bold and centered by default. <td> creates regular data cells.' },
     { id: 'tbl2', question: 'What attribute merges multiple columns into one cell?', type: 'multiple-choice', options: ['rowspan', 'colspan', 'merge', 'span'], correct: 1, explanation: 'colspan="N" makes a cell span N columns horizontally. rowspan="N" makes a cell span N rows vertically.' },
   ],
   quiz: [{ id: 'tq1', question: 'What is the correct order of table elements?', options: ['table > td > tr', 'table > tr > td', 'table > th > td', 'tr > table > td'], correct: 1, explanation: 'Correct: <table> contains <tr> (rows), and each <tr> contains <td> or <th> (cells). Never put <td> directly inside <table>.' }],

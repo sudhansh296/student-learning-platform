@@ -33,7 +33,7 @@ export const lesson09: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'Most database indexes use a B-tree (Balanced tree) structure. Values are sorted and organized into a tree where each node contains keys and pointers. Searching a B-tree is O(log n) — finding one row among 1 million rows requires at most 20 comparisons rather than scanning all 1 million rows.'
+      content: 'Most database indexes use a B-tree (Balanced tree) structure. Values are sorted and organized into a tree where each node contains keys and pointers. Searching a B-tree is O(log n) - finding one row among 1 million rows requires at most 20 comparisons rather than scanning all 1 million rows.'
     },
     {
       type: 'text',
@@ -47,10 +47,10 @@ export const lesson09: SqlLesson = {
       type: 'list',
       title: 'Index these columns:',
       items: [
-        'Foreign key columns — used in JOIN conditions; without an index, JOINs scan the entire joined table',
+        'Foreign key columns - used in JOIN conditions; without an index, JOINs scan the entire joined table',
         'Columns frequently used in WHERE clauses with high cardinality (many distinct values)',
         'Columns used in ORDER BY when you also need fast retrieval with LIMIT',
-        'Columns frequently used together in queries — consider a composite index',
+        'Columns frequently used together in queries - consider a composite index',
         'Unique fields like email or username that need both uniqueness and fast lookup'
       ]
     },
@@ -58,10 +58,10 @@ export const lesson09: SqlLesson = {
       type: 'list',
       title: 'Do NOT index these:',
       items: [
-        'Low-cardinality columns like boolean flags (active/inactive) — the index is useless if half the table matches',
+        'Low-cardinality columns like boolean flags (active/inactive) - the index is useless if half the table matches',
         'Columns rarely used in WHERE, JOIN, or ORDER BY',
-        'Small tables (< 1000 rows) — a full scan is fast enough and indexes add overhead',
-        'Columns that are frequently updated — indexes must be maintained on every write'
+        'Small tables (< 1000 rows) - a full scan is fast enough and indexes add overhead',
+        'Columns that are frequently updated - indexes must be maintained on every write'
       ]
     },
     {
@@ -74,7 +74,7 @@ export const lesson09: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'A covering index is a composite index that includes all columns needed by a query. When the database can satisfy a query entirely from the index without touching the main table, this is called an "index-only scan" — the fastest possible query plan.'
+      content: 'A covering index is a composite index that includes all columns needed by a query. When the database can satisfy a query entirely from the index without touching the main table, this is called an "index-only scan" - the fastest possible query plan.'
     },
     {
       type: 'example',
@@ -111,7 +111,7 @@ Execution Time: 0.2 ms  (vs 45ms without index)`
     },
     {
       type: 'text',
-      content: 'A foreign key constraint ensures referential integrity — every value in a foreign key column must match an existing value in the referenced table\'s primary key. This prevents orphaned records: you cannot have an order referencing a user_id that does not exist.'
+      content: 'A foreign key constraint ensures referential integrity - every value in a foreign key column must match an existing value in the referenced table\'s primary key. This prevents orphaned records: you cannot have an order referencing a user_id that does not exist.'
     },
     {
       type: 'text',
@@ -158,7 +158,7 @@ ALTER TABLE orders
     {
       type: 'tip',
       title: 'EXPLAIN Is Your Best Friend',
-      content: 'EXPLAIN (or EXPLAIN ANALYZE for actual execution stats) shows the query plan the database chose. Look for "Seq Scan" (full table scan — might need an index) vs "Index Scan" (using an index — good). EXPLAIN ANALYZE runs the query and shows actual execution time alongside estimates.'
+      content: 'EXPLAIN (or EXPLAIN ANALYZE for actual execution stats) shows the query plan the database chose. Look for "Seq Scan" (full table scan - might need an index) vs "Index Scan" (using an index - good). EXPLAIN ANALYZE runs the query and shows actual execution time alongside estimates.'
     },
     {
       type: 'tryit',
@@ -325,7 +325,7 @@ render();`,
         'An index created automatically by the database'
       ],
       correct: 1,
-      explanation: 'A covering index contains all columns that a specific query needs. The database can answer the query entirely from the index without reading the main table rows — called an index-only scan. This is extremely fast and is an advanced optimization technique.'
+      explanation: 'A covering index contains all columns that a specific query needs. The database can answer the query entirely from the index without reading the main table rows - called an index-only scan. This is extremely fast and is an advanced optimization technique.'
     }
   ]
 };

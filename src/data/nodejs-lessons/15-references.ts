@@ -74,7 +74,7 @@ const data = await fs.readFile('file.txt', 'utf8');
 await fs.writeFile('file.txt', 'content');
 
 // Append to file
-await fs.appendFile('log.txt', 'new line\\n');
+await fs.appendFile('log.txt', 'new line\ ');
 
 // Check if file exists
 try {

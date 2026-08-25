@@ -24,7 +24,7 @@ export const lesson05: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'This architectural difference drives most of the other differences. A client-server database can serve many simultaneous clients over a network, manage permissions, handle concurrent writes with sophisticated locking, and scale with dedicated hardware. An embedded database can do none of these things by design — but it needs zero configuration and zero infrastructure.'
+      content: 'This architectural difference drives most of the other differences. A client-server database can serve many simultaneous clients over a network, manage permissions, handle concurrent writes with sophisticated locking, and scale with dedicated hardware. An embedded database can do none of these things by design - but it needs zero configuration and zero infrastructure.'
     },
     {
       type: 'table',
@@ -50,7 +50,7 @@ export const lesson05: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'Concurrency is where SQLite most significantly differs from PostgreSQL and MySQL. SQLite allows many simultaneous readers, but only one writer at a time. The default journal mode serializes all writes. WAL (Write-Ahead Logging) mode is significantly better — it allows readers and one writer to proceed concurrently — but still has limits compared to server databases.'
+      content: 'Concurrency is where SQLite most significantly differs from PostgreSQL and MySQL. SQLite allows many simultaneous readers, but only one writer at a time. The default journal mode serializes all writes. WAL (Write-Ahead Logging) mode is significantly better - it allows readers and one writer to proceed concurrently - but still has limits compared to server databases.'
     },
     {
       type: 'text',
@@ -91,7 +91,7 @@ export const lesson05: SqliteLesson = {
       code: `const Database = require('better-sqlite3');
 const db = new Database('./myapp.db');
 
-// Enable WAL mode — persists in the database file
+// Enable WAL mode - persists in the database file
 // Only needs to be run once, then it stays in WAL mode
 db.pragma('journal_mode = WAL');
 
@@ -148,9 +148,9 @@ const questions = [
   {
     q: 'Do you need advanced features (PostGIS, JSONB, complex types)?',
     opts: [
-      { text: 'No — standard SQL is enough', score: { sqlite: 2, pg: 2, mysql: 2 } },
+      { text: 'No - standard SQL is enough', score: { sqlite: 2, pg: 2, mysql: 2 } },
       { text: 'JSON storage would be useful', score: { sqlite: 1, pg: 3, mysql: 2 } },
-      { text: 'Yes — geospatial, full-text search, custom types', score: { sqlite: 0, pg: 3, mysql: 1 } },
+      { text: 'Yes - geospatial, full-text search, custom types', score: { sqlite: 0, pg: 3, mysql: 1 } },
     ]
   },
 ];
@@ -252,7 +252,7 @@ p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
       type: 'multiple-choice',
       options: [
         'A backup strategy that creates multiple versions of the database file',
-        'Multi-Version Concurrency Control — each transaction sees a consistent snapshot, allowing concurrent readers and writers without blocking',
+        'Multi-Version Concurrency Control - each transaction sees a consistent snapshot, allowing concurrent readers and writers without blocking',
         'A clustering technology for running multiple PostgreSQL servers',
         'The MySQL version control system'
       ],
@@ -266,7 +266,7 @@ p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
       question: 'What is the primary reason SQLite cannot be used on multiple application servers simultaneously?',
       options: [
         'SQLite uses a different SQL dialect than PostgreSQL',
-        'SQLite is a local file — multiple servers would each have their own copy with no synchronization',
+        'SQLite is a local file - multiple servers would each have their own copy with no synchronization',
         'SQLite does not support transactions',
         'SQLite has no authentication system'
       ],
@@ -289,7 +289,7 @@ p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
       id: 'q-sqlite-5-3',
       question: 'When should you consider SQLite for production use?',
       options: [
-        'Never — SQLite is only for development',
+        'Never - SQLite is only for development',
         'When you have read-heavy workloads, a single server, and can use WAL mode with tools like Litestream',
         'When you need the most concurrent writes possible',
         'Only when PostgreSQL is too expensive'

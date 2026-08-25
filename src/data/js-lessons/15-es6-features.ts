@@ -1,13 +1,13 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsEs6Lesson: JSLesson = {
   id:'js-es6',title:'ES6+ Modern Features',slug:'es6-features',
   chapter:'es6',order:16,difficulty:'intermediate',readingTime:14,
-  description:'Master essential ES6+ features — destructuring, spread/rest, optional chaining, nullish coalescing, Map, Set, Symbol, WeakMap, and more.',
+  description:'Master essential ES6+ features - destructuring, spread/rest, optional chaining, nullish coalescing, Map, Set, Symbol, WeakMap, and more.',
   sections:[
     {type:'text',content:'ES6 (2015) was the biggest upgrade to JavaScript ever. Every year since, new features have been added. This lesson covers the modern features used daily in professional JavaScript, React, and Node.js development.'},
-    {type:'heading',content:'Destructuring — Arrays and Objects'},
-    {type:'example',title:'Extract values cleanly',content:'Destructuring is one of the most-used ES6 features. Instead of writing const name = user.name; const age = user.age; on separate lines, you write const { name, age } = user; in one. You can rename variables, provide defaults, and even destructure nested objects. Function parameter destructuring is used constantly in React — component props are always destructured.',language:'javascript',code:`// Array destructuring
+    {type:'heading',content:'Destructuring - Arrays and Objects'},
+    {type:'example',title:'Extract values cleanly',content:'Destructuring is one of the most-used ES6 features. Instead of writing const name = user.name; const age = user.age; on separate lines, you write const { name, age } = user; in one. You can rename variables, provide defaults, and even destructure nested objects. Function parameter destructuring is used constantly in React - component props are always destructured.',language:'javascript',code:`// Array destructuring
 const [a, b, c] = [1, 2, 3];
 const [x, , z] = [10, 20, 30];  // skip middle
 const [first, ...rest] = [1,2,3,4,5]; // rest: [2,3,4,5]
@@ -34,12 +34,12 @@ function renderCard({ title, author, date = "Unknown" }) {
 
 // Array of objects
 const users = [{ name:"Alice", score:95 }, { name:"Bob", score:87 }];
-const [[first2]] = users; // doesn't work — just showing that it's possible
+const [[first2]] = users; // doesn't work - just showing that it's possible
 for (const { name, score } of users) {
   console.log(\`\${name}: \${score}\`);
 }`},
     {type:'heading',content:'Spread and Rest Operators'},
-    {type:'example',title:'... does two things depending on context',content:'The three dots (...) do two opposite things based on where you use them. As SPREAD (in arrays, objects, function calls) it expands — it unpacks an array or object into individual elements. As REST (in function parameters, destructuring) it collects — it gathers remaining items into an array. Spread is how you clone and merge objects in React state updates without mutating the original.',language:'javascript',code:`// SPREAD — expands arrays/objects
+    {type:'example',title:'... does two things depending on context',content:'The three dots (...) do two opposite things based on where you use them. As SPREAD (in arrays, objects, function calls) it expands - it unpacks an array or object into individual elements. As REST (in function parameters, destructuring) it collects - it gathers remaining items into an array. Spread is how you clone and merge objects in React state updates without mutating the original.',language:'javascript',code:`// SPREAD - expands arrays/objects
 // In array literals
 const arr1 = [1,2,3], arr2 = [4,5,6];
 const merged = [...arr1, ...arr2];         // [1,2,3,4,5,6]
@@ -54,7 +54,7 @@ const defaults = { theme:"light", lang:"en" };
 const prefs    = { theme:"dark" };
 const config   = { ...defaults, ...prefs }; // { theme:"dark", lang:"en" }
 
-// REST — collects remaining values into array
+// REST - collects remaining values into array
 function sum(...nums) {
   return nums.reduce((a,b) => a+b, 0);
 }
@@ -65,7 +65,7 @@ function first(a, b, ...rest) {
 }
 first(1,2,3,4,5); // 1 2 [3,4,5]`},
     {type:'heading',content:'Map and Set'},
-    {type:'example',title:'Map — better than objects for key-value pairs',content:'A Map is like an object, but with superpowers: any value can be a key (including objects and functions), it remembers insertion order, and it has a .size property. Map is better than a plain object when keys are dynamic, not known in advance, or when you need to count things. Iterating a Map with for...of gives you [key, value] pairs directly.',language:'javascript',code:`// Map — key-value pairs where keys can be ANY type
+    {type:'example',title:'Map - better than objects for key-value pairs',content:'A Map is like an object, but with superpowers: any value can be a key (including objects and functions), it remembers insertion order, and it has a .size property. Map is better than a plain object when keys are dynamic, not known in advance, or when you need to count things. Iterating a Map with for...of gives you [key, value] pairs directly.',language:'javascript',code:`// Map - key-value pairs where keys can be ANY type
 const map = new Map();
 map.set("name", "Alex");
 map.set(1, "one");
@@ -93,7 +93,7 @@ Array.from(scores.entries());       // [["Alice",95],["Bob",87],...]
 // Map vs Object:
 // Map: any key type, ordered, has size, no prototype issues
 // Object: string/symbol keys only, slightly faster for reads`},
-    {type:'example',title:'Set — unique values only',content:'A Set stores unique values — duplicates are automatically ignored when you add them. The most common use is removing duplicates from an array: [...new Set(arr)] gives you a new array with all duplicates removed. Sets also support set math operations like union, intersection, and difference, which you can build using spread and filter.',language:'javascript',code:`// Set — stores unique values (no duplicates)
+    {type:'example',title:'Set - unique values only',content:'A Set stores unique values - duplicates are automatically ignored when you add them. The most common use is removing duplicates from an array: [...new Set(arr)] gives you a new array with all duplicates removed. Sets also support set math operations like union, intersection, and difference, which you can build using spread and filter.',language:'javascript',code:`// Set - stores unique values (no duplicates)
 const set = new Set([1, 2, 2, 3, 3, 3, 4]);
 console.log(set); // Set {1, 2, 3, 4}
 set.size;         // 4
@@ -126,13 +126,13 @@ const union        = new Set([...a,...b]);    // {1,2,3,4,5,6}
 const intersection = new Set([...a].filter(x=>b.has(x))); // {3,4}
 const difference   = new Set([...a].filter(x=>!b.has(x)));// {1,2}`},
     {type:'heading',content:'Optional Chaining and Nullish Coalescing'},
-    {type:'example',title:'Safe navigation and default values',content:'Optional chaining (?.) lets you safely access deeply nested properties without crashing. Instead of checking if user && user.profile && user.profile.address before reading city, you just write user?.profile?.address?.city — if anything in the chain is null or undefined, it returns undefined instead of throwing. The nullish coalescing operator (??) provides a default value only for null/undefined — unlike ||, it does NOT treat 0 or empty string as "missing".',language:'javascript',code:`// Optional chaining (?.) — safe property access
+    {type:'example',title:'Safe navigation and default values',content:'Optional chaining (?.) lets you safely access deeply nested properties without crashing. Instead of checking if user && user.profile && user.profile.address before reading city, you just write user?.profile?.address?.city - if anything in the chain is null or undefined, it returns undefined instead of throwing. The nullish coalescing operator (??) provides a default value only for null/undefined - unlike ||, it does NOT treat 0 or empty string as "missing".',language:'javascript',code:`// Optional chaining (?.) - safe property access
 const user = { profile: { name:"Alex", address: null } };
 
-// Without optional chaining — crashes if null
+// Without optional chaining - crashes if null
 // const city = user.profile.address.city; // TypeError!
 
-// With optional chaining — returns undefined
+// With optional chaining - returns undefined
 const city    = user?.profile?.address?.city;   // undefined
 const missing = user?.settings?.theme;          // undefined
 
@@ -146,14 +146,14 @@ const first = users?.[0]?.name;
 // Combine with nullish coalescing
 const theme = user?.settings?.theme ?? "light";
 
-// Nullish coalescing (??) — ONLY falls back for null/undefined
+// Nullish coalescing (??) - ONLY falls back for null/undefined
 const score = 0;
-score || 100;   // 100 — 0 is falsy (WRONG!)
-score ?? 100;   // 0   — 0 is NOT null/undefined (CORRECT)
+score || 100;   // 100 - 0 is falsy (WRONG!)
+score ?? 100;   // 0   - 0 is NOT null/undefined (CORRECT)
 
 const name = "";
-name || "Guest"; // "Guest" — "" is falsy
-name ?? "Guest"; // ""      — "" is NOT null/undefined
+name || "Guest"; // "Guest" - "" is falsy
+name ?? "Guest"; // ""      - "" is NOT null/undefined
 
 // Logical assignment (ES2021)
 let a = null;
@@ -165,10 +165,10 @@ b ||= 100;       // assign if falsy → 100
 let c = 5;
 c &&= c * 2;     // assign if truthy → 10`},
     {type:'heading',content:'Symbols'},
-    {type:'example',title:'Unique identifiers with Symbol',content:'Symbol() always creates a completely unique value — even two Symbols with the same description are not equal. This makes them perfect as unique object keys that will never accidentally conflict with other code. Well-known Symbols like Symbol.iterator let you make your own objects work with for...of loops and the spread operator — JavaScript uses these internally.',language:'javascript',code:`// Symbol — always unique, even with same description
+    {type:'example',title:'Unique identifiers with Symbol',content:'Symbol() always creates a completely unique value - even two Symbols with the same description are not equal. This makes them perfect as unique object keys that will never accidentally conflict with other code. Well-known Symbols like Symbol.iterator let you make your own objects work with for...of loops and the spread operator - JavaScript uses these internally.',language:'javascript',code:`// Symbol - always unique, even with same description
 const id1 = Symbol("id");
 const id2 = Symbol("id");
-id1 === id2; // false — always unique!
+id1 === id2; // false - always unique!
 
 // Use as unique object keys (never accidentally overwritten)
 const USER_ID = Symbol("userId");
@@ -189,7 +189,7 @@ class MyArray {
 }
 for (const val of new MyArray()) console.log(val); // 1 2 3
 
-// Symbol.toPrimitive — control type conversion
+// Symbol.toPrimitive - control type conversion
 class Money {
   constructor(amount, currency) { this.amount=amount; this.currency=currency; }
   [Symbol.toPrimitive](hint) {
@@ -225,7 +225,7 @@ p,pre{margin:8px 0;font-size:13px;background:#f8fafc;border:1px solid #e2e8f0;pa
   const items = input.split(',').map(s=>s.trim()).filter(Boolean);
   const unique = [...new Set(items)];
   document.getElementById('dupeResult').textContent =
-    'Original (' + items.length + '): [' + items.join(', ') + ']\\n' +
+    'Original (' + items.length + '): [' + items.join(', ') + ']\ ' +
     'Unique   (' + unique.length + '): [' + unique.join(', ') + ']';
 }
 
@@ -241,7 +241,7 @@ function demoDestruct() {
     'appPort: ' + appPort,
     'version: ' + version,
   ];
-  document.getElementById('destructResult').textContent = lines.join('\\n');
+  document.getElementById('destructResult').textContent = lines.join('\ ');
 }
 
 function demoChaining() {
@@ -256,7 +256,7 @@ function demoChaining() {
     const count = u?.profile?.scores?.length ?? 0;
     return \`users[\${i}]: name=\${u?.name??'null'}, city=\${city}, firstScore=\${first}, count=\${count}\`;
   });
-  document.getElementById('chainResult').textContent = lines.join('\\n');
+  document.getElementById('chainResult').textContent = lines.join('\ ');
 }`,mode:'full'},
   ],
   exercises:[{id:'es6-1',question:'What does [...new Set([1,2,2,3,3])] produce?',type:'code-output',correct:'[1,2,3]',explanation:'new Set([1,2,2,3,3]) creates a Set with unique values {1,2,3}. The spread [...] converts it back to an array [1,2,3]. This is the cleanest way to remove duplicates from an array.'}],

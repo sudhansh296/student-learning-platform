@@ -1,16 +1,16 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssColorsLesson: CssLesson = {
   id:'css-colors',title:'Colors & Backgrounds',slug:'colors-backgrounds',
   chapter:'colors',order:4,difficulty:'beginner',readingTime:10,
   description:'Master CSS color formats, backgrounds, gradients, and opacity.',
   sections:[
-    {type:'text',content:'CSS offers multiple ways to specify colors — named colors, hex codes, RGB, RGBA, HSL, and HSLA. You can apply colors to text, backgrounds, borders, shadows, and gradients.'},
+    {type:'text',content:'CSS offers multiple ways to specify colors - named colors, hex codes, RGB, RGBA, HSL, and HSLA. You can apply colors to text, backgrounds, borders, shadows, and gradients.'},
     {type:'heading',content:'Color Formats'},
     {type:'code',language:'css',content:'CSS supports 140+ named colors like red, tomato, steelblue, and coral. They are readable but limited. For exact brand colors use hex codes. Named colors are great for quick prototyping and learning CSS.',code:`/* Named colors (140+ available) */
 h1 { color: tomato; }
 .warning { background: coral; }
 
-/* HEX — most common in web design */
+/* HEX - most common in web design */
 h1 { color: #2563eb; }           /* 6-digit hex */
 h1 { color: #25f; }              /* 3-digit shorthand = #2255ff */
 h1 { color: #2563eb80; }         /* 8-digit hex with alpha (last 2) */
@@ -19,11 +19,11 @@ h1 { color: #2563eb80; }         /* 8-digit hex with alpha (last 2) */
 p { color: rgb(37, 99, 235); }
 .overlay { background: rgb(0, 0, 0); }
 
-/* RGBA — with transparency (0=transparent, 1=opaque) */
+/* RGBA - with transparency (0=transparent, 1=opaque) */
 .overlay { background: rgba(0, 0, 0, 0.5); }     /* 50% black */
 .card { box-shadow: 0 4px 24px rgba(0,0,0,0.1); }
 
-/* HSL — Hue (0-360°), Saturation (%), Lightness (%) */
+/* HSL - Hue (0-360°), Saturation (%), Lightness (%) */
 h1 { color: hsl(221, 83%, 53%); }     /* blue */
 .muted { color: hsl(0, 0%, 50%); }    /* gray */
 
@@ -97,7 +97,7 @@ body { background-color: #f9fafb; }
 .stripes { background: repeating-linear-gradient(45deg, #e5e7eb, #e5e7eb 10px, white 10px, white 20px); }`},
     {type:'heading',content:'Opacity and Transparency'},
     {type:'code',language:'css',content:'opacity applies to the entire element and all its children. rgba() applies transparency to just the color, not the element contents. Use rgba() for semi-transparent backgrounds. Use opacity for dimming an entire component including its text.',code:`/* opacity: affects entire element + children */
-.dimmed { opacity: 0.5; }     /* 50% transparent — text, images, everything */
+.dimmed { opacity: 0.5; }     /* 50% transparent - text, images, everything */
 
 /* rgba/hsla: only affects that specific property */
 .card { background: rgba(255,255,255,0.8); }  /* semi-transparent background */

@@ -20,12 +20,12 @@ export const lesson01: DockerLesson = {
     },
     {
       type: 'text',
-      content: 'Every developer has experienced the moment when code works perfectly on their laptop but fails on a teammate\'s machine or the production server. Different operating system versions, missing libraries, wrong Node.js versions, conflicting environment variables — all of these cause unpredictable failures that are painful to debug.'
+      content: 'Every developer has experienced the moment when code works perfectly on their laptop but fails on a teammate\'s machine or the production server. Different operating system versions, missing libraries, wrong Node.js versions, conflicting environment variables - all of these cause unpredictable failures that are painful to debug.'
     },
     {
       type: 'analogy',
       title: 'The Shipping Container Analogy',
-      content: 'Before standardized shipping containers, cargo was loaded piece by piece onto ships — slow, inconsistent, and prone to damage. The shipping container standardized freight: one format, loaded once, transported anywhere by sea, rail, or truck. Docker does the same for software: build your app once, ship it anywhere.'
+      content: 'Before standardized shipping containers, cargo was loaded piece by piece onto ships - slow, inconsistent, and prone to damage. The shipping container standardized freight: one format, loaded once, transported anywhere by sea, rail, or truck. Docker does the same for software: build your app once, ship it anywhere.'
     },
     {
       type: 'list',
@@ -45,7 +45,7 @@ export const lesson01: DockerLesson = {
     },
     {
       type: 'text',
-      content: 'A container is a lightweight, isolated process on your host machine. It has its own filesystem, network, and process space — but shares the host OS kernel. This makes containers much lighter than full virtual machines while still providing strong isolation.'
+      content: 'A container is a lightweight, isolated process on your host machine. It has its own filesystem, network, and process space - but shares the host OS kernel. This makes containers much lighter than full virtual machines while still providing strong isolation.'
     },
     {
       type: 'heading',
@@ -53,7 +53,7 @@ export const lesson01: DockerLesson = {
     },
     {
       type: 'table',
-      title: 'Containers vs Virtual Machines — side-by-side comparison',
+      title: 'Containers vs Virtual Machines - side-by-side comparison',
       headers: ['Feature', 'Containers', 'Virtual Machines'],
       rows: [
         ['OS Kernel', 'Shared with host', 'Full OS per VM'],

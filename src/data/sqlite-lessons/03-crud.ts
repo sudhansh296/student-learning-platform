@@ -12,7 +12,7 @@ export const lesson03: SqliteLesson = {
   sections: [
     {
       type: 'text',
-      content: 'CRUD — Create, Read, Update, Delete — are the four fundamental database operations. Every application that stores data performs these operations. In better-sqlite3, CRUD maps directly to SQL statements: CREATE TABLE + INSERT for create, SELECT for read, UPDATE for update, and DELETE for delete.'
+      content: 'CRUD - Create, Read, Update, Delete - are the four fundamental database operations. Every application that stores data performs these operations. In better-sqlite3, CRUD maps directly to SQL statements: CREATE TABLE + INSERT for create, SELECT for read, UPDATE for update, and DELETE for delete.'
     },
     {
       type: 'heading',
@@ -26,7 +26,7 @@ export const lesson03: SqliteLesson = {
       type: 'list',
       title: 'Prepared statement benefits:',
       items: [
-        'Security: parameters are never interpolated into the SQL string — SQL injection is impossible',
+        'Security: parameters are never interpolated into the SQL string - SQL injection is impossible',
         'Performance: the query is parsed and compiled once, then executed many times without re-parsing',
         'Convenience: named parameters (@email, @name) make code readable and eliminate parameter order bugs'
       ]
@@ -42,7 +42,7 @@ export const lesson03: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'Creating a table in SQLite uses the same CREATE TABLE syntax as standard SQL, with a few SQLite-specific notes. INTEGER PRIMARY KEY is SQLite\'s way of creating an auto-incrementing primary key using the built-in rowid. The AUTOINCREMENT keyword is optional and prevents rowid reuse, but adds overhead — omit it unless you specifically need that guarantee.'
+      content: 'Creating a table in SQLite uses the same CREATE TABLE syntax as standard SQL, with a few SQLite-specific notes. INTEGER PRIMARY KEY is SQLite\'s way of creating an auto-incrementing primary key using the built-in rowid. The AUTOINCREMENT keyword is optional and prevents rowid reuse, but adds overhead - omit it unless you specifically need that guarantee.'
     },
     {
       type: 'example',
@@ -127,7 +127,7 @@ console.log(getAllUsers()); // []`,
     {
       type: 'example',
       title: 'Transactions with better-sqlite3',
-      content: 'Using db.transaction() for atomic multi-step operations — transferring subscription plan while recording the change in an audit log.',
+      content: 'Using db.transaction() for atomic multi-step operations - transferring subscription plan while recording the change in an audit log.',
       code: `const Database = require('better-sqlite3');
 const db = new Database(':memory:');
 db.pragma('foreign_keys = ON');
@@ -151,7 +151,7 @@ const debit  = db.prepare('UPDATE accounts SET credits = credits - ? WHERE id = 
 const credit = db.prepare('UPDATE accounts SET credits = credits + ? WHERE id = ?');
 const logTx  = db.prepare('INSERT INTO transactions (from_id, to_id, amount) VALUES (?,?,?)');
 
-// Wrap in a transaction — atomic, auto-rollback on error
+// Wrap in a transaction - atomic, auto-rollback on error
 const transfer = db.transaction((fromId, toId, amount) => {
   debit.run(amount, fromId);
   credit.run(amount, toId);
@@ -307,7 +307,7 @@ button { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; f
         'SQLite silently ignores the error'
       ],
       correct: 1,
-      explanation: 'better-sqlite3\'s transaction() wrapper automatically rolls back the entire transaction if an exception is thrown inside the function. This ensures atomicity — either all operations succeed or none are applied.'
+      explanation: 'better-sqlite3\'s transaction() wrapper automatically rolls back the entire transaction if an exception is thrown inside the function. This ensures atomicity - either all operations succeed or none are applied.'
     },
     {
       id: 'ex-sqlite-3-3',

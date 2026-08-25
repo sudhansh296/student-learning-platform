@@ -12,7 +12,7 @@ export const lesson04: SqlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'The WHERE clause is how you filter rows. Without WHERE, a SELECT returns every row in a table. With WHERE, you specify conditions that each row must satisfy to appear in the results. Mastering WHERE means mastering data retrieval — it is the most important clause after SELECT and FROM.'
+      content: 'The WHERE clause is how you filter rows. Without WHERE, a SELECT returns every row in a table. With WHERE, you specify conditions that each row must satisfy to appear in the results. Mastering WHERE means mastering data retrieval - it is the most important clause after SELECT and FROM.'
     },
     {
       type: 'heading',
@@ -80,7 +80,7 @@ export const lesson04: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'BETWEEN tests whether a value falls within an inclusive range. BETWEEN 10 AND 20 is equivalent to >= 10 AND <= 20. It works on numbers, dates, and strings. BETWEEN is inclusive on both ends, which is sometimes surprising — use explicit >= and <= comparisons if you need exclusive bounds.'
+      content: 'BETWEEN tests whether a value falls within an inclusive range. BETWEEN 10 AND 20 is equivalent to >= 10 AND <= 20. It works on numbers, dates, and strings. BETWEEN is inclusive on both ends, which is sometimes surprising - use explicit >= and <= comparisons if you need exclusive bounds.'
     },
     {
       type: 'heading',
@@ -101,7 +101,7 @@ export const lesson04: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'NULL represents a missing or unknown value. You cannot use = or != to check for NULL — those comparisons always return NULL (unknown) when NULL is involved. The only correct way to check for NULL is with IS NULL or IS NOT NULL.'
+      content: 'NULL represents a missing or unknown value. You cannot use = or != to check for NULL - those comparisons always return NULL (unknown) when NULL is involved. The only correct way to check for NULL is with IS NULL or IS NOT NULL.'
     },
     {
       type: 'example',
@@ -161,7 +161,7 @@ WHERE sku LIKE 'PROD-___-2024'  -- PROD-ABC-2024, PROD-XYZ-2024`,
     {
       type: 'tip',
       title: 'Index-Friendly Patterns',
-      content: 'LIKE \'ali%\' (prefix search — no leading wildcard) can use a B-tree index and is fast. LIKE \'%ali%\' (contains search) and LIKE \'%ali\' (suffix search) cannot use a B-tree index and require a full table scan.'
+      content: 'LIKE \'ali%\' (prefix search - no leading wildcard) can use a B-tree index and is fast. LIKE \'%ali%\' (contains search) and LIKE \'%ali\' (suffix search) cannot use a B-tree index and require a full table scan.'
     },
     {
       type: 'tryit',
@@ -432,7 +432,7 @@ function render(){
   condDiv.innerHTML='';
   if(conditions.length===0){
     var empty=document.createElement('span');
-    empty.textContent='No filters — showing all rows';
+    empty.textContent='No filters - showing all rows';
     empty.style.cssText='color:#a0aec0;font-size:12px;';
     condDiv.appendChild(empty);
   } else {
@@ -527,7 +527,7 @@ render();`,
         'Ages 21 through 29 (exclusive of 20 and 30)',
         'Ages 20 through 30 (inclusive of both 20 and 30)',
         'Ages greater than 20 and less than 30',
-        'It depends on the database — behavior is inconsistent'
+        'It depends on the database - behavior is inconsistent'
       ],
       correct: 1,
       explanation: 'BETWEEN is always inclusive on both ends. BETWEEN 20 AND 30 is identical to >= 20 AND <= 30. It includes the boundary values 20 and 30.'

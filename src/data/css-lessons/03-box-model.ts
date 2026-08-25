@@ -3,17 +3,17 @@ import type { CssLesson } from '../css-curriculum';
 export const cssBoxModelLesson: CssLesson = {
   id: 'css-box-model', title: 'The CSS Box Model', slug: 'box-model',
   chapter: 'box', order: 3, difficulty: 'beginner', readingTime: 12,
-  description: 'Understand how every HTML element is a box — content, padding, border, margin — and how box-sizing changes everything.',
+  description: 'Understand how every HTML element is a box - content, padding, border, margin - and how box-sizing changes everything.',
   sections: [
     { type: 'text', content: 'Every HTML element is a rectangular box. The CSS Box Model describes the four layers of this box: content (text/images), padding (space inside), border (the line around it), and margin (space outside). Understanding this model is the foundation of all CSS layout work.' },
     { type: 'analogy', title: 'Think of a picture frame', content: 'Imagine a framed photo on a wall. The photo itself is the content. The white matting between photo and frame is the padding. The frame itself is the border. The gap between the frame and the wall or other frames is the margin.' },
     { type: 'heading', content: 'The Four Layers' },
     { type: 'code', language: 'css', code: `div {
-  /* CONTENT — controlled by width and height */
+  /* CONTENT - controlled by width and height */
   width: 300px;
   height: 150px;
 
-  /* PADDING — space between content and border */
+  /* PADDING - space between content and border */
   padding: 20px;              /* all sides */
   padding: 10px 20px;         /* top/bottom, left/right */
   padding: 10px 20px 15px 25px; /* top, right, bottom, left (clockwise) */
@@ -22,27 +22,27 @@ export const cssBoxModelLesson: CssLesson = {
   padding-bottom: 10px;
   padding-left: 20px;
 
-  /* BORDER — the line around the element */
+  /* BORDER - the line around the element */
   border: 2px solid #2563eb;
   border: 3px dashed #e5e7eb;
   border: 1px solid transparent;
   border-top: 4px solid red;
   border-radius: 8px;         /* rounds the corners */
 
-  /* MARGIN — space outside the element */
+  /* MARGIN - space outside the element */
   margin: 20px;               /* all sides */
   margin: 20px auto;          /* top/bottom 20px, left/right auto (centers block) */
   margin-top: 10px;
   margin-bottom: 10px;
 }` },
     { type: 'heading', content: 'Default vs box-sizing: border-box' },
-    { type: 'text', content: 'By default, width and height only measure the content area. So a 300px-wide div with 20px padding and 2px border actually takes up 344px total. This is confusing. The fix: box-sizing: border-box — the most important single CSS rule you will ever write.' },
+    { type: 'text', content: 'By default, width and height only measure the content area. So a 300px-wide div with 20px padding and 2px border actually takes up 344px total. This is confusing. The fix: box-sizing: border-box - the most important single CSS rule you will ever write.' },
     { type: 'code', language: 'css', code: `/* Default box-sizing (content-box): */
 .box {
   width: 300px;
   padding: 20px;
   border: 2px solid black;
-  /* Total width = 300 + 20+20 + 2+2 = 344px — confusing! */
+  /* Total width = 300 + 20+20 + 2+2 = 344px - confusing! */
 }
 
 /* border-box: width INCLUDES padding and border */
@@ -51,13 +51,13 @@ export const cssBoxModelLesson: CssLesson = {
   width: 300px;
   padding: 20px;
   border: 2px solid black;
-  /* Total width = 300px — exactly what you set! */
+  /* Total width = 300px - exactly what you set! */
 }
 
-/* THE UNIVERSAL RESET — always put this at the top of your CSS */
+/* THE UNIVERSAL RESET - always put this at the top of your CSS */
 *, *::before, *::after {
   box-sizing: border-box;
-  /* Now ALL elements use border-box — width is always what you say */
+  /* Now ALL elements use border-box - width is always what you say */
 }` },
     { type: 'note', title: 'Always use box-sizing: border-box', content: 'Every professional CSS project starts with * { box-sizing: border-box; }. This single rule prevents hundreds of confusing layout bugs where elements overflow their containers unexpectedly.' },
     { type: 'heading', content: 'Margin Collapse' },
@@ -65,7 +65,7 @@ export const cssBoxModelLesson: CssLesson = {
     { type: 'code', language: 'css', code: `/* Margin collapse example */
 .box1 { margin-bottom: 40px; }
 .box2 { margin-top: 20px; }
-/* Space between them = 40px (NOT 60px) — the larger margin wins */
+/* Space between them = 40px (NOT 60px) - the larger margin wins */
 
 /* How to prevent margin collapse: */
 /* 1. Use padding instead of margin */
@@ -182,7 +182,7 @@ strong { color: #1d4ed8; }
   ],
   exercises: [
     { id: 'bm1', question: 'With box-sizing: content-box, a div has width:200px, padding:20px, border:5px. What is the total rendered width?', type: 'code-output', correct: '250px', explanation: '200 (content) + 20 + 20 (padding) + 5 + 5 (border) = 250px. With border-box it would stay at 200px.' },
-    { id: 'bm2', question: 'Which CSS value centers a block element horizontally?', type: 'multiple-choice', options: ['text-align: center', 'margin: 0 auto', 'padding: auto', 'display: center'], correct: 1, explanation: 'margin: 0 auto sets top/bottom margin to 0 and left/right to auto — the browser splits the available space equally between left and right, centering the element.' },
+    { id: 'bm2', question: 'Which CSS value centers a block element horizontally?', type: 'multiple-choice', options: ['text-align: center', 'margin: 0 auto', 'padding: auto', 'display: center'], correct: 1, explanation: 'margin: 0 auto sets top/bottom margin to 0 and left/right to auto - the browser splits the available space equally between left and right, centering the element.' },
   ],
   quiz: [
     { id: 'bq1', question: 'What is the difference between margin and padding?', options: ['No difference', 'Margin is space inside, padding is space outside', 'Padding is space inside the border, margin is space outside the border', 'Margin only works vertically'], correct: 2, explanation: 'Padding is the space between the content and the border (inside). Margin is the space outside the border, between this element and others.' },

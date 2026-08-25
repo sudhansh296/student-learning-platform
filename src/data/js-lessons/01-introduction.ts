@@ -17,7 +17,7 @@ export const jsIntroLesson: JSLesson = {
     {
       type: 'analogy',
       title: 'The three layers of the web',
-      content: 'Think of a website like a human body. HTML is the skeleton — structure and bones. CSS is the skin, hair, and clothing — appearance. JavaScript is the brain and muscles — behavior, logic, and interaction. Without JavaScript, a webpage is just a static document that cannot respond to anything.',
+      content: 'Think of a website like a human body. HTML is the skeleton - structure and bones. CSS is the skin, hair, and clothing - appearance. JavaScript is the brain and muscles - behavior, logic, and interaction. Without JavaScript, a webpage is just a static document that cannot respond to anything.',
     },
     {
       type: 'heading',
@@ -27,7 +27,7 @@ export const jsIntroLesson: JSLesson = {
       type: 'list',
       items: [
         'Change any HTML content on the page (text, images, attributes)',
-        'Respond to user actions — clicks, key presses, form submissions',
+        'Respond to user actions - clicks, key presses, form submissions',
         'Validate forms before sending data to a server',
         'Fetch data from APIs without reloading the page (AJAX/Fetch)',
         'Store data in the browser (localStorage, cookies)',
@@ -40,7 +40,7 @@ export const jsIntroLesson: JSLesson = {
     },
     {
       type: 'heading',
-      content: 'JavaScript vs Java — They Are NOT the Same',
+      content: 'JavaScript vs Java - They Are NOT the Same',
     },
     {
       type: 'note',
@@ -53,8 +53,8 @@ export const jsIntroLesson: JSLesson = {
     },
     {
       type: 'example',
-      title: 'Three ways to output — console, alert, DOM',
-      content: 'JavaScript has several ways to show output. console.log() is the developer tool — it writes to the browser console (F12). alert() shows a popup box. document.getElementById().innerHTML changes what the user actually sees on the page. In real applications, you almost always use the DOM method to update the page.',
+      title: 'Three ways to output - console, alert, DOM',
+      content: 'JavaScript has several ways to show output. console.log() is the developer tool - it writes to the browser console (F12). alert() shows a popup box. document.getElementById().innerHTML changes what the user actually sees on the page. In real applications, you almost always use the DOM method to update the page.',
       code: `// 1. Console output (developers use this for debugging)
 console.log("Hello, World!");
 console.log(42);
@@ -124,16 +124,16 @@ function showAlert() {
       type: 'list' as const,
       title: 'JavaScript version history',
       items: [
-        'ES1 (1997) — First standardized version',
-        'ES3 (1999) — Regular expressions, try/catch',
-        'ES5 (2009) — Array methods, JSON, strict mode',
-        'ES6/ES2015 — let/const, arrow functions, classes, modules, promises — MAJOR update',
-        'ES2016 — Array.includes(), ** exponent operator',
-        'ES2017 — async/await, Object.values/entries',
-        'ES2018 — Spread/rest, Promise.all, async iteration',
-        'ES2019 — Array.flat(), Object.fromEntries',
-        'ES2020 — Optional chaining (?.), nullish coalescing (??)',
-        'ES2021–2026 — Logical assignment, at(), Object.hasOwn(), and more',
+        'ES1 (1997) - First standardized version',
+        'ES3 (1999) - Regular expressions, try/catch',
+        'ES5 (2009) - Array methods, JSON, strict mode',
+        'ES6/ES2015 - let/const, arrow functions, classes, modules, promises - MAJOR update',
+        'ES2016 - Array.includes(), ** exponent operator',
+        'ES2017 - async/await, Object.values/entries',
+        'ES2018 - Spread/rest, Promise.all, async iteration',
+        'ES2019 - Array.flat(), Object.fromEntries',
+        'ES2020 - Optional chaining (?.), nullish coalescing (??)',
+        'ES2021-2026 - Logical assignment, at(), Object.hasOwn(), and more',
       ],
     },
   ],
@@ -173,9 +173,9 @@ function showAlert() {
     {
       id: 'qji2',
       question: 'JavaScript can only run in web browsers. True or False?',
-      options: ['True', 'False — it also runs on servers via Node.js', 'True — only modern browsers', 'False — it runs everywhere except browsers'],
+      options: ['True', 'False - it also runs on servers via Node.js', 'True - only modern browsers', 'False - it runs everywhere except browsers'],
       correct: 1,
-      explanation: 'JavaScript runs both in browsers (client-side) AND on servers via Node.js (server-side). This is what makes the MERN stack (MongoDB, Express, React, Node.js) possible — one language everywhere.',
+      explanation: 'JavaScript runs both in browsers (client-side) AND on servers via Node.js (server-side). This is what makes the MERN stack (MongoDB, Express, React, Node.js) possible - one language everywhere.',
     },
   ],
 };

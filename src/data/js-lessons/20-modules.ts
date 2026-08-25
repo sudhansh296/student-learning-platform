@@ -1,12 +1,12 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsModulesLesson: JSLesson = {
-  id:'js-modules',title:'Modules — import & export',slug:'modules',
+  id:'js-modules',title:'Modules - import & export',slug:'modules',
   chapter:'es6',order:21,difficulty:'intermediate',readingTime:10,
-  description:'Organize JavaScript with ES6 modules — named exports, default exports, re-exports, dynamic imports, and module patterns.',
+  description:'Organize JavaScript with ES6 modules - named exports, default exports, re-exports, dynamic imports, and module patterns.',
   sections:[
-    {type:'text',content:'Modules let you split your code across multiple files and import/export functionality between them. Every modern JavaScript application — React, Node.js, Vue — uses modules. Before modules, all JavaScript code shared one global scope, causing naming conflicts.'},
+    {type:'text',content:'Modules let you split your code across multiple files and import/export functionality between them. Every modern JavaScript application - React, Node.js, Vue - uses modules. Before modules, all JavaScript code shared one global scope, causing naming conflicts.'},
     {type:'heading',content:'Named Exports and Imports'},
-    {type:'example',title:'math.js — exporting multiple items',content:'Named exports let you export multiple values from one file. Put the export keyword in front of any declaration, or export them all together at the bottom using export { name1, name2 }. You can also rename an export at the point of export with export { square as sq } — this is what the consumer will use as the import name.',language:'javascript',code:`// math.js — named exports
+    {type:'example',title:'math.js - exporting multiple items',content:'Named exports let you export multiple values from one file. Put the export keyword in front of any declaration, or export them all together at the bottom using export { name1, name2 }. You can also rename an export at the point of export with export { square as sq } - this is what the consumer will use as the import name.',language:'javascript',code:`// math.js - named exports
 export const PI = 3.14159265358979;
 
 export function add(a, b) { return a + b; }
@@ -24,7 +24,7 @@ export { GOLDEN_RATIO, square };
 
 // Rename on export
 export { square as sq };`},
-    {type:'example',title:'app.js — importing named exports',content:'Import only the specific functions you need using { braces } — this is called a named import. You can rename any import with "as" to avoid naming conflicts: import { add as mathAdd }. Import everything with * as Namespace to access all exports under one object — useful when a module has many exports you need.',language:'javascript',code:`// Import specific named exports
+    {type:'example',title:'app.js - importing named exports',content:'Import only the specific functions you need using { braces } - this is called a named import. You can rename any import with "as" to avoid naming conflicts: import { add as mathAdd }. Import everything with * as Namespace to access all exports under one object - useful when a module has many exports you need.',language:'javascript',code:`// Import specific named exports
 import { add, multiply, PI } from "./math.js";
 console.log(add(5, 3));       // 8
 console.log(PI);              // 3.14159...
@@ -36,8 +36,8 @@ import { add as mathAdd } from "./math.js";
 import * as Math from "./math.js";
 console.log(Math.add(5, 3));
 console.log(Math.PI);`},
-    {type:'heading',content:'Default Export — One Main Export'},
-    {type:'example',title:'Default export — common in React components',content:'A default export is the "main thing" a module provides — each file can have only one. React components are always default exports. When importing a default export, you choose any name you want — no curly braces needed. You can mix a default and named exports in the same file, and import both in one line.',language:'javascript',code:`// userService.js — default export
+    {type:'heading',content:'Default Export - One Main Export'},
+    {type:'example',title:'Default export - common in React components',content:'A default export is the "main thing" a module provides - each file can have only one. React components are always default exports. When importing a default export, you choose any name you want - no curly braces needed. You can mix a default and named exports in the same file, and import both in one line.',language:'javascript',code:`// userService.js - default export
 export default class UserService {
   constructor(apiUrl) {
     this.apiUrl = apiUrl;
@@ -59,7 +59,7 @@ export default class UserService {
   }
 }
 
-// Import default — any name you want
+// Import default - any name you want
 import UserService from "./userService.js";
 import Service from "./userService.js"; // same thing, different name
 const service = new UserService("https://api.example.com");
@@ -67,7 +67,7 @@ const service = new UserService("https://api.example.com");
 // Mix default + named imports
 import UserService, { UserError, validateUser } from "./userService.js";`},
     {type:'heading',content:'Re-exports and Barrel Files'},
-    {type:'example',title:'Index files for clean imports',content:'A barrel file (usually index.js) re-exports everything from multiple files in a folder. This gives consumers a single import path: import { capitalize, unique } from "./utils" instead of separate imports from separate files. This also makes refactoring easier — if you rename or move a file, you only update the barrel, not every file that imports from it.',language:'javascript',code:`// utils/string.js
+    {type:'example',title:'Index files for clean imports',content:'A barrel file (usually index.js) re-exports everything from multiple files in a folder. This gives consumers a single import path: import { capitalize, unique } from "./utils" instead of separate imports from separate files. This also makes refactoring easier - if you rename or move a file, you only update the barrel, not every file that imports from it.',language:'javascript',code:`// utils/string.js
 export function capitalize(str) { return str[0].toUpperCase() + str.slice(1); }
 export function truncate(str, n) { return str.length > n ? str.slice(0,n)+"..." : str; }
 
@@ -77,7 +77,7 @@ export function chunk(arr, size) {
   return Array.from({length: Math.ceil(arr.length/size)}, (_,i) => arr.slice(i*size, i*size+size));
 }
 
-// utils/index.js — barrel file (re-exports everything)
+// utils/index.js - barrel file (re-exports everything)
 export { capitalize, truncate } from "./string.js";
 export { unique, chunk }        from "./array.js";
 export { default as UserService } from "./userService.js"; // re-export default as named
@@ -87,8 +87,8 @@ import { capitalize, unique, UserService } from "./utils/index.js";
 // Much cleaner than:
 // import { capitalize } from "./utils/string.js"
 // import { unique } from "./utils/array.js"`},
-    {type:'heading',content:'Dynamic Imports — Load on Demand'},
-    {type:'example',title:'Lazy loading modules',content:'Dynamic import() loads a module only when you actually need it, not at startup. This is called "code splitting" and makes your app load faster — heavy chart libraries, PDF exporters, or admin panels are only downloaded when the user navigates to that feature. import() returns a Promise so you use await with it. React.lazy() uses this pattern internally.',language:'javascript',code:`// Dynamic import() — returns a Promise
+    {type:'heading',content:'Dynamic Imports - Load on Demand'},
+    {type:'example',title:'Lazy loading modules',content:'Dynamic import() loads a module only when you actually need it, not at startup. This is called "code splitting" and makes your app load faster - heavy chart libraries, PDF exporters, or admin panels are only downloaded when the user navigates to that feature. import() returns a Promise so you use await with it. React.lazy() uses this pattern internally.',language:'javascript',code:`// Dynamic import() - returns a Promise
 // Useful for code splitting and lazy loading
 
 // Load module only when needed
@@ -109,7 +109,7 @@ async function loadPlugin(name) {
   return plugin.default;
 }
 
-// In React — React.lazy uses this under the hood
+// In React - React.lazy uses this under the hood
 const HeavyComponent = React.lazy(() => import("./HeavyComponent"));`},
     {type:'tryit',title:'Try It: Module Pattern (simulated)',
      html:`<div id="app">
@@ -132,9 +132,9 @@ button{padding:8px 14px;background:#2563eb;color:white;border:none;border-radius
 .item-price{color:#059669;font-size:14px;font-weight:700;}
 .del{background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px;}
 .total{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:12px 14px;font-weight:700;color:#1d4ed8;text-align:right;}`,
-     js:`// Module pattern — simulates ES6 module with private state
+     js:`// Module pattern - simulates ES6 module with private state
 const cartModule = (() => {
-  // Private state — cannot be accessed outside
+  // Private state - cannot be accessed outside
   const _items = [];
 
   // Private helper
@@ -157,10 +157,10 @@ const cartModule = (() => {
     clear() { _items.length = 0; _render(); },
     getTotal() { return _items.reduce((s,i)=>s+i.price,0); },
     getCount() { return _items.length; },
-    // _items is private — cartModule._items is undefined!
+    // _items is private - cartModule._items is undefined!
   };
 })();`,mode:'full'},
   ],
   exercises:[{id:'mod-1',question:'What is a "barrel file" in JavaScript modules?',type:'multiple-choice',options:['A file that is very large','An index.js that re-exports from multiple files for cleaner imports','A file with no exports','A minified module'],correct:1,explanation:'A barrel file (usually index.js) re-exports items from multiple modules. Instead of importing from specific paths, you import everything from the barrel. This makes refactoring easier and keeps import statements clean.'}],
-  quiz:[{id:'qmod1',question:'What does a dynamic import() return?',options:['The module directly','A Promise that resolves to the module','undefined until loaded','A callback'],correct:1,explanation:'import() is a function that returns a Promise. When the module finishes loading, the Promise resolves with the module exports. This enables code splitting — only loading modules when they are actually needed.'}],
+  quiz:[{id:'qmod1',question:'What does a dynamic import() return?',options:['The module directly','A Promise that resolves to the module','undefined until loaded','A callback'],correct:1,explanation:'import() is a function that returns a Promise. When the module finishes loading, the Promise resolves with the module exports. This enables code splitting - only loading modules when they are actually needed.'}],
 };

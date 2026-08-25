@@ -1,14 +1,14 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsLocalStorageLesson: JSLesson = {
   id:'js-localstorage',title:'localStorage & sessionStorage',slug:'localstorage',
   chapter:'dom',order:19,difficulty:'beginner',readingTime:8,
-  description:'Store data in the browser with localStorage and sessionStorage — save settings, auth tokens, and user preferences.',
+  description:'Store data in the browser with localStorage and sessionStorage - save settings, auth tokens, and user preferences.',
   sections:[
-    {type:'text',content:'Browsers provide two storage mechanisms — localStorage (persists until cleared) and sessionStorage (cleared when tab closes). They store key-value pairs as strings. Perfect for themes, tokens, preferences, and form drafts.'},
-    {type:'heading',content:'localStorage — Persistent Storage'},
-    {type:'example',title:'localStorage basics',content:'localStorage stores key-value pairs in the browser permanently — they survive page refreshes, tab closes, and browser restarts. The catch: it only stores strings. To save objects or arrays, use JSON.stringify() when writing and JSON.parse() when reading. Wrap these in helper functions (lsGet/lsSet) to handle JSON errors gracefully and provide default values when a key is missing.',language:'javascript',code:`// localStorage survives page refresh, tab close, browser restart
+    {type:'text',content:'Browsers provide two storage mechanisms - localStorage (persists until cleared) and sessionStorage (cleared when tab closes). They store key-value pairs as strings. Perfect for themes, tokens, preferences, and form drafts.'},
+    {type:'heading',content:'localStorage - Persistent Storage'},
+    {type:'example',title:'localStorage basics',content:'localStorage stores key-value pairs in the browser permanently - they survive page refreshes, tab closes, and browser restarts. The catch: it only stores strings. To save objects or arrays, use JSON.stringify() when writing and JSON.parse() when reading. Wrap these in helper functions (lsGet/lsSet) to handle JSON errors gracefully and provide default values when a key is missing.',language:'javascript',code:`// localStorage survives page refresh, tab close, browser restart
 
-// Store items — values MUST be strings
+// Store items - values MUST be strings
 localStorage.setItem("theme", "dark");
 localStorage.setItem("username", "Alex");
 localStorage.setItem("lang", "en");
@@ -23,7 +23,7 @@ localStorage.removeItem("lang");
 // Clear everything
 // localStorage.clear(); // use carefully!
 
-// Store objects — must stringify/parse
+// Store objects - must stringify/parse
 const user = { id:1, name:"Alex", role:"admin" };
 localStorage.setItem("user", JSON.stringify(user));
 const stored = JSON.parse(localStorage.getItem("user") || "null");
@@ -45,8 +45,8 @@ function lsSet(key, value) {
 lsSet("preferences", { theme:"dark", fontSize:16, notifications:true });
 const prefs = lsGet("preferences", { theme:"light" });
 console.log(prefs.theme); // "dark"`},
-    {type:'heading',content:'sessionStorage — Tab-Only Storage'},
-    {type:'example',title:'sessionStorage — cleared when tab closes',content:'sessionStorage has the exact same API as localStorage but a much shorter lifetime — it only exists while the browser tab is open. Close the tab and it is gone. Use sessionStorage for data that should NOT persist between visits: an unsaved form draft, a one-time welcome message, or a shopping cart for a guest user. The storage event fires when another tab changes localStorage — useful for syncing logout across tabs.',language:'javascript',code:`// Same API as localStorage — different lifetime
+    {type:'heading',content:'sessionStorage - Tab-Only Storage'},
+    {type:'example',title:'sessionStorage - cleared when tab closes',content:'sessionStorage has the exact same API as localStorage but a much shorter lifetime - it only exists while the browser tab is open. Close the tab and it is gone. Use sessionStorage for data that should NOT persist between visits: an unsaved form draft, a one-time welcome message, or a shopping cart for a guest user. The storage event fires when another tab changes localStorage - useful for syncing logout across tabs.',language:'javascript',code:`// Same API as localStorage - different lifetime
 sessionStorage.setItem("formDraft", JSON.stringify({ title:"", body:"" }));
 sessionStorage.getItem("formDraft");
 sessionStorage.removeItem("formDraft");
@@ -63,7 +63,7 @@ window.addEventListener("storage", (event) => {
   console.log("New value:", event.newValue);
   // Useful for multi-tab sync (e.g., logout in all tabs)
   if (event.key === "authToken" && !event.newValue) {
-    // User logged out in another tab — redirect to login
+    // User logged out in another tab - redirect to login
     window.location.href = "/login";
   }
 });`},
@@ -147,6 +147,6 @@ function showAll() {
 function removeItem(key) { localStorage.removeItem(key); showAll(); }
 function clearAll() { localStorage.clear(); showAll(); document.getElementById('storage-result').textContent = 'Storage cleared'; }`,mode:'full'},
   ],
-  exercises:[{id:'ls-1',question:'What is the difference between localStorage and sessionStorage?',type:'multiple-choice',options:['No difference','localStorage persists until manually cleared; sessionStorage is cleared when the browser tab is closed','sessionStorage is faster','localStorage only works with strings'],correct:1,explanation:'localStorage data persists across page refreshes, tab closes, and browser restarts. sessionStorage data is only available for the duration of the tab session — it is cleared when the tab is closed.'}],
-  quiz:[{id:'qlk1',question:'Why must you use JSON.stringify/JSON.parse with localStorage?',options:['It is optional','localStorage only stores strings — stringify converts objects to strings, parse converts them back','JSON is faster','localStorage rejects non-JSON data'],correct:1,explanation:'localStorage can only store string values. To save objects or arrays, use JSON.stringify() to convert them to strings when saving, and JSON.parse() to convert them back to objects when reading.'}],
+  exercises:[{id:'ls-1',question:'What is the difference between localStorage and sessionStorage?',type:'multiple-choice',options:['No difference','localStorage persists until manually cleared; sessionStorage is cleared when the browser tab is closed','sessionStorage is faster','localStorage only works with strings'],correct:1,explanation:'localStorage data persists across page refreshes, tab closes, and browser restarts. sessionStorage data is only available for the duration of the tab session - it is cleared when the tab is closed.'}],
+  quiz:[{id:'qlk1',question:'Why must you use JSON.stringify/JSON.parse with localStorage?',options:['It is optional','localStorage only stores strings - stringify converts objects to strings, parse converts them back','JSON is faster','localStorage rejects non-JSON data'],correct:1,explanation:'localStorage can only store string values. To save objects or arrays, use JSON.stringify() to convert them to strings when saving, and JSON.parse() to convert them back to objects when reading.'}],
 };

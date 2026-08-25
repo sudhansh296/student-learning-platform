@@ -20,7 +20,7 @@ export const lesson03: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'INSERT INTO adds one or more rows to a table. You specify the table name, a list of column names, and a corresponding list of values. The column list is optional but strongly recommended — omitting it makes your INSERT fragile against schema changes.'
+      content: 'INSERT INTO adds one or more rows to a table. You specify the table name, a list of column names, and a corresponding list of values. The column list is optional but strongly recommended - omitting it makes your INSERT fragile against schema changes.'
     },
     {
       type: 'text',
@@ -83,7 +83,7 @@ RETURNING id, created_at;`,
     },
     {
       type: 'text',
-      content: 'Understanding execution order matters because it explains constraints — you cannot reference a SELECT alias in a WHERE clause (WHERE runs before SELECT), but you can reference it in ORDER BY (which runs after SELECT).'
+      content: 'Understanding execution order matters because it explains constraints - you cannot reference a SELECT alias in a WHERE clause (WHERE runs before SELECT), but you can reference it in ORDER BY (which runs after SELECT).'
     },
     {
       type: 'heading',
@@ -99,7 +99,7 @@ RETURNING id, created_at;`,
     },
     {
       type: 'text',
-      content: 'The AS keyword renames a column in the result set. Aliases make results easier to read and are required when you compute new values — computed columns have no name unless you give them one. Aliases are visible to ORDER BY but not to WHERE or HAVING (because of execution order).'
+      content: 'The AS keyword renames a column in the result set. Aliases make results easier to read and are required when you compute new values - computed columns have no name unless you give them one. Aliases are visible to ORDER BY but not to WHERE or HAVING (because of execution order).'
     },
     {
       type: 'heading',
@@ -107,7 +107,7 @@ RETURNING id, created_at;`,
     },
     {
       type: 'text',
-      content: 'SELECT DISTINCT removes duplicate rows from the result set. It compares all selected columns — two rows are duplicates only if every selected column matches. DISTINCT has a cost: the database must sort or hash all rows to identify duplicates. Use it when you genuinely need unique values, not as a bandaid for accidental duplicates in your data.'
+      content: 'SELECT DISTINCT removes duplicate rows from the result set. It compares all selected columns - two rows are duplicates only if every selected column matches. DISTINCT has a cost: the database must sort or hash all rows to identify duplicates. Use it when you genuinely need unique values, not as a bandaid for accidental duplicates in your data.'
     },
     {
       type: 'example',
@@ -144,7 +144,7 @@ ORDER BY plan;`,
     {
       type: 'tip',
       title: 'String Concatenation Syntax',
-      content: 'PostgreSQL uses || for string concatenation (first_name || \' \' || last_name). MySQL uses CONCAT(first_name, \' \', last_name). Both approaches work fine — just match the syntax to your database.'
+      content: 'PostgreSQL uses || for string concatenation (first_name || \' \' || last_name). MySQL uses CONCAT(first_name, \' \', last_name). Both approaches work fine - just match the syntax to your database.'
     },
     {
       type: 'note',
@@ -153,7 +153,7 @@ ORDER BY plan;`,
     },
     {
       type: 'tryit',
-      title: 'SQL Query Runner — Interactive Table Demo',
+      title: 'SQL Query Runner - Interactive Table Demo',
       js: `document.body.innerHTML = \`<div id="output"></div>\`;
 
 // ──────────────────────────────────────────────────────────────
@@ -315,10 +315,10 @@ render();`,
         'All plan values including duplicates',
         'Only unique plan values, with duplicates removed',
         'The first plan value in the table',
-        'An error — DISTINCT cannot be used with a single column'
+        'An error - DISTINCT cannot be used with a single column'
       ],
       correct: 1,
-      explanation: 'SELECT DISTINCT removes duplicate values from the result. If users have plan values of "free", "pro", "free", "pro", the result will be just "free" and "pro" — one row per unique value.'
+      explanation: 'SELECT DISTINCT removes duplicate values from the result. If users have plan values of "free", "pro", "free", "pro", the result will be just "free" and "pro" - one row per unique value.'
     },
     {
       id: 'ex-sql-3-2',

@@ -1,9 +1,9 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 export const htmlIframesLesson: HtmlLesson = {
   id: 'html-iframes', title: 'HTML Iframes', slug: 'iframes', chapter: 'advanced', order: 17,
   difficulty: 'intermediate', readingTime: 8, description: 'Embed other web pages, YouTube videos, maps, and documents using the iframe element.',
   sections: [
-    { type: 'text', content: 'An iframe (inline frame) embeds another HTML document inside the current page. It creates a completely separate browsing context — like a mini browser window inside your page. Common uses: embedding YouTube videos, Google Maps, Codepen demos, social media posts, and external content.' },
+    { type: 'text', content: 'An iframe (inline frame) embeds another HTML document inside the current page. It creates a completely separate browsing context - like a mini browser window inside your page. Common uses: embedding YouTube videos, Google Maps, Codepen demos, social media posts, and external content.' },
     { type: 'heading', content: 'Basic iframe Syntax' },
     { type: 'code', language: 'html',       content: 'The iframe element embeds another webpage inside your page. src is the URL of the page to embed. The content inside the iframe tag is shown only if the browser does not support iframes (a fallback). iframes are used to embed YouTube videos, Google Maps, payment forms, and third-party widgets.',
 code: `<!-- Basic iframe -->
@@ -21,7 +21,7 @@ code: `<!-- Basic iframe -->
 ></iframe>` },
     { type: 'warning', title: 'Security: Many sites block iframe embedding', content: 'Websites can prevent being embedded in iframes using the X-Frame-Options HTTP header. That\'s why you cannot embed Google.com in an iframe. Always use official embed codes (like YouTube embed) rather than trying to iframe full websites.' },
     { type: 'heading', content: 'Embedding YouTube Videos' },
-    { type: 'code', language: 'html',       content: 'YouTube provides a special embed URL (youtube.com/embed/VIDEO_ID). allowfullscreen enables the full-screen button. loading=lazy defers loading until the iframe is near the viewport — important because YouTube iframes are large and slow initial page load significantly.',
+    { type: 'code', language: 'html',       content: 'YouTube provides a special embed URL (youtube.com/embed/VIDEO_ID). allowfullscreen enables the full-screen button. loading=lazy defers loading until the iframe is near the viewport - important because YouTube iframes are large and slow initial page load significantly.',
       code: `<!-- YouTube official embed code -->
 <!-- Get this from YouTube: Share → Embed -->
 <iframe
@@ -57,7 +57,7 @@ code: `<!-- Basic iframe -->
   referrerpolicy="no-referrer-when-downgrade"
   title="Our office location"
 ></iframe>` },
-    { type: 'heading', content: 'The sandbox Attribute — Security' },
+    { type: 'heading', content: 'The sandbox Attribute - Security' },
     { type: 'code', language: 'html',       content: 'The sandbox attribute restricts embedded content for security. Without it, embedded pages can run scripts and navigate the parent window. sandbox= blocks everything. Selectively re-enable with allow-scripts, allow-forms, allow-same-origin. Always sandbox third-party content.',
       code: `<!-- sandbox restricts what the iframe can do -->
 <iframe

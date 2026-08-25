@@ -1,13 +1,13 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsFetchLesson: JSLesson = {
   id:'js-fetch',title:'Fetch API & HTTP',slug:'fetch-api',
   chapter:'async',order:18,difficulty:'intermediate',readingTime:13,
-  description:'Make HTTP requests with the Fetch API — GET, POST, PUT, DELETE, headers, auth tokens, and error handling.',
+  description:'Make HTTP requests with the Fetch API - GET, POST, PUT, DELETE, headers, auth tokens, and error handling.',
   sections:[
-    {type:'text',content:'The Fetch API is how JavaScript communicates with servers and external APIs. Every modern web app — loading user data, submitting forms, getting weather, posting tweets — uses Fetch. It is built into all modern browsers and returns Promises.'},
+    {type:'text',content:'The Fetch API is how JavaScript communicates with servers and external APIs. Every modern web app - loading user data, submitting forms, getting weather, posting tweets - uses Fetch. It is built into all modern browsers and returns Promises.'},
     {type:'heading',content:'Basic GET Request'},
-    {type:'example',title:'Fetching data from an API',content:'fetch() takes a URL and returns a Promise that resolves to a Response object. The response is NOT your data yet — it is the raw HTTP response. You call response.json() to parse the body as JSON, response.text() for plain text, or response.blob() for binary data like images. Always check response.ok first — a 404 or 500 does NOT automatically throw an error.',language:'javascript',code:`// Basic fetch — always returns a Promise
+    {type:'example',title:'Fetching data from an API',content:'fetch() takes a URL and returns a Promise that resolves to a Response object. The response is NOT your data yet - it is the raw HTTP response. You call response.json() to parse the body as JSON, response.text() for plain text, or response.blob() for binary data like images. Always check response.ok first - a 404 or 500 does NOT automatically throw an error.',language:'javascript',code:`// Basic fetch - always returns a Promise
 const response = await fetch("https://jsonplaceholder.typicode.com/users/1");
 
 // response.ok = true if status 200-299
@@ -30,9 +30,9 @@ console.log(response.url);         // the actual URL (after redirects)
 console.log(user.name);    // "Leanne Graham"
 console.log(user.email);   // "Sincere@april.biz"`},
     {type:'heading',content:'POST, PUT, DELETE Requests'},
-    {type:'example',title:'Sending data to a server',content:'To send data, pass a second argument to fetch() with method, headers, and body. The body must be a string — use JSON.stringify() to convert your object. Always set the Content-Type header to "application/json" so the server knows how to parse it. POST creates new data, PUT replaces it entirely, PATCH updates specific fields, and DELETE removes it.',language:'javascript',code:`const BASE_URL = "https://jsonplaceholder.typicode.com";
+    {type:'example',title:'Sending data to a server',content:'To send data, pass a second argument to fetch() with method, headers, and body. The body must be a string - use JSON.stringify() to convert your object. Always set the Content-Type header to "application/json" so the server knows how to parse it. POST creates new data, PUT replaces it entirely, PATCH updates specific fields, and DELETE removes it.',language:'javascript',code:`const BASE_URL = "https://jsonplaceholder.typicode.com";
 
-// POST — create new resource
+// POST - create new resource
 async function createPost(title, body, userId) {
   const response = await fetch(\`\${BASE_URL}/posts\`, {
     method: "POST",
@@ -45,7 +45,7 @@ async function createPost(title, body, userId) {
   return response.json(); // returns created post with id
 }
 
-// PUT — replace existing resource
+// PUT - replace existing resource
 async function updatePost(id, data) {
   const response = await fetch(\`\${BASE_URL}/posts/\${id}\`, {
     method: "PUT",
@@ -55,7 +55,7 @@ async function updatePost(id, data) {
   return response.json();
 }
 
-// PATCH — partial update
+// PATCH - partial update
 async function patchPost(id, fields) {
   const response = await fetch(\`\${BASE_URL}/posts/\${id}\`, {
     method: "PATCH",
@@ -65,7 +65,7 @@ async function patchPost(id, fields) {
   return response.json();
 }
 
-// DELETE — remove resource
+// DELETE - remove resource
 async function deletePost(id) {
   const response = await fetch(\`\${BASE_URL}/posts/\${id}\`, {
     method: "DELETE",
@@ -76,7 +76,7 @@ async function deletePost(id) {
 // Usage
 const newPost = await createPost("Hello", "Content here", 1);
 console.log("Created:", newPost.id); // returns new id`},
-    {type:'heading',content:'Authentication — Bearer Tokens'},
+    {type:'heading',content:'Authentication - Bearer Tokens'},
     {type:'example',title:'Sending auth headers',content:'Most APIs require authentication. The standard way is a Bearer token sent in the Authorization header. Build a reusable apiRequest() helper that automatically attaches the token from localStorage to every request. This helper also handles 401 (expired session) by redirecting to login, and converts empty 204 responses to null. With this pattern, all your CRUD functions become single-line calls.',language:'javascript',code:`// Most APIs require authentication
 async function apiRequest(url, options = {}) {
   const token = localStorage.getItem("authToken"); // get saved token
@@ -122,7 +122,7 @@ const user   = await api.post("/api/users", { name:"Alex", email:"alex@example.c
 const updated = await api.patch(\`/api/users/\${user.id}\`, { name:"Alexander" });
 await api.delete(\`/api/users/\${user.id}\`);`},
     {type:'heading',content:'Query Parameters and URL Building'},
-    {type:'example',title:'Building URLs with parameters',content:'URLSearchParams is the clean, safe way to build query strings. It automatically handles encoding special characters — spaces become %20, & signs are escaped, etc. Create it with an object of key-value pairs and it generates the full ?key=value&key2=value2 string. You can also add, modify, and delete params dynamically, and read params from the current page URL.',language:'javascript',code:`// URLSearchParams — clean way to build query strings
+    {type:'example',title:'Building URLs with parameters',content:'URLSearchParams is the clean, safe way to build query strings. It automatically handles encoding special characters - spaces become %20, & signs are escaped, etc. Create it with an object of key-value pairs and it generates the full ?key=value&key2=value2 string. You can also add, modify, and delete params dynamically, and read params from the current page URL.',language:'javascript',code:`// URLSearchParams - clean way to build query strings
 const params = new URLSearchParams({
   page:     1,
   limit:    10,
@@ -143,8 +143,8 @@ params.delete("category");
 const currentParams = new URLSearchParams(window.location.search);
 const search = currentParams.get("search") || "";
 const page   = parseInt(currentParams.get("page")) || 1;`},
-    {type:'heading',content:'AbortController — Cancel Requests'},
-    {type:'example',title:'Timeout and cancellation',content:'AbortController lets you cancel a fetch request that is still in progress. Pass controller.signal to fetch, then call controller.abort() to cancel it. Use this for timeouts — if a request takes longer than 5 seconds, abort it and show an error. In React, cancel the previous search request when the user types a new character so stale results do not overwrite fresh ones.',language:'javascript',code:`// AbortController — cancel fetch requests
+    {type:'heading',content:'AbortController - Cancel Requests'},
+    {type:'example',title:'Timeout and cancellation',content:'AbortController lets you cancel a fetch request that is still in progress. Pass controller.signal to fetch, then call controller.abort() to cancel it. Use this for timeouts - if a request takes longer than 5 seconds, abort it and show an error. In React, cancel the previous search request when the user types a new character so stale results do not overwrite fresh ones.',language:'javascript',code:`// AbortController - cancel fetch requests
 async function fetchWithTimeout(url, timeoutMs = 5000) {
   const controller = new AbortController();
   const timeoutId  = setTimeout(() => controller.abort(), timeoutMs);
@@ -302,6 +302,6 @@ window.searchUser = searchUser;
 window.quickSearch = quickSearch;
 searchUser(null);`,mode:'full'},
   ],
-  exercises:[{id:'fetch-1',question:'Why do you need to check response.ok after a fetch() call?',type:'multiple-choice',options:['You don\'t — fetch throws on any non-200 response','fetch() only rejects on network errors (no connection). A 404 or 500 still resolves — you must check response.ok','response.ok is deprecated','You should use response.status instead'],correct:1,explanation:'fetch() only throws (rejects) on network failures — no internet, CORS error, etc. A 404 Not Found or 500 Server Error are still "successful" HTTP responses from fetch\'s perspective. Always check response.ok or response.status to detect API errors.'}],
+  exercises:[{id:'fetch-1',question:'Why do you need to check response.ok after a fetch() call?',type:'multiple-choice',options:['You don\'t - fetch throws on any non-200 response','fetch() only rejects on network errors (no connection). A 404 or 500 still resolves - you must check response.ok','response.ok is deprecated','You should use response.status instead'],correct:1,explanation:'fetch() only throws (rejects) on network failures - no internet, CORS error, etc. A 404 Not Found or 500 Server Error are still "successful" HTTP responses from fetch\'s perspective. Always check response.ok or response.status to detect API errors.'}],
   quiz:[{id:'qfetch1',question:'What does AbortController allow you to do?',options:['Speed up requests','Cancel an in-progress fetch request','Add authentication','Retry failed requests'],correct:1,explanation:'AbortController lets you cancel pending fetch requests. Pass its signal to fetch\'s options: fetch(url, {signal: controller.signal}). Call controller.abort() to cancel. Useful for timeouts and when the user navigates away before a request completes.'}],
 };

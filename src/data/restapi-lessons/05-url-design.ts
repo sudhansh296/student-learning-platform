@@ -20,11 +20,11 @@ export const lesson05: RestapiLesson = {
     },
     {
       type: 'text',
-      content: 'The most common REST URL design mistake is putting verbs in URLs. The HTTP method is already the verb — you do not need to repeat it in the path. GET /users means "get users." You do not need GET /getUsers.'
+      content: 'The most common REST URL design mistake is putting verbs in URLs. The HTTP method is already the verb - you do not need to repeat it in the path. GET /users means "get users." You do not need GET /getUsers.'
     },
     {
       type: 'example',
-      title: 'Good vs bad URL patterns — the key differences',
+      title: 'Good vs bad URL patterns - the key differences',
       content: 'This comparison shows the most common URL design anti-patterns and their correct alternatives. The bad patterns duplicate the HTTP method in the URL or use singular nouns, while the good patterns use plural nouns and let HTTP methods convey the action.',
       code: `// BAD URL PATTERNS (verbs in URLs, inconsistent naming):
 GET    /getUsers          // verb in URL
@@ -51,7 +51,7 @@ GET    /users/1/orders    // get orders for user 1`,
     },
     {
       type: 'text',
-      content: 'Always use plural nouns for collection endpoints (/users, /products, /orders). This keeps the URL pattern consistent — /users returns a list, /users/1 returns a single user. Using singular nouns creates confusion about whether an endpoint returns one item or many.'
+      content: 'Always use plural nouns for collection endpoints (/users, /products, /orders). This keeps the URL pattern consistent - /users returns a list, /users/1 returns a single user. Using singular nouns creates confusion about whether an endpoint returns one item or many.'
     },
     {
       type: 'heading',
@@ -60,8 +60,8 @@ GET    /users/1/orders    // get orders for user 1`,
     {
       type: 'example',
       title: 'Nested resource URLs and a complete CRUD endpoint set',
-      content: 'Nested resources show parent-child relationships directly in the URL structure. This complete CRUD example for a blog API shows how every operation on posts and their comments maps to a clean URL pattern — reading this table, any developer immediately understands the full API surface.',
-      code: `// Posts resource — full CRUD
+      content: 'Nested resources show parent-child relationships directly in the URL structure. This complete CRUD example for a blog API shows how every operation on posts and their comments maps to a clean URL pattern - reading this table, any developer immediately understands the full API surface.',
+      code: `// Posts resource - full CRUD
 GET    /posts              // list all posts
 GET    /posts/1            // get post #1
 POST   /posts              // create a post
@@ -93,7 +93,7 @@ GET    /api/v2/users`,
     {
       type: 'example',
       title: 'Query parameters for filtering and pagination',
-      content: 'This shows the standard conventions for common query operations. The key insight is that filtering and sorting describe how to read the collection, not a different resource — so they belong in query params, not new URL paths.',
+      content: 'This shows the standard conventions for common query operations. The key insight is that filtering and sorting describe how to read the collection, not a different resource - so they belong in query params, not new URL paths.',
       code: `// Filtering
 GET /products?category=electronics&in_stock=true
 
@@ -128,7 +128,7 @@ GET /users?fields=id,name,email`,
     },
     {
       type: 'table',
-      title: 'URL naming conventions — good and bad',
+      title: 'URL naming conventions - good and bad',
       headers: ['Bad', 'Good', 'Rule'],
       rows: [
         ['/getUsers', '/users', 'No verbs in URLs'],
@@ -253,7 +253,7 @@ h3 { color: #1e293b; margin: 0 0 12px 0; font-size: 15px; }
         'In the Authorization header'
       ],
       correct: 2,
-      explanation: 'Filtering and sorting are query parameters — they describe how to read the collection, not a different resource. /users?role=admin&sort=name is the correct REST pattern. Path segments are for identifying resources (like /users/42), and GET requests should not have bodies.'
+      explanation: 'Filtering and sorting are query parameters - they describe how to read the collection, not a different resource. /users?role=admin&sort=name is the correct REST pattern. Path segments are for identifying resources (like /users/42), and GET requests should not have bodies.'
     },
     {
       id: 'ex-05-3',
@@ -263,7 +263,7 @@ h3 { color: #1e293b; margin: 0 0 12px 0; font-size: 15px; }
         '1 level (/resources only)',
         '2-3 levels (/resources/:id/sub-resources)',
         '5-6 levels for complex data models',
-        'There is no limit — depth should reflect your full data hierarchy'
+        'There is no limit - depth should reflect your full data hierarchy'
       ],
       correct: 1,
       explanation: 'REST best practice is to limit nesting to 2-3 levels. Deeper nesting creates unwieldy URLs and tightly couples API structure to database schema. For deeply nested data, consider using query parameters or returning IDs that clients can use to make separate requests.'

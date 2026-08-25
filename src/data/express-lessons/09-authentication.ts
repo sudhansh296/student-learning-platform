@@ -215,21 +215,21 @@ function login() {
   var email = document.getElementById('email').value;
   var password = document.getElementById('password').value;
   
-  var status = '[POST /login]\\n';
-  status += 'Email: ' + email + '\\n';
-  status += 'Password: ' + password + '\\n\\n';
+  var status = '[POST /login]\ ';
+  status += 'Email: ' + email + '\ ';
+  status += 'Password: ' + password + '\\n\ ';
   
   if (email === 'alice@example.com' && password === 'password123') {
     token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWxpY2UifQ.demo';
-    status += 'HTTP/200 OK\\n';
-    status += '{\\n';
-    status += '  "message": "Login successful",\\n';
-    status += '  "token": "' + token.substring(0, 30) + '..."\\n';
+    status += 'HTTP/200 OK\ ';
+    status += '{\ ';
+    status += '  "message": "Login successful",\ ';
+    status += '  "token": "' + token.substring(0, 30) + '..."\ ';
     status += '}';
     
     document.getElementById('tokenBox').innerHTML = '<strong>Token stored:</strong><br>' + token;
   } else {
-    status += 'HTTP/401 Unauthorized\\n';
+    status += 'HTTP/401 Unauthorized\ ';
     status += '{ "error": "Invalid credentials" }';
     token = null;
     document.getElementById('tokenBox').innerHTML = 'No token (not logged in)';
@@ -239,17 +239,17 @@ function login() {
 }
 
 function testProtected() {
-  var status = '[GET /profile]\\n';
-  status += 'Authorization: Bearer ' + (token ? token.substring(0, 30) + '...' : '(none)') + '\\n\\n';
+  var status = '[GET /profile]\ ';
+  status += 'Authorization: Bearer ' + (token ? token.substring(0, 30) + '...' : '(none)') + '\\n\ ';
   
   if (token) {
-    status += 'HTTP/200 OK\\n';
-    status += '{\\n';
-    status += '  "message": "Protected data",\\n';
-    status += '  "user": { "userId": 1, "email": "alice@example.com" }\\n';
+    status += 'HTTP/200 OK\ ';
+    status += '{\ ';
+    status += '  "message": "Protected data",\ ';
+    status += '  "user": { "userId": 1, "email": "alice@example.com" }\ ';
     status += '}';
   } else {
-    status += 'HTTP/401 Unauthorized\\n';
+    status += 'HTTP/401 Unauthorized\ ';
     status += '{ "error": "No token provided" }';
   }
   

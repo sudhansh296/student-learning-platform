@@ -8,7 +8,7 @@ export const lesson07: GitLesson = {
   order: 7,
   difficulty: 'intermediate',
   readingTime: 12,
-  description: 'Learn all the ways to undo work in Git: restore, reset, revert, stash, and amend — and when each is the right tool.',
+  description: 'Learn all the ways to undo work in Git: restore, reset, revert, stash, and amend - and when each is the right tool.',
   sections: [
     {
       type: 'text',

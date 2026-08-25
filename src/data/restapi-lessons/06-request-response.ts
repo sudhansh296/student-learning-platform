@@ -12,7 +12,7 @@ export const lesson06: RestapiLesson = {
   sections: [
     {
       type: 'text',
-      content: 'The shape of your request and response bodies is part of your API contract. Inconsistent response formats — sometimes wrapping data in an object, sometimes returning raw arrays, sometimes including metadata and sometimes not — force every API consumer to write special-case code. This lesson covers the conventions that make an API predictable and pleasant to use.'
+      content: 'The shape of your request and response bodies is part of your API contract. Inconsistent response formats - sometimes wrapping data in an object, sometimes returning raw arrays, sometimes including metadata and sometimes not - force every API consumer to write special-case code. This lesson covers the conventions that make an API predictable and pleasant to use.'
     },
     {
       type: 'heading',
@@ -55,7 +55,7 @@ export const lesson06: RestapiLesson = {
   }
 }`,
       language: 'json',
-      output: 'Response always has a "data" key — client code accesses response.data consistently'
+      output: 'Response always has a "data" key - client code accesses response.data consistently'
     },
     {
       type: 'heading',
@@ -109,7 +109,7 @@ export const lesson06: RestapiLesson = {
       type: 'example',
       title: 'Consistent error response format',
       content: 'The error object uses a code field with a screaming-snake-case string that client code can switch on programmatically, plus a message field suitable for logging. The details array allows field-level validation errors to be reported all at once rather than one at a time.',
-      code: `// 400 Bad Request — validation failure
+      code: `// 400 Bad Request - validation failure
 {
   "error": {
     "code": "VALIDATION_ERROR",
@@ -137,7 +137,7 @@ export const lesson06: RestapiLesson = {
   }
 }`,
       language: 'json',
-      output: 'Errors always have error.code and error.message — one error handler covers all cases'
+      output: 'Errors always have error.code and error.message - one error handler covers all cases'
     },
     {
       type: 'heading',
@@ -175,7 +175,7 @@ async function apiRequest(method, path, body = null) {
 
   const response = await fetch('https://api.example.com' + path, options);
 
-  // 204 No Content — no body to parse
+  // 204 No Content - no body to parse
   if (response.status === 204) return null;
 
   const data = await response.json();
@@ -248,7 +248,7 @@ function syntaxHighlight(json) {
 }
 
 function findLineOfError(text, pos) {
-  var lines = text.substring(0, pos).split('\\\\n');
+  var lines = text.substring(0, pos).split('\\\ ');
   return lines.length;
 }
 
@@ -354,7 +354,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         'X-Requested-With: XMLHttpRequest'
       ],
       correct: 1,
-      explanation: 'Content-Type: application/json tells the server what format the request body is in. Accept: application/json tells the server what format you want the response in — both are useful, but Content-Type is required when sending a JSON body. Without it, many servers will not parse the body.'
+      explanation: 'Content-Type: application/json tells the server what format the request body is in. Accept: application/json tells the server what format you want the response in - both are useful, but Content-Type is required when sending a JSON body. Without it, many servers will not parse the body.'
     },
     {
       id: 'ex-06-2',
@@ -406,14 +406,14 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         'It replaces the need for an error message'
       ],
       correct: 1,
-      explanation: 'The error code is a stable, machine-readable string that client code can use in switch statements or if/else chains to handle different error types differently — for example, showing a different UI for VALIDATION_ERROR vs NOT_FOUND vs UNAUTHORIZED. Human-readable messages change with translations and wording updates; codes should never change.'
+      explanation: 'The error code is a stable, machine-readable string that client code can use in switch statements or if/else chains to handle different error types differently - for example, showing a different UI for VALIDATION_ERROR vs NOT_FOUND vs UNAUTHORIZED. Human-readable messages change with translations and wording updates; codes should never change.'
     },
     {
       id: 'q-06-3',
       question: 'When should you omit a field from a JSON response rather than setting it to null?',
       options: [
         'Always omit optional fields to reduce response size',
-        'Never — always include all fields, null if they have no value',
+        'Never - always include all fields, null if they have no value',
         'Only when the field is an array',
         'When the field is truly irrelevant to the resource type (not just empty), such as a "companyName" field on a personal user account type'
       ],

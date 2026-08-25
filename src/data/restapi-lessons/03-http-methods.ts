@@ -8,11 +8,11 @@ export const lesson03: RestapiLesson = {
   order: 3,
   difficulty: 'beginner',
   readingTime: 12,
-  description: 'Master GET, POST, PUT, PATCH, and DELETE — the five verbs that define every operation in a REST API.',
+  description: 'Master GET, POST, PUT, PATCH, and DELETE - the five verbs that define every operation in a REST API.',
   sections: [
     {
       type: 'text',
-      content: 'HTTP methods are the verbs of the REST API language. They tell the server what action to perform on a resource. Choosing the right method is not just convention — it determines how browsers cache requests, how proxies handle them, and whether clients can safely retry them.'
+      content: 'HTTP methods are the verbs of the REST API language. They tell the server what action to perform on a resource. Choosing the right method is not just convention - it determines how browsers cache requests, how proxies handle them, and whether clients can safely retry them.'
     },
     {
       type: 'heading',
@@ -20,7 +20,7 @@ export const lesson03: RestapiLesson = {
     },
     {
       type: 'text',
-      content: 'Two key properties define how methods behave when repeated. A safe method does not modify any server state (read-only). An idempotent method can be called multiple times with the same result — calling DELETE on /users/1 ten times is the same as calling it once.'
+      content: 'Two key properties define how methods behave when repeated. A safe method does not modify any server state (read-only). An idempotent method can be called multiple times with the same result - calling DELETE on /users/1 ten times is the same as calling it once.'
     },
     {
       type: 'table',
@@ -38,7 +38,7 @@ export const lesson03: RestapiLesson = {
     },
     {
       type: 'heading',
-      content: 'GET — Read Data'
+      content: 'GET - Read Data'
     },
     {
       type: 'text',
@@ -46,8 +46,8 @@ export const lesson03: RestapiLesson = {
     },
     {
       type: 'example',
-      title: 'GET requests — list and single resource',
-      content: 'GET requests pass all parameters through the URL — either as path segments for specific resource IDs or as query parameters for filtering and pagination. This example shows both patterns and how to check the response status before processing the data.',
+      title: 'GET requests - list and single resource',
+      content: 'GET requests pass all parameters through the URL - either as path segments for specific resource IDs or as query parameters for filtering and pagination. This example shows both patterns and how to check the response status before processing the data.',
       code: `// GET all users (list)
 const res = await fetch('https://api.example.com/users');
 const users = await res.json();
@@ -69,15 +69,15 @@ const filtered = await res3.json();
     },
     {
       type: 'heading',
-      content: 'POST — Create a Resource'
+      content: 'POST - Create a Resource'
     },
     {
       type: 'text',
-      content: 'POST sends data to the server to create a new resource. Each POST request creates a new resource, so it is not idempotent — posting the same data twice creates two resources. The server assigns the new resource an ID and typically returns it in the response with status 201 Created.'
+      content: 'POST sends data to the server to create a new resource. Each POST request creates a new resource, so it is not idempotent - posting the same data twice creates two resources. The server assigns the new resource an ID and typically returns it in the response with status 201 Created.'
     },
     {
       type: 'example',
-      title: 'POST — creating a new user',
+      title: 'POST - creating a new user',
       content: 'POST requests require the Content-Type: application/json header and a JSON-serialized body. The server creates a new resource, assigns it an ID, and returns the full created object. The 201 status code and Location header in the response tell the client exactly where to find the new resource.',
       code: `const response = await fetch('https://api.example.com/users', {
   method: 'POST',
@@ -101,7 +101,7 @@ console.log(created);`,
     },
     {
       type: 'heading',
-      content: 'PUT — Replace a Resource'
+      content: 'PUT - Replace a Resource'
     },
     {
       type: 'text',
@@ -109,19 +109,19 @@ console.log(created);`,
     },
     {
       type: 'heading',
-      content: 'PATCH — Partial Update'
+      content: 'PATCH - Partial Update'
     },
     {
       type: 'text',
-      content: 'PATCH updates only the fields you specify. Send only the fields you want to change — the rest stay as they are. This is more efficient than PUT for large objects and safer when concurrent updates might occur.'
+      content: 'PATCH updates only the fields you specify. Send only the fields you want to change - the rest stay as they are. This is more efficient than PUT for large objects and safer when concurrent updates might occur.'
     },
     {
       type: 'example',
-      title: 'PUT vs PATCH — the key difference',
+      title: 'PUT vs PATCH - the key difference',
       content: 'This comparison demonstrates why choosing between PUT and PATCH matters. PUT replaces the entire resource so any fields omitted from the body will be lost or reset to null, while PATCH merges your changes with the existing resource, leaving unspecified fields untouched.',
       code: `// Current state: { id: 1, name: 'Alice', email: 'alice@example.com', role: 'admin' }
 
-// PUT — replaces ENTIRE resource (email and role will be lost!)
+// PUT - replaces ENTIRE resource (email and role will be lost!)
 await fetch('https://api.example.com/users/1', {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json' },
@@ -129,7 +129,7 @@ await fetch('https://api.example.com/users/1', {
 });
 // Result: { id: 1, name: 'Alice Johnson', email: null, role: null }
 
-// PATCH — updates ONLY specified fields (email and role unchanged)
+// PATCH - updates ONLY specified fields (email and role unchanged)
 await fetch('https://api.example.com/users/1', {
   method: 'PATCH',
   headers: { 'Content-Type': 'application/json' },
@@ -142,11 +142,11 @@ PATCH: { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'admin'
     },
     {
       type: 'heading',
-      content: 'DELETE — Remove a Resource'
+      content: 'DELETE - Remove a Resource'
     },
     {
       type: 'example',
-      title: 'DELETE — removing a resource',
+      title: 'DELETE - removing a resource',
       content: 'DELETE requests identify the resource to delete via the URL path and typically return 204 No Content on success, which means the operation succeeded but there is nothing to return. Deleting the same resource a second time should return 404 Not Found since the resource no longer exists.',
       code: `const response = await fetch('https://api.example.com/users/42', {
   method: 'DELETE',
@@ -162,7 +162,7 @@ const response2 = await fetch('https://api.example.com/users/42', {
   method: 'DELETE',
   headers: { 'Authorization': 'Bearer your-token-here' }
 });
-console.log(response2.status); // 404 — already deleted`,
+console.log(response2.status); // 404 - already deleted`,
       language: 'javascript',
       output: `204
 404`
@@ -173,7 +173,7 @@ console.log(response2.status); // 404 — already deleted`,
     },
     {
       type: 'text',
-      content: 'HEAD returns only the response headers for a URL without the body — useful for checking if a resource exists or checking its size before downloading. OPTIONS returns the HTTP methods that are allowed for a resource — browsers send an OPTIONS preflight request before any cross-origin POST/PUT/DELETE to check CORS permissions.'
+      content: 'HEAD returns only the response headers for a URL without the body - useful for checking if a resource exists or checking its size before downloading. OPTIONS returns the HTTP methods that are allowed for a resource - browsers send an OPTIONS preflight request before any cross-origin POST/PUT/DELETE to check CORS permissions.'
     },
     {
       type: 'tryit',
@@ -195,7 +195,7 @@ var data = {
     body: '{ \\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" }',
     response: '{ \\"id\\": 42, \\"name\\": \\"Alice\\", \\"email\\": \\"alice@example.com\\" }',
     status: '201 Created',
-    desc: 'Creates a new resource. Not idempotent — sending twice creates two records.'
+    desc: 'Creates a new resource. Not idempotent - sending twice creates two records.'
   },
   PUT: {
     color: '#f59e0b',
@@ -219,7 +219,7 @@ var data = {
     body: '(no body)',
     response: '(no body)',
     status: '204 No Content',
-    desc: 'Removes the resource. Returns 204 on success. Idempotent — deleting twice is safe.'
+    desc: 'Removes the resource. Returns 204 on success. Idempotent - deleting twice is safe.'
   }
 };
 
@@ -286,7 +286,7 @@ code { display: block; background: #f1f5f9; border-radius: 4px; padding: 6px 10p
         'GET, because you are requesting a change'
       ],
       correct: 2,
-      explanation: 'PATCH is designed for partial updates — it only changes the fields you include in the request body. PUT would replace the entire resource, potentially nulling out fields you did not include. POST creates new resources, and GET only reads data.'
+      explanation: 'PATCH is designed for partial updates - it only changes the fields you include in the request body. PUT would replace the entire resource, potentially nulling out fields you did not include. POST creates new resources, and GET only reads data.'
     },
     {
       id: 'ex-03-2',
@@ -299,7 +299,7 @@ code { display: block; background: #f1f5f9; border-radius: 4px; padding: 6px 10p
         'The response is always cached by the browser'
       ],
       correct: 1,
-      explanation: 'An idempotent method produces the same server state regardless of how many times you call it with the same inputs. GET, PUT, and DELETE are idempotent. POST is not — sending the same POST twice typically creates two records.'
+      explanation: 'An idempotent method produces the same server state regardless of how many times you call it with the same inputs. GET, PUT, and DELETE are idempotent. POST is not - sending the same POST twice typically creates two records.'
     },
     {
       id: 'ex-03-3',

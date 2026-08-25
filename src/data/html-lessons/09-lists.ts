@@ -10,16 +10,16 @@ export const htmlListsLesson: HtmlLesson = {
   readingTime: 8,
   description: 'Create unordered, ordered, and description lists. Nest lists, customize markers, and use lists for navigation.',
   sections: [
-    { type: 'text', content: 'Lists are everywhere in web design — navigation menus, ingredient lists, step-by-step instructions, feature lists, and more. HTML has three types of lists: Unordered (bullet points), Ordered (numbered), and Description (term + definition pairs).' },
-    { type: 'heading', content: 'Unordered Lists — <ul>' },
-    { type: 'text', content: 'An unordered list groups items where order does not matter — like a shopping list or feature list. Items are shown with bullet points by default.' },
+    { type: 'text', content: 'Lists are everywhere in web design - navigation menus, ingredient lists, step-by-step instructions, feature lists, and more. HTML has three types of lists: Unordered (bullet points), Ordered (numbered), and Description (term + definition pairs).' },
+    { type: 'heading', content: 'Unordered Lists - <ul>' },
+    { type: 'text', content: 'An unordered list groups items where order does not matter - like a shopping list or feature list. Items are shown with bullet points by default.' },
     { type: 'code', language: 'html',       content: 'The ul element creates a bulleted list where item order does not matter. Each li is one item. Use ul for navigation menus, feature lists, and any group of items without a specific sequence. CSS can change the bullet style or remove it entirely.',
       code: `<h3>Frontend Technologies</h3>
 <ul>
-  <li>HTML — structure</li>
-  <li>CSS  — styling</li>
-  <li>JavaScript — behavior</li>
-  <li>React — UI library</li>
+  <li>HTML - structure</li>
+  <li>CSS  - styling</li>
+  <li>JavaScript - behavior</li>
+  <li>React - UI library</li>
 </ul>
 
 <!-- CSS can change the bullet style -->
@@ -32,8 +32,8 @@ export const htmlListsLesson: HtmlLesson = {
   <li>No bullets at all (common for nav menus)</li>
   <li>Another item</li>
 </ul>` },
-    { type: 'heading', content: 'Ordered Lists — <ol>' },
-    { type: 'text', content: 'An ordered list is used when sequence matters — like steps in a tutorial, a recipe, or ranking. Items are automatically numbered.' },
+    { type: 'heading', content: 'Ordered Lists - <ol>' },
+    { type: 'text', content: 'An ordered list is used when sequence matters - like steps in a tutorial, a recipe, or ranking. Items are automatically numbered.' },
     { type: 'code', language: 'html',       content: 'The ol element creates a numbered list where order matters. Use it for step-by-step instructions, recipes, and ranked items. The start attribute changes the starting number. The type attribute switches to letters (A, a) or Roman numerals (I, i).',
       code: `<h3>How to Learn HTML</h3>
 <ol>
@@ -84,15 +84,15 @@ export const htmlListsLesson: HtmlLesson = {
     </ul>
   </li>
 </ul>` },
-    { type: 'heading', content: 'Description Lists — <dl>' },
+    { type: 'heading', content: 'Description Lists - <dl>' },
     { type: 'text', content: 'A description list pairs terms with their definitions. It is perfect for glossaries, FAQs, and key-value data.' },
-    { type: 'code', language: 'html',       content: 'The dl element is for term-definition pairs — glossaries, FAQs, and key-value data. dt is the term, dd is its description. You can have multiple dd elements for one dt. Screen readers announce these as definition lists.',
+    { type: 'code', language: 'html',       content: 'The dl element is for term-definition pairs - glossaries, FAQs, and key-value data. dt is the term, dd is its description. You can have multiple dd elements for one dt. Screen readers announce these as definition lists.',
       code: `<dl>
   <dt>HTML</dt>
-  <dd>HyperText Markup Language — the structure of web pages</dd>
+  <dd>HyperText Markup Language - the structure of web pages</dd>
 
   <dt>CSS</dt>
-  <dd>Cascading Style Sheets — controls the visual appearance</dd>
+  <dd>Cascading Style Sheets - controls the visual appearance</dd>
 
   <dt>JavaScript</dt>
   <dd>Programming language that adds interactivity to web pages</dd>
@@ -103,7 +103,7 @@ export const htmlListsLesson: HtmlLesson = {
 <!-- dt = Description Term (the word/phrase) -->
 <!-- dd = Description Details (the definition) -->` },
     { type: 'heading', content: 'Lists as Navigation Menus' },
-    { type: 'code', language: 'html',       content: 'Navigation menus are built from ul and li elements — just styled with CSS to look like a row of links instead of a bullet list. This is the standard pattern for all website navigation. Use a nav element to wrap it for semantic meaning and accessibility.',
+    { type: 'code', language: 'html',       content: 'Navigation menus are built from ul and li elements - just styled with CSS to look like a row of links instead of a bullet list. This is the standard pattern for all website navigation. Use a nav element to wrap it for semantic meaning and accessibility.',
 code: `<!-- Navigation menus are semantically lists of links -->
 <nav>
   <ul>
@@ -162,7 +162,7 @@ nav a:hover { text-decoration: underline; }
   <dt>API</dt>
   <dd>Application Programming Interface</dd>
   <dt>DOM</dt>
-  <dd>Document Object Model — the tree of HTML elements</dd>
+  <dd>Document Object Model - the tree of HTML elements</dd>
 </dl>
 
 <h2>Nav Menu (horizontal)</h2>

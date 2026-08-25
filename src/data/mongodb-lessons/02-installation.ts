@@ -242,11 +242,11 @@ Compass features:
   
   // Simulate connection check
   setTimeout(function() {
-    var msg = 'Connection successful!\\n\\n';
-    msg += 'Protocol: ' + (isAtlas ? 'MongoDB Atlas (Cloud)' : 'Local MongoDB') + '\\n';
-    msg += 'Host: ' + (isLocal ? 'localhost:27017' : 'Remote Server') + '\\n';
-    msg += 'Database: ' + dbName + '\\n';
-    msg += 'Authentication: ' + (hasAuth ? 'Enabled' : 'Disabled') + '\\n\\n';
+    var msg = 'Connection successful!\\n\ ';
+    msg += 'Protocol: ' + (isAtlas ? 'MongoDB Atlas (Cloud)' : 'Local MongoDB') + '\ ';
+    msg += 'Host: ' + (isLocal ? 'localhost:27017' : 'Remote Server') + '\ ';
+    msg += 'Database: ' + dbName + '\ ';
+    msg += 'Authentication: ' + (hasAuth ? 'Enabled' : 'Disabled') + '\\n\ ';
     msg += 'Ready to execute commands!';
     showResult('success', msg);
   }, 800);

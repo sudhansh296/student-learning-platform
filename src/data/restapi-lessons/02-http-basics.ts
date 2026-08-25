@@ -8,11 +8,11 @@ export const lesson02: RestapiLesson = {
   order: 2,
   difficulty: 'beginner',
   readingTime: 12,
-  description: 'Understand the HTTP protocol — the foundation of REST APIs — including requests, responses, headers, and the request-response cycle.',
+  description: 'Understand the HTTP protocol - the foundation of REST APIs - including requests, responses, headers, and the request-response cycle.',
   sections: [
     {
       type: 'text',
-      content: 'HTTP (HyperText Transfer Protocol) is the protocol that defines how messages are formatted and transmitted across the web. Every REST API interaction is an HTTP conversation — a client sends an HTTP request and the server sends an HTTP response. Understanding HTTP deeply means you can debug any API issue with confidence.'
+      content: 'HTTP (HyperText Transfer Protocol) is the protocol that defines how messages are formatted and transmitted across the web. Every REST API interaction is an HTTP conversation - a client sends an HTTP request and the server sends an HTTP response. Understanding HTTP deeply means you can debug any API issue with confidence.'
     },
     {
       type: 'heading',
@@ -125,7 +125,7 @@ Date: Tue, 19 Aug 2026 14:30:00 GMT
     },
     {
       type: 'text',
-      content: 'HTTPS is HTTP with TLS (Transport Layer Security) encryption. All data transmitted — including headers, tokens, and request bodies — is encrypted so it cannot be read by intermediaries. Every production REST API must use HTTPS. Never send API keys or tokens over plain HTTP.'
+      content: 'HTTPS is HTTP with TLS (Transport Layer Security) encryption. All data transmitted - including headers, tokens, and request bodies - is encrypted so it cannot be read by intermediaries. Every production REST API must use HTTPS. Never send API keys or tokens over plain HTTP.'
     },
     {
       type: 'heading',
@@ -133,7 +133,7 @@ Date: Tue, 19 Aug 2026 14:30:00 GMT
     },
     {
       type: 'text',
-      content: 'Traditional web apps use cookies (automatically sent by browsers with every request to the same domain). REST APIs typically prefer tokens — either API keys or JWTs sent in the Authorization header. Tokens work across domains, in mobile apps, and in server-to-server communication where cookies do not apply.'
+      content: 'Traditional web apps use cookies (automatically sent by browsers with every request to the same domain). REST APIs typically prefer tokens - either API keys or JWTs sent in the Authorization header. Tokens work across domains, in mobile apps, and in server-to-server communication where cookies do not apply.'
     },
     {
       type: 'tryit',
@@ -248,7 +248,7 @@ textarea { resize: vertical; }
         'The host (api.example.com)'
       ],
       correct: 2,
-      explanation: 'The fragment (#section) is processed only by the browser for in-page navigation. It is never included in the HTTP request sent to the server. All other URL parts — protocol, host, path, and query string — are used to construct the request.'
+      explanation: 'The fragment (#section) is processed only by the browser for in-page navigation. It is never included in the HTTP request sent to the server. All other URL parts - protocol, host, path, and query string - are used to construct the request.'
     },
     {
       id: 'ex-02-2',
@@ -261,7 +261,7 @@ textarea { resize: vertical; }
         'X-Request-Id'
       ],
       correct: 2,
-      explanation: 'Content-Type declares the media type of the request body, for example application/json. The Accept header tells the server what format the client wants in the response — the reverse direction.'
+      explanation: 'Content-Type declares the media type of the request body, for example application/json. The Accept header tells the server what format the client wants in the response - the reverse direction.'
     },
     {
       id: 'ex-02-3',
@@ -274,7 +274,7 @@ textarea { resize: vertical; }
         'HTTPS is required for APIs to support the POST method'
       ],
       correct: 1,
-      explanation: 'HTTPS uses TLS encryption to protect all data in transit — including headers, authorization tokens, and request bodies. Without HTTPS, any network intermediary could read or modify API credentials and responses.'
+      explanation: 'HTTPS uses TLS encryption to protect all data in transit - including headers, authorization tokens, and request bodies. Without HTTPS, any network intermediary could read or modify API credentials and responses.'
     }
   ],
   quiz: [

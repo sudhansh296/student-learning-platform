@@ -1,12 +1,12 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 export const htmlJavascriptLesson: HtmlLesson = {
   id: 'html-javascript', title: 'HTML & JavaScript', slug: 'javascript-in-html', chapter: 'advanced', order: 18,
-  difficulty: 'beginner', readingTime: 10, description: 'Add JavaScript to HTML pages — inline, internal, external scripts, defer vs async, and DOM manipulation basics.',
+  difficulty: 'beginner', readingTime: 10, description: 'Add JavaScript to HTML pages - inline, internal, external scripts, defer vs async, and DOM manipulation basics.',
   sections: [
-    { type: 'text', content: 'JavaScript makes HTML pages interactive. Without JavaScript, HTML is just a static document — no animations, no dynamic content, no responses to clicks. JavaScript runs in the browser, reads and modifies the HTML structure (DOM), and responds to user events.' },
+    { type: 'text', content: 'JavaScript makes HTML pages interactive. Without JavaScript, HTML is just a static document - no animations, no dynamic content, no responses to clicks. JavaScript runs in the browser, reads and modifies the HTML structure (DOM), and responds to user events.' },
     { type: 'heading', content: 'Three Ways to Add JavaScript' },
-    { type: 'code', language: 'html',       content: 'The script element embeds JavaScript. Inline event handlers like onclick run code when events happen. This mixes HTML and behavior — fine for quick demos. In production, keep JavaScript in separate .js files for clean separation of concerns.',
-      code: `<!-- 1. INLINE: directly on element — avoid in production -->
+    { type: 'code', language: 'html',       content: 'The script element embeds JavaScript. Inline event handlers like onclick run code when events happen. This mixes HTML and behavior - fine for quick demos. In production, keep JavaScript in separate .js files for clean separation of concerns.',
+      code: `<!-- 1. INLINE: directly on element - avoid in production -->
 <button onclick="alert('Hello!')">Click Me</button>
 <p onmouseover="this.style.color='red'">Hover me</p>
 
@@ -17,12 +17,12 @@ export const htmlJavascriptLesson: HtmlLesson = {
   }
 </script>
 
-<!-- 3. EXTERNAL: separate .js file — BEST PRACTICE -->
+<!-- 3. EXTERNAL: separate .js file - BEST PRACTICE -->
 <script src="app.js" defer></script>
 <!-- defer: loads in parallel, executes after HTML parsed -->` },
     { type: 'heading', content: 'Where to Put the <script> Tag' },
-    { type: 'code', language: 'html',       content: 'Placing script before closing body ensures HTML is parsed before the script runs. The modern way is script in head with defer — it loads in parallel and executes after parsing finishes, giving the same result with better performance.',
-      code: `<!-- OPTION 1: Just before </body> — OLD way but works -->
+    { type: 'code', language: 'html',       content: 'Placing script before closing body ensures HTML is parsed before the script runs. The modern way is script in head with defer - it loads in parallel and executes after parsing finishes, giving the same result with better performance.',
+      code: `<!-- OPTION 1: Just before </body> - OLD way but works -->
 <body>
   <h1>My Page</h1>
   <p id="output"></p>
@@ -32,7 +32,7 @@ export const htmlJavascriptLesson: HtmlLesson = {
   </script>
 </body>
 
-<!-- OPTION 2: In <head> with defer — MODERN BEST PRACTICE -->
+<!-- OPTION 2: In <head> with defer - MODERN BEST PRACTICE -->
 <head>
   <script src="app.js" defer></script>
 </head>
@@ -79,23 +79,23 @@ export const htmlJavascriptLesson: HtmlLesson = {
     document.getElementById('output').textContent = 'Button was clicked!';
   });
 
-  // Input event — fires on every keystroke
+  // Input event - fires on every keystroke
   document.getElementById('inp').addEventListener('input', function(e) {
     document.getElementById('output').textContent = 'You typed: ' + e.target.value;
   });
 
   // Common events:
-  // 'click'       — mouse click
-  // 'dblclick'    — double click
-  // 'mouseover'   — hover start
-  // 'mouseout'    — hover end
-  // 'keydown'     — key pressed
-  // 'keyup'       — key released
-  // 'input'       — input value changed
-  // 'change'      — select/checkbox changed
-  // 'submit'      — form submitted
-  // 'load'        — page fully loaded
-  // 'DOMContentLoaded' — HTML parsed (before images)
+  // 'click'       - mouse click
+  // 'dblclick'    - double click
+  // 'mouseover'   - hover start
+  // 'mouseout'    - hover end
+  // 'keydown'     - key pressed
+  // 'keyup'       - key released
+  // 'input'       - input value changed
+  // 'change'      - select/checkbox changed
+  // 'submit'      - form submitted
+  // 'load'        - page fully loaded
+  // 'DOMContentLoaded' - HTML parsed (before images)
 </script>` },
     { type: 'tryit', title: 'Try It: JavaScript + HTML',
       html: `<div id="app">

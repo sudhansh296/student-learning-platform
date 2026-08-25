@@ -12,7 +12,7 @@ export const lesson01: SqliteLesson = {
   sections: [
     {
       type: 'text',
-      content: 'SQLite is the most widely deployed database engine in the world. Not the most popular in terms of downloads or documentation — but in terms of actual running instances. Every smartphone, every browser, most desktop apps, and countless IoT devices run SQLite right now. It is embedded in the device itself, requiring no setup and no server.'
+      content: 'SQLite is the most widely deployed database engine in the world. Not the most popular in terms of downloads or documentation - but in terms of actual running instances. Every smartphone, every browser, most desktop apps, and countless IoT devices run SQLite right now. It is embedded in the device itself, requiring no setup and no server.'
     },
     {
       type: 'heading',
@@ -20,7 +20,7 @@ export const lesson01: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'Traditional databases like PostgreSQL and MySQL run as separate server processes. Your application connects to them over a network socket, sends queries, and receives results. SQLite works completely differently: it is a library linked directly into your application. The entire database — tables, indexes, data — lives in a single file on disk. No server, no port, no authentication setup, no configuration.'
+      content: 'Traditional databases like PostgreSQL and MySQL run as separate server processes. Your application connects to them over a network socket, sends queries, and receives results. SQLite works completely differently: it is a library linked directly into your application. The entire database - tables, indexes, data - lives in a single file on disk. No server, no port, no authentication setup, no configuration.'
     },
     {
       type: 'list',
@@ -32,7 +32,7 @@ export const lesson01: SqliteLesson = {
         'Self-contained: the library has no external dependencies',
         'Cross-platform: a database file created on Windows works on Linux and macOS',
         'ACID compliant: full transaction support with crash recovery',
-        'Public domain: SQLite code is in the public domain — no license required'
+        'Public domain: SQLite code is in the public domain - no license required'
       ]
     },
     {
@@ -53,7 +53,7 @@ export const lesson01: SqliteLesson = {
         ['Connection', 'Direct file access (no network)', 'TCP/IP socket connection'],
         ['Concurrent writes', 'One writer at a time (WAL mode helps)', 'Multiple concurrent writers'],
         ['Data size', 'Up to 281 TB technically, practical limit ~1 GB', 'Petabytes with proper hardware'],
-        ['User management', 'None — filesystem permissions control access', 'Full user, role, and privilege system'],
+        ['User management', 'None - filesystem permissions control access', 'Full user, role, and privilege system'],
         ['Data types', 'Loosely typed (type affinity)', 'Strictly typed with many types'],
         ['Network access', 'Local file only (not directly)', 'Any client over the network'],
         ['Use cases', 'Mobile, desktop, embedded, testing, prototypes', 'Web apps, APIs, enterprise systems']
@@ -91,10 +91,10 @@ export const lesson01: SqliteLesson = {
       type: 'list',
       title: 'Known SQLite limitations:',
       items: [
-        'Type affinity instead of strict types: SQLite uses "type affinity" — you can store any type in any column unless STRICT mode is enabled (SQLite 3.37+)',
-        'Limited ALTER TABLE: SQLite only supports ADD COLUMN and RENAME — you cannot drop or modify columns without recreating the table',
+        'Type affinity instead of strict types: SQLite uses "type affinity" - you can store any type in any column unless STRICT mode is enabled (SQLite 3.37+)',
+        'Limited ALTER TABLE: SQLite only supports ADD COLUMN and RENAME - you cannot drop or modify columns without recreating the table',
         'No RIGHT JOIN or FULL OUTER JOIN in older versions (added in 3.39.0)',
-        'Foreign key constraints are OFF by default — you must enable with PRAGMA foreign_keys = ON',
+        'Foreign key constraints are OFF by default - you must enable with PRAGMA foreign_keys = ON',
         'Single writer at a time by default (WAL mode allows concurrent reads with one writer)'
       ]
     },
@@ -104,7 +104,7 @@ export const lesson01: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'The SQLite database is a regular file on your filesystem. You can copy it, back it up with cp, email it, open it in a GUI tool, or delete it. The file format is stable and cross-platform — a .db file created today will be readable by SQLite in decades. This simplicity is one of SQLite\'s greatest strengths for embedded and archival use cases.'
+      content: 'The SQLite database is a regular file on your filesystem. You can copy it, back it up with cp, email it, open it in a GUI tool, or delete it. The file format is stable and cross-platform - a .db file created today will be readable by SQLite in decades. This simplicity is one of SQLite\'s greatest strengths for embedded and archival use cases.'
     },
     {
       type: 'example',
@@ -164,7 +164,7 @@ const useCases = [
   { case: 'Multi-user web application', winner: 'PostgreSQL', reason: 'Needs concurrent writes from many users/servers' },
   { case: 'Local desktop app', winner: 'SQLite', reason: 'Single user, no server process, self-contained' },
   { case: 'High-traffic API (>100 req/s writes)', winner: 'PostgreSQL', reason: 'SQLite serializes writes; PG handles concurrent writes' },
-  { case: 'Prototype / quick demo', winner: 'SQLite', reason: 'Fastest start — just open a file' },
+  { case: 'Prototype / quick demo', winner: 'SQLite', reason: 'Fastest start - just open a file' },
 ];
 
 let tab = 'comparison';
@@ -262,7 +262,7 @@ p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
         'In a directory of files, one per table'
       ],
       correct: 2,
-      explanation: 'SQLite stores the entire database — all tables, indexes, and data — in a single file on the local filesystem. This is one of its defining characteristics. The file can be copied, backed up, or moved like any other file.'
+      explanation: 'SQLite stores the entire database - all tables, indexes, and data - in a single file on the local filesystem. This is one of its defining characteristics. The file can be copied, backed up, or moved like any other file.'
     },
     {
       id: 'q-sqlite-1-2',
@@ -281,9 +281,9 @@ p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
       question: 'What is "WAL mode" in SQLite?',
       options: [
         'A mode that makes SQLite act as a server',
-        'Write-Ahead Logging — allows concurrent reads while one writer is active',
-        'Web API Layer — enables network access to SQLite',
-        'Warm Access Log — a performance profiling mode'
+        'Write-Ahead Logging - allows concurrent reads while one writer is active',
+        'Web API Layer - enables network access to SQLite',
+        'Warm Access Log - a performance profiling mode'
       ],
       correct: 1,
       explanation: 'WAL (Write-Ahead Logging) is an SQLite journal mode that enables concurrent reads while a write is in progress. In default journal mode, writers block all readers. WAL mode significantly improves concurrency for read-heavy workloads.'

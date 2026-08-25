@@ -1,4 +1,4 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 
 export const htmlElementsLesson: HtmlLesson = {
   id: 'html-elements',
@@ -12,7 +12,7 @@ export const htmlElementsLesson: HtmlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'An HTML element is the basic building block of every webpage. An element tells the browser what type of content it is — a heading, a paragraph, a link, an image, a button. Understanding elements is the single most important concept in HTML.',
+      content: 'An HTML element is the basic building block of every webpage. An element tells the browser what type of content it is - a heading, a paragraph, a link, an image, a button. Understanding elements is the single most important concept in HTML.',
     },
     {
       type: 'heading',
@@ -25,7 +25,7 @@ export const htmlElementsLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-      content: 'Every HTML element has three parts: an opening tag (like <p>), the content in the middle, and a closing tag (like </p>) with a forward slash. The tag name tells the browser what kind of content it is — h1 for main heading, p for paragraph, strong for bold, em for italic.',
+      content: 'Every HTML element has three parts: an opening tag (like <p>), the content in the middle, and a closing tag (like </p>) with a forward slash. The tag name tells the browser what kind of content it is - h1 for main heading, p for paragraph, strong for bold, em for italic.',
       code: `<!-- The anatomy of an HTML element: -->
 
 <tagname>Content goes here</tagname>
@@ -53,13 +53,13 @@ export const htmlElementsLesson: HtmlLesson = {
     },
     {
       type: 'text',
-      content: 'HTML elements can contain other elements inside them. This is called "nesting." The outer element is the "parent" and the inner element is the "child." Proper nesting is critical — always close inner tags before outer tags.',
+      content: 'HTML elements can contain other elements inside them. This is called "nesting." The outer element is the "parent" and the inner element is the "child." Proper nesting is critical - always close inner tags before outer tags.',
     },
     {
       type: 'code',
       language: 'html',
-      content: 'Nesting means placing elements inside other elements. The outer element is the parent, the inner is the child. Always close inner tags before outer ones — if you open <strong> inside <p>, you must close </strong> before </p>. Wrong nesting causes broken layouts that are hard to debug.',
-      code: `<!-- Correct nesting — inner tag closes before outer tag -->
+      content: 'Nesting means placing elements inside other elements. The outer element is the parent, the inner is the child. Always close inner tags before outer ones - if you open <strong> inside <p>, you must close </strong> before </p>. Wrong nesting causes broken layouts that are hard to debug.',
+      code: `<!-- Correct nesting - inner tag closes before outer tag -->
 <p>This is <strong>bold text</strong> inside a paragraph.</p>
 <p>This is <em>italic text</em> in another paragraph.</p>
 
@@ -74,7 +74,7 @@ export const htmlElementsLesson: HtmlLesson = {
   </body>
 </html>
 
-<!-- WRONG — never do this: overlapping tags -->
+<!-- WRONG - never do this: overlapping tags -->
 <!-- <p>This is <strong>wrong</p></strong> -->`,
     },
     {
@@ -93,7 +93,7 @@ export const htmlElementsLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-      content: 'Empty elements (also called void elements) have NO content and NO closing tag — they stand alone. The most common ones are <br> (line break), <img> (image), <input> (form field), <hr> (horizontal divider), and <meta> (page metadata). You may optionally write a self-closing slash like <br /> — both forms are valid in HTML5.',
+      content: 'Empty elements (also called void elements) have NO content and NO closing tag - they stand alone. The most common ones are <br> (line break), <img> (image), <input> (form field), <hr> (horizontal divider), and <meta> (page metadata). You may optionally write a self-closing slash like <br /> - both forms are valid in HTML5.',
       code: `<!-- Empty elements have no content and no closing tag -->
 
 <!-- Line break -->
@@ -158,7 +158,7 @@ hr { border: none; border-top: 2px solid #e5e7eb; margin: 20px 0; }`,
     {
       type: 'code',
       language: 'html',
-            content: 'HTML tag names are not case-sensitive — P and p both work. But the industry standard and W3C recommendation is always lowercase. All professional code you will ever read uses lowercase tags. Inconsistent casing makes code hard to read and maintain.',
+            content: 'HTML tag names are not case-sensitive - P and p both work. But the industry standard and W3C recommendation is always lowercase. All professional code you will ever read uses lowercase tags. Inconsistent casing makes code hard to read and maintain.',
       code: `<!-- These all work, but lowercase is the standard -->
 <P>This is a paragraph</P>         <!-- works but not recommended -->
 <p>This is a paragraph</p>         <!-- correct - always use lowercase -->
@@ -198,7 +198,7 @@ hr { border: none; border-top: 2px solid #e5e7eb; margin: 20px 0; }`,
       type: 'multiple-choice',
       options: [
         'Nothing wrong',
-        'The tags are overlapping — strong must close before p closes',
+        'The tags are overlapping - strong must close before p closes',
         'p and strong cannot be nested',
         'Closing tags need a space before the slash',
       ],

@@ -1,12 +1,12 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssTextLesson: CssLesson = {
   id:'css-text',title:'Text & Fonts',slug:'text-fonts',
   chapter:'text',order:5,difficulty:'beginner',readingTime:12,
-  description:'Control typography — font families, sizes, weights, line height, letter spacing, and text decoration.',
+  description:'Control typography - font families, sizes, weights, line height, letter spacing, and text decoration.',
   sections:[
     {type:'text',content:'Typography is one of the most impactful aspects of web design. Good typography improves readability, establishes hierarchy, and creates visual rhythm. CSS gives you complete control over every aspect of text display.'},
     {type:'heading',content:'Font Family'},
-    {type:'code',language:'css',content:'font-family specifies the font to use. Always provide a font stack — a comma-separated list of fallbacks. If the first font is unavailable, the browser tries the next. Always end with a generic family: serif, sans-serif, or monospace.',code:`/* Font stack: browser tries each font in order */
+    {type:'code',language:'css',content:'font-family specifies the font to use. Always provide a font stack - a comma-separated list of fallbacks. If the first font is unavailable, the browser tries the next. Always end with a generic family: serif, sans-serif, or monospace.',code:`/* Font stack: browser tries each font in order */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -16,11 +16,11 @@ body {
 .sans-serif { font-family: Arial, Helvetica, sans-serif; }
 .mono      { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
 
-/* Google Fonts — add to HTML <head> first */
+/* Google Fonts - add to HTML <head> first */
 /* <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"> */
 body { font-family: 'Inter', sans-serif; }
 
-/* @font-face — self-hosted fonts */
+/* @font-face - self-hosted fonts */
 @font-face {
   font-family: 'MyFont';
   src: url('/fonts/myfont.woff2') format('woff2');
@@ -28,7 +28,7 @@ body { font-family: 'Inter', sans-serif; }
   font-display: swap; /* show fallback while loading */
 }`},
     {type:'heading',content:'Font Size'},
-    {type:'code',language:'css',content:'font-size sets how large text appears. px is absolute and consistent. em is relative to the parent font size. rem is relative to the root (html) font size — more predictable. 1rem equals 16px by default. Use rem for consistent sizing across components.',code:`/* Absolute units */
+    {type:'code',language:'css',content:'font-size sets how large text appears. px is absolute and consistent. em is relative to the parent font size. rem is relative to the root (html) font size - more predictable. 1rem equals 16px by default. Use rem for consistent sizing across components.',code:`/* Absolute units */
 h1 { font-size: 48px; }
 p  { font-size: 16px; }
 
@@ -37,7 +37,7 @@ p  { font-size: 1rem; }    /* relative to root (html) = 16px by default */
 p  { font-size: 1em; }     /* relative to PARENT element font-size */
 small { font-size: 0.875rem; } /* 14px */
 
-/* Fluid typography with clamp() — scales with viewport */
+/* Fluid typography with clamp() - scales with viewport */
 h1 { font-size: clamp(1.5rem, 5vw, 3rem); }
 /* min:24px, preferred:5% of viewport, max:48px */
 
@@ -52,7 +52,7 @@ h1 { font-size: clamp(1.5rem, 5vw, 3rem); }
 .text-3xl  { font-size: 1.875rem; } /* 30px */
 .text-4xl  { font-size: 2.25rem; }  /* 36px */`},
     {type:'heading',content:'Font Weight, Style & Variant'},
-    {type:'code',language:'css',content:'font-weight controls how bold text appears. Values range from 100 (thin) to 900 (black). 400 is normal, 700 is bold. Not all weights are available for every font — if a weight is missing the browser uses the nearest available weight.',code:`/* Font weight */
+    {type:'code',language:'css',content:'font-weight controls how bold text appears. Values range from 100 (thin) to 900 (black). 400 is normal, 700 is bold. Not all weights are available for every font - if a weight is missing the browser uses the nearest available weight.',code:`/* Font weight */
 .thin       { font-weight: 100; }
 .light      { font-weight: 300; }
 .regular    { font-weight: 400; }  /* normal */
@@ -73,8 +73,8 @@ h1 { font-size: clamp(1.5rem, 5vw, 3rem); }
 p { font: italic 600 1rem/1.6 'Inter', sans-serif; }
 /* style weight size/line-height family */`},
     {type:'heading',content:'Text Spacing'},
-    {type:'code',language:'css',content:'line-height controls vertical spacing between lines of text. A value of 1.5 to 1.7 is ideal for body text readability. Headings can use 1.1 to 1.2 for a tighter look. Using a unitless number (1.5) is recommended over px — it scales with font size.',code:`/* Line height — most important for readability */
-body  { line-height: 1.6; }    /* unitless — relative to font-size, recommended */
+    {type:'code',language:'css',content:'line-height controls vertical spacing between lines of text. A value of 1.5 to 1.7 is ideal for body text readability. Headings can use 1.1 to 1.2 for a tighter look. Using a unitless number (1.5) is recommended over px - it scales with font size.',code:`/* Line height - most important for readability */
+body  { line-height: 1.6; }    /* unitless - relative to font-size, recommended */
 h1    { line-height: 1.1; }    /* tighter for headings */
 .text { line-height: 1.75; }   /* looser for long articles */
 
@@ -89,11 +89,11 @@ p { word-spacing: 0.1em; }
 /* Text indent */
 p { text-indent: 2em; }  /* indent first line like a book */`},
     {type:'heading',content:'Text Alignment & Decoration'},
-    {type:'code',language:'css',content:'text-align positions inline content within its container. left is the default for LTR languages. center works well for headings and hero text. justify stretches text to fill full width — avoid it for body text as it creates uneven word spacing.',code:`/* Text alignment */
+    {type:'code',language:'css',content:'text-align positions inline content within its container. left is the default for LTR languages. center works well for headings and hero text. justify stretches text to fill full width - avoid it for body text as it creates uneven word spacing.',code:`/* Text alignment */
 .left    { text-align: left; }
 .center  { text-align: center; }
 .right   { text-align: right; }
-.justify { text-align: justify; } /* even edges — use carefully, creates gaps */
+.justify { text-align: justify; } /* even edges - use carefully, creates gaps */
 
 /* Vertical alignment (for inline elements) */
 sup { vertical-align: super; }
@@ -149,7 +149,7 @@ h1 { text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
   <p class="subtitle">Beautiful text starts with good CSS</p>
   <p class="body-text">Typography is not just about choosing a font. It's about the relationship between <strong>font size</strong>, <em>line height</em>, letter spacing, and color contrast. A well-typeset page draws readers in and makes content effortless to read.</p>
   <blockquote>Typography is the craft of endowing human language with a durable visual form.</blockquote>
-  <p class="body-text">Try adjusting the CSS properties on the left — change <code>line-height</code>, <code>letter-spacing</code>, or <code>font-size</code> to see how they affect readability.</p>
+  <p class="body-text">Try adjusting the CSS properties on the left - change <code>line-height</code>, <code>letter-spacing</code>, or <code>font-size</code> to see how they affect readability.</p>
   <a href="#">Read more →</a>
 </article>`,
      css:`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');

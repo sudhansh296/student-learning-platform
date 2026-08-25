@@ -12,7 +12,7 @@ export const lesson09: DockerLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Node.js and Docker are a natural pairing. Node\'s ecosystem — with npm, environment-specific configs, and fast startup times — fits perfectly into the container model. This lesson walks through containerizing a real Node.js Express application, from a development workflow to a production-ready multi-stage build.'
+      content: 'Node.js and Docker are a natural pairing. Node\'s ecosystem - with npm, environment-specific configs, and fast startup times - fits perfectly into the container model. This lesson walks through containerizing a real Node.js Express application, from a development workflow to a production-ready multi-stage build.'
     },
     {
       type: 'heading',
@@ -221,18 +221,18 @@ networks:
       type: 'list',
       title: 'Mistakes every Node.js developer makes with Docker (and how to fix them):',
       items: [
-        'Including node_modules in COPY: Always add node_modules to .dockerignore — copy package.json and run npm ci inside the container instead',
-        'Running as root: Create a non-root user and use USER in the Dockerfile — root container processes can escalate to host root',
-        'Ignoring SIGTERM: Node.js does not handle SIGTERM by default — use dumb-init or handle process.on(SIGTERM) to shut down gracefully',
-        'Using npm start instead of node directly: npm adds a wrapper process that swallows signals — use CMD ["node", "server.js"] directly',
+        'Including node_modules in COPY: Always add node_modules to .dockerignore - copy package.json and run npm ci inside the container instead',
+        'Running as root: Create a non-root user and use USER in the Dockerfile - root container processes can escalate to host root',
+        'Ignoring SIGTERM: Node.js does not handle SIGTERM by default - use dumb-init or handle process.on(SIGTERM) to shut down gracefully',
+        'Using npm start instead of node directly: npm adds a wrapper process that swallows signals - use CMD ["node", "server.js"] directly',
         'Hardcoding ports: Use the PORT environment variable (process.env.PORT) so the app can be configured at runtime',
-        'Bundling .env files: Never COPY .env into your image — pass secrets as runtime environment variables with -e or compose environment'
+        'Bundling .env files: Never COPY .env into your image - pass secrets as runtime environment variables with -e or compose environment'
       ]
     },
     {
       type: 'example',
       title: 'Graceful shutdown handling in Node.js',
-      content: 'This code registers SIGTERM and SIGINT handlers so the Node.js process closes the HTTP server and database connections cleanly before exiting. Docker sends SIGTERM when stopping a container — without this handler, active requests would be cut off mid-flight.',
+      content: 'This code registers SIGTERM and SIGINT handlers so the Node.js process closes the HTTP server and database connections cleanly before exiting. Docker sends SIGTERM when stopping a container - without this handler, active requests would be cut off mid-flight.',
       code: `const http = require('http');
 const app = require('./app');
 
@@ -290,12 +290,12 @@ function generateDockerfile() {
     'ENTRYPOINT [\\"dumb-init\\", \\"--\\"]',
     'CMD [\\"node\\", \\"' + config.entrypoint + '\\"]'
   ]).filter(function(l) { return l.length > 0; });
-  return lines.join('\\n');
+  return lines.join('\ ');
 }
 
 function generateCompose() {
-  return 'services:\\n  api:\\n    build: .\\n    ports:\\n      - \\"' + config.port + ':' + config.port + '\\"\\n    environment:\\n' +
-    config.envVars.map(function(e) { return '      - ' + e; }).join('\\n') + '\\n    restart: unless-stopped';
+  return 'services:\\n  api:\\n    build: .\\n    ports:\\n      - \\"' + config.port + ':' + config.port + '\\"\\n    environment:\ ' +
+    config.envVars.map(function(e) { return '      - ' + e; }).join('\ ') + '\\n    restart: unless-stopped';
 }
 
 function render() {

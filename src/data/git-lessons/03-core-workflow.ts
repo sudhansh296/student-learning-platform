@@ -172,7 +172,7 @@ build/
 .next/
 out/
 
-# Environment variables — never commit secrets
+# Environment variables - never commit secrets
 .env
 .env.local
 .env.production

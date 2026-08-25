@@ -8,7 +8,7 @@ export const lesson07: RestapiLesson = {
   order: 7,
   difficulty: 'intermediate',
   readingTime: 13,
-  description: 'Secure your REST API using API keys, JWT tokens, and OAuth — and understand the difference between authentication and authorization.',
+  description: 'Secure your REST API using API keys, JWT tokens, and OAuth - and understand the difference between authentication and authorization.',
   sections: [
     {
       type: 'text',
@@ -21,7 +21,7 @@ export const lesson07: RestapiLesson = {
     {
       type: 'analogy',
       title: 'The hotel key card analogy',
-      content: 'Authentication is checking in at the hotel front desk and proving your identity with an ID — you receive a key card. Authorization is the key card itself deciding which doors you can open. The front desk does not follow you around; the key card handles access. In APIs: authentication verifies identity (who are you?), authorization enforces permissions (what can you do?).'
+      content: 'Authentication is checking in at the hotel front desk and proving your identity with an ID - you receive a key card. Authorization is the key card itself deciding which doors you can open. The front desk does not follow you around; the key card handles access. In APIs: authentication verifies identity (who are you?), authorization enforces permissions (what can you do?).'
     },
     {
       type: 'table',
@@ -44,7 +44,7 @@ export const lesson07: RestapiLesson = {
     },
     {
       type: 'text',
-      content: 'Always put API keys in a custom request header (X-API-Key is the common convention), never in a URL query parameter. URLs are logged by every proxy, load balancer, and browser history — putting a secret in a URL leaks it everywhere.'
+      content: 'Always put API keys in a custom request header (X-API-Key is the common convention), never in a URL query parameter. URLs are logged by every proxy, load balancer, and browser history - putting a secret in a URL leaks it everywhere.'
     },
     {
       type: 'example',
@@ -64,7 +64,7 @@ const response2 = await fetch('https://api.example.com/data', {
   }
 });
 
-// NEVER do this — key visible in server logs and browser history:
+// NEVER do this - key visible in server logs and browser history:
 // fetch('https://api.example.com/data?api_key=your-secret-key')`,
       language: 'javascript',
       output: 'API key is sent in the header on every request, never in the URL'
@@ -75,7 +75,7 @@ const response2 = await fetch('https://api.example.com/data', {
     },
     {
       type: 'text',
-      content: 'HTTP Basic Authentication sends a username and password encoded in Base64 as the Authorization header value. It is supported by every HTTP client but should only be used over HTTPS — Base64 is not encryption, it can be decoded trivially. Basic Auth is common for internal tooling and simple scripts, but not recommended for user-facing APIs.'
+      content: 'HTTP Basic Authentication sends a username and password encoded in Base64 as the Authorization header value. It is supported by every HTTP client but should only be used over HTTPS - Base64 is not encryption, it can be decoded trivially. Basic Auth is common for internal tooling and simple scripts, but not recommended for user-facing APIs.'
     },
     {
       type: 'heading',
@@ -88,7 +88,7 @@ const response2 = await fetch('https://api.example.com/data', {
     {
       type: 'example',
       title: 'Authorization header with Bearer token',
-      content: 'The Bearer scheme places the token directly after the word "Bearer" with a space. This header is checked on every protected endpoint — middleware on the server decodes and validates the token before the route handler runs, so the handler can trust req.user.',
+      content: 'The Bearer scheme places the token directly after the word "Bearer" with a space. This header is checked on every protected endpoint - middleware on the server decodes and validates the token before the route handler runs, so the handler can trust req.user.',
       code: `// Login: send credentials, receive token
 const loginRes = await fetch('https://api.example.com/auth/login', {
   method: 'POST',
@@ -116,22 +116,22 @@ GET /profile with Bearer -> 200 { id: 1, name: 'Alice', role: 'admin' }`
     },
     {
       type: 'text',
-      content: 'A JSON Web Token (JWT) has three parts separated by dots: header.payload.signature. The header declares the token type and signing algorithm. The payload holds claims — facts about the user. The signature proves the token was issued by your server and has not been tampered with. The header and payload are Base64Url-encoded JSON, not encrypted — never put secrets in a JWT payload.'
+      content: 'A JSON Web Token (JWT) has three parts separated by dots: header.payload.signature. The header declares the token type and signing algorithm. The payload holds claims - facts about the user. The signature proves the token was issued by your server and has not been tampered with. The header and payload are Base64Url-encoded JSON, not encrypted - never put secrets in a JWT payload.'
     },
     {
       type: 'example',
       title: 'JWT structure breakdown',
-      content: 'Splitting a JWT by the dot separator reveals three distinct Base64Url-encoded parts. The header and payload are plain JSON after decoding — readable by anyone. Only the signature is cryptographically protected, and it is what prevents clients from forging or modifying tokens.',
+      content: 'Splitting a JWT by the dot separator reveals three distinct Base64Url-encoded parts. The header and payload are plain JSON after decoding - readable by anyone. Only the signature is cryptographically protected, and it is what prevents clients from forging or modifying tokens.',
       code: `// A real JWT token:
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzQyIiwibmFtZSI6IkFsaWNlIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzI0MDc3MjAwLCJleHAiOjE3MjQwODA4MDB9.abc123signature
 
-// Part 1 — Header (Base64Url decoded):
+// Part 1 - Header (Base64Url decoded):
 {
   "alg": "HS256",   // signing algorithm
   "typ": "JWT"      // token type
 }
 
-// Part 2 — Payload (Base64Url decoded):
+// Part 2 - Payload (Base64Url decoded):
 {
   "sub": "user_42",          // subject: who this token is about
   "name": "Alice Johnson",
@@ -141,7 +141,7 @@ GET /profile with Bearer -> 200 { id: 1, name: 'Alice', role: 'admin' }`
   "exp": 1724080800          // expiry (Unix timestamp)
 }
 
-// Part 3 — Signature:
+// Part 3 - Signature:
 // HMACSHA256(base64(header) + "." + base64(payload), secretKey)
 // Only the server can verify this without the secret`,
       language: 'javascript',
@@ -161,8 +161,8 @@ GET /profile with Bearer -> 200 { id: 1, name: 'Alice', role: 'admin' }`
         ['iat', 'Issued At', 'Unix timestamp when the token was created'],
         ['exp', 'Expiration', 'Unix timestamp when the token stops being valid'],
         ['nbf', 'Not Before', 'Token is not valid before this timestamp'],
-        ['jti', 'JWT ID', 'Unique token ID — used for token revocation'],
-        ['role', 'Custom', 'User role (custom claim — not in the standard)']
+        ['jti', 'JWT ID', 'Unique token ID - used for token revocation'],
+        ['role', 'Custom', 'User role (custom claim - not in the standard)']
       ]
     },
     {
@@ -174,7 +174,7 @@ GET /profile with Bearer -> 200 { id: 1, name: 'Alice', role: 'admin' }`
   const parts = token.split('.');
   if (parts.length !== 3) throw new Error('Invalid JWT format');
 
-  // Payload is the second part — Base64Url encoded JSON
+  // Payload is the second part - Base64Url encoded JSON
   // Replace URL-safe chars and pad to standard Base64
   const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
   const json = atob(base64);
@@ -241,13 +241,13 @@ isTokenExpired("eyJ...expiredToken...") -> true`
       type: 'list',
       title: 'API authentication security checklist:',
       items: [
-        'Always use HTTPS — tokens sent over HTTP can be intercepted',
-        'Never put tokens or API keys in URLs — they end up in logs, browser history, and referrer headers',
+        'Always use HTTPS - tokens sent over HTTP can be intercepted',
+        'Never put tokens or API keys in URLs - they end up in logs, browser history, and referrer headers',
         'Set short expiry on access tokens (15 minutes is common)',
-        'Use the httpOnly cookie flag for refresh tokens — prevents JavaScript from accessing them',
+        'Use the httpOnly cookie flag for refresh tokens - prevents JavaScript from accessing them',
         'Validate the exp, iss, and aud claims on every incoming JWT',
         'Rotate and revoke API keys immediately if they are compromised',
-        'Use environment variables for secrets — never commit them to source control'
+        'Use environment variables for secrets - never commit them to source control'
       ]
     },
     {
@@ -374,10 +374,10 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
       question: 'A user is logged in and sends a request to DELETE /users/99 but they only have a "viewer" role. Which status code should the API return?',
       type: 'multiple-choice',
       options: [
-        '401 Unauthorized — they need to provide credentials',
-        '400 Bad Request — the request is malformed',
-        '403 Forbidden — they are authenticated but not permitted to delete',
-        '404 Not Found — hide the resource from unauthorized users'
+        '401 Unauthorized - they need to provide credentials',
+        '400 Bad Request - the request is malformed',
+        '403 Forbidden - they are authenticated but not permitted to delete',
+        '404 Not Found - hide the resource from unauthorized users'
       ],
       correct: 2,
       explanation: '403 Forbidden is the correct code for authorization failures. The user is authenticated (the server knows who they are), but they lack the required permissions. 401 would be used if no token was provided or the token was invalid/expired.'
@@ -387,10 +387,10 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
       question: 'You need to store a user\'s refresh token on the client side. Which storage option is most secure?',
       type: 'multiple-choice',
       options: [
-        'localStorage — persistent and easy to access from JavaScript',
-        'A JavaScript variable — cleared when the page unloads',
-        'An httpOnly cookie — JavaScript cannot read it, reducing XSS risk',
-        'A URL query parameter — easily passed between pages'
+        'localStorage - persistent and easy to access from JavaScript',
+        'A JavaScript variable - cleared when the page unloads',
+        'An httpOnly cookie - JavaScript cannot read it, reducing XSS risk',
+        'A URL query parameter - easily passed between pages'
       ],
       correct: 2,
       explanation: 'An httpOnly cookie cannot be read by JavaScript at all, which means even if an attacker injects malicious JS (XSS), they cannot steal the refresh token. localStorage is accessible from any JavaScript on the page and is a common XSS theft target. URL query parameters are logged everywhere and visible in browser history.'
@@ -406,7 +406,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         'A separate metadata object attached to the header'
       ],
       correct: 1,
-      explanation: 'The payload (second part, between the two dots) contains the JWT claims — the actual data about the user such as their ID (sub), roles, and expiry (exp). The header contains algorithm metadata. The signature is the cryptographic proof that the token is valid and was not tampered with.'
+      explanation: 'The payload (second part, between the two dots) contains the JWT claims - the actual data about the user such as their ID (sub), roles, and expiry (exp). The header contains algorithm metadata. The signature is the cryptographic proof that the token is valid and was not tampered with.'
     }
   ],
   quiz: [
@@ -420,7 +420,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         'Query parameter values are limited to 64 characters'
       ],
       correct: 2,
-      explanation: 'URLs — including query parameters — appear in server access logs, proxy logs, browser history, and HTTP Referer headers sent to third parties. Putting a secret API key in a URL effectively broadcasts it to anyone with access to those logs. Header values are not typically logged.'
+      explanation: 'URLs - including query parameters - appear in server access logs, proxy logs, browser history, and HTTP Referer headers sent to third parties. Putting a secret API key in a URL effectively broadcasts it to anyone with access to those logs. Header values are not typically logged.'
     },
     {
       id: 'q-07-2',

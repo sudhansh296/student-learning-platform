@@ -1,8 +1,8 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsVariablesLesson: JSLesson = {
   id: 'js-variables-full',
-  title: 'Variables — let, const, var',
+  title: 'Variables - let, const, var',
   slug: 'variables',
   chapter: 'basics',
   order: 3,
@@ -16,26 +16,26 @@ export const jsVariablesLesson: JSLesson = {
     },
     {
       type: 'heading',
-      content: 'var, let, const — Side by Side',
+      content: 'var, let, const - Side by Side',
     },
     {
       type: 'example',
       title: 'All three declaration keywords',
-      content: 'JavaScript has three ways to declare a variable. Use const when the value will not change (most of the time). Use let when the value needs to change later (like a counter or score). Never use var in modern code — it has confusing scoping behavior that causes bugs.',
-      code: `// const — value CANNOT be reassigned (use by default)
+      content: 'JavaScript has three ways to declare a variable. Use const when the value will not change (most of the time). Use let when the value needs to change later (like a counter or score). Never use var in modern code - it has confusing scoping behavior that causes bugs.',
+      code: `// const - value CANNOT be reassigned (use by default)
 const name = "Alex";
 const age = 25;
 const PI = 3.14159;
 const user = { id: 1, name: "Alex" };  // object is fine
 const colors = ["red", "green", "blue"]; // array is fine
 
-// let — value CAN be reassigned (use when value changes)
+// let - value CAN be reassigned (use when value changes)
 let score = 0;
 score = score + 10;   // OK
 let isLoggedIn = false;
 isLoggedIn = true;    // OK
 
-// var — OLD, avoid in modern code (has confusing behavior)
+// var - OLD, avoid in modern code (has confusing behavior)
 var legacyCode = "please avoid";
 
 // Try to reassign const:
@@ -53,21 +53,21 @@ console.log(isLoggedIn); // true`, output: 'Alex | 10 | true',
     {
       type: 'example',
       title: 'const with objects and arrays',
-      content: 'This is a common confusion point: const does NOT make an object or array frozen. It only prevents you from pointing the variable at a completely different value. You can still add, change, or remove properties inside the object — const just means "this variable will always point to THIS object."',
+      content: 'This is a common confusion point: const does NOT make an object or array frozen. It only prevents you from pointing the variable at a completely different value. You can still add, change, or remove properties inside the object - const just means "this variable will always point to THIS object."',
       code: `// const prevents REASSIGNMENT, not MUTATION
 const user = { name: "Alex", age: 25 };
 
-// Mutating properties — ALLOWED
+// Mutating properties - ALLOWED
 user.age = 26;         // ✅ OK
-user.city = "NYC";     // ✅ OK — add new property
+user.city = "NYC";     // ✅ OK - add new property
 
-// Reassigning the variable — NOT ALLOWED
+// Reassigning the variable - NOT ALLOWED
 // user = {};          // ❌ TypeError
 
 const fruits = ["apple", "banana"];
-fruits.push("cherry"); // ✅ OK — mutating the array
-fruits[0] = "mango";   // ✅ OK — modifying element
-// fruits = [];         // ❌ TypeError — cannot reassign
+fruits.push("cherry"); // ✅ OK - mutating the array
+fruits[0] = "mango";   // ✅ OK - modifying element
+// fruits = [];         // ❌ TypeError - cannot reassign
 
 console.log(user);   // { name: "Alex", age: 26, city: "NYC" }
 console.log(fruits); // ["mango", "banana", "cherry"]`,
@@ -76,7 +76,7 @@ console.log(fruits); // ["mango", "banana", "cherry"]`,
     {
       type: 'note',
       title: 'Rule: Use const by default, let when you need to change',
-      content: 'Start with const for everything. Only change to let if you realize the value needs to be reassigned. This makes code easier to read — seeing const tells you "this value never changes."',
+      content: 'Start with const for everything. Only change to let if you realize the value needs to be reassigned. This makes code easier to read - seeing const tells you "this value never changes."',
     },
     {
       type: 'heading',
@@ -85,10 +85,10 @@ console.log(fruits); // ["mango", "banana", "cherry"]`,
     {
       type: 'example',
       title: 'Valid and invalid variable names',
-      content: 'JavaScript variable names can contain letters, digits, underscore _, and dollar sign $. They cannot start with a digit. They cannot be reserved keywords (let, const, function, class, etc.). JavaScript is case-sensitive — score, Score, and SCORE are three completely different variables. Follow camelCase for variables and functions, SCREAMING_SNAKE_CASE for true constants.',
+      content: 'JavaScript variable names can contain letters, digits, underscore _, and dollar sign $. They cannot start with a digit. They cannot be reserved keywords (let, const, function, class, etc.). JavaScript is case-sensitive - score, Score, and SCORE are three completely different variables. Follow camelCase for variables and functions, SCREAMING_SNAKE_CASE for true constants.',
       code: `// ✅ VALID names
 let name = "Alex";
-let firstName = "Jordan";     // camelCase — JavaScript convention
+let firstName = "Jordan";     // camelCase - JavaScript convention
 let _privateVar = "internal";  // underscore prefix
 let $price = 9.99;             // dollar sign (used by jQuery)
 let user1 = "first user";
@@ -101,7 +101,7 @@ let MAX_RETRY_COUNT = 3;       // SCREAMING_SNAKE_CASE for constants
 // let class = "bad";          // Reserved keyword
 // let return = "bad";         // Reserved keyword
 
-// ⚠️ Case sensitive — these are THREE different variables
+// ⚠️ Case sensitive - these are THREE different variables
 let score = 10;
 let Score = 20;
 let SCORE = 30;
@@ -114,21 +114,21 @@ console.log(score, Score, SCORE); // 10 20 30
     },
     {
       type: 'heading',
-      content: 'Scope — Where Variables Live',
+      content: 'Scope - Where Variables Live',
     },
     {
       type: 'example',
       title: 'Block scope vs function scope vs global scope',
-      content: 'Scope defines where a variable can be accessed. Think of scope like a building with rooms. A variable declared in a room (block) can only be used in that room. But a variable declared in the building lobby (global) can be used anywhere. The key rule: let and const are block-scoped (stay inside {}). var is function-scoped (leaks out of if/for blocks — this is why it causes bugs).',
-      code: `// 1. Global scope — accessible everywhere
+      content: 'Scope defines where a variable can be accessed. Think of scope like a building with rooms. A variable declared in a room (block) can only be used in that room. But a variable declared in the building lobby (global) can be used anywhere. The key rule: let and const are block-scoped (stay inside {}). var is function-scoped (leaks out of if/for blocks - this is why it causes bugs).',
+      code: `// 1. Global scope - accessible everywhere
 const globalName = "I am global";
 
 function myFunction() {
-  // 2. Function scope — only inside this function
+  // 2. Function scope - only inside this function
   const funcOnly = "I am function-scoped";
 
   if (true) {
-    // 3. Block scope — only inside this { }
+    // 3. Block scope - only inside this { }
     const blockOnly = "I am block-scoped";
     let alsoBlock = "me too";
     var notBlock = "var escapes blocks!"; // ⚠️ var is function-scoped
@@ -138,8 +138,8 @@ function myFunction() {
     console.log(blockOnly);   // ✅ "I am block-scoped"
   }
 
-  console.log(notBlock);  // ✅ "var escapes blocks!" — var leaks out!
-  // console.log(blockOnly); // ❌ ReferenceError — const is block-scoped
+  console.log(notBlock);  // ✅ "var escapes blocks!" - var leaks out!
+  // console.log(blockOnly); // ❌ ReferenceError - const is block-scoped
 }
 
 myFunction();
@@ -149,14 +149,14 @@ console.log(globalName); // ✅
     },
     {
       type: 'heading',
-      content: 'Hoisting — How JavaScript Reads Your Code',
+      content: 'Hoisting - How JavaScript Reads Your Code',
     },
     {
       type: 'example',
       title: 'var hoisting vs let/const temporal dead zone',
-      content: 'JavaScript reads your entire file before running it. During this read, it "hoists" (moves up) var declarations to the top. This means you can use a var variable before the line where you wrote it — but its value is undefined. This is confusing and is one reason we avoid var. let and const do NOT hoist — if you try to use them before their declaration line, you get a clear error.',
-      code: `// var declarations are HOISTED (moved to top) — but not initialized
-console.log(x); // undefined — no error! var is hoisted
+      content: 'JavaScript reads your entire file before running it. During this read, it "hoists" (moves up) var declarations to the top. This means you can use a var variable before the line where you wrote it - but its value is undefined. This is confusing and is one reason we avoid var. let and const do NOT hoist - if you try to use them before their declaration line, you get a clear error.',
+      code: `// var declarations are HOISTED (moved to top) - but not initialized
+console.log(x); // undefined - no error! var is hoisted
 var x = 5;
 console.log(x); // 5
 
@@ -165,9 +165,9 @@ var x;           // declaration hoisted to top
 console.log(x);  // undefined (declared but not assigned yet)
 x = 5;           // assignment stays here
 
-// let and const have "Temporal Dead Zone" — cannot be used before declaration
+// let and const have "Temporal Dead Zone" - cannot be used before declaration
 // console.log(y); // ❌ ReferenceError: Cannot access 'y' before initialization
-let y = 5;        // declaration here — now y exists
+let y = 5;        // declaration here - now y exists
 
 // Function declarations ARE fully hoisted
 greet("Alice"); // ✅ works! function declarations are hoisted
@@ -182,13 +182,13 @@ const sayBye = (name) => console.log("Goodbye,", name);`,
     },
     {
       type: 'heading',
-      content: 'The var Problem — Why We Avoid It',
+      content: 'The var Problem - Why We Avoid It',
     },
     {
       type: 'example',
       title: 'Classic var bug in loops',
-            content: 'This is the most famous JavaScript bug. When you use var in a for loop, there is only ONE shared i variable for all iterations. By the time the setTimeout callbacks run, the loop has finished and i equals 3. Replacing var with let gives each iteration its own private i — the correct output is 0, 1, 2.',
-      code: `// var in a loop — the famous bug
+            content: 'This is the most famous JavaScript bug. When you use var in a for loop, there is only ONE shared i variable for all iterations. By the time the setTimeout callbacks run, the loop has finished and i equals 3. Replacing var with let gives each iteration its own private i - the correct output is 0, 1, 2.',
+      code: `// var in a loop - the famous bug
 for (var i = 0; i < 3; i++) {
   setTimeout(() => console.log("var:", i), 100);
 }
@@ -196,7 +196,7 @@ for (var i = 0; i < 3; i++) {
 // Reason: var is function-scoped, so there is ONE shared i
 // By the time callbacks run, the loop has finished and i=3
 
-// let in a loop — fixed
+// let in a loop - fixed
 for (let j = 0; j < 3; j++) {
   setTimeout(() => console.log("let:", j), 100);
 }
@@ -237,11 +237,11 @@ button:hover{background:#1d4ed8;}
 .counter-row button{width:40px;height:40px;padding:0;font-size:20px;display:flex;align-items:center;justify-content:center;}
 #counter{font-size:36px;font-weight:800;min-width:60px;text-align:center;color:#2563eb;}
 #counter-msg{color:#6b7280;font-size:13px;margin-top:6px;}`,
-      js: `// const — won't change
+      js: `// const - won't change
 const MIN_AGE = 0;
 const MAX_AGE = 120;
 
-// let — will change as user interacts
+// let - will change as user interacts
 let clickCount = 0;
 
 function createProfile() {
@@ -262,7 +262,7 @@ function createProfile() {
   \`;
 }
 
-let count = 0;  // let — changes on click
+let count = 0;  // let - changes on click
 
 function increment() {
   count++;
@@ -292,7 +292,7 @@ function updateCounter() {
       type: 'multiple-choice',
       options: ['var', 'let', 'const', 'define'],
       correct: 2,
-      explanation: 'Use const by default. Only use let when the value needs to be reassigned later. Never use var in modern JavaScript — it has confusing scoping behavior.',
+      explanation: 'Use const by default. Only use let when the value needs to be reassigned later. Never use var in modern JavaScript - it has confusing scoping behavior.',
     },
     {
       id: 'jv-2',
@@ -319,7 +319,7 @@ function updateCounter() {
     {
       id: 'qv1',
       question: 'What error does: console.log(x); let x = 5; throw?',
-      options: ['No error — prints undefined', 'ReferenceError: Cannot access x before initialization', 'SyntaxError', 'TypeError'],
+      options: ['No error - prints undefined', 'ReferenceError: Cannot access x before initialization', 'SyntaxError', 'TypeError'],
       correct: 1,
       explanation: 'let and const are in the Temporal Dead Zone (TDZ) between the start of their block and their declaration. Accessing them before the declaration throws a ReferenceError. This is different from var which returns undefined when accessed before assignment.',
     },
@@ -328,7 +328,7 @@ function updateCounter() {
       question: 'Which of these is a valid variable name in JavaScript?',
       options: ['1username', 'user-name', 'user_name', 'class'],
       correct: 2,
-      explanation: 'user_name is valid — underscores are allowed anywhere. 1username starts with a digit (invalid). user-name uses a hyphen (invalid). class is a reserved keyword (invalid).',
+      explanation: 'user_name is valid - underscores are allowed anywhere. 1username starts with a digit (invalid). user-name uses a hyphen (invalid). class is a reserved keyword (invalid).',
     },
   ],
 };

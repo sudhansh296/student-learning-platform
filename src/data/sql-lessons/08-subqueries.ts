@@ -12,7 +12,7 @@ export const lesson08: SqlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'A subquery is a query nested inside another query. Subqueries let you use the results of one query as input to another, enabling multi-step logic within a single SQL statement. They are one of the most powerful — and sometimes most misused — features of SQL.'
+      content: 'A subquery is a query nested inside another query. Subqueries let you use the results of one query as input to another, enabling multi-step logic within a single SQL statement. They are one of the most powerful - and sometimes most misused - features of SQL.'
     },
     {
       type: 'heading',
@@ -37,7 +37,7 @@ export const lesson08: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'A scalar subquery returns exactly one row and one column. It can be used anywhere a single value is expected — in SELECT, WHERE, or HAVING. If it returns more than one row, the database throws an error. They are often used to include a computed value from another table alongside each row.'
+      content: 'A scalar subquery returns exactly one row and one column. It can be used anywhere a single value is expected - in SELECT, WHERE, or HAVING. If it returns more than one row, the database throws an error. They are often used to include a computed value from another table alongside each row.'
     },
     {
       type: 'heading',
@@ -45,7 +45,7 @@ export const lesson08: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'A correlated subquery references columns from the outer query. Unlike a simple subquery (which runs once), a correlated subquery runs once for every row in the outer query. This makes them intuitive but potentially slow on large tables — they are O(n) in query execution.'
+      content: 'A correlated subquery references columns from the outer query. Unlike a simple subquery (which runs once), a correlated subquery runs once for every row in the outer query. This makes them intuitive but potentially slow on large tables - they are O(n) in query execution.'
     },
     {
       type: 'warning',
@@ -58,11 +58,11 @@ export const lesson08: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'EXISTS tests whether a subquery returns any rows at all — it does not care about the values, just whether any rows exist. NOT EXISTS is the inverse. EXISTS is often the most efficient way to check for related records because the database can stop as soon as it finds the first match.'
+      content: 'EXISTS tests whether a subquery returns any rows at all - it does not care about the values, just whether any rows exist. NOT EXISTS is the inverse. EXISTS is often the most efficient way to check for related records because the database can stop as soon as it finds the first match.'
     },
     {
       type: 'text',
-      content: 'EXISTS is generally preferred over IN for subqueries that return many rows, and is safer than NOT IN because it handles NULLs correctly — NOT IN with NULLs in the subquery returns no rows, which is almost always a bug.'
+      content: 'EXISTS is generally preferred over IN for subqueries that return many rows, and is safer than NOT IN because it handles NULLs correctly - NOT IN with NULLs in the subquery returns no rows, which is almost always a bug.'
     },
     {
       type: 'example',
@@ -117,7 +117,7 @@ WHERE NOT EXISTS (
     },
     {
       type: 'text',
-      content: 'Views do not store data — they are just saved query definitions. Every time you query a view, the underlying query runs. This means views reflect the current state of the data, but also that complex views do not have the performance benefit of caching.'
+      content: 'Views do not store data - they are just saved query definitions. Every time you query a view, the underlying query runs. This means views reflect the current state of the data, but also that complex views do not have the performance benefit of caching.'
     },
     {
       type: 'heading',
@@ -125,11 +125,11 @@ WHERE NOT EXISTS (
     },
     {
       type: 'text',
-      content: 'A simple view over a single table without aggregation is usually updatable — you can run INSERT, UPDATE, and DELETE on it and the changes propagate to the underlying table. Complex views with JOINs, aggregation, or DISTINCT are typically read-only.'
+      content: 'A simple view over a single table without aggregation is usually updatable - you can run INSERT, UPDATE, and DELETE on it and the changes propagate to the underlying table. Complex views with JOINs, aggregation, or DISTINCT are typically read-only.'
     },
     {
       type: 'text',
-      content: 'A materialized view stores the result of the query physically on disk. Querying it is like querying a table — very fast. But the data is only as fresh as the last refresh (REFRESH MATERIALIZED VIEW). Materialized views are ideal for expensive aggregation or JOIN queries that are queried frequently but do not need real-time data.'
+      content: 'A materialized view stores the result of the query physically on disk. Querying it is like querying a table - very fast. But the data is only as fresh as the last refresh (REFRESH MATERIALIZED VIEW). Materialized views are ideal for expensive aggregation or JOIN queries that are queried frequently but do not need real-time data.'
     },
     {
       type: 'example',
@@ -267,7 +267,7 @@ render();`,
         'It appears in the FROM clause'
       ],
       correct: 1,
-      explanation: 'A correlated subquery references a column from the outer query (e.g., WHERE o.user_id = u.id where u comes from the outer query). This means it cannot be evaluated independently — it runs once for each row produced by the outer query.'
+      explanation: 'A correlated subquery references a column from the outer query (e.g., WHERE o.user_id = u.id where u comes from the outer query). This means it cannot be evaluated independently - it runs once for each row produced by the outer query.'
     },
     {
       id: 'ex-sql-8-2',
@@ -293,7 +293,7 @@ render();`,
         'NOT EXISTS uses less memory'
       ],
       correct: 1,
-      explanation: 'If a subquery in NOT IN returns any NULL value, the entire NOT IN condition evaluates to NULL (unknown) for every row, effectively excluding all rows from the result. NOT EXISTS does not have this problem — it only checks whether any rows exist, not their values.'
+      explanation: 'If a subquery in NOT IN returns any NULL value, the entire NOT IN condition evaluates to NULL (unknown) for every row, effectively excluding all rows from the result. NOT EXISTS does not have this problem - it only checks whether any rows exist, not their values.'
     }
   ],
   quiz: [
@@ -326,12 +326,12 @@ render();`,
       question: 'A view stores which of the following?',
       options: [
         'A snapshot of data at view creation time',
-        'The query definition — data is retrieved fresh on each access',
+        'The query definition - data is retrieved fresh on each access',
         'An encrypted copy of the underlying table',
         'An index on the underlying table columns'
       ],
       correct: 1,
-      explanation: 'A regular view stores only the query definition (the SELECT statement). Each time you query the view, the database executes that query against the current data. No data is stored in the view itself — unlike a materialized view.'
+      explanation: 'A regular view stores only the query definition (the SELECT statement). Each time you query the view, the database executes that query against the current data. No data is stored in the view itself - unlike a materialized view.'
     }
   ]
 };

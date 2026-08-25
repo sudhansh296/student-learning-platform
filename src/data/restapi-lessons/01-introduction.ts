@@ -99,7 +99,7 @@ Content-Type: application/json; charset=utf-8`
     {
       type: 'example',
       title: 'A typical JSON response object',
-      content: 'REST APIs return structured JSON objects where each key represents a field of the resource. Nested objects and arrays are common — here a user resource contains a nested address object and a company object, showing how JSON can represent complex real-world data hierarchies.',
+      content: 'REST APIs return structured JSON objects where each key represents a field of the resource. Nested objects and arrays are common - here a user resource contains a nested address object and a company object, showing how JSON can represent complex real-world data hierarchies.',
       code: `// Example JSON response from GET /users/1
 {
   "id": 1,
@@ -127,7 +127,7 @@ Content-Type: application/json; charset=utf-8`
     },
     {
       type: 'text',
-      content: 'Every REST API interaction follows the same pattern: the client sends an HTTP request with a method, URL, optional headers, and optional body. The server processes it and returns an HTTP response with a status code, headers, and optional body. This cycle is synchronous — the client waits for the response.'
+      content: 'Every REST API interaction follows the same pattern: the client sends an HTTP request with a method, URL, optional headers, and optional body. The server processes it and returns an HTTP response with a status code, headers, and optional body. This cycle is synchronous - the client waits for the response.'
     },
     {
       type: 'list',
@@ -298,7 +298,7 @@ h3 { margin: 0 0 16px 0; color: #1e293b; font-size: 15px; }
         'The HTTP method being used'
       ],
       correct: 2,
-      explanation: 'The kitchen represents the server or database. You (the client) never go to the kitchen directly — the waiter (the API) acts as the intermediary, carrying your request to the kitchen and bringing the result back.'
+      explanation: 'The kitchen represents the server or database. You (the client) never go to the kitchen directly - the waiter (the API) acts as the intermediary, carrying your request to the kitchen and bringing the result back.'
     },
     {
       id: 'q-01-2',

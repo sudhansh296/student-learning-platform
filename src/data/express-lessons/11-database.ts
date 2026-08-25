@@ -219,27 +219,27 @@ function runOp(op) {
   
   if (op === 'findAll') {
     query = 'db.users.find()';
-    result = 'Found ' + users.length + ' users\\n';
+    result = 'Found ' + users.length + ' users\ ';
     result += JSON.stringify(users, null, 2);
   } else if (op === 'findOne') {
     query = 'db.users.findOne({ id: 1 })';
-    result = 'Found user:\\n';
+    result = 'Found user:\ ';
     result += JSON.stringify(users[0], null, 2);
   } else if (op === 'insert') {
     query = 'db.users.insert({ name: "Charlie", email: "charlie@example.com" })';
     var newUser = { id: nextId++, name: 'Charlie', email: 'charlie@example.com' };
     users.push(newUser);
-    result = 'Inserted new user:\\n';
+    result = 'Inserted new user:\ ';
     result += JSON.stringify(newUser, null, 2);
   } else if (op === 'update') {
     query = 'db.users.update({ id: 1 }, { $set: { name: "Alice Updated" } })';
     users[0].name = 'Alice Updated';
-    result = 'Updated user:\\n';
+    result = 'Updated user:\ ';
     result += JSON.stringify(users[0], null, 2);
   } else if (op === 'delete') {
     query = 'db.users.delete({ id: 2 })';
     users = users.filter(function(u) { return u.id !== 2; });
-    result = 'Deleted user with id: 2\\n';
+    result = 'Deleted user with id: 2\ ';
     result += 'Remaining users: ' + users.length;
   }
   

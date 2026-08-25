@@ -113,12 +113,12 @@ git checkout main`,
       type: 'list',
       title: 'Standard branch name prefixes:',
       items: [
-        'feature/ — new functionality: feature/user-authentication',
-        'bugfix/ — fixing a non-critical bug: bugfix/login-redirect',
-        'hotfix/ — urgent production fix: hotfix/payment-crash',
-        'release/ — preparing a release: release/v2.1.0',
-        'chore/ — maintenance tasks: chore/update-dependencies',
-        'docs/ — documentation changes: docs/api-reference'
+        'feature/ - new functionality: feature/user-authentication',
+        'bugfix/ - fixing a non-critical bug: bugfix/login-redirect',
+        'hotfix/ - urgent production fix: hotfix/payment-crash',
+        'release/ - preparing a release: release/v2.1.0',
+        'chore/ - maintenance tasks: chore/update-dependencies',
+        'docs/ - documentation changes: docs/api-reference'
       ]
     },
     {
@@ -261,7 +261,7 @@ function render(){
     +renderCommitRow(featCommits,FEAT_CLR,'feature/login',featIsHead);
 
   var logHtml=log.length?log.map(function(l){return '<div class=\\"log-entry\\">'+l+'</div>';}).join('')
-    :'<div class=\\"log-entry\\" style=\\"color:#484f58\\">No operations yet — use the buttons above</div>';
+    :'<div class=\\"log-entry\\" style=\\"color:#484f58\\">No operations yet - use the buttons above</div>';
 
   document.getElementById('output').innerHTML=
     '<div class=\\"title\\">🌿 Git Branch Graph</div>'+
@@ -282,9 +282,9 @@ function render(){
     '<div class=\\"log-wrap\\">'+
       '<div class=\\"log-title\\">Operation Log</div>'+logHtml+
     '</div>'+
-    '<div class=\\"tip-box\\"><b>git switch -c feature/login</b> — creates &amp; switches<br>'+
-    '<b>git commit -m \\"msg\\"</b> — saves a snapshot<br>'+
-    '<b>git merge feature/login</b> — merges into current branch</div>';
+    '<div class=\\"tip-box\\"><b>git switch -c feature/login</b> - creates &amp; switches<br>'+
+    '<b>git commit -m \\"msg\\"</b> - saves a snapshot<br>'+
+    '<b>git merge feature/login</b> - merges into current branch</div>';
   
   document.getElementById('btn-commit-main').onclick=commitToMain;
   document.getElementById('btn-commit-feat').onclick=commitToFeat;

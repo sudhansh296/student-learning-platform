@@ -21,7 +21,7 @@ export const lesson08: DockerLesson = {
     {
       type: 'analogy',
       title: 'The Orchestra Conductor Analogy',
-      content: 'Running a multi-container app manually is like trying to conduct an orchestra by running up to each musician individually and telling them when to play. Docker Compose is the conductor — one gesture (docker compose up) and every instrument (service) starts in the right order.'
+      content: 'Running a multi-container app manually is like trying to conduct an orchestra by running up to each musician individually and telling them when to play. Docker Compose is the conductor - one gesture (docker compose up) and every instrument (service) starts in the right order.'
     },
     {
       type: 'heading',
@@ -118,7 +118,7 @@ docker compose down -v`,
     {
       type: 'example',
       title: 'docker compose status, logs, and exec',
-      content: 'These everyday Compose commands let you monitor your running stack, view combined or per-service logs, and execute commands inside individual containers — all without needing to know individual container names or IDs.',
+      content: 'These everyday Compose commands let you monitor your running stack, view combined or per-service logs, and execute commands inside individual containers - all without needing to know individual container names or IDs.',
       code: `# Show status of all services
 docker compose ps
 
@@ -200,7 +200,7 @@ NODE_ENV=production
     {
       type: 'example',
       title: 'Using profiles for optional services',
-      content: 'Profiles let you define optional services that only start when explicitly requested. For example, a monitoring stack (Prometheus, Grafana) might only be needed by some developers — wrap it in a profile and others do not get it.',
+      content: 'Profiles let you define optional services that only start when explicitly requested. For example, a monitoring stack (Prometheus, Grafana) might only be needed by some developers - wrap it in a profile and others do not get it.',
       code: `services:
   api:
     image: myapp

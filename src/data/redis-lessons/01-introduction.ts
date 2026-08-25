@@ -12,7 +12,7 @@ export const lesson01: RedisLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Redis (Remote Dictionary Server) is an open-source, in-memory key-value store. Unlike traditional databases that read and write to disk, Redis keeps all its data in RAM. This single design decision is the reason Redis can respond to requests in under a millisecond — up to 100,000 operations per second on a single instance. It is single-threaded, which eliminates lock contention entirely, and it uses a non-blocking I/O event loop to handle concurrency without multiple threads.',
+      content: 'Redis (Remote Dictionary Server) is an open-source, in-memory key-value store. Unlike traditional databases that read and write to disk, Redis keeps all its data in RAM. This single design decision is the reason Redis can respond to requests in under a millisecond - up to 100,000 operations per second on a single instance. It is single-threaded, which eliminates lock contention entirely, and it uses a non-blocking I/O event loop to handle concurrency without multiple threads.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const lesson01: RedisLesson = {
     {
       type: 'analogy',
       title: 'The desk vs. filing cabinet analogy',
-      content: 'Think of your desk as RAM and your filing cabinet as a hard disk. Grabbing a document from your desk takes one second. Walking to the cabinet, finding the drawer, flipping through folders, and pulling the file takes several minutes. Your disk works the same way — data must be located, read into memory, and transferred. RAM skips all of that. Redis keeps your data permanently on the desk.',
+      content: 'Think of your desk as RAM and your filing cabinet as a hard disk. Grabbing a document from your desk takes one second. Walking to the cabinet, finding the drawer, flipping through folders, and pulling the file takes several minutes. Your disk works the same way - data must be located, read into memory, and transferred. RAM skips all of that. Redis keeps your data permanently on the desk.',
     },
     {
       type: 'heading',
@@ -47,13 +47,13 @@ export const lesson01: RedisLesson = {
     {
       type: 'list',
       items: [
-        'Session storage — Store user login sessions with automatic expiry. Redis handles millions of sessions efficiently without touching the main database on every request.',
-        'Caching — Cache the results of expensive database queries or API calls. Serve repeated requests from memory instead of recomputing or re-fetching.',
-        'Rate limiting — Track how many requests a user has made in a time window using atomic increment operations (INCR). Block abusers without a database query.',
-        'Pub/Sub messaging — Broadcast events to many subscribers in real time. Used for live notifications, dashboards, and microservice communication.',
-        'Leaderboards — Sorted Sets maintain a ranked list of scores that can be updated and queried instantly. Games, rankings, and reputation systems use this heavily.',
-        'Job queues — Use Lists as first-in, first-out queues. Workers block on BRPOP waiting for new jobs. BullMQ builds a full job queue system on top of Redis.',
-        'Real-time analytics — Count page views, track unique visitors, and aggregate metrics in real time using atomic operations and HyperLogLog.',
+        'Session storage - Store user login sessions with automatic expiry. Redis handles millions of sessions efficiently without touching the main database on every request.',
+        'Caching - Cache the results of expensive database queries or API calls. Serve repeated requests from memory instead of recomputing or re-fetching.',
+        'Rate limiting - Track how many requests a user has made in a time window using atomic increment operations (INCR). Block abusers without a database query.',
+        'Pub/Sub messaging - Broadcast events to many subscribers in real time. Used for live notifications, dashboards, and microservice communication.',
+        'Leaderboards - Sorted Sets maintain a ranked list of scores that can be updated and queried instantly. Games, rankings, and reputation systems use this heavily.',
+        'Job queues - Use Lists as first-in, first-out queues. Workers block on BRPOP waiting for new jobs. BullMQ builds a full job queue system on top of Redis.',
+        'Real-time analytics - Count page views, track unique visitors, and aggregate metrics in real time using atomic operations and HyperLogLog.',
       ],
     },
     {
@@ -81,12 +81,12 @@ export const lesson01: RedisLesson = {
     {
       type: 'list',
       items: [
-        'String — The most basic type. Stores text, numbers, or binary data up to 512 MB. Used for counters, tokens, and cached values.',
-        'List — An ordered sequence of strings. Supports push/pop from both ends. Ideal for queues and recent-activity feeds.',
-        'Set — An unordered collection of unique strings. Perfect for tracking unique visitors, tags, and memberships.',
-        'Hash — A map of field-value pairs. Stores structured objects like user profiles without serializing to JSON.',
-        'Sorted Set — Like a Set but every member has a floating-point score. Redis keeps members sorted by score automatically. Powers leaderboards and priority queues.',
-        'Stream — An append-only log of entries with consumer groups. The most durable and feature-rich messaging primitive in Redis.',
+        'String - The most basic type. Stores text, numbers, or binary data up to 512 MB. Used for counters, tokens, and cached values.',
+        'List - An ordered sequence of strings. Supports push/pop from both ends. Ideal for queues and recent-activity feeds.',
+        'Set - An unordered collection of unique strings. Perfect for tracking unique visitors, tags, and memberships.',
+        'Hash - A map of field-value pairs. Stores structured objects like user profiles without serializing to JSON.',
+        'Sorted Set - Like a Set but every member has a floating-point score. Redis keeps members sorted by score automatically. Powers leaderboards and priority queues.',
+        'Stream - An append-only log of entries with consumer groups. The most durable and feature-rich messaging primitive in Redis.',
       ],
     },
     {
@@ -95,7 +95,7 @@ export const lesson01: RedisLesson = {
     },
     {
       type: 'text',
-      content: 'Redis processes all commands in a single thread. At first this sounds like a limitation, but it is actually a strength. Because only one command executes at a time, there is no need for mutex locks, no deadlocks, and no thread context-switching overhead. Redis uses a non-blocking I/O event loop (similar to Node.js) to handle thousands of client connections concurrently while still processing commands sequentially. The single thread also means all commands are inherently atomic — a INCR, for example, will never produce a race condition.',
+      content: 'Redis processes all commands in a single thread. At first this sounds like a limitation, but it is actually a strength. Because only one command executes at a time, there is no need for mutex locks, no deadlocks, and no thread context-switching overhead. Redis uses a non-blocking I/O event loop (similar to Node.js) to handle thousands of client connections concurrently while still processing commands sequentially. The single thread also means all commands are inherently atomic - a INCR, for example, will never produce a race condition.',
     },
     {
       type: 'example',
@@ -124,7 +124,7 @@ redis-cli
     {
       type: 'example',
       title: 'Basic SET, GET, and DEL operations',
-      content: 'These three commands are the foundation of Redis — every other data type builds on top of this concept of named keys that hold values.',
+      content: 'These three commands are the foundation of Redis - every other data type builds on top of this concept of named keys that hold values.',
       language: 'bash',
       code: `# Store a value
 SET username "alice"
@@ -204,7 +204,7 @@ INCR page_views
   },
   {
     icon: 'J', label: 'Job Queues',
-    desc: 'Use a Redis List as a queue. Producers push jobs onto the list. Worker processes block on BRPOP — they wait until a job arrives and process it immediately.',
+    desc: 'Use a Redis List as a queue. Producers push jobs onto the list. Worker processes block on BRPOP - they wait until a job arrives and process it immediately.',
     fit: 'BRPOP is atomic and blocking, so workers do not busy-loop. If the queue is empty, the worker sleeps until work arrives.',
     cmd: '# Producer\\nLPUSH jobs:email \\'{\"to\":\"user@example.com\",\"subject\":\"Welcome\"}?\\'\\n\\n# Worker (blocks until item available)\\nBRPOP jobs:email 0'
   }
@@ -285,7 +285,7 @@ render();`,
       type: 'multiple-choice',
       options: [
         'It can run on computers with no CPU',
-        'All commands are inherently atomic — no race conditions between concurrent clients',
+        'All commands are inherently atomic - no race conditions between concurrent clients',
         'It uses less RAM than multi-threaded databases',
         'It can process more total requests per second than any multi-threaded system',
       ],

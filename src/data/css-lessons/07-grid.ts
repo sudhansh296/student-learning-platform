@@ -1,8 +1,8 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssGridLesson: CssLesson = {
   id:'css-grid',title:'CSS Grid',slug:'grid',
   chapter:'grid',order:7,difficulty:'intermediate',readingTime:16,
-  description:'Master CSS Grid — the two-dimensional layout system for building complex page layouts.',
+  description:'Master CSS Grid - the two-dimensional layout system for building complex page layouts.',
   sections:[
     {type:'text',content:'CSS Grid is the most powerful layout system in CSS. Unlike Flexbox (one-dimensional), Grid controls both rows and columns simultaneously. It is perfect for full page layouts, dashboards, image galleries, and any two-dimensional structure.'},
     {type:'heading',content:'Basic Grid Setup'},
@@ -26,7 +26,7 @@ export const cssGridLesson: CssLesson = {
   row-gap: 16px;       /* only row */
 }`},
     {type:'heading',content:'The fr Unit'},
-    {type:'code',language:'css',content:'grid-template-columns defines how many columns and their widths. fr (fractional unit) divides the remaining space proportionally — 1fr 2fr 1fr gives 25%, 50%, 25%. repeat(3,1fr) creates three equal columns. gap adds spacing between all cells.',code:`/* fr = fractional unit — divides remaining space */
+    {type:'code',language:'css',content:'grid-template-columns defines how many columns and their widths. fr (fractional unit) divides the remaining space proportionally - 1fr 2fr 1fr gives 25%, 50%, 25%. repeat(3,1fr) creates three equal columns. gap adds spacing between all cells.',code:`/* fr = fractional unit - divides remaining space */
 grid-template-columns: 1fr 1fr 1fr;     /* 3 equal columns */
 grid-template-columns: 2fr 1fr;         /* left twice as wide as right */
 grid-template-columns: 250px 1fr;       /* fixed sidebar, flexible main */
@@ -51,8 +51,8 @@ grid-template-columns: repeat(3, 200px 1fr); /* alternating: 200px 1fr 200px 1fr
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .full-width { grid-column: 1 / -1; }   /* spans all 3 columns */
 .two-thirds { grid-column: span 2; }   /* spans 2 of 3 columns */`},
-    {type:'heading',content:'Named Grid Areas — Most Readable Approach'},
-    {type:'code',language:'css',content:'grid-template-areas gives each zone a name and you place items by name with grid-area. This creates a visual map of your layout directly in the CSS. Changing the layout at a breakpoint is as simple as redefining the template-areas string.',code:`/* BEST for page layouts — name your areas like a map */
+    {type:'heading',content:'Named Grid Areas - Most Readable Approach'},
+    {type:'code',language:'css',content:'grid-template-areas gives each zone a name and you place items by name with grid-area. This creates a visual map of your layout directly in the CSS. Changing the layout at a breakpoint is as simple as redefining the template-areas string.',code:`/* BEST for page layouts - name your areas like a map */
 .layout {
   display: grid;
   grid-template-areas:
@@ -78,14 +78,14 @@ footer  { grid-area: footer; }
     "hero   hero hero"
     "cards  cards cards";
 }`},
-    {type:'heading',content:'auto-fill vs auto-fit — Responsive Grid Without Media Queries'},
+    {type:'heading',content:'auto-fill vs auto-fit - Responsive Grid Without Media Queries'},
     {type:'code',language:'css',content:'auto-fill creates as many columns as fit in the container. auto-fit collapses empty columns. minmax(250px,1fr) sets a minimum column width of 250px and a maximum of 1fr. Together these create a fully responsive grid with no media queries.',code:`/* AUTO-FILL: creates as many columns as fit */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 16px;
 }
-/* 4 columns on large screen, 2 on tablet, 1 on mobile — automatically! */
+/* 4 columns on large screen, 2 on tablet, 1 on mobile - automatically! */
 
 /* AUTO-FIT: same but collapses empty tracks */
 .cards {
@@ -243,7 +243,7 @@ function update() {
 
   document.getElementById('info').textContent = cols+'×'+rows+' grid';
   document.getElementById('cssOut').textContent =
-    '.grid {\n  display: grid;\n  grid-template-columns: '+colSizes+';\n' +
+    '.grid {\n  display: grid;\n  grid-template-columns: '+colSizes+'; ' +
     '  grid-template-rows: repeat('+rows+', 1fr);\n  gap: '+gap+'px;\n}';
 }
 
@@ -273,7 +273,7 @@ update();`,
      mode:'full'},
   ],
   exercises:[
-    {id:'gr1',question:'What does grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) do?',type:'multiple-choice',options:['Creates exactly 200 columns','Creates responsive columns that are at least 200px and share remaining space','Creates one column of 200px','Nothing — invalid syntax'],correct:1,explanation:'auto-fit creates as many columns as fit, each at least 200px wide. On wide screens you get 4-5 columns, on mobile you get 1. This creates a responsive grid with NO media queries needed.'},
+    {id:'gr1',question:'What does grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) do?',type:'multiple-choice',options:['Creates exactly 200 columns','Creates responsive columns that are at least 200px and share remaining space','Creates one column of 200px','Nothing - invalid syntax'],correct:1,explanation:'auto-fit creates as many columns as fit, each at least 200px wide. On wide screens you get 4-5 columns, on mobile you get 1. This creates a responsive grid with NO media queries needed.'},
   ],
   quiz:[
     {id:'gq1',question:'What is the difference between grid-column: 1/3 and grid-column: span 2?',options:['They are identical','1/3 goes from line 1 to line 3; span 2 spans 2 columns from current position','span 2 is wrong syntax','1/3 is a fraction'],correct:1,explanation:'grid-column: 1/3 means start at grid line 1, end at grid line 3. grid-column: span 2 means span 2 columns from wherever the item is placed. Both result in a 2-column-wide item if starting at line 1.'},

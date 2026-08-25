@@ -8,11 +8,11 @@ export const lesson04: DockerLesson = {
   order: 4,
   difficulty: 'beginner',
   readingTime: 13,
-  description: 'Run, manage, stop, and remove containers — and understand container lifecycle from creation to deletion.',
+  description: 'Run, manage, stop, and remove containers - and understand container lifecycle from creation to deletion.',
   sections: [
     {
       type: 'text',
-      content: 'A container is a running instance of a Docker image. You can run many containers from the same image simultaneously — each gets its own isolated filesystem, network, and process space. Understanding how to manage the container lifecycle is the core skill for day-to-day Docker work.'
+      content: 'A container is a running instance of a Docker image. You can run many containers from the same image simultaneously - each gets its own isolated filesystem, network, and process space. Understanding how to manage the container lifecycle is the core skill for day-to-day Docker work.'
     },
     {
       type: 'heading',
@@ -21,11 +21,11 @@ export const lesson04: DockerLesson = {
     {
       type: 'analogy',
       title: 'Class and Object Analogy',
-      content: 'An image is like a class in object-oriented programming — it is the blueprint, immutable and reusable. A container is like an object instantiated from that class — it is a live, running instance with its own state. You can create many containers from one image, just as you can create many objects from one class.'
+      content: 'An image is like a class in object-oriented programming - it is the blueprint, immutable and reusable. A container is like an object instantiated from that class - it is a live, running instance with its own state. You can create many containers from one image, just as you can create many objects from one class.'
     },
     {
       type: 'heading',
-      content: 'docker run — The Most Important Command'
+      content: 'docker run - The Most Important Command'
     },
     {
       type: 'text',
@@ -78,7 +78,7 @@ docker run --rm node:20-alpine node --version`,
         'Created: Container has been created from an image but not started yet (docker create)',
         'Running: Container is actively running its main process',
         'Stopped/Exited: The main process has terminated (either normally or due to an error)',
-        'Removed: Container has been deleted with docker rm — all its data is gone'
+        'Removed: Container has been deleted with docker rm - all its data is gone'
       ]
     },
     {
@@ -112,7 +112,7 @@ docker rm -f my-nginx`,
     },
     {
       type: 'example',
-      title: 'docker exec — run commands in a running container',
+      title: 'docker exec - run commands in a running container',
       content: 'The docker exec command runs a new process inside an already running container. The -it flags give you an interactive terminal. This is how you "shell into" a container to inspect files, run database commands, or debug issues.',
       code: `# Open an interactive shell inside a running container
 docker exec -it my-nginx sh
@@ -128,7 +128,7 @@ docker exec my-app node --version`,
     },
     {
       type: 'example',
-      title: 'docker logs — view container output',
+      title: 'docker logs - view container output',
       content: 'Docker captures all stdout and stderr output from your container\'s main process. Use docker logs to inspect this output for debugging. The --follow flag streams logs in real time like tail -f.',
       code: `# View all logs from a container
 docker logs my-nginx
@@ -148,7 +148,7 @@ docker logs --timestamps my-nginx`,
     },
     {
       type: 'example',
-      title: 'docker cp — copy files between host and container',
+      title: 'docker cp - copy files between host and container',
       content: 'The docker cp command copies files or directories between the host filesystem and a container. This is useful for extracting logs or config files from a container, or for quickly injecting a file without rebuilding the image.',
       code: `# Copy a file from host into a running container
 docker cp ./config.json my-app:/app/config.json
@@ -163,7 +163,7 @@ docker cp my-nginx:/etc/nginx ./nginx-config`,
     },
     {
       type: 'example',
-      title: 'docker stats — live resource usage',
+      title: 'docker stats - live resource usage',
       content: 'The docker stats command shows a live stream of resource utilization for running containers: CPU percentage, memory usage and limit, network I/O, and block I/O. Essential for identifying memory leaks or CPU hotspots.',
       code: `docker stats`,
       language: 'bash',
@@ -174,7 +174,7 @@ b2c3d4e5f6a7   my-postgres  0.5%    42.1MiB / 15.55GiB   0.3%    1.2MB / 890kB  
     {
       type: 'note',
       title: 'Container Names vs IDs',
-      content: 'Every container has a unique ID (like a1b2c3d4e5f6) and a name (either assigned with --name or randomly generated). You can use either in any docker command. Names are easier to remember and use in scripts — always use --name in development.'
+      content: 'Every container has a unique ID (like a1b2c3d4e5f6) and a name (either assigned with --name or randomly generated). You can use either in any docker command. Names are easier to remember and use in scripts - always use --name in development.'
     },
     {
       type: 'tip',
@@ -269,7 +269,7 @@ h3 { color: #2496ED; margin: 0 0 14px 0; font-size: 15px; font-weight: 700; }
     {
       type: 'warning',
       title: 'Data Is Lost When You Remove a Container',
-      content: 'Any data written inside a container (to its writable layer) is permanently lost when you run docker rm. This includes databases, uploaded files, and logs. Use Docker volumes to persist data beyond the container lifecycle — covered in the volumes lesson.'
+      content: 'Any data written inside a container (to its writable layer) is permanently lost when you run docker rm. This includes databases, uploaded files, and logs. Use Docker volumes to persist data beyond the container lifecycle - covered in the volumes lesson.'
     }
   ],
   exercises: [
@@ -318,7 +318,7 @@ h3 { color: #2496ED; margin: 0 0 14px 0; font-size: 15px; font-weight: 700; }
       id: 'q-docker-4-1',
       question: 'What is the difference between docker stop and docker kill?',
       options: [
-        'They are identical — both send SIGKILL',
+        'They are identical - both send SIGKILL',
         'docker stop sends SIGTERM and waits for graceful shutdown; docker kill sends SIGKILL immediately',
         'docker stop removes the container; docker kill only pauses it',
         'docker kill is deprecated and should not be used'

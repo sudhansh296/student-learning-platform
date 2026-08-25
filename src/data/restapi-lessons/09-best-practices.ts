@@ -20,7 +20,7 @@ export const lesson09: RestapiLesson = {
     },
     {
       type: 'text',
-      content: 'When you need to make a breaking change — removing a field, changing a URL structure, altering response format — versioning lets old clients continue using v1 while new clients use v2. Without versioning, any breaking change instantly breaks all existing integrations.'
+      content: 'When you need to make a breaking change - removing a field, changing a URL structure, altering response format - versioning lets old clients continue using v1 while new clients use v2. Without versioning, any breaking change instantly breaks all existing integrations.'
     },
     {
       type: 'table',
@@ -54,7 +54,7 @@ export const lesson09: RestapiLesson = {
         ['Pros', 'Simple, easy to build UI controls', 'No duplicate/skipped items if data changes'],
         ['Cons', 'Items can shift if data is inserted/deleted', 'No random access, harder to build page buttons'],
         ['Best for', 'Admin tables, reports, stable data', 'Feeds, timelines, frequently changing data'],
-        ['Total count', 'Easy to include', 'Expensive — often omitted']
+        ['Total count', 'Easy to include', 'Expensive - often omitted']
       ]
     },
     {
@@ -73,7 +73,7 @@ app.get('/users', (req, res) => {
   const totalPages = Math.ceil(total / limit);
   const base = '/users?limit=' + limit;
 
-  // RFC 5988 Link header — used by GitHub API
+  // RFC 5988 Link header - used by GitHub API
   const links = [];
   if (page > 1)          links.push('<' + base + '&page=' + (page - 1) + '>; rel="prev"');
   if (page < totalPages) links.push('<' + base + '&page=' + (page + 1) + '>; rel="next"');
@@ -168,32 +168,32 @@ After limit exceeded:
     {
       type: 'example',
       title: 'Cache-Control header usage',
-      content: 'The Cache-Control header instructs every party in the request chain — browser, CDN, proxy — how to handle caching. The ETag header enables conditional requests: the client sends the previous ETag back as If-None-Match and the server returns 304 Not Modified if nothing changed, saving bandwidth.',
-      code: `// Static public data — cache aggressively (1 hour)
+      content: 'The Cache-Control header instructs every party in the request chain - browser, CDN, proxy - how to handle caching. The ETag header enables conditional requests: the client sends the previous ETag back as If-None-Match and the server returns 304 Not Modified if nothing changed, saving bandwidth.',
+      code: `// Static public data - cache aggressively (1 hour)
 app.get('/countries', (req, res) => {
   res.set('Cache-Control', 'public, max-age=3600');
   res.json({ data: countries });
 });
 
-// User-specific data — cache in browser only (5 minutes)
+// User-specific data - cache in browser only (5 minutes)
 app.get('/profile', authenticate, (req, res) => {
   res.set('Cache-Control', 'private, max-age=300');
   res.json({ data: req.user });
 });
 
-// Never cache — real-time data or sensitive endpoints
+// Never cache - real-time data or sensitive endpoints
 app.get('/payments', authenticate, (req, res) => {
   res.set('Cache-Control', 'no-store');
   res.json({ data: getPayments(req.user.id) });
 });
 
-// ETag — client sends it back, server returns 304 if unchanged
+// ETag - client sends it back, server returns 304 if unchanged
 app.get('/users/:id', (req, res) => {
   const user = db.find(req.params.id);
   const etag = '"' + user.updatedAt + '"';
 
   if (req.headers['if-none-match'] === etag) {
-    return res.status(304).send(); // not modified — no body needed
+    return res.status(304).send(); // not modified - no body needed
   }
 
   res.set('ETag', etag);
@@ -202,7 +202,7 @@ app.get('/users/:id', (req, res) => {
 });`,
       language: 'javascript',
       output: `First request:  200, ETag: "2026-08-19T14:00:00Z", full body
-Second request (same ETag): 304 Not Modified, no body — saves bandwidth`
+Second request (same ETag): 304 Not Modified, no body - saves bandwidth`
     },
     {
       type: 'heading',
@@ -210,7 +210,7 @@ Second request (same ETag): 304 Not Modified, no body — saves bandwidth`
     },
     {
       type: 'text',
-      content: 'CORS (Cross-Origin Resource Sharing) is a browser security feature. Browsers block JavaScript from making requests to a different domain than the one serving the page — unless the target server explicitly allows it via CORS headers. This only affects browser clients; curl and server-side code are not affected.'
+      content: 'CORS (Cross-Origin Resource Sharing) is a browser security feature. Browsers block JavaScript from making requests to a different domain than the one serving the page - unless the target server explicitly allows it via CORS headers. This only affects browser clients; curl and server-side code are not affected.'
     },
     {
       type: 'example',
@@ -218,10 +218,10 @@ Second request (same ETag): 304 Not Modified, no body — saves bandwidth`
       content: 'The cors package handles all CORS header logic including preflight OPTIONS requests. The origin option controls which domains are allowed to call your API from a browser. In production, always specify exact origins rather than using the wildcard asterisk, which disables credentials.',
       code: `const cors = require('cors');
 
-// Development — allow all origins
+// Development - allow all origins
 app.use(cors());
 
-// Production — allow specific origins only
+// Production - allow specific origins only
 app.use(cors({
   origin: ['https://app.example.com', 'https://admin.example.com'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -236,7 +236,7 @@ app.use(cors({
 // Access-Control-Allow-Headers: Content-Type, Authorization
 // Access-Control-Allow-Credentials: true
 
-// Manual CORS (no package) — for understanding:
+// Manual CORS (no package) - for understanding:
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://app.example.com');
   if (req.method === 'OPTIONS') {
@@ -350,7 +350,7 @@ code { background: #1e293b; color: #7dd3fc; padding: 2px 8px; border-radius: 4px
       question: 'You ship /api/users and later need to change the response format in a breaking way. What is the best approach?',
       type: 'multiple-choice',
       options: [
-        'Modify /api/users directly — clients should update their code',
+        'Modify /api/users directly - clients should update their code',
         'Create /api/v2/users and keep /api/v1/users (or /api/users) working for existing clients',
         'Add a query param ?legacy=true to the existing endpoint',
         'Deprecate the endpoint and require all clients to re-register'
@@ -366,10 +366,10 @@ code { background: #1e293b; color: #7dd3fc; padding: 2px 8px; border-radius: 4px
         '200 OK with the full response body again',
         '204 No Content with no body',
         '304 Not Modified with no body',
-        '400 Bad Request — ETags are only for POST requests'
+        '400 Bad Request - ETags are only for POST requests'
       ],
       correct: 2,
-      explanation: '304 Not Modified tells the client their cached version is still current. No body is sent, saving bandwidth. The client uses its cached copy. This is the whole point of ETags — avoid re-sending data the client already has.'
+      explanation: '304 Not Modified tells the client their cached version is still current. No body is sent, saving bandwidth. The client uses its cached copy. This is the whole point of ETags - avoid re-sending data the client already has.'
     },
     {
       id: 'ex-09-3',
@@ -382,7 +382,7 @@ code { background: #1e293b; color: #7dd3fc; padding: 2px 8px; border-radius: 4px
         'Cookies are blocked at the DNS level when wildcard CORS is used'
       ],
       correct: 1,
-      explanation: 'Allowing credentials with a wildcard origin would be a security hole — it would allow any website to make authenticated requests to your API using the user\'s cookies. The browser prohibits Access-Control-Allow-Credentials: true combined with Access-Control-Allow-Origin: *. For credentialed requests, you must specify exact allowed origins.'
+      explanation: 'Allowing credentials with a wildcard origin would be a security hole - it would allow any website to make authenticated requests to your API using the user\'s cookies. The browser prohibits Access-Control-Allow-Credentials: true combined with Access-Control-Allow-Origin: *. For credentialed requests, you must specify exact allowed origins.'
     }
   ],
   quiz: [
@@ -408,7 +408,7 @@ code { background: #1e293b; color: #7dd3fc; padding: 2px 8px; border-radius: 4px
         'immutable, max-age=86400'
       ],
       correct: 2,
-      explanation: '"private" means only the end user\'s browser may cache the response — CDNs and shared proxies must not store it. Combined with a short max-age, this allows browser-side caching (good for performance) while preventing shared caches from serving one user\'s data to another.'
+      explanation: '"private" means only the end user\'s browser may cache the response - CDNs and shared proxies must not store it. Combined with a short max-age, this allows browser-side caching (good for performance) while preventing shared caches from serving one user\'s data to another.'
     },
     {
       id: 'q-09-3',
@@ -420,7 +420,7 @@ code { background: #1e293b; color: #7dd3fc; padding: 2px 8px; border-radius: 4px
         'It is an internal server header not intended for clients'
       ],
       correct: 1,
-      explanation: 'X-RateLimit-Reset provides the time when the current rate limit window expires and the counter resets to zero. Combined with Retry-After (which may give the same value as seconds to wait), it enables clients to implement intelligent backoff — waiting exactly as long as needed rather than polling repeatedly.'
+      explanation: 'X-RateLimit-Reset provides the time when the current rate limit window expires and the counter resets to zero. Combined with Retry-After (which may give the same value as seconds to wait), it enables clients to implement intelligent backoff - waiting exactly as long as needed rather than polling repeatedly.'
     }
   ]
 };

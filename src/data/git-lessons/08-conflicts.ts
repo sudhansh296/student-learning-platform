@@ -230,7 +230,7 @@ button { padding: 8px 12px; border: none; border-radius: 6px; font-weight: 600; 
         'The common ancestor version before both branches diverged'
       ],
       correct: 1,
-      explanation: '<<<<<<< HEAD marks the beginning of your version of the conflicting section — the code as it exists on the branch you are currently on (HEAD).'
+      explanation: '<<<<<<< HEAD marks the beginning of your version of the conflicting section - the code as it exists on the branch you are currently on (HEAD).'
     },
     {
       id: 'ex-git-8-2',

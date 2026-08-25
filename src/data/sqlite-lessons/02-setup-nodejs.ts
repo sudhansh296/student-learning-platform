@@ -24,7 +24,7 @@ export const lesson02: SqliteLesson = {
       headers: ['Factor', 'better-sqlite3', 'node-sqlite3'],
       rows: [
         ['API style', 'Synchronous (blocking)', 'Asynchronous (callbacks/promises)'],
-        ['Speed', 'Faster — no event loop overhead for each query', 'Slower due to async overhead'],
+        ['Speed', 'Faster - no event loop overhead for each query', 'Slower due to async overhead'],
         ['Simplicity', 'Simple: const row = db.prepare(...).get()', 'More verbose: callbacks or async/await'],
         ['Error handling', 'Throw/catch like normal JS', 'Must handle callback errors or promise rejections'],
         ['Transactions', 'Built-in: db.transaction(() => {...})()', 'Manual: begin/commit/rollback calls'],
@@ -34,7 +34,7 @@ export const lesson02: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'The synchronous approach works well for SQLite specifically because SQLite operations are extremely fast (microseconds for indexed queries). Node.js is single-threaded, but a synchronous SQLite call that completes in 0.1ms blocks the event loop for 0.1ms — which is acceptable for most applications. For very high query volume, use a worker thread.'
+      content: 'The synchronous approach works well for SQLite specifically because SQLite operations are extremely fast (microseconds for indexed queries). Node.js is single-threaded, but a synchronous SQLite call that completes in 0.1ms blocks the event loop for 0.1ms - which is acceptable for most applications. For very high query volume, use a worker thread.'
     },
     {
       type: 'heading',
@@ -104,7 +104,7 @@ console.log(user);
     },
     {
       type: 'text',
-      content: 'better-sqlite3 has three core query methods: run (for INSERT/UPDATE/DELETE), get (for SELECT returning one row), and all (for SELECT returning all rows). Prepared statements are objects created once and executed many times — they are more efficient than string queries and prevent SQL injection.'
+      content: 'better-sqlite3 has three core query methods: run (for INSERT/UPDATE/DELETE), get (for SELECT returning one row), and all (for SELECT returning all rows). Prepared statements are objects created once and executed many times - they are more efficient than string queries and prevent SQL injection.'
     },
     {
       type: 'table',
@@ -125,7 +125,7 @@ console.log(user);
     },
     {
       type: 'text',
-      content: 'You can open SQLite entirely in memory by passing \':memory:\' instead of a file path. An in-memory database is created fresh and exists only while the process runs — when the process exits, all data is gone. This is ideal for testing: each test can create a fresh database in microseconds without cleaning up files.'
+      content: 'You can open SQLite entirely in memory by passing \':memory:\' instead of a file path. An in-memory database is created fresh and exists only while the process runs - when the process exits, all data is gone. This is ideal for testing: each test can create a fresh database in microseconds without cleaning up files.'
     },
     {
       type: 'text',
@@ -137,7 +137,7 @@ console.log(user);
       content: 'Creating a fresh in-memory SQLite database for tests, with schema setup, test data insertion, and assertions.',
       code: `const Database = require('better-sqlite3');
 
-// In-memory database — no file created, no cleanup needed
+// In-memory database - no file created, no cleanup needed
 function createTestDb() {
   const db = new Database(':memory:');
   db.pragma('foreign_keys = ON');
@@ -164,7 +164,7 @@ describe('User queries', () => {
   let db;
 
   beforeEach(() => {
-    // Fresh database for every test — no interference between tests
+    // Fresh database for every test - no interference between tests
     db = createTestDb();
     db.prepare('INSERT INTO users (email, name) VALUES (?, ?)').run(
       'alice@example.com', 'Alice Chen'
@@ -192,7 +192,7 @@ describe('User queries', () => {
     {
       type: 'note',
       title: 'Named Parameters',
-      content: 'better-sqlite3 supports both positional (?) and named (@paramName or :paramName) parameters. Named parameters are preferred when a query has many inputs — they are self-documenting and immune to parameter order mistakes. stmt.run({ email: "a@b.com", name: "Alice" }) is clearer than stmt.run("a@b.com", "Alice").'
+      content: 'better-sqlite3 supports both positional (?) and named (@paramName or :paramName) parameters. Named parameters are preferred when a query has many inputs - they are self-documenting and immune to parameter order mistakes. stmt.run({ email: "a@b.com", name: "Alice" }) is clearer than stmt.run("a@b.com", "Alice").'
     },
     {
       type: 'tip',

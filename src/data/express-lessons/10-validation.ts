@@ -217,23 +217,23 @@ function submit() {
   
   var result = '';
   if (valid) {
-    result = 'POST /users\\n';
-    result += 'HTTP/201 Created\\n\\n';
-    result += '{\\n';
-    result += '  "success": true,\\n';
-    result += '  "message": "User created successfully",\\n';
-    result += '  "user": {\\n';
-    result += '    "name": "' + document.getElementById('name').value + '",\\n';
-    result += '    "email": "' + document.getElementById('email').value + '",\\n';
-    result += '    "age": ' + document.getElementById('age').value + '\\n';
-    result += '  }\\n';
+    result = 'POST /users\ ';
+    result += 'HTTP/201 Created\\n\ ';
+    result += '{\ ';
+    result += '  "success": true,\ ';
+    result += '  "message": "User created successfully",\ ';
+    result += '  "user": {\ ';
+    result += '    "name": "' + document.getElementById('name').value + '",\ ';
+    result += '    "email": "' + document.getElementById('email').value + '",\ ';
+    result += '    "age": ' + document.getElementById('age').value + '\ ';
+    result += '  }\ ';
     result += '}';
   } else {
-    result = 'POST /users\\n';
-    result += 'HTTP/400 Bad Request\\n\\n';
-    result += '{\\n';
-    result += '  "success": false,\\n';
-    result += '  "errors": [...]\\n';
+    result = 'POST /users\ ';
+    result += 'HTTP/400 Bad Request\\n\ ';
+    result += '{\ ';
+    result += '  "success": false,\ ';
+    result += '  "errors": [...]\ ';
     result += '}';
   }
   

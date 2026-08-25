@@ -1,11 +1,11 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsFunctionsLesson: JSLesson = {
-  id: 'js-functions-complete', title: 'Functions — Complete Guide', slug: 'functions',
+  id: 'js-functions-complete', title: 'Functions - Complete Guide', slug: 'functions',
   chapter: 'functions', order: 8, difficulty: 'beginner', readingTime: 16,
-  description: 'Master every type of JavaScript function — declarations, expressions, arrow functions, parameters, default values, rest/spread, higher-order functions, and closures.',
+  description: 'Master every type of JavaScript function - declarations, expressions, arrow functions, parameters, default values, rest/spread, higher-order functions, and closures.',
   sections: [
-    { type: 'text', content: 'A function is a reusable block of code that performs a specific task. You define it once and call it whenever needed. Functions are the most important concept in JavaScript — everything in modern JS (React components, event handlers, async operations) is built with functions.' },
+    { type: 'text', content: 'A function is a reusable block of code that performs a specific task. You define it once and call it whenever needed. Functions are the most important concept in JavaScript - everything in modern JS (React components, event handlers, async operations) is built with functions.' },
     { type: 'heading', content: '1. Function Declaration' },
     { type: 'example', title: 'Function declarations are hoisted', content: 'A function declaration defines a reusable, named function. You can call it BEFORE the line where you wrote it because JavaScript moves ("hoists") function declarations to the top. Every function can accept inputs (parameters) and send back a result (return). If you do not write return, the function automatically returns undefined.', language: 'javascript', code: `// Function declarations can be called BEFORE they are defined (hoisted)
 sayHello("Alice"); // Works! Function declarations are fully hoisted
@@ -20,7 +20,7 @@ function add(a, b) {
 }
 console.log(add(5, 3)); // 8
 
-// Without a return — implicitly returns undefined
+// Without a return - implicitly returns undefined
 function greetUser(name) {
   console.log("Welcome, " + name);
   // returns undefined
@@ -28,7 +28,7 @@ function greetUser(name) {
 const result = greetUser("Bob"); // logs "Welcome, Bob"
 console.log(result); // undefined` },
     { type: 'heading', content: '2. Function Expression' },
-    { type: 'example', title: 'Function stored in a variable', content: 'A function expression stores a function inside a variable. Unlike declarations, they are NOT hoisted — you must define them before calling them. Named function expressions are useful for recursion and better error messages.', language: 'javascript', code: `// Function expressions are NOT hoisted — must be defined before use
+    { type: 'example', title: 'Function stored in a variable', content: 'A function expression stores a function inside a variable. Unlike declarations, they are NOT hoisted - you must define them before calling them. Named function expressions are useful for recursion and better error messages.', language: 'javascript', code: `// Function expressions are NOT hoisted - must be defined before use
 // sayBye("Alice"); // ❌ ReferenceError
 
 const sayBye = function(name) {
@@ -42,8 +42,8 @@ const factorial = function fact(n) {
   return n * fact(n - 1); // uses the name 'fact' for recursion
 };
 console.log(factorial(5)); // 120` },
-    { type: 'heading', content: '3. Arrow Functions — Modern Syntax' },
-    { type: 'example', title: 'Arrow functions — from verbose to concise', content: 'Arrow functions (=>) are the modern, shorter way to write functions. They are especially popular in React. When an arrow function has only one expression, you can skip the curly braces and the return keyword — the result is returned automatically. One important difference: arrow functions do NOT have their own "this", they inherit it from where they were defined.', language: 'javascript', code: `// Regular function:
+    { type: 'heading', content: '3. Arrow Functions - Modern Syntax' },
+    { type: 'example', title: 'Arrow functions - from verbose to concise', content: 'Arrow functions (=>) are the modern, shorter way to write functions. They are especially popular in React. When an arrow function has only one expression, you can skip the curly braces and the return keyword - the result is returned automatically. One important difference: arrow functions do NOT have their own "this", they inherit it from where they were defined.', language: 'javascript', code: `// Regular function:
 function double(x) { return x * 2; }
 
 // Arrow function equivalents (all do the same):
@@ -51,15 +51,15 @@ const double = (x) => { return x * 2; };
 const double = x => { return x * 2; };    // no parens for single param
 const double = x => x * 2;                 // implicit return (one expression)
 
-// Multiple parameters — parens required
+// Multiple parameters - parens required
 const add = (a, b) => a + b;
 console.log(add(3, 4)); // 7
 
-// No parameters — empty parens required
+// No parameters - empty parens required
 const greet = () => "Hello!";
 console.log(greet()); // "Hello!"
 
-// Returning an object — wrap in parentheses!
+// Returning an object - wrap in parentheses!
 const makeUser = (name, age) => ({ name, age }); // ({ }) not { }
 console.log(makeUser("Alex", 25)); // { name: "Alex", age: 25 }
 
@@ -68,9 +68,9 @@ const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(n => n * 2); // [2,4,6,8,10]
 const evens   = numbers.filter(n => n % 2 === 0); // [2,4]
 const sum     = numbers.reduce((acc, n) => acc + n, 0); // 15` },
-    { type: 'note', title: 'Arrow functions do NOT have their own "this"', content: 'Arrow functions inherit "this" from their surrounding context. This makes them perfect for callbacks in class methods and React components. Regular functions create their own "this" — which causes bugs in class methods.' },
-    { type: 'heading', content: '4. Parameters — Default, Rest, Destructuring' },
-    { type: 'example', title: 'Advanced parameter patterns', content: 'Default parameters let you specify what value to use if an argument is not provided. Rest parameters (...args) collect any number of extra arguments into an array — perfect for functions like sum() that should accept any count of numbers. Destructuring in parameters lets you pull out just the properties you need from an object argument.', language: 'javascript', code: `// Default parameters
+    { type: 'note', title: 'Arrow functions do NOT have their own "this"', content: 'Arrow functions inherit "this" from their surrounding context. This makes them perfect for callbacks in class methods and React components. Regular functions create their own "this" - which causes bugs in class methods.' },
+    { type: 'heading', content: '4. Parameters - Default, Rest, Destructuring' },
+    { type: 'example', title: 'Advanced parameter patterns', content: 'Default parameters let you specify what value to use if an argument is not provided. Rest parameters (...args) collect any number of extra arguments into an array - perfect for functions like sum() that should accept any count of numbers. Destructuring in parameters lets you pull out just the properties you need from an object argument.', language: 'javascript', code: `// Default parameters
 function greet(name = "Guest", emoji = "👋") {
   return \`Hello, \${name}! \${emoji}\`;
 }
@@ -78,7 +78,7 @@ console.log(greet());            // "Hello, Guest! 👋"
 console.log(greet("Alex"));     // "Hello, Alex! 👋"
 console.log(greet("Mia", "🎉")); // "Hello, Mia! 🎉"
 
-// Rest parameters — collect remaining args into array
+// Rest parameters - collect remaining args into array
 function sum(...numbers) {
   return numbers.reduce((total, n) => total + n, 0);
 }
@@ -94,10 +94,10 @@ logMessage("info", "Server", "started", "on port 3000");
 
 // Destructuring in parameters
 function renderUser({ name, email, role = "user" }) {
-  return \`\${name} (\${email}) — \${role}\`;
+  return \`\${name} (\${email}) - \${role}\`;
 }
 renderUser({ name: "Alex", email: "alex@example.com" });
-// "Alex (alex@example.com) — user"
+// "Alex (alex@example.com) - user"
 
 // Array destructuring in params
 function first([a, b, ...rest]) {
@@ -105,7 +105,7 @@ function first([a, b, ...rest]) {
 }
 first([10, 20, 30, 40]); // { first: 10, second: 20, remaining: [30,40] }` },
     { type: 'heading', content: '5. Higher-Order Functions' },
-    { type: 'example', title: 'Functions that accept or return functions', content: 'Higher-order functions either accept another function as an argument (callback) or return a function. This is how .map(), .filter(), .forEach() work — you pass them a function that they call for each item. Returning a function creates a "factory" that generates customized functions with preset values.', language: 'javascript', code: `// Passing a function as an argument (callback)
+    { type: 'example', title: 'Functions that accept or return functions', content: 'Higher-order functions either accept another function as an argument (callback) or return a function. This is how .map(), .filter(), .forEach() work - you pass them a function that they call for each item. Returning a function creates a "factory" that generates customized functions with preset values.', language: 'javascript', code: `// Passing a function as an argument (callback)
 function doOperation(a, b, operation) {
   return operation(a, b);
 }
@@ -132,8 +132,8 @@ const sayHello = makeGreeter("Hello");
 const sayHi    = makeGreeter("Hi");
 console.log(sayHello("Alice")); // "Hello, Alice!"
 console.log(sayHi("Bob"));      // "Hi, Bob!"` },
-    { type: 'heading', content: '6. Closures — Functions Remember Their Environment' },
-    { type: 'example', title: 'Closures — one of JavaScript\'s most powerful features', content: 'A closure happens when an inner function keeps access to variables from its outer function even after the outer function has finished running. Those variables are "trapped" inside the inner function. This is how you create private data in JavaScript — the count variable below cannot be accessed from outside, only through the returned methods.', language: 'javascript', code: `// A closure is when an inner function remembers variables from
+    { type: 'heading', content: '6. Closures - Functions Remember Their Environment' },
+    { type: 'example', title: 'Closures - one of JavaScript\'s most powerful features', content: 'A closure happens when an inner function keeps access to variables from its outer function even after the outer function has finished running. Those variables are "trapped" inside the inner function. This is how you create private data in JavaScript - the count variable below cannot be accessed from outside, only through the returned methods.', language: 'javascript', code: `// A closure is when an inner function remembers variables from
 // its outer function even after the outer function has returned
 
 function makeCounter() {
@@ -153,7 +153,7 @@ console.log(counter.increment()); // 2
 console.log(counter.decrement()); // 1
 console.log(counter.reset());     // 0
 
-// count is private — cannot be accessed directly!
+// count is private - cannot be accessed directly!
 // console.log(counter.count); // undefined
 
 // Practical closure: make a bank account
@@ -178,8 +178,8 @@ const account = createAccount(100);
 console.log(account.deposit(50));   // "Deposited $50. Balance: $150"
 console.log(account.withdraw(200)); // "Insufficient funds"
 console.log(account.withdraw(30));  // "Withdrew $30. Balance: $120"` },
-    { type: 'heading', content: '7. IIFE — Immediately Invoked Function Expression' },
-    { type: 'example', title: 'Functions that run immediately', content: 'An IIFE (Immediately Invoked Function Expression) is a function that runs as soon as it is defined. You wrap it in parentheses and immediately call it with (). The main use case is creating a private scope — all variables inside the IIFE are invisible to the outside world, preventing name collisions in global scope.', language: 'javascript', code: `// IIFE: defined and called at the same time
+    { type: 'heading', content: '7. IIFE - Immediately Invoked Function Expression' },
+    { type: 'example', title: 'Functions that run immediately', content: 'An IIFE (Immediately Invoked Function Expression) is a function that runs as soon as it is defined. You wrap it in parentheses and immediately call it with (). The main use case is creating a private scope - all variables inside the IIFE are invisible to the outside world, preventing name collisions in global scope.', language: 'javascript', code: `// IIFE: defined and called at the same time
 (function() {
   const secret = "I am private";
   console.log("IIFE ran:", secret);
@@ -198,11 +198,11 @@ console.log(account.withdraw(30));  // "Withdrew $30. Balance: $120"` },
 // Use case: avoid polluting global scope
 (function() {
   const config = { theme: "dark", lang: "en" };
-  // All code here is isolated — config is private
+  // All code here is isolated - config is private
   document.documentElement.dataset.theme = config.theme;
 })();
 
-// console.log(config); // ❌ ReferenceError — it's private` },
+// console.log(config); // ❌ ReferenceError - it's private` },
     { type: 'tryit', title: 'Try It: Functions Workshop',
       html: `<div id="app">
   <h2>Function Workshop</h2>
@@ -286,11 +286,11 @@ function createGreet() {
       mode: 'full' },
   ],
   exercises: [
-    { id: 'fn-1', question: 'What is the concise arrow function for: function double(x) { return x * 2; }', type: 'multiple-choice', options: ['const double = x => x * 2;', 'const double = (x) { x * 2 }', 'arrow double(x) => x*2', 'const double = => x * 2'], correct: 0, explanation: 'const double = x => x * 2; — with a single parameter and a single-expression body, you can omit the parentheses around the parameter and the curly braces/return keyword.' },
+    { id: 'fn-1', question: 'What is the concise arrow function for: function double(x) { return x * 2; }', type: 'multiple-choice', options: ['const double = x => x * 2;', 'const double = (x) { x * 2 }', 'arrow double(x) => x*2', 'const double = => x * 2'], correct: 0, explanation: 'const double = x => x * 2; - with a single parameter and a single-expression body, you can omit the parentheses around the parameter and the curly braces/return keyword.' },
     { id: 'fn-2', question: 'What is a closure?', type: 'multiple-choice', options: ['A function that calls itself', 'A function that remembers variables from its outer scope even after the outer function returns', 'A function with no parameters', 'A function that cannot be called'], correct: 1, explanation: 'A closure is formed when a function retains access to variables from its enclosing scope after the outer function has returned. This enables private data, function factories, and state management.' },
   ],
   quiz: [
-    { id: 'qfn1', question: 'Which type of function can be called before its declaration?', options: ['Arrow functions', 'Function expressions', 'Function declarations', 'IIFE'], correct: 2, explanation: 'Function declarations are fully hoisted — the browser moves them to the top of their scope before execution. Arrow functions and function expressions stored in variables are NOT hoisted.' },
+    { id: 'qfn1', question: 'Which type of function can be called before its declaration?', options: ['Arrow functions', 'Function expressions', 'Function declarations', 'IIFE'], correct: 2, explanation: 'Function declarations are fully hoisted - the browser moves them to the top of their scope before execution. Arrow functions and function expressions stored in variables are NOT hoisted.' },
     { id: 'qfn2', question: 'What does the rest parameter (...args) do?', options: ['Spreads an array into arguments', 'Collects remaining function arguments into an array', 'Creates a copy of a function', 'Stops execution'], correct: 1, explanation: 'Rest parameters (...args) collect any number of remaining arguments into a single array. function sum(...nums) allows calling sum(1,2,3,4) where nums becomes [1,2,3,4].' },
   ],
 };

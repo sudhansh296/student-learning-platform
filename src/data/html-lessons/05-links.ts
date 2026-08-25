@@ -8,20 +8,20 @@ export const htmlLinksLesson: HtmlLesson = {
   order: 5,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Master HTML hyperlinks — absolute vs relative URLs, target attributes, bookmark links, email/phone links, and best practices.',
+  description: 'Master HTML hyperlinks - absolute vs relative URLs, target attributes, bookmark links, email/phone links, and best practices.',
   sections: [
     {
       type: 'text',
-      content: 'Links are the foundation of the web. Without links, every page would be isolated — you could not navigate from one page to another. The <a> tag (anchor tag) creates clickable links. It is one of the most important HTML elements you will ever use.',
+      content: 'Links are the foundation of the web. Without links, every page would be isolated - you could not navigate from one page to another. The <a> tag (anchor tag) creates clickable links. It is one of the most important HTML elements you will ever use.',
     },
     {
       type: 'heading',
-      content: 'The <a> Tag — Anchor Element',
+      content: 'The <a> Tag - Anchor Element',
     },
     {
       type: 'code',
       language: 'html',
-            content: 'The a (anchor) element creates a hyperlink. The href attribute specifies the destination. The clickable text goes between the opening and closing tags. Links are the foundation of the web — they connect pages together.',
+            content: 'The a (anchor) element creates a hyperlink. The href attribute specifies the destination. The clickable text goes between the opening and closing tags. Links are the foundation of the web - they connect pages together.',
 code: `<!-- Basic link syntax -->
 <a href="URL">Link Text</a>
 
@@ -42,12 +42,12 @@ code: `<!-- Basic link syntax -->
     {
       type: 'code',
       language: 'html',
-      content: 'Absolute URLs include the full web address starting with https:// — use them for external sites. Relative URLs only specify the path from your current page — use them for links within your own website. Relative URLs are shorter and keep working if you move the site to a different domain.',
-      code: `<!-- ABSOLUTE URLs — full address, for external websites -->
+      content: 'Absolute URLs include the full web address starting with https:// - use them for external sites. Relative URLs only specify the path from your current page - use them for links within your own website. Relative URLs are shorter and keep working if you move the site to a different domain.',
+      code: `<!-- ABSOLUTE URLs - full address, for external websites -->
 <a href="https://www.google.com">Google</a>
 <a href="https://github.com/yourusername">My GitHub</a>
 
-<!-- RELATIVE URLs — for pages within your own site -->
+<!-- RELATIVE URLs - for pages within your own site -->
 <!-- Current file: /pages/blog/post.html -->
 
 <a href="/index.html">Home (from root)</a>
@@ -61,12 +61,12 @@ code: `<!-- Basic link syntax -->
     },
     {
       type: 'heading',
-      content: 'The target Attribute — Where to Open Links',
+      content: 'The target Attribute - Where to Open Links',
     },
     {
       type: 'code',
       language: 'html',
-      content: 'target="_blank" opens the link in a new browser tab. Always add rel="noopener noreferrer" with it — without this, the new tab can access your page via JavaScript (a security vulnerability called tab-nabbing). This is the secure standard for all external links.',
+      content: 'target="_blank" opens the link in a new browser tab. Always add rel="noopener noreferrer" with it - without this, the new tab can access your page via JavaScript (a security vulnerability called tab-nabbing). This is the secure standard for all external links.',
       code: `<!-- Opens in the SAME tab (default behavior) -->
 <a href="https://example.com">Same tab</a>
 <a href="https://example.com" target="_self">Same tab (explicit)</a>
@@ -83,11 +83,11 @@ code: `<!-- Basic link syntax -->
     {
       type: 'warning',
       title: 'Security: Always use rel="noopener noreferrer" with target="_blank"',
-      content: 'When you open a link in a new tab with target="_blank", the new page can access your page through window.opener — a security vulnerability called "tab nabbing." Adding rel="noopener noreferrer" prevents this. This is critical for external links.',
+      content: 'When you open a link in a new tab with target="_blank", the new page can access your page through window.opener - a security vulnerability called "tab nabbing." Adding rel="noopener noreferrer" prevents this. This is critical for external links.',
     },
     {
       type: 'heading',
-      content: 'Bookmark Links — Navigate Within a Page',
+      content: 'Bookmark Links - Navigate Within a Page',
     },
     {
       type: 'text',
@@ -122,8 +122,8 @@ code: `<!-- Basic link syntax -->
     {
       type: 'code',
       language: 'html',
-      content: 'mailto: opens the user\'s email client with the address pre-filled. tel: creates a clickable phone number on mobile devices. The download attribute tells the browser to download the file instead of navigating to it — you can set a custom filename as the attribute value.',
-      code: `<!-- Email link — opens default email client -->
+      content: 'mailto: opens the user\'s email client with the address pre-filled. tel: creates a clickable phone number on mobile devices. The download attribute tells the browser to download the file instead of navigating to it - you can set a custom filename as the attribute value.',
+      code: `<!-- Email link - opens default email client -->
 <a href="mailto:hello@example.com">Send us an email</a>
 
 <!-- Email with pre-filled subject and body -->
@@ -131,10 +131,10 @@ code: `<!-- Basic link syntax -->
   Contact Support
 </a>
 
-<!-- Phone link — opens phone app on mobile -->
+<!-- Phone link - opens phone app on mobile -->
 <a href="tel:+1-800-555-1234">Call us: 1-800-555-1234</a>
 
-<!-- Download link — prompts file download -->
+<!-- Download link - prompts file download -->
 <a href="/files/resume.pdf" download>Download Resume (PDF)</a>
 
 <!-- Download with custom filename -->
@@ -152,7 +152,7 @@ code: `<!-- Basic link syntax -->
       content: 'Wrap an img inside an anchor element to make the image itself a clickable link. The alt text also serves as the accessible label for the link. This is the standard way to make logo images navigate to the homepage.',
       code: `<!-- Wrap an image inside an <a> tag to make it clickable -->
 <a href="https://example.com">
-  <img src="logo.png" alt="Company Logo — click to visit homepage">
+  <img src="logo.png" alt="Company Logo - click to visit homepage">
 </a>
 
 <!-- Clickable image that opens in new tab -->
@@ -266,7 +266,7 @@ hr { border: none; border-top: 1px solid #e5e7eb; }`,
         'Absolute URLs are for images, relative URLs are for links',
       ],
       correct: 1,
-      explanation: 'Absolute: href="https://example.com/page.html" — full address. Relative: href="/page.html" or href="../page.html" — path relative to current file. Use relative URLs within your own site.',
+      explanation: 'Absolute: href="https://example.com/page.html" - full address. Relative: href="/page.html" or href="../page.html" - path relative to current file. Use relative URLs within your own site.',
     },
     {
       id: 'ql-2',

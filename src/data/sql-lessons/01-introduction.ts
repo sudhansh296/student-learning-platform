@@ -12,7 +12,7 @@ export const lesson01: SqlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'SQL (Structured Query Language) is the standard language for communicating with relational databases. It is not a programming language in the traditional sense — it is a declarative query language, meaning you describe what data you want, not how to retrieve it. SQL has been around since the 1970s and remains the most important data skill a developer can have.'
+      content: 'SQL (Structured Query Language) is the standard language for communicating with relational databases. It is not a programming language in the traditional sense - it is a declarative query language, meaning you describe what data you want, not how to retrieve it. SQL has been around since the 1970s and remains the most important data skill a developer can have.'
     },
     {
       type: 'heading',
@@ -20,19 +20,19 @@ export const lesson01: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'A relational database stores data in tables — structured grids with rows and columns, similar to a spreadsheet. Each table represents one type of entity (users, orders, products). The "relational" part refers to the relationships between tables: a user row can link to many order rows, and each order row can link to many product rows.'
+      content: 'A relational database stores data in tables - structured grids with rows and columns, similar to a spreadsheet. Each table represents one type of entity (users, orders, products). The "relational" part refers to the relationships between tables: a user row can link to many order rows, and each order row can link to many product rows.'
     },
     {
       type: 'text',
-      content: 'Every table has a defined schema: a set of column names and their data types. This structure enforces consistency — you cannot accidentally store a phone number in an email column. This discipline is one of the biggest advantages of relational databases over more flexible alternatives.'
+      content: 'Every table has a defined schema: a set of column names and their data types. This structure enforces consistency - you cannot accidentally store a phone number in an email column. This discipline is one of the biggest advantages of relational databases over more flexible alternatives.'
     },
     {
       type: 'list',
       title: 'Core concepts in every relational database:',
       items: [
         'Table: a collection of related data organized in rows and columns',
-        'Row (record): a single data entry — one user, one order, one product',
-        'Column (field): a named attribute with a fixed data type — name, email, price',
+        'Row (record): a single data entry - one user, one order, one product',
+        'Column (field): a named attribute with a fixed data type - name, email, price',
         'Primary key: a column (or combination) that uniquely identifies each row',
         'Foreign key: a column that references the primary key of another table',
         'Schema: the complete definition of tables, columns, types, and constraints'
@@ -73,7 +73,7 @@ export const lesson01: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'NoSQL databases emerged in the 2000s to address specific scaling and flexibility challenges that relational databases struggled with. However, NoSQL is not a replacement for SQL — they solve different problems. Most production systems use both.'
+      content: 'NoSQL databases emerged in the 2000s to address specific scaling and flexibility challenges that relational databases struggled with. However, NoSQL is not a replacement for SQL - they solve different problems. Most production systems use both.'
     },
     {
       type: 'table',
@@ -145,7 +145,7 @@ ORDER BY created_at DESC;`,
     {
       type: 'tip',
       title: 'SQL Is Declarative',
-      content: 'You write what you want (SELECT name FROM users WHERE active = true) and the database engine figures out how to retrieve it efficiently. You do not write loops or iteration logic — that is the database\'s job.'
+      content: 'You write what you want (SELECT name FROM users WHERE active = true) and the database engine figures out how to retrieve it efficiently. You do not write loops or iteration logic - that is the database\'s job.'
     },
     {
       type: 'tryit',

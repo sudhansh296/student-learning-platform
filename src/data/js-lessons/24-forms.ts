@@ -1,11 +1,11 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsFormsLesson: JSLesson = {
   id:'js-forms',title:'Form Handling',slug:'forms',chapter:'dom',order:25,difficulty:'intermediate',readingTime:10,
-  description:'Handle HTML forms with JavaScript — read values, validate, submit with Fetch, FormData, and real-world patterns.',
+  description:'Handle HTML forms with JavaScript - read values, validate, submit with Fetch, FormData, and real-world patterns.',
   sections:[
-    {type:'text',content:'Forms are how users send data to your application. JavaScript makes forms dynamic — real-time validation, AJAX submission (no page reload), and rich user feedback. Every web app needs solid form handling.'},
+    {type:'text',content:'Forms are how users send data to your application. JavaScript makes forms dynamic - real-time validation, AJAX submission (no page reload), and rich user feedback. Every web app needs solid form handling.'},
     {type:'heading',content:'Reading Form Values'},
-    {type:'example',title:'Getting values from inputs',content:'Each input type has its own way to read the value. Text, email, and password inputs use .value. Checkboxes use .checked (true/false). Radio buttons need a CSS selector to find the checked one. The cleanest way to read an entire form is new FormData(form) — it automatically collects all named inputs into a key-value structure that you convert to a plain object with Object.fromEntries().',language:'javascript',code:`const form = document.querySelector('#myForm');
+    {type:'example',title:'Getting values from inputs',content:'Each input type has its own way to read the value. Text, email, and password inputs use .value. Checkboxes use .checked (true/false). Radio buttons need a CSS selector to find the checked one. The cleanest way to read an entire form is new FormData(form) - it automatically collects all named inputs into a key-value structure that you convert to a plain object with Object.fromEntries().',language:'javascript',code:`const form = document.querySelector('#myForm');
 
 // Individual input values
 const name  = document.querySelector('#name').value;
@@ -15,7 +15,7 @@ const age   = parseInt(document.querySelector('#age').value, 10);
 // Checkbox
 const agree = document.querySelector('#agree').checked; // true/false
 
-// Radio buttons — find the checked one
+// Radio buttons - find the checked one
 const gender = document.querySelector('input[name="gender"]:checked')?.value;
 
 // Select dropdown
@@ -27,7 +27,7 @@ const langs = [...document.querySelectorAll('#langs option:checked')].map(o => o
 // Textarea
 const bio = document.querySelector('#bio').value.trim();
 
-// FormData — easiest way to get ALL form values
+// FormData - easiest way to get ALL form values
 const formData = new FormData(form);
 const values = Object.fromEntries(formData.entries());
 // { name:"Alex", email:"alex@example.com", ... }
@@ -37,7 +37,7 @@ for (const [key, value] of formData) {
   console.log(key, value);
 }`},
     {type:'heading',content:'Form Validation'},
-    {type:'example',title:'Validate before submitting',content:'Always validate on the client side before sending data to the server — it gives instant feedback without a round trip. Build a validateForm() function that returns an errors object where each key is the field name and each value is the error message. An empty errors object means valid. Use this pattern to display inline error messages next to each field and add/remove CSS classes.',language:'javascript',code:`function validateForm(data) {
+    {type:'example',title:'Validate before submitting',content:'Always validate on the client side before sending data to the server - it gives instant feedback without a round trip. Build a validateForm() function that returns an errors object where each key is the field name and each value is the error message. An empty errors object means valid. Use this pattern to display inline error messages next to each field and add/remove CSS classes.',language:'javascript',code:`function validateForm(data) {
   const errors = {};
 
   if (!data.name || data.name.trim().length < 2) {
@@ -76,7 +76,7 @@ function showErrors(errors) {
   }
 }`},
     {type:'heading',content:'Submit with Fetch (AJAX)'},
-    {type:'example',title:'No page reload — modern form submission',content:'The standard modern pattern: listen for the submit event, call e.preventDefault() to stop the page reload, validate the data, then send it with fetch(). Disable the submit button while the request is in flight to prevent double submissions. Always re-enable it in finally so it recovers from both success and error. Show the user a clear success or error message.',language:'javascript',code:`document.querySelector('#registerForm').addEventListener('submit', async (e) => {
+    {type:'example',title:'No page reload - modern form submission',content:'The standard modern pattern: listen for the submit event, call e.preventDefault() to stop the page reload, validate the data, then send it with fetch(). Disable the submit button while the request is in flight to prevent double submissions. Always re-enable it in finally so it recovers from both success and error. Show the user a clear success or error message.',language:'javascript',code:`document.querySelector('#registerForm').addEventListener('submit', async (e) => {
   e.preventDefault(); // stop default page reload
 
   const form = e.target;

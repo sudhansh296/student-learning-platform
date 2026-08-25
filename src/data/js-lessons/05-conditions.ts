@@ -1,8 +1,8 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsConditionsLesson: JSLesson = {
   id: 'js-conditions',
-  title: 'Conditions — if, else, switch',
+  title: 'Conditions - if, else, switch',
   slug: 'conditions',
   chapter: 'basics',
   order: 6,
@@ -10,7 +10,7 @@ export const jsConditionsLesson: JSLesson = {
   readingTime: 10,
   description: 'Control the flow of your program with if/else statements, switch/case, and the ternary operator.',
   sections: [
-    { type: 'text', content: 'Conditions let your program make decisions. "If the user is logged in, show the dashboard. Otherwise, show the login page." Every program needs conditions — they are the foundation of logic.' },
+    { type: 'text', content: 'Conditions let your program make decisions. "If the user is logged in, show the dashboard. Otherwise, show the login page." Every program needs conditions - they are the foundation of logic.' },
     { type: 'heading', content: 'if / else if / else' },
     { type: 'example', title: 'Basic conditionals', content: 'An if statement runs code only when a condition is true. else if adds more conditions. else runs when nothing above was true. JavaScript evaluates conditions from top to bottom and stops at the first true one. The condition inside () can be any expression that evaluates to true or false.', language: 'javascript', code: `const hour = new Date().getHours();
 let greeting;
@@ -43,7 +43,7 @@ if (score >= 90) {
 }
 console.log("Grade:", grade); // "C"` },
     { type: 'heading', content: 'Truthy and Falsy in Conditions' },
-    { type: 'example', title: 'Using truthy/falsy to simplify conditions', content: 'In JavaScript, you do not always need to write the full comparison. Any value used in an if condition is automatically converted to boolean. The 6 "falsy" values that become false: 0, "", null, undefined, NaN, false. EVERYTHING else is truthy — including empty arrays [], empty objects {}, and the string "false". This lets you write cleaner code like: if (name) instead of if (name !== null && name !== undefined && name !== "").', language: 'javascript', code: `// Falsy values: false, 0, "", '', null, undefined, NaN
+    { type: 'example', title: 'Using truthy/falsy to simplify conditions', content: 'In JavaScript, you do not always need to write the full comparison. Any value used in an if condition is automatically converted to boolean. The 6 "falsy" values that become false: 0, "", null, undefined, NaN, false. EVERYTHING else is truthy - including empty arrays [], empty objects {}, and the string "false". This lets you write cleaner code like: if (name) instead of if (name !== null && name !== undefined && name !== "").', language: 'javascript', code: `// Falsy values: false, 0, "", '', null, undefined, NaN
 // Everything else is truthy
 
 // Long way:
@@ -52,7 +52,7 @@ if (name !== null && name !== undefined && name !== "") {
   console.log("Name:", name);
 }
 
-// Short way — using truthiness:
+// Short way - using truthiness:
 if (name) {
   console.log("Name:", name); // runs if name is truthy (non-empty)
 }
@@ -66,34 +66,34 @@ if (items.length) {
 // Check if user exists before accessing property:
 const user = null;
 if (user) {
-  console.log(user.name); // safe — only runs if user is truthy
+  console.log(user.name); // safe - only runs if user is truthy
 }
 // With optional chaining:
 console.log(user?.name); // undefined (no error)` },
     { type: 'heading', content: 'switch / case' },
-    { type: 'example', title: 'Switch for multiple specific values', content: 'A switch statement is cleaner than multiple if/else when you are checking ONE variable against many specific exact values. The break statement is critical — without it, JavaScript "falls through" and keeps running the next case even if it does not match. The default case runs if no other case matched, like the final else.', language: 'javascript', code: `const day = new Date().getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+    { type: 'example', title: 'Switch for multiple specific values', content: 'A switch statement is cleaner than multiple if/else when you are checking ONE variable against many specific exact values. The break statement is critical - without it, JavaScript "falls through" and keeps running the next case even if it does not match. The default case runs if no other case matched, like the final else.', language: 'javascript', code: `const day = new Date().getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
 
 switch (day) {
   case 0:
-    console.log("Sunday — rest day");
+    console.log("Sunday - rest day");
     break;
   case 1:
-    console.log("Monday — start of work week");
+    console.log("Monday - start of work week");
     break;
   case 2:
-    console.log("Tuesday — keep going");
+    console.log("Tuesday - keep going");
     break;
   case 3:
-    console.log("Wednesday — halfway there");
+    console.log("Wednesday - halfway there");
     break;
   case 4:
-    console.log("Thursday — almost Friday!");
+    console.log("Thursday - almost Friday!");
     break;
   case 5:
-    console.log("Friday — TGIF! 🎉");
+    console.log("Friday - TGIF! 🎉");
     break;
   case 6:
-    console.log("Saturday — weekend!");
+    console.log("Saturday - weekend!");
     break;
   default:
     console.log("Unknown day");
@@ -116,8 +116,8 @@ switch (day) {
 
 // IMPORTANT: always use break to stop fall-through!
 // Without break, execution continues to the next case` },
-    { type: 'note', title: 'switch vs if/else — when to use which', content: 'Use switch when checking one variable against many specific exact values (like a menu command or day of week). Use if/else for ranges (age > 18), multiple conditions (&&, ||), or when conditions are complex.' },
-    { type: 'heading', content: 'Object Lookup — Better Than Long switch' },
+    { type: 'note', title: 'switch vs if/else - when to use which', content: 'Use switch when checking one variable against many specific exact values (like a menu command or day of week). Use if/else for ranges (age > 18), multiple conditions (&&, ||), or when conditions are complex.' },
+    { type: 'heading', content: 'Object Lookup - Better Than Long switch' },
     { type: 'example', title: 'Replace switch with an object map', content: 'For many simple lookups, an object works better than a long switch statement. Instead of case 200: return "OK", store the mapping in an object { 200: "OK", 404: "Not Found" } and access it with statuses[code]. The ?? "Unknown" at the end provides a default value if the code is not in the object. This is shorter, more readable, and easier to update.', language: 'javascript', code: `// Switch statement (verbose):
 function getStatusText(code) {
   switch(code) {

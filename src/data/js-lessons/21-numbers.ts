@@ -1,15 +1,15 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsNumbersLesson: JSLesson = {
   id:'js-numbers',title:'Numbers & Math',slug:'numbers',chapter:'basics',order:22,difficulty:'beginner',readingTime:10,
-  description:'Master JavaScript numbers — integer vs float, special values (Infinity/NaN), Number methods, and the Math object.',
+  description:'Master JavaScript numbers - integer vs float, special values (Infinity/NaN), Number methods, and the Math object.',
   sections:[
     {type:'text',content:'JavaScript has ONE number type for both integers and decimals (unlike Java/C which have int, float, double). All numbers are 64-bit floating point (IEEE 754). This causes some surprises but is easy to work with once understood.'},
     {type:'heading',content:'Number Basics and Special Values'},
-    {type:'example',title:'Numbers in JavaScript',content:'JavaScript uses one number type for both whole numbers and decimals — a 64-bit floating point (IEEE 754). This means very large integers can lose precision, and 0.1 + 0.2 does not equal exactly 0.3 (a classic floating-point issue). Number.EPSILON is the smallest difference JavaScript can represent — use it when comparing floats. Number.MAX_SAFE_INTEGER is the largest integer that can be represented exactly.',language:'javascript',code:`// JavaScript has ONE number type
+    {type:'example',title:'Numbers in JavaScript',content:'JavaScript uses one number type for both whole numbers and decimals - a 64-bit floating point (IEEE 754). This means very large integers can lose precision, and 0.1 + 0.2 does not equal exactly 0.3 (a classic floating-point issue). Number.EPSILON is the smallest difference JavaScript can represent - use it when comparing floats. Number.MAX_SAFE_INTEGER is the largest integer that can be represented exactly.',language:'javascript',code:`// JavaScript has ONE number type
 const integer = 42;
 const decimal = 3.14;
 const negative = -100;
-const big = 1_000_000;   // numeric separator (ES2021) — just for readability
+const big = 1_000_000;   // numeric separator (ES2021) - just for readability
 
 // Special values
 console.log(Infinity);      // positive infinity
@@ -35,7 +35,7 @@ console.log(Number.isInteger(42));      // true
 console.log(Number.isInteger(42.5));    // false
 console.log(Number.isSafeInteger(Number.MAX_SAFE_INTEGER)); // true`},
     {type:'heading',content:'Number Conversion'},
-    {type:'example',title:'Converting to and from numbers',content:'Number() converts any value to a number — empty string becomes 0, non-numeric strings become NaN. parseInt() is smarter for strings that start with numbers — it reads as far as it can and stops, so "42px" becomes 42. Always pass a radix (base) to parseInt: parseInt("0xff", 16) for hex. toFixed() formats a number to a set number of decimal places and returns a string — useful for displaying prices.',language:'javascript',code:`// String to number
+    {type:'example',title:'Converting to and from numbers',content:'Number() converts any value to a number - empty string becomes 0, non-numeric strings become NaN. parseInt() is smarter for strings that start with numbers - it reads as far as it can and stops, so "42px" becomes 42. Always pass a radix (base) to parseInt: parseInt("0xff", 16) for hex. toFixed() formats a number to a set number of decimal places and returns a string - useful for displaying prices.',language:'javascript',code:`// String to number
 Number("42");         // 42
 Number("3.14");       // 3.14
 Number("");           // 0
@@ -46,57 +46,57 @@ Number(null);         // 0
 Number(undefined);    // NaN
 
 // parseInt and parseFloat
-parseInt("42px");     // 42 — stops at non-numeric
-parseInt("3.9");      // 3 — truncates decimal
-parseInt("0xff", 16); // 255 — parse hex
-parseInt("1010", 2);  // 10 — parse binary
+parseInt("42px");     // 42 - stops at non-numeric
+parseInt("3.9");      // 3 - truncates decimal
+parseInt("0xff", 16); // 255 - parse hex
+parseInt("1010", 2);  // 10 - parse binary
 parseFloat("3.14em"); // 3.14
 
 // Number to string
 (42).toString();      // "42"
-(255).toString(16);   // "ff" — hex
-(255).toString(2);    // "11111111" — binary
-(255).toString(8);    // "377" — octal
+(255).toString(16);   // "ff" - hex
+(255).toString(2);    // "11111111" - binary
+(255).toString(8);    // "377" - octal
 
 // Formatting
-(3.14159).toFixed(2);    // "3.14" — decimal places (returns string!)
-(1234567).toLocaleString(); // "1,234,567" — locale-aware
+(3.14159).toFixed(2);    // "3.14" - decimal places (returns string!)
+(1234567).toLocaleString(); // "1,234,567" - locale-aware
 (0.000001).toExponential(2); // "1.00e-6"
 (1234).toPrecision(3);   // "1.23e+3"`},
     {type:'heading',content:'The Math Object'},
-    {type:'example',title:'Math methods — all you need to know',content:'The Math object contains constants and functions for mathematical operations. Math.random() gives a random number between 0 and 1 (never exactly 1) — multiply and floor it to get random integers. Know the difference between Math.floor() (always rounds down toward -∞) and Math.trunc() (always rounds toward zero) — they differ for negative numbers. Math.max(...arr) uses spread to pass an array as individual arguments.',language:'javascript',code:`// Constants
+    {type:'example',title:'Math methods - all you need to know',content:'The Math object contains constants and functions for mathematical operations. Math.random() gives a random number between 0 and 1 (never exactly 1) - multiply and floor it to get random integers. Know the difference between Math.floor() (always rounds down toward -∞) and Math.trunc() (always rounds toward zero) - they differ for negative numbers. Math.max(...arr) uses spread to pass an array as individual arguments.',language:'javascript',code:`// Constants
 Math.PI;      // 3.14159265358979
 Math.E;       // 2.71828182845905
 Math.SQRT2;   // 1.41421356237
 Math.LN2;     // 0.693147180559945
 
 // Rounding
-Math.round(4.6);    // 5  — nearest integer
-Math.round(4.5);    // 5  — .5 rounds UP
+Math.round(4.6);    // 5  - nearest integer
+Math.round(4.5);    // 5  - .5 rounds UP
 Math.round(4.4);    // 4
-Math.floor(4.9);    // 4  — always rounds DOWN
-Math.ceil(4.1);     // 5  — always rounds UP
-Math.trunc(4.9);    // 4  — removes decimal (no rounding)
+Math.floor(4.9);    // 4  - always rounds DOWN
+Math.ceil(4.1);     // 5  - always rounds UP
+Math.trunc(4.9);    // 4  - removes decimal (no rounding)
 Math.trunc(-4.9);   // -4 (different from floor for negatives!)
 Math.floor(-4.1);   // -5 (floor goes toward -∞)
 
 // Min/Max
 Math.max(1, 5, 3, 9, 2);   // 9
 Math.min(1, 5, 3, 9, 2);   // 1
-Math.max(...[1,5,3,9,2]);   // 9 — spread array
+Math.max(...[1,5,3,9,2]);   // 9 - spread array
 
 // Math functions
-Math.abs(-42);              // 42 — absolute value
-Math.sqrt(16);              // 4  — square root
-Math.cbrt(27);              // 3  — cube root
+Math.abs(-42);              // 42 - absolute value
+Math.sqrt(16);              // 4  - square root
+Math.cbrt(27);              // 3  - cube root
 Math.pow(2, 10);            // 1024 (same as 2**10)
 Math.sign(-5);              // -1 (negative)
 Math.sign(0);               // 0
 Math.sign(5);               // 1 (positive)
-Math.log(Math.E);           // 1 — natural log
-Math.log2(8);               // 3 — log base 2
-Math.log10(1000);           // 3 — log base 10
-Math.hypot(3, 4);           // 5 — sqrt(3²+4²)
+Math.log(Math.E);           // 1 - natural log
+Math.log2(8);               // 3 - log base 2
+Math.log10(1000);           // 3 - log base 10
+Math.hypot(3, 4);           // 5 - sqrt(3²+4²)
 
 // Trigonometry
 Math.sin(Math.PI / 2);      // 1
@@ -150,7 +150,7 @@ p{font-size:18px;font-weight:700;color:#2563eb;margin:10px 0 0;}`,
     '(a).toString(2) = ' + Math.floor(a).toString(2) + ' (binary)',
     '(a).toString(16)= ' + Math.floor(a).toString(16) + ' (hex)',
   ];
-  document.getElementById('result').textContent = lines.join('\\n');
+  document.getElementById('result').textContent = lines.join('\ ');
 }
 function rollDice() {
   const dice = Array.from({length:5}, () => Math.floor(Math.random()*6)+1);

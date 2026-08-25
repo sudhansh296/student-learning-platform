@@ -94,12 +94,12 @@ const writeStream = fs.createWriteStream('output.txt', {
 });
 
 // Write data
-writeStream.write('First line\\n');
-writeStream.write('Second line\\n');
-writeStream.write('Third line\\n');
+writeStream.write('First line\ ');
+writeStream.write('Second line\ ');
+writeStream.write('Third line\ ');
 
 // End the stream (required!)
-writeStream.end('Final line\\n');
+writeStream.end('Final line\ ');
 
 // Listen to finish event
 writeStream.on('finish', () => {
@@ -223,13 +223,13 @@ class LineCounter extends Transform {
   }
   
   _transform(chunk, encoding, callback) {
-    const lines = chunk.toString().split('\\n');
+    const lines = chunk.toString().split('\ ');
     this.lineCount += lines.length - 1;
     
     // Add line numbers
     const numbered = lines
       .map((line, i) => \`\${this.lineCount + i}: \${line}\`)
-      .join('\\n');
+      .join('\ ');
     
     this.push(numbered);
     callback();
@@ -307,7 +307,7 @@ class CSVProcessor extends Transform {
     this.buffer += chunk.toString();
     
     // Split on newlines
-    const lines = this.buffer.split('\\n');
+    const lines = this.buffer.split('\ ');
     
     // Keep last incomplete line in buffer
     this.buffer = lines.pop();
@@ -320,7 +320,7 @@ class CSVProcessor extends Transform {
           name: fields[0],
           age: parseInt(fields[1]),
           email: fields[2]
-        }) + '\\n');
+        }) + '\ ');
       }
     });
     
@@ -335,7 +335,7 @@ class CSVProcessor extends Transform {
         name: fields[0],
         age: parseInt(fields[1]),
         email: fields[2]
-      }) + '\\n');
+      }) + '\ ');
     }
     callback();
   }

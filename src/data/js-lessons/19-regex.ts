@@ -1,12 +1,12 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsRegexLesson: JSLesson = {
   id:'js-regex',title:'Regular Expressions',slug:'regex',
   chapter:'advanced',order:20,difficulty:'intermediate',readingTime:12,
-  description:'Master regular expressions in JavaScript — syntax, flags, methods, capture groups, and real-world validation patterns.',
+  description:'Master regular expressions in JavaScript - syntax, flags, methods, capture groups, and real-world validation patterns.',
   sections:[
     {type:'text',content:'Regular expressions (regex) are patterns for matching text. They look intimidating at first, but once you understand the syntax, they become an incredibly powerful tool for validation, search, and text manipulation.'},
     {type:'heading',content:'Creating Regular Expressions'},
-    {type:'example',title:'Regex literals and the RegExp constructor',content:'A regular expression is a pattern written between two forward slashes: /pattern/. Flags come after the closing slash — i makes it case-insensitive, g finds all matches not just the first. Use the literal syntax when the pattern is known at compile time. Use new RegExp(variable) when you need to build the pattern dynamically from a string variable.',language:'javascript',code:`// Literal syntax (preferred)
+    {type:'example',title:'Regex literals and the RegExp constructor',content:'A regular expression is a pattern written between two forward slashes: /pattern/. Flags come after the closing slash - i makes it case-insensitive, g finds all matches not just the first. Use the literal syntax when the pattern is known at compile time. Use new RegExp(variable) when you need to build the pattern dynamically from a string variable.',language:'javascript',code:`// Literal syntax (preferred)
 const pattern1 = /hello/;          // match "hello"
 const pattern2 = /hello/i;         // case-insensitive
 const pattern3 = /hello/gi;        // global + case-insensitive
@@ -17,43 +17,43 @@ const pattern4 = new RegExp(word, "i"); // same as /hello/i
 const pattern5 = new RegExp(\`^\${word}\$\`, "i"); // dynamic
 
 // Flags:
-// i — case-insensitive
-// g — global (find ALL matches)
-// m — multiline (^ and $ match start/end of each line)
-// s — dotAll (. matches newline too)
-// u — unicode
-// d — generate indices for matches (ES2022)`},
+// i - case-insensitive
+// g - global (find ALL matches)
+// m - multiline (^ and $ match start/end of each line)
+// s - dotAll (. matches newline too)
+// u - unicode
+// d - generate indices for matches (ES2022)`},
     {type:'heading',content:'Testing and Matching'},
-    {type:'example',title:'test, match, search, replace',content:'test() is the simplest — just returns true or false. match() returns the matched text plus metadata, or null if nothing matched. With the /g flag, match() returns an array of all matches. exec() is like match() but works in a loop for multiple matches. search() returns the index position of the match. replace() substitutes the match with new text — use a function as the replacement for dynamic substitutions.',language:'javascript',code:`const str = "Hello, my email is alex@example.com and phone is +1-555-0123";
+    {type:'example',title:'test, match, search, replace',content:'test() is the simplest - just returns true or false. match() returns the matched text plus metadata, or null if nothing matched. With the /g flag, match() returns an array of all matches. exec() is like match() but works in a loop for multiple matches. search() returns the index position of the match. replace() substitutes the match with new text - use a function as the replacement for dynamic substitutions.',language:'javascript',code:`const str = "Hello, my email is alex@example.com and phone is +1-555-0123";
 const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
-// test() — returns true/false
+// test() - returns true/false
 emailRegex.test(str);               // true
 emailRegex.test("no email here");   // false
 
-// match() — returns match array or null
+// match() - returns match array or null
 str.match(emailRegex);              // ["alex@example.com", ...]
 "no match".match(emailRegex);       // null
 
-// With 'g' flag — returns ALL matches
+// With 'g' flag - returns ALL matches
 const allEmails = str.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g);
 // ["alex@example.com"]
 
-// exec() — returns match with index (useful in loops)
+// exec() - returns match with index (useful in loops)
 const regex = /\d+/g;
 let match;
 while ((match = regex.exec("a1b2c3")) !== null) {
   console.log(\`Found \${match[0]} at index \${match.index}\`);
 }
 
-// search() — returns index of first match or -1
+// search() - returns index of first match or -1
 str.search(emailRegex);   // 22 (index of match)
 str.search(/python/);     // -1 (not found)
 
-// replace() — single replacement
+// replace() - single replacement
 str.replace(emailRegex, "[REDACTED]");
 
-// replaceAll() with regex — use 'g' flag
+// replaceAll() with regex - use 'g' flag
 str.replace(/\d+/g, "X"); // replace all numbers`},
     {type:'heading',content:'Regex Patterns and Character Classes'},
     {type:'example',title:'Special characters and patterns',content:'Character classes like [a-z] match any character in that range. Shorthand classes \\d (digit), \\w (word character), \\s (whitespace) save you from writing the full range. Quantifiers control how many times something must appear: + means one or more, * means zero or more, {2,4} means between 2 and 4 times. Anchors ^ and $ pin the match to the start or end of the string. Capture groups () extract specific parts of the match.',language:'javascript',code:`// Character classes
@@ -93,7 +93,7 @@ str.replace(/\d+/g, "X"); // replace all numbers`},
 /(hello)(world)/ // two capture groups
 /(?<year>\d{4})-(?<month>\d{2})/ // named capture groups`},
     {type:'heading',content:'Real-World Validation Patterns'},
-    {type:'example',title:'Common validation regexes',content:'These are the regex patterns used in real-world form validation. The email regex checks for the user@domain.tld structure. The password regex uses lookaheads (?=...) — these are zero-width assertions that check "the string contains at least one lowercase/uppercase/digit" without consuming characters. Named capture groups (?<year>...) extract date parts directly by name instead of by index number.',language:'javascript',code:`// Email validation
+    {type:'example',title:'Common validation regexes',content:'These are the regex patterns used in real-world form validation. The email regex checks for the user@domain.tld structure. The password regex uses lookaheads (?=...) - these are zero-width assertions that check "the string contains at least one lowercase/uppercase/digit" without consuming characters. Named capture groups (?<year>...) extract date parts directly by name instead of by index number.',language:'javascript',code:`// Email validation
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 emailRegex.test("user@example.com");    // true
 emailRegex.test("invalid.email");       // false
@@ -164,9 +164,9 @@ p{margin:8px 0 0;font-size:13px;font-weight:600;}`,
   try {
     const rx = new RegExp(pat, flags);
     const matches = str.match(rx) || [];
-    let html = 'Pattern: /' + pat + '/' + flags + '\\n';
-    html += 'Matches (' + matches.length + '): ' + JSON.stringify(matches) + '\\n';
-    html += 'test(): ' + rx.test(str) + '\\n';
+    let html = 'Pattern: /' + pat + '/' + flags + '\ ';
+    html += 'Matches (' + matches.length + '): ' + JSON.stringify(matches) + '\ ';
+    html += 'test(): ' + rx.test(str) + '\ ';
     result.textContent = html;
   } catch(e) { result.textContent = '❌ Invalid regex: ' + e.message; }
 }
@@ -190,5 +190,5 @@ function testPass() {
 }`,mode:'full'},
   ],
   exercises:[{id:'rx-1',question:'What does the /g flag do in a regex?',type:'multiple-choice',options:['Makes the match case-insensitive','Returns all matches instead of just the first one','Makes the regex run faster','Searches only global variables'],correct:1,explanation:'The g (global) flag makes the regex find ALL matches in a string, not just the first one. Without g, str.match(/\d+/) returns the first number found. With g, str.match(/\d+/g) returns an array of all numbers.'}],
-  quiz:[{id:'qrx1',question:'What is (?<name>...) in a regex?',options:['Optional group','Negative lookahead','A named capture group — accessible via match.groups.name','A non-capturing group'],correct:2,explanation:'(?<name>...) is a named capture group. The matched value is available at match.groups.name. Example: /(?<year>\\d{4})-(?<month>\\d{2})/.exec("2026-08") gives groups.year="2026" and groups.month="08".'}],
+  quiz:[{id:'qrx1',question:'What is (?<name>...) in a regex?',options:['Optional group','Negative lookahead','A named capture group - accessible via match.groups.name','A non-capturing group'],correct:2,explanation:'(?<name>...) is a named capture group. The matched value is available at match.groups.name. Example: /(?<year>\\d{4})-(?<month>\\d{2})/.exec("2026-08") gives groups.year="2026" and groups.month="08".'}],
 };

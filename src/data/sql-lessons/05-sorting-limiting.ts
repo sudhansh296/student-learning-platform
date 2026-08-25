@@ -12,7 +12,7 @@ export const lesson05: SqlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Without ORDER BY, SQL results come back in no guaranteed order. The database returns rows in whatever order is most convenient for its query plan — usually the order they are stored on disk, but this can change after updates or deletions. Always use ORDER BY when the order of results matters to your application.'
+      content: 'Without ORDER BY, SQL results come back in no guaranteed order. The database returns rows in whatever order is most convenient for its query plan - usually the order they are stored on disk, but this can change after updates or deletions. Always use ORDER BY when the order of results matters to your application.'
     },
     {
       type: 'heading',
@@ -20,7 +20,7 @@ export const lesson05: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'ORDER BY sorts the result set by one or more columns. ASC (ascending) sorts from smallest to largest, A to Z, oldest to newest — and is the default if you omit the direction. DESC (descending) sorts in the opposite direction: largest first, Z to A, newest first.'
+      content: 'ORDER BY sorts the result set by one or more columns. ASC (ascending) sorts from smallest to largest, A to Z, oldest to newest - and is the default if you omit the direction. DESC (descending) sorts in the opposite direction: largest first, Z to A, newest first.'
     },
     {
       type: 'text',
@@ -65,7 +65,7 @@ ORDER BY last_login DESC NULLS LAST;`,
     },
     {
       type: 'text',
-      content: 'LIMIT restricts the number of rows returned. This is essential for performance — retrieving 10,000 rows when you only need the top 10 wastes database resources, network bandwidth, and application memory. Always LIMIT queries that could return large result sets.'
+      content: 'LIMIT restricts the number of rows returned. This is essential for performance - retrieving 10,000 rows when you only need the top 10 wastes database resources, network bandwidth, and application memory. Always LIMIT queries that could return large result sets.'
     },
     {
       type: 'text',
@@ -85,9 +85,9 @@ ORDER BY last_login DESC NULLS LAST;`,
       headers: ['Factor', 'Offset Pagination', 'Cursor Pagination'],
       rows: [
         ['Implementation', 'Simple: LIMIT n OFFSET m', 'More complex: WHERE id > last_id LIMIT n'],
-        ['Performance', 'Slow on large offsets (must scan and skip rows)', 'Fast regardless of position — uses index'],
-        ['Consistency', 'Can show duplicates or miss rows if data changes', 'Stable — anchored to a specific row'],
-        ['Random access', 'Yes — can jump to any page number', 'No — sequential only'],
+        ['Performance', 'Slow on large offsets (must scan and skip rows)', 'Fast regardless of position - uses index'],
+        ['Consistency', 'Can show duplicates or miss rows if data changes', 'Stable - anchored to a specific row'],
+        ['Random access', 'Yes - can jump to any page number', 'No - sequential only'],
         ['Best for', 'Admin dashboards, small datasets, numbered pages', 'Infinite scroll, large datasets, real-time feeds']
       ]
     },
@@ -155,7 +155,7 @@ button:disabled { background: #a0aec0; cursor: not-allowed; }
 #page { font-size: 13px; color: #4a5568; font-weight: 600; }
 </style>
 <div>
-  <h3>📄 Pagination Simulator — LIMIT and OFFSET</h3>
+  <h3>📄 Pagination Simulator - LIMIT and OFFSET</h3>
   <div id="info"></div>
   <code id="sql"></code>
   <div id="table"></div>
@@ -229,7 +229,7 @@ render();`,
         'The last 10 rows of the result'
       ],
       correct: 1,
-      explanation: 'OFFSET 20 skips the first 20 rows, and LIMIT 10 returns the next 10. So you get rows 21-30 — this is page 3 of a 10-rows-per-page pagination scheme (pages are 1-10, 11-20, 21-30, ...).'
+      explanation: 'OFFSET 20 skips the first 20 rows, and LIMIT 10 returns the next 10. So you get rows 21-30 - this is page 3 of a 10-rows-per-page pagination scheme (pages are 1-10, 11-20, 21-30, ...).'
     },
     {
       id: 'ex-sql-5-3',
@@ -252,7 +252,7 @@ render();`,
       options: [
         'An error is thrown',
         'Results are sorted alphabetically by the first column',
-        'An arbitrary subset is returned — the specific rows may vary between queries',
+        'An arbitrary subset is returned - the specific rows may vary between queries',
         'The database returns the first rows in insertion order'
       ],
       correct: 2,

@@ -1,24 +1,24 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssFlexboxLesson: CssLesson = {
   id:'css-flexbox',title:'CSS Flexbox',slug:'flexbox',
   chapter:'flexbox',order:6,difficulty:'beginner',readingTime:15,
-  description:'Master Flexbox — the modern one-dimensional layout system for aligning and distributing elements.',
+  description:'Master Flexbox - the modern one-dimensional layout system for aligning and distributing elements.',
   sections:[
     {type:'text',content:'Flexbox (Flexible Box Layout) is a CSS layout model that makes it easy to arrange items in a row or column, align them, and distribute space between them. It replaced float-based layouts and is now the most used layout technique in web development.'},
     {type:'analogy',title:'Flexbox is like a shelf',content:'Imagine a bookshelf. You decide if books stand left-to-right or top-to-bottom (flex-direction). You decide if they bunch up to one side or spread out (justify-content). You decide if they all stand at the same height or vary (align-items). Flexbox gives you this control over any group of HTML elements.'},
     {type:'heading',content:'Enabling Flexbox'},
-    {type:'code',language:'css',content:'display:flex turns a container into a flexbox. Its DIRECT children become flex items that line up in a row by default. Only the direct children are affected — deeper descendants are not flex items. This is the most important rule in Flexbox.',code:`/* Add display: flex to the PARENT (container) */
+    {type:'code',language:'css',content:'display:flex turns a container into a flexbox. Its DIRECT children become flex items that line up in a row by default. Only the direct children are affected - deeper descendants are not flex items. This is the most important rule in Flexbox.',code:`/* Add display: flex to the PARENT (container) */
 .container {
   display: flex;        /* makes children flex items */
   display: inline-flex; /* flex container but stays inline */
 }`},
-    {type:'heading',content:'flex-direction — Row or Column?'},
+    {type:'heading',content:'flex-direction - Row or Column?'},
     {type:'code',language:'css',content:'flex-direction sets which way items flow. row (default) lays items left to right. column stacks them top to bottom. row-reverse and column-reverse go in the opposite direction. The main axis is always the direction of flex-direction.',code:`/* Controls main axis direction */
 .container { flex-direction: row; }           /* → left to right (default) */
 .container { flex-direction: row-reverse; }   /* ← right to left */
 .container { flex-direction: column; }        /* ↓ top to bottom */
 .container { flex-direction: column-reverse; }/* ↑ bottom to top */`},
-    {type:'heading',content:'justify-content — Alignment on Main Axis'},
+    {type:'heading',content:'justify-content - Alignment on Main Axis'},
     {type:'code',language:'css',content:'justify-content distributes space along the main axis. flex-start packs items to the start. flex-end to the end. center centers them. space-between puts equal space between items. space-around adds equal space around each item.',code:`/* Controls how items are distributed along main axis */
 .row { justify-content: flex-start; }    /* items at start (default) */
 .row { justify-content: flex-end; }      /* items at end */
@@ -26,7 +26,7 @@ export const cssFlexboxLesson: CssLesson = {
 .row { justify-content: space-between; } /* equal gaps between items, no outer gaps */
 .row { justify-content: space-around; }  /* equal gaps including half-gaps at edges */
 .row { justify-content: space-evenly; }  /* equal gaps everywhere including edges */`},
-    {type:'heading',content:'align-items — Alignment on Cross Axis'},
+    {type:'heading',content:'align-items - Alignment on Cross Axis'},
     {type:'code',language:'css',content:'align-items aligns items on the cross axis (perpendicular to flex-direction). stretch (default) makes all items the same height. center vertically centers them. flex-start aligns to the top. baseline aligns items to their text baseline.',code:`/* Controls how items align on the CROSS axis (perpendicular to main) */
 .row { align-items: stretch; }    /* items stretch to fill container height (default) */
 .row { align-items: flex-start; } /* items at top (for row direction) */
@@ -34,20 +34,20 @@ export const cssFlexboxLesson: CssLesson = {
 .row { align-items: center; }     /* items vertically centered */
 .row { align-items: baseline; }   /* items aligned by text baseline */
 
-/* Perfect centering — one of the most useful CSS tricks */
+/* Perfect centering - one of the most useful CSS tricks */
 .center-everything {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; /* needs height set */
 }`},
-    {type:'heading',content:'flex-wrap — Wrapping'},
-    {type:'code',language:'css',content:'By default flex items never wrap — they shrink to fit on one line. flex-wrap:wrap allows items to move to the next line when there is not enough space. This is essential for responsive card grids.',code:`/* By default, flex items never wrap (they shrink instead) */
+    {type:'heading',content:'flex-wrap - Wrapping'},
+    {type:'code',language:'css',content:'By default flex items never wrap - they shrink to fit on one line. flex-wrap:wrap allows items to move to the next line when there is not enough space. This is essential for responsive card grids.',code:`/* By default, flex items never wrap (they shrink instead) */
 .container { flex-wrap: nowrap; }   /* all on one line (default) */
 .container { flex-wrap: wrap; }     /* wrap to next line when needed */
 .container { flex-wrap: wrap-reverse; } /* wrap upward */
 
-/* align-content — controls wrapped lines */
+/* align-content - controls wrapped lines */
 .container {
   flex-wrap: wrap;
   align-content: flex-start;   /* wrapped lines at start */
@@ -71,20 +71,20 @@ export const cssFlexboxLesson: CssLesson = {
 .item { flex-basis: 33.33%; }  /* start at 1/3 width */
 
 /* SHORTHAND: flex = grow shrink basis */
-.item { flex: 1; }          /* grow:1, shrink:1, basis:0 — equal widths */
+.item { flex: 1; }          /* grow:1, shrink:1, basis:0 - equal widths */
 .item { flex: 0 0 200px; }  /* fixed 200px, never grow or shrink */
 .item { flex: 1 1 auto; }   /* default behavior */
 
-/* order — change visual order without changing HTML */
+/* order - change visual order without changing HTML */
 .first { order: -1; } /* moves to front */
 .last  { order: 999; } /* moves to back */
 /* default order is 0 for all items */
 
-/* align-self — override align-items for ONE item */
+/* align-self - override align-items for ONE item */
 .item { align-self: flex-start; }  /* this item ignores align-items on container */
 .item { align-self: center; }`},
-    {type:'heading',content:'gap — Space Between Items'},
-    {type:'code',language:'css',content:'gap adds consistent spacing between flex items without needing margins. It does not add space before the first or after the last item — unlike margin. row-gap and column-gap set spacing independently for each direction.',code:`/* gap replaces margin tricks for flex spacing */
+    {type:'heading',content:'gap - Space Between Items'},
+    {type:'code',language:'css',content:'gap adds consistent spacing between flex items without needing margins. It does not add space before the first or after the last item - unlike margin. row-gap and column-gap set spacing independently for each direction.',code:`/* gap replaces margin tricks for flex spacing */
 .container { gap: 16px; }        /* same gap on all sides */
 .container { gap: 8px 16px; }    /* row-gap column-gap */
 .container { row-gap: 8px; column-gap: 16px; }
@@ -112,7 +112,7 @@ nav {
   gap: 24px;
 }
 .card {
-  flex: 1 1 280px; /* grow, shrink, min 280px — wraps nicely */
+  flex: 1 1 280px; /* grow, shrink, min 280px - wraps nicely */
   max-width: 400px;
 }
 
@@ -188,6 +188,6 @@ small{font-weight:400;opacity:.8;}`,
   ],
   quiz:[
     {id:'fq1',question:'How do you perfectly center content both horizontally and vertically with flexbox?',options:['text-align:center only','display:flex + justify-content:center + align-items:center','margin:auto on child','padding:50%'],correct:1,explanation:'display:flex + justify-content:center + align-items:center on the container centers all children. The container needs a defined height/width to center against.'},
-    {id:'fq2',question:'What does flex: 1 mean?',options:['Fixed width of 1px','flex-grow:1, flex-shrink:1, flex-basis:0 — item fills available space equally','Only grow, never shrink','Nothing'],correct:1,explanation:'flex: 1 is shorthand for flex-grow:1 shrink:1 basis:0. Multiple items with flex:1 share available space equally — very useful for equal-width columns.'},
+    {id:'fq2',question:'What does flex: 1 mean?',options:['Fixed width of 1px','flex-grow:1, flex-shrink:1, flex-basis:0 - item fills available space equally','Only grow, never shrink','Nothing'],correct:1,explanation:'flex: 1 is shorthand for flex-grow:1 shrink:1 basis:0. Multiple items with flex:1 share available space equally - very useful for equal-width columns.'},
   ],
 };

@@ -89,7 +89,7 @@ export const lesson06: SqliteLesson = {
         'Enable WAL + foreign_keys in a single setup function called after every connection open',
         'Prepare all statements once at module initialization, not inside request handlers',
         'Use :memory: databases in tests with beforeEach to get a fresh isolated DB every test',
-        'Wrap bulk inserts in a single transaction — 100x faster than auto-commit inserts',
+        'Wrap bulk inserts in a single transaction - 100x faster than auto-commit inserts',
         'Use db.backup() for online backups without closing the database',
         'Index foreign key columns and frequently filtered columns for JOIN performance'
       ]
@@ -205,7 +205,7 @@ const entries = [
   { item: '.dump', cat: 'CLI', desc: 'Export entire database as SQL statements' },
   { item: 'INTEGER PRIMARY KEY', cat: 'SQL', desc: 'Auto-incrementing integer ID (rowid alias)' },
   { item: 'datetime(\\'now\\')', cat: 'SQL', desc: 'Current UTC timestamp as text' },
-  { item: 'ON CONFLICT DO UPDATE', cat: 'SQL', desc: 'UPSERT — insert or update on conflict (3.24+)' },
+  { item: 'ON CONFLICT DO UPDATE', cat: 'SQL', desc: 'UPSERT - insert or update on conflict (3.24+)' },
   { item: 'STRICT tables', cat: 'SQL', desc: 'Enable strict type checking per table (3.37+)' },
 ];
 

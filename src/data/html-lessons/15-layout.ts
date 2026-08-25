@@ -1,14 +1,14 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 export const htmlLayoutLesson: HtmlLesson = {
   id: 'html-layout', title: 'HTML Layout', slug: 'layout', chapter: 'advanced', order: 15,
   difficulty: 'beginner', readingTime: 10, description: 'Understand HTML layout with block vs inline elements, div, span, and modern CSS layout techniques.',
   sections: [
     { type: 'text', content: 'HTML elements have a default display behavior: block or inline. Understanding this is the foundation of all web layout. Modern layouts use CSS Flexbox and Grid (applied to semantic HTML5 elements), not layout tables.' },
     { type: 'heading', content: 'Block vs Inline Elements' },
-    { type: 'code', language: 'html',       content: 'Block elements take full width and start on a new line — div, p, h1, section. Inline elements stay within text flow — span, a, strong. Use div as a generic block container when no semantic element fits. Use span to target specific inline text with CSS or JavaScript.',
+    { type: 'code', language: 'html',       content: 'Block elements take full width and start on a new line - div, p, h1, section. Inline elements stay within text flow - span, a, strong. Use div as a generic block container when no semantic element fits. Use span to target specific inline text with CSS or JavaScript.',
       code: `<!-- BLOCK elements: take full width, start on new line -->
 <div>I am a block element</div>
-<p>So am I — I take full width</p>
+<p>So am I - I take full width</p>
 <h1>Me too</h1>
 <ul><li>And me</li></ul>
 <header>And header</header>
@@ -24,7 +24,7 @@ export const htmlLayoutLesson: HtmlLesson = {
 <!-- You can change display with CSS: -->
 <span style="display: block;">Inline span acting as block</span>
 <div  style="display: inline;">Block div acting as inline</div>` },
-    { type: 'heading', content: '<div> and <span> — Generic Containers' },
+    { type: 'heading', content: '<div> and <span> - Generic Containers' },
     { type: 'text', content: '<div> is a block-level container with no semantic meaning. <span> is an inline container with no semantic meaning. Use them when no other semantic element fits, primarily as hooks for CSS and JavaScript.' },
     { type: 'code', language: 'html',       content: 'display:flex creates a flexbox container. Children lay out in a row by default. justify-content distributes items horizontally. align-items aligns them vertically. gap adds spacing between items without needing margins. Flexbox is perfect for nav bars, card rows, and form layouts.',
       code: `<!-- div: block container, groups related elements for layout -->
@@ -49,7 +49,7 @@ export const htmlLayoutLesson: HtmlLesson = {
   Error: <span style="color:red; font-weight:700">Invalid email address</span>
 </p>` },
     { type: 'heading', content: 'A Complete Page Layout with CSS Flexbox' },
-    { type: 'code', language: 'html',       content: 'CSS Grid creates two-dimensional layouts — rows and columns at the same time. grid-template-columns defines column widths. repeat(3,1fr) creates three equal columns. grid-template-areas lets you name layout zones. Grid is ideal for full page layouts and card grids.',
+    { type: 'code', language: 'html',       content: 'CSS Grid creates two-dimensional layouts - rows and columns at the same time. grid-template-columns defines column widths. repeat(3,1fr) creates three equal columns. grid-template-areas lets you name layout zones. Grid is ideal for full page layouts and card grids.',
       code: `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +107,7 @@ export const htmlLayoutLesson: HtmlLesson = {
     <span class="inline-demo">a span</span>
     and <strong class="inline-demo">strong</strong>
     and <em class="inline-demo">emphasis</em>
-    — all inline.
+    - all inline.
   </p>
 
   <h2>3-Column Grid Layout</h2>

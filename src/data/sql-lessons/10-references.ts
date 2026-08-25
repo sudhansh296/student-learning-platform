@@ -80,14 +80,14 @@ export const lesson10: SqlLesson = {
       items: [
         'WHERE phone = NULL instead of WHERE phone IS NULL (NULL comparisons always return NULL)',
         'Using NOT IN when the subquery might return NULL values (use NOT EXISTS instead)',
-        'Forgetting WHERE in UPDATE or DELETE — running UPDATE users SET plan = \'pro\' updates EVERY user',
-        'SELECT * in production code — always name columns explicitly',
+        'Forgetting WHERE in UPDATE or DELETE - running UPDATE users SET plan = \'pro\' updates EVERY user',
+        'SELECT * in production code - always name columns explicitly',
         'Putting aggregate conditions in WHERE instead of HAVING',
-        'Not indexing foreign key columns — causes slow JOIN performance on large tables',
-        'Using FLOAT for money — always use DECIMAL(10,2) for exact arithmetic',
+        'Not indexing foreign key columns - causes slow JOIN performance on large tables',
+        'Using FLOAT for money - always use DECIMAL(10,2) for exact arithmetic',
         'Forgetting that GROUP BY requires all non-aggregated SELECT columns',
-        'LIMIT without ORDER BY — returns unpredictable row subsets',
-        'Assuming JOINs preserve order — always add ORDER BY when order matters'
+        'LIMIT without ORDER BY - returns unpredictable row subsets',
+        'Assuming JOINs preserve order - always add ORDER BY when order matters'
       ]
     },
     {
@@ -271,10 +271,10 @@ render();`,
         'Lowercase keywords, uppercase identifiers',
         'Uppercase keywords, lowercase identifiers (select, from, where)',
         'Uppercase keywords (SELECT, FROM, WHERE), lowercase identifiers (users, email)',
-        'Any consistent style is fine — there is no convention'
+        'Any consistent style is fine - there is no convention'
       ],
       correct: 2,
-      explanation: 'The widely adopted convention is UPPERCASE for SQL keywords (SELECT, FROM, WHERE, JOIN, etc.) and lowercase for identifiers (table names, column names). This makes queries easy to scan visually — you can immediately see the structure.'
+      explanation: 'The widely adopted convention is UPPERCASE for SQL keywords (SELECT, FROM, WHERE, JOIN, etc.) and lowercase for identifiers (table names, column names). This makes queries easy to scan visually - you can immediately see the structure.'
     },
     {
       id: 'q-sql-10-2',

@@ -274,7 +274,7 @@ app.post('/users', function(req, res, next) {
 
 function runTest(idx) {
   var test = tests[idx];
-  var lines = test.output.split('\\n');
+  var lines = test.output.split('\ ');
   var output = '';
   
   lines.forEach(function(line) {

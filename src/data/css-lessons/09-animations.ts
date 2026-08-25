@@ -1,4 +1,4 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssAnimationsLesson: CssLesson = {
   id:'css-animations',title:'Transitions & Animations',slug:'animations',
   chapter:'advanced',order:9,difficulty:'intermediate',readingTime:12,
@@ -6,7 +6,7 @@ export const cssAnimationsLesson: CssLesson = {
   sections:[
     {type:'text',content:'CSS animations make interfaces feel responsive and alive. There are two ways to animate in CSS: transitions (animate between two states) and animations (keyframe-based, can loop, have multiple steps).'},
     {type:'heading',content:'CSS Transitions'},
-    {type:'code',language:'css',content:'transition animates changes between CSS states. Specify which property to animate, the duration, and the easing function. Transitions fire when the property value changes — most commonly on :hover. Use ease-out for natural-feeling motion.',code:`/* transition: property duration timing-function delay */
+    {type:'code',language:'css',content:'transition animates changes between CSS states. Specify which property to animate, the duration, and the easing function. Transitions fire when the property value changes - most commonly on :hover. Use ease-out for natural-feeling motion.',code:`/* transition: property duration timing-function delay */
 .btn {
   background: #2563eb;
   transition: background 0.2s ease;  /* animate background over 200ms */
@@ -24,7 +24,7 @@ export const cssAnimationsLesson: CssLesson = {
   box-shadow: 0 12px 32px rgba(0,0,0,0.15);
 }
 
-/* Transition ALL properties (use carefully — can be slow) */
+/* Transition ALL properties (use carefully - can be slow) */
 .element { transition: all 0.3s ease; }
 
 /* Timing functions */
@@ -35,15 +35,15 @@ transition-timing-function: ease-in-out;  /* slow both ends */
 transition-timing-function: linear;       /* constant speed */
 transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* custom bounce */`},
     {type:'heading',content:'CSS Transforms'},
-    {type:'code',language:'css',content:'transform moves, rotates, scales, or skews elements without affecting document layout — neighboring elements do not move. translateX/Y moves in pixels. scale() resizes. rotate() spins. Combining transforms in one declaration applies them right to left.\\',code:`/* transform doesn't affect layout — no reflow */
+    {type:'code',language:'css',content:'transform moves, rotates, scales, or skews elements without affecting document layout - neighboring elements do not move. translateX/Y moves in pixels. scale() resizes. rotate() spins. Combining transforms in one declaration applies them right to left.\\',code:`/* transform doesn't affect layout - no reflow */
 
-/* Translate — move */
+/* Translate - move */
 .move { transform: translateX(50px); }    /* right 50px */
 .move { transform: translateY(-20px); }   /* up 20px */
 .move { transform: translate(50px, -20px); } /* both */
 .move { transform: translateZ(100px); }   /* 3D depth */
 
-/* Scale — resize */
+/* Scale - resize */
 .grow   { transform: scale(1.05); }   /* 5% larger */
 .shrink { transform: scale(0.95); }   /* 5% smaller */
 .icon   { transform: scaleX(1.1); }   /* only horizontal */
@@ -60,7 +60,7 @@ transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* custom bounce 
 /* Multiple transforms */
 .complex { transform: translate(20px, -10px) scale(1.1) rotate(5deg); }
 
-/* transform-origin — pivot point */
+/* transform-origin - pivot point */
 .pivot { transform-origin: top left; }    /* rotate from top-left */
 .pivot { transform-origin: 50% 50%; }     /* default: center */
 
@@ -119,7 +119,7 @@ transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* custom bounce 
   animation-play-state: running;  /* or paused */
 }`},
     {type:'heading',content:'Skeleton Loading Animation'},
-    {type:'code',language:'css',content:'Performance tip: only animate opacity and transform — these are handled by the GPU and do not trigger layout recalculations (reflow). Animating width, height, or top/left forces the browser to recalculate the layout every frame, which causes jank on low-end devices.',code:`/* Common pattern: skeleton loading placeholder */
+    {type:'code',language:'css',content:'Performance tip: only animate opacity and transform - these are handled by the GPU and do not trigger layout recalculations (reflow). Animating width, height, or top/left forces the browser to recalculate the layout every frame, which causes jank on low-end devices.',code:`/* Common pattern: skeleton loading placeholder */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }

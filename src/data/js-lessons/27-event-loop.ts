@@ -1,27 +1,27 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsEventLoopLesson: JSLesson = {
-  id:'js-event-loop',title:'Event Loop — How JS Really Works',slug:'event-loop',chapter:'async',order:28,difficulty:'advanced',readingTime:12,
-  description:'Understand the JavaScript runtime — call stack, event loop, task queue, microtask queue — and why output order sometimes surprises you.',
+  id:'js-event-loop',title:'Event Loop - How JS Really Works',slug:'event-loop',chapter:'async',order:28,difficulty:'advanced',readingTime:12,
+  description:'Understand the JavaScript runtime - call stack, event loop, task queue, microtask queue - and why output order sometimes surprises you.',
   sections:[
-    {type:'text',content:'JavaScript is single-threaded — it can only do one thing at a time. Yet it handles async operations without freezing. Understanding the event loop explains exactly HOW this works, and why certain code runs in unexpected orders.'},
+    {type:'text',content:'JavaScript is single-threaded - it can only do one thing at a time. Yet it handles async operations without freezing. Understanding the event loop explains exactly HOW this works, and why certain code runs in unexpected orders.'},
     {type:'analogy',title:'A chef in a restaurant',content:'JavaScript is like a chef (single-threaded) with one pair of hands. The chef handles requests one at a time. When they start a slow task (like waiting for an oven), instead of standing there frozen, they hand it to a timer assistant (Web API). When the timer is done, the assistant places a ticket on the queue. The chef finishes their current task, checks the queue, and handles the next ticket.'},
     {type:'heading',content:'The Components'},
-    {type:'example',title:'Call stack, Web APIs, queues',content:'The JavaScript runtime has four key parts: the call stack runs synchronous code one frame at a time. Web APIs (setTimeout, fetch, DOM events) are handled by the browser outside the stack. When ready, their callbacks go into the callback queue (macrotasks). Promise callbacks go into the microtask queue. The event loop checks: is the stack empty? If yes — drain all microtasks, then take ONE macrotask. Repeat.',language:'javascript',code:`// THE COMPONENTS:
-// 1. CALL STACK — currently executing functions (LIFO)
-// 2. WEB APIs — browser handles these (setTimeout, fetch, DOM events)
-// 3. CALLBACK QUEUE (macro tasks) — setTimeout, setInterval, I/O callbacks
-// 4. MICROTASK QUEUE — Promise.then, queueMicrotask, MutationObserver
-// 5. EVENT LOOP — checks if stack is empty, processes queues
+    {type:'example',title:'Call stack, Web APIs, queues',content:'The JavaScript runtime has four key parts: the call stack runs synchronous code one frame at a time. Web APIs (setTimeout, fetch, DOM events) are handled by the browser outside the stack. When ready, their callbacks go into the callback queue (macrotasks). Promise callbacks go into the microtask queue. The event loop checks: is the stack empty? If yes - drain all microtasks, then take ONE macrotask. Repeat.',language:'javascript',code:`// THE COMPONENTS:
+// 1. CALL STACK - currently executing functions (LIFO)
+// 2. WEB APIs - browser handles these (setTimeout, fetch, DOM events)
+// 3. CALLBACK QUEUE (macro tasks) - setTimeout, setInterval, I/O callbacks
+// 4. MICROTASK QUEUE - Promise.then, queueMicrotask, MutationObserver
+// 5. EVENT LOOP - checks if stack is empty, processes queues
 
 // Order: Call Stack → Microtask Queue → Callback Queue
 
-console.log("1: Start");                          // sync — stack
+console.log("1: Start");                          // sync - stack
 
 setTimeout(() => console.log("4: Timeout"), 0);  // callback queue
 
 Promise.resolve().then(() => console.log("3: Promise")); // microtask queue
 
-console.log("2: End");                            // sync — stack
+console.log("2: End");                            // sync - stack
 
 // Output order:
 // 1: Start
@@ -29,12 +29,12 @@ console.log("2: End");                            // sync — stack
 // 3: Promise  ← microtasks run BEFORE macro tasks
 // 4: Timeout  ← macro tasks run after all microtasks`},
     {type:'heading',content:'Microtasks vs Macrotasks'},
-    {type:'example',title:'Priority order explained',content:'Microtasks (Promises, queueMicrotask) have higher priority than macrotasks (setTimeout, setInterval). After each task completes, JavaScript drains the ENTIRE microtask queue before picking the next macrotask. This means if you keep creating microtasks inside microtasks, setTimeout callbacks are blocked forever — called "microtask starvation". In practice: Promise.then always runs before setTimeout even with 0ms delay.',language:'javascript',code:`// MICROTASKS — run immediately after current stack, before next macro task
+    {type:'example',title:'Priority order explained',content:'Microtasks (Promises, queueMicrotask) have higher priority than macrotasks (setTimeout, setInterval). After each task completes, JavaScript drains the ENTIRE microtask queue before picking the next macrotask. This means if you keep creating microtasks inside microtasks, setTimeout callbacks are blocked forever - called "microtask starvation". In practice: Promise.then always runs before setTimeout even with 0ms delay.',language:'javascript',code:`// MICROTASKS - run immediately after current stack, before next macro task
 // Sources: Promise.then, Promise.catch, async/await, queueMicrotask
 Promise.resolve().then(() => console.log("Microtask 1"));
 Promise.resolve().then(() => console.log("Microtask 2"));
 
-// MACROTASKS — run one at a time after microtask queue is empty
+// MACROTASKS - run one at a time after microtask queue is empty
 // Sources: setTimeout, setInterval, setImmediate, I/O, UI events
 setTimeout(() => console.log("Macro 1"), 0);
 setTimeout(() => console.log("Macro 2"), 0);
@@ -43,9 +43,9 @@ console.log("Sync");
 
 // Output:
 // Sync        (call stack)
-// Microtask 1 (microtask queue — all cleared before any macro)
+// Microtask 1 (microtask queue - all cleared before any macro)
 // Microtask 2
-// Macro 1     (macro task queue — one per loop iteration)
+// Macro 1     (macro task queue - one per loop iteration)
 // Macro 2
 
 // Microtasks can BLOCK macrotasks!
@@ -55,7 +55,7 @@ async function floodMicrotasks() {
     // This will starve setTimeout callbacks!
   }
 }
-// Never do this — use setTimeout/0 to yield to macrotask queue
+// Never do this - use setTimeout/0 to yield to macrotask queue
 
 // Correct pattern for deferring work
 queueMicrotask(() => {
@@ -63,22 +63,22 @@ queueMicrotask(() => {
   console.log("Queued microtask");
 });`},
     {type:'heading',content:'async/await Under the Hood'},
-    {type:'example',title:'What async/await actually does',content:'Every await creates a checkpoint. Code BEFORE await runs synchronously as part of the current task. Code AFTER await is scheduled as a microtask to run after the current stack clears. This is why code that appears after an async function call runs before the continuation inside the async function — the continuation is queued as a microtask, not executed immediately.',language:'javascript',code:`// async/await is syntactic sugar over Promises + generators
+    {type:'example',title:'What async/await actually does',content:'Every await creates a checkpoint. Code BEFORE await runs synchronously as part of the current task. Code AFTER await is scheduled as a microtask to run after the current stack clears. This is why code that appears after an async function call runs before the continuation inside the async function - the continuation is queued as a microtask, not executed immediately.',language:'javascript',code:`// async/await is syntactic sugar over Promises + generators
 // Each "await" pauses the function and schedules the continuation as a microtask
 
 async function example() {
-  console.log("1 — before await");
+  console.log("1 - before await");
   const result = await somePromise();
-  console.log("3 — after await"); // scheduled as microtask!
+  console.log("3 - after await"); // scheduled as microtask!
 }
 
 example();
-console.log("2 — synchronous code after calling example()");
+console.log("2 - synchronous code after calling example()");
 
 // Output:
-// 1 — before await
-// 2 — synchronous code  ← runs BEFORE the continuation
-// 3 — after await       ← microtask runs after current stack clears
+// 1 - before await
+// 2 - synchronous code  ← runs BEFORE the continuation
+// 3 - after await       ← microtask runs after current stack clears
 
 // Multiple awaits
 async function multiStep() {
@@ -122,11 +122,11 @@ button{padding:9px 18px;background:#2563eb;color:white;border:none;border-radius
   setTimeout(() => {
     add('① Sync: Start', 'sync');
 
-    setTimeout(() => add('⑤ Macro: setTimeout(0) — 1st', 'macro'), 0);
-    setTimeout(() => add('⑥ Macro: setTimeout(0) — 2nd', 'macro'), 0);
+    setTimeout(() => add('⑤ Macro: setTimeout(0) - 1st', 'macro'), 0);
+    setTimeout(() => add('⑥ Macro: setTimeout(0) - 2nd', 'macro'), 0);
 
-    Promise.resolve().then(() => add('③ Micro: Promise.then — 1st', 'micro'));
-    Promise.resolve().then(() => add('④ Micro: Promise.then — 2nd', 'micro'));
+    Promise.resolve().then(() => add('③ Micro: Promise.then - 1st', 'micro'));
+    Promise.resolve().then(() => add('④ Micro: Promise.then - 2nd', 'micro'));
 
     queueMicrotask(() => add('🔵 Micro: queueMicrotask', 'micro'));
 

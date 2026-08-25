@@ -8,7 +8,7 @@ export const htmlColorsLesson: HtmlLesson = {
   order: 7,
   difficulty: 'beginner',
   readingTime: 8,
-  description: 'Understand HTML color values — color names, hex codes, RGB, RGBA, HSL, and how to use them everywhere.',
+  description: 'Understand HTML color values - color names, hex codes, RGB, RGBA, HSL, and how to use them everywhere.',
   sections: [
     { type: 'text', content: 'Colors in HTML are specified using CSS. You can use color names, HEX codes, RGB values, RGBA (with transparency), or HSL. Colors can be applied to text, backgrounds, borders, shadows, and almost any visual element.' },
     { type: 'heading', content: 'Color Names' },
@@ -24,44 +24,44 @@ export const htmlColorsLesson: HtmlLesson = {
     { type: 'text', content: 'Hex codes start with # followed by 6 hex digits: #RRGGBB. Each pair controls the amount of Red, Green, Blue (0-255 = 00-FF). Hex is the most commonly used format in web development.' },
     { type: 'code', language: 'html',       content: 'Hex codes start with # followed by 6 characters: #RRGGBB. Each pair is the Red, Green, Blue value in hexadecimal (00=0, FF=255). #ff0000 is pure red, #000000 is black, #ffffff is white. Shorthand #RGB works when each pair repeats: #f00 = #ff0000.',
       code: `<!-- Hex format: #RRGGBB -->
-<p style="color: #ff0000;">Red    — #ff0000 (max red, no green/blue)</p>
-<p style="color: #00ff00;">Green  — #00ff00</p>
-<p style="color: #0000ff;">Blue   — #0000ff</p>
-<p style="color: #ffffff; background:#000">White  — #ffffff</p>
-<p style="color: #000000;">Black  — #000000</p>
-<p style="color: #2563eb;">Brand Blue — #2563eb</p>
-<p style="color: #e5e7eb; background:#111">Light Gray — #e5e7eb</p>
+<p style="color: #ff0000;">Red    - #ff0000 (max red, no green/blue)</p>
+<p style="color: #00ff00;">Green  - #00ff00</p>
+<p style="color: #0000ff;">Blue   - #0000ff</p>
+<p style="color: #ffffff; background:#000">White  - #ffffff</p>
+<p style="color: #000000;">Black  - #000000</p>
+<p style="color: #2563eb;">Brand Blue - #2563eb</p>
+<p style="color: #e5e7eb; background:#111">Light Gray - #e5e7eb</p>
 
 <!-- Shorthand: if pairs repeat, use 3 digits -->
-<p style="color: #f00;">Red shorthand — #f00 = #ff0000</p>
-<p style="color: #0af;">Cyan shorthand — #0af = #00aaff</p>` },
+<p style="color: #f00;">Red shorthand - #f00 = #ff0000</p>
+<p style="color: #0af;">Cyan shorthand - #0af = #00aaff</p>` },
     { type: 'heading', content: 'RGB and RGBA Colors' },
-    { type: 'code', language: 'html',       content: 'RGB uses decimal numbers 0-255 for each channel. RGBA adds a fourth value (0-1) for transparency — rgba(0,0,0,0.5) is 50% transparent black. Use RGBA for overlays, hover effects, and subtle background tints.',
-      code: `<!-- RGB: rgb(red, green, blue) — values 0-255 -->
+    { type: 'code', language: 'html',       content: 'RGB uses decimal numbers 0-255 for each channel. RGBA adds a fourth value (0-1) for transparency - rgba(0,0,0,0.5) is 50% transparent black. Use RGBA for overlays, hover effects, and subtle background tints.',
+      code: `<!-- RGB: rgb(red, green, blue) - values 0-255 -->
 <p style="color: rgb(255, 0, 0);">Red with RGB</p>
 <p style="color: rgb(37, 99, 235);">Brand blue with RGB</p>
 <p style="background: rgb(244, 244, 244); padding: 8px;">Light gray background</p>
 
-<!-- RGBA: rgba(red, green, blue, alpha) — alpha = 0 (transparent) to 1 (opaque) -->
+<!-- RGBA: rgba(red, green, blue, alpha) - alpha = 0 (transparent) to 1 (opaque) -->
 <p style="background: rgba(37,99,235, 0.1); color:#1d4ed8; padding:8px; border-radius:6px;">
-  10% blue background — semi-transparent
+  10% blue background - semi-transparent
 </p>
 <p style="background: rgba(0,0,0, 0.5); color: white; padding: 8px;">
-  50% black overlay — useful for image overlays
+  50% black overlay - useful for image overlays
 </p>
-<p style="color: rgba(0,0,0,0.4);">40% transparent black — good for subtle text</p>` },
+<p style="color: rgba(0,0,0,0.4);">40% transparent black - good for subtle text</p>` },
     { type: 'heading', content: 'HSL Colors' },
     { type: 'text', content: 'HSL (Hue, Saturation, Lightness) is more intuitive for humans. Hue is the color wheel position (0-360). Saturation is how vivid (0% gray, 100% full color). Lightness is how light or dark (0% black, 100% white, 50% normal).' },
     { type: 'code', language: 'html',       content: 'HSL is the most human-friendly color format. Hue is the angle on the color wheel (0=red, 120=green, 240=blue). Saturation controls vividness (0%=grey). Lightness controls brightness (0%=black, 50%=normal, 100%=white). HSLA adds transparency.',
       code: `<!-- hsl(hue, saturation%, lightness%) -->
-<p style="color: hsl(0, 100%, 50%);">Red — hue 0°</p>
-<p style="color: hsl(120, 100%, 30%);">Dark Green — hue 120°</p>
-<p style="color: hsl(240, 100%, 50%);">Blue — hue 240°</p>
-<p style="color: hsl(221, 83%, 53%);">Brand blue — hsl version</p>
+<p style="color: hsl(0, 100%, 50%);">Red - hue 0°</p>
+<p style="color: hsl(120, 100%, 30%);">Dark Green - hue 120°</p>
+<p style="color: hsl(240, 100%, 50%);">Blue - hue 240°</p>
+<p style="color: hsl(221, 83%, 53%);">Brand blue - hsl version</p>
 
-<!-- HSLA — with transparency -->
+<!-- HSLA - with transparency -->
 <p style="background: hsla(221, 83%, 53%, 0.1); padding:8px; border-radius:6px; color:#1d4ed8;">
-  Blue at 10% opacity — great for hover states
+  Blue at 10% opacity - great for hover states
 </p>` },
     { type: 'tryit', title: 'Try It: Colors Everywhere',
       html: `<div class="demo">
@@ -69,7 +69,7 @@ export const htmlColorsLesson: HtmlLesson = {
 
   <h2>Text Colors</h2>
   <p class="red">Red text</p>
-  <p class="blue">Blue text — hex #2563eb</p>
+  <p class="blue">Blue text - hex #2563eb</p>
   <p class="gradient-text">Gradient text!</p>
 
   <h2>Background Colors</h2>
@@ -94,7 +94,7 @@ h2 { color: #6b7280; font-size: 14px; text-transform: uppercase; letter-spacing:
       mode: 'html' },
   ],
   exercises: [
-    { id: 'col1', question: 'What does the A in RGBA stand for?', type: 'multiple-choice', options: ['Adjustment', 'Alpha (opacity/transparency)', 'Accent', 'Appearance'], correct: 1, explanation: 'RGBA = Red, Green, Blue, Alpha. The Alpha channel controls transparency — 0 is fully transparent, 1 is fully opaque.' },
+    { id: 'col1', question: 'What does the A in RGBA stand for?', type: 'multiple-choice', options: ['Adjustment', 'Alpha (opacity/transparency)', 'Accent', 'Appearance'], correct: 1, explanation: 'RGBA = Red, Green, Blue, Alpha. The Alpha channel controls transparency - 0 is fully transparent, 1 is fully opaque.' },
   ],
-  quiz: [{ id: 'cq1', question: 'Which hex code represents pure white?', options: ['#000000', '#ffffff', '#ff0000', '#f0f0f0'], correct: 1, explanation: '#ffffff means maximum Red (ff), Green (ff), Blue (ff) — combining max of all three gives pure white.' }],
+  quiz: [{ id: 'cq1', question: 'Which hex code represents pure white?', options: ['#000000', '#ffffff', '#ff0000', '#f0f0f0'], correct: 1, explanation: '#ffffff means maximum Red (ff), Green (ff), Blue (ff) - combining max of all three gives pure white.' }],
 };

@@ -330,52 +330,52 @@ const posts = await Post.find()
   var result = '';
   
   if (type === 'embedded') {
-    result = '// EMBEDDED PATTERN\\n\\n' +
-      '// User document with embedded addresses\\n' +
-      '{\\n' +
-      '  _id: ObjectId("user1"),\\n' +
-      '  name: "Alice Johnson",\\n' +
-      '  email: "alice@example.com",\\n' +
-      '  addresses: [\\n' +
-      '    { type: "home", city: "Boston", zip: "02101" },\\n' +
-      '    { type: "work", city: "Cambridge", zip: "02139" }\\n' +
-      '  ]\\n' +
-      '}\\n\\n' +
-      '// Query (1 operation):\\n' +
-      'db.users.findOne({ _id: ObjectId("user1") })\\n\\n' +
-      'Metrics:\\n' +
-      '- Queries needed: 1\\n' +
-      '- Data duplication: None\\n' +
+    result = '// EMBEDDED PATTERN\\n\ ' +
+      '// User document with embedded addresses\ ' +
+      '{\ ' +
+      '  _id: ObjectId("user1"),\ ' +
+      '  name: "Alice Johnson",\ ' +
+      '  email: "alice@example.com",\ ' +
+      '  addresses: [\ ' +
+      '    { type: "home", city: "Boston", zip: "02101" },\ ' +
+      '    { type: "work", city: "Cambridge", zip: "02139" }\ ' +
+      '  ]\ ' +
+      '}\\n\ ' +
+      '// Query (1 operation):\ ' +
+      'db.users.findOne({ _id: ObjectId("user1") })\\n\ ' +
+      'Metrics:\ ' +
+      '- Queries needed: 1\ ' +
+      '- Data duplication: None\ ' +
       '- Best for: One-to-few, data accessed together';
   } else if (type === 'referenced') {
-    result = '// REFERENCED PATTERN\\n\\n' +
-      '// Users collection\\n' +
-      '{ _id: ObjectId("user1"), name: "Alice" }\\n\\n' +
-      '// Orders collection\\n' +
-      '{ _id: ObjectId("ord1"), userId: ObjectId("user1"), total: 299 }\\n' +
-      '{ _id: ObjectId("ord2"), userId: ObjectId("user1"), total: 149 }\\n\\n' +
-      '// Query (2 operations):\\n' +
-      'const user = db.users.findOne({ _id: ObjectId("user1") })\\n' +
-      'const orders = db.orders.find({ userId: ObjectId("user1") })\\n\\n' +
-      'Metrics:\\n' +
-      '- Queries needed: 2\\n' +
-      '- Data duplication: None\\n' +
+    result = '// REFERENCED PATTERN\\n\ ' +
+      '// Users collection\ ' +
+      '{ _id: ObjectId("user1"), name: "Alice" }\\n\ ' +
+      '// Orders collection\ ' +
+      '{ _id: ObjectId("ord1"), userId: ObjectId("user1"), total: 299 }\ ' +
+      '{ _id: ObjectId("ord2"), userId: ObjectId("user1"), total: 149 }\\n\ ' +
+      '// Query (2 operations):\ ' +
+      'const user = db.users.findOne({ _id: ObjectId("user1") })\ ' +
+      'const orders = db.orders.find({ userId: ObjectId("user1") })\\n\ ' +
+      'Metrics:\ ' +
+      '- Queries needed: 2\ ' +
+      '- Data duplication: None\ ' +
       '- Best for: One-to-many, large collections';
   } else if (type === 'manytomany') {
-    result = '// MANY-TO-MANY PATTERN\\n\\n' +
-      '// Students collection\\n' +
-      '{ _id: ObjectId("s1"), name: "Alice" }\\n\\n' +
-      '// Courses collection\\n' +
-      '{ _id: ObjectId("c1"), title: "MongoDB 101" }\\n\\n' +
-      '// Enrollments (junction)\\n' +
-      '{ studentId: ObjectId("s1"), courseId: ObjectId("c1"), grade: "A" }\\n\\n' +
-      '// Find student courses:\\n' +
-      'const enrollments = db.enrollments.find({ studentId: ObjectId("s1") })\\n' +
-      'const courseIds = enrollments.map(e => e.courseId)\\n' +
-      'const courses = db.courses.find({ _id: { $in: courseIds } })\\n\\n' +
-      'Metrics:\\n' +
-      '- Queries needed: 3\\n' +
-      '- Data duplication: None\\n' +
+    result = '// MANY-TO-MANY PATTERN\\n\ ' +
+      '// Students collection\ ' +
+      '{ _id: ObjectId("s1"), name: "Alice" }\\n\ ' +
+      '// Courses collection\ ' +
+      '{ _id: ObjectId("c1"), title: "MongoDB 101" }\\n\ ' +
+      '// Enrollments (junction)\ ' +
+      '{ studentId: ObjectId("s1"), courseId: ObjectId("c1"), grade: "A" }\\n\ ' +
+      '// Find student courses:\ ' +
+      'const enrollments = db.enrollments.find({ studentId: ObjectId("s1") })\ ' +
+      'const courseIds = enrollments.map(e => e.courseId)\ ' +
+      'const courses = db.courses.find({ _id: { $in: courseIds } })\\n\ ' +
+      'Metrics:\ ' +
+      '- Queries needed: 3\ ' +
+      '- Data duplication: None\ ' +
       '- Best for: Many-to-many with metadata';
   }
   

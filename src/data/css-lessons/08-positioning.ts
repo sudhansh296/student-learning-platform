@@ -1,15 +1,15 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssPositioningLesson: CssLesson = {
   id:'css-positioning',title:'CSS Positioning',slug:'positioning',
   chapter:'layout',order:8,difficulty:'intermediate',readingTime:12,
-  description:'Master CSS position values — static, relative, absolute, fixed, sticky — and z-index.',
+  description:'Master CSS position values - static, relative, absolute, fixed, sticky - and z-index.',
   sections:[
     {type:'text',content:'CSS positioning lets you place elements exactly where you want them, removing them from the normal document flow. Understanding the five position values is essential for building navigation bars, modals, tooltips, dropdowns, and sticky sidebars.'},
     {type:'heading',content:'The Five Position Values'},
-    {type:'code',language:'css',content:'The position property controls how an element is placed. static is the default — elements flow in the document. relative moves an element from its normal position without affecting others. absolute removes it from flow and places it relative to the nearest positioned ancestor. fixed stays in the viewport. sticky is a hybrid.',code:`/* 1. static — default, normal document flow */
+    {type:'code',language:'css',content:'The position property controls how an element is placed. static is the default - elements flow in the document. relative moves an element from its normal position without affecting others. absolute removes it from flow and places it relative to the nearest positioned ancestor. fixed stays in the viewport. sticky is a hybrid.',code:`/* 1. static - default, normal document flow */
 div { position: static; }  /* top/left/right/bottom have NO effect */
 
-/* 2. relative — offset from its normal position, stays in flow */
+/* 2. relative - offset from its normal position, stays in flow */
 .badge {
   position: relative;
   top: -4px;    /* move 4px UP from where it would normally be */
@@ -17,16 +17,16 @@ div { position: static; }  /* top/left/right/bottom have NO effect */
 }
 /* The space it WOULD have occupied is preserved */
 
-/* 3. absolute — positioned relative to nearest positioned ancestor */
+/* 3. absolute - positioned relative to nearest positioned ancestor */
 .tooltip {
   position: absolute;
   top: 100%;    /* directly below the parent */
   left: 0;
-  /* Removed from normal flow — other elements ignore it */
+  /* Removed from normal flow - other elements ignore it */
 }
 /* IMPORTANT: parent must have position: relative */
 
-/* 4. fixed — stays in viewport, doesn't scroll */
+/* 4. fixed - stays in viewport, doesn't scroll */
 .navbar {
   position: fixed;
   top: 0;
@@ -35,7 +35,7 @@ div { position: static; }  /* top/left/right/bottom have NO effect */
   z-index: 100;
 }
 
-/* 5. sticky — relative until scrolled to threshold, then fixed */
+/* 5. sticky - relative until scrolled to threshold, then fixed */
 .table-header {
   position: sticky;
   top: 0;   /* sticks when it reaches 0px from top of viewport */
@@ -70,8 +70,8 @@ div { position: static; }  /* top/left/right/bottom have NO effect */
   left: 50%;
   transform: translate(-50%, -50%); /* move back by half its own size */
 }`},
-    {type:'heading',content:'z-index — Stacking Order'},
-    {type:'code',language:'css',content:'z-index controls stacking order — higher values appear on top of lower ones. It only works on positioned elements (position other than static). Define a scale: modals at 1000, dropdowns at 100, tooltips at 50. Avoid arbitrary large numbers to prevent z-index wars.',code:`/* z-index controls which element appears ON TOP */
+    {type:'heading',content:'z-index - Stacking Order'},
+    {type:'code',language:'css',content:'z-index controls stacking order - higher values appear on top of lower ones. It only works on positioned elements (position other than static). Define a scale: modals at 1000, dropdowns at 100, tooltips at 50. Avoid arbitrary large numbers to prevent z-index wars.',code:`/* z-index controls which element appears ON TOP */
 /* Higher value = closer to user */
 
 .navbar    { z-index: 100; }   /* always on top */
@@ -83,7 +83,7 @@ div { position: static; }  /* top/left/right/bottom have NO effect */
 .no-effect { z-index: 999; }   /* does nothing if position: static */
 .works     { position: relative; z-index: 999; }  /* this works */
 
-/* Stacking context — z-index is relative within each context */
+/* Stacking context - z-index is relative within each context */
 .parent { position: relative; z-index: 1; }
 .child  { position: absolute; z-index: 9999; }
 /* child can never appear above elements that are SIBLINGS of parent
@@ -134,5 +134,5 @@ h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:#6b7280;ma
      mode:'html'},
   ],
   exercises:[{id:'pos1',question:'An element with position:absolute is positioned relative to what?',type:'multiple-choice',options:['The viewport','The document root','The nearest ancestor with a position other than static','Its normal flow position'],correct:2,explanation:'Absolute positioned elements find the nearest ancestor with position: relative, absolute, fixed, or sticky. If none exists, they position relative to the viewport (initial containing block).'}],
-  quiz:[{id:'pq1',question:'Which position value keeps an element visible as the user scrolls?',options:['relative','absolute','fixed','static'],correct:2,explanation:'position: fixed removes the element from document flow and fixes it relative to the viewport — it never scrolls with the page. Perfect for sticky headers and floating buttons.'}],
+  quiz:[{id:'pq1',question:'Which position value keeps an element visible as the user scrolls?',options:['relative','absolute','fixed','static'],correct:2,explanation:'position: fixed removes the element from document flow and fixes it relative to the viewport - it never scrolls with the page. Perfect for sticky headers and floating buttons.'}],
 };

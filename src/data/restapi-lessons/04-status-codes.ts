@@ -33,19 +33,19 @@ export const lesson04: RestapiLesson = {
     {
       type: 'example',
       title: 'Express responses with correct 2xx status codes',
-      content: 'Each Express route handler demonstrates the correct status code for that type of success response. Using 201 for creation and 204 for deletions makes your API self-documenting — clients know exactly what happened without reading documentation.',
+      content: 'Each Express route handler demonstrates the correct status code for that type of success response. Using 201 for creation and 204 for deletions makes your API self-documenting - clients know exactly what happened without reading documentation.',
       code: `const express = require('express');
 const app = express();
 app.use(express.json());
 
-// 200 OK — successful read or update
+// 200 OK - successful read or update
 app.get('/users/:id', (req, res) => {
   const user = { id: req.params.id, name: 'Alice' };
   res.status(200).json(user);
-  // or just res.json(user) — 200 is the default
+  // or just res.json(user) - 200 is the default
 });
 
-// 201 Created — resource successfully created
+// 201 Created - resource successfully created
 app.post('/users', (req, res) => {
   const newUser = { id: 42, ...req.body };
   res.status(201).json(newUser);
@@ -53,13 +53,13 @@ app.post('/users', (req, res) => {
   res.set('Location', '/users/42');
 });
 
-// 204 No Content — success but nothing to return
+// 204 No Content - success but nothing to return
 app.delete('/users/:id', (req, res) => {
   // delete from database...
   res.status(204).send();
 });
 
-// 202 Accepted — request accepted but processing async
+// 202 Accepted - request accepted but processing async
 app.post('/reports/generate', (req, res) => {
   // queue the job...
   res.status(202).json({ jobId: 'abc123', status: 'queued' });
@@ -76,7 +76,7 @@ POST /reports  -> 202 { jobId: 'abc123', status: 'queued' }`
     },
     {
       type: 'text',
-      content: '301 Moved Permanently means the resource has a new URL forever — search engines update their indexes and browsers remember the redirect. 302 Found is a temporary redirect — browsers follow it but do not cache it. 304 Not Modified is the response to a conditional GET when the resource has not changed, saving bandwidth.'
+      content: '301 Moved Permanently means the resource has a new URL forever - search engines update their indexes and browsers remember the redirect. 302 Found is a temporary redirect - browsers follow it but do not cache it. 304 Not Modified is the response to a conditional GET when the resource has not changed, saving bandwidth.'
     },
     {
       type: 'heading',
@@ -84,12 +84,12 @@ POST /reports  -> 202 { jobId: 'abc123', status: 'queued' }`
     },
     {
       type: 'text',
-      content: '4xx errors mean the client did something wrong — bad data, missing auth, wrong URL, or conflict. These are your responsibility as the API consumer. Read the response body carefully; well-designed APIs include error details there.'
+      content: '4xx errors mean the client did something wrong - bad data, missing auth, wrong URL, or conflict. These are your responsibility as the API consumer. Read the response body carefully; well-designed APIs include error details there.'
     },
     {
       type: 'example',
       title: 'Consistent error response format',
-      content: 'A consistent error response structure lets API consumers handle errors programmatically. Every error response includes a machine-readable error code, a human-readable message, and optional details — this format is used by APIs like Stripe, GitHub, and Twilio.',
+      content: 'A consistent error response structure lets API consumers handle errors programmatically. Every error response includes a machine-readable error code, a human-readable message, and optional details - this format is used by APIs like Stripe, GitHub, and Twilio.',
       code: `// Express error response helper
 function sendError(res, status, code, message, details = null) {
   const body = { error: code, message };
@@ -97,7 +97,7 @@ function sendError(res, status, code, message, details = null) {
   return res.status(status).json(body);
 }
 
-// 400 Bad Request — missing or invalid fields
+// 400 Bad Request - missing or invalid fields
 app.post('/users', (req, res) => {
   if (!req.body.email) {
     return sendError(res, 400, 'VALIDATION_ERROR',
@@ -108,7 +108,7 @@ app.post('/users', (req, res) => {
   // ...
 });
 
-// 401 Unauthorized — no credentials provided
+// 401 Unauthorized - no credentials provided
 app.get('/profile', (req, res) => {
   if (!req.headers.authorization) {
     return sendError(res, 401, 'UNAUTHORIZED',
@@ -117,7 +117,7 @@ app.get('/profile', (req, res) => {
   }
 });
 
-// 403 Forbidden — authenticated but not allowed
+// 403 Forbidden - authenticated but not allowed
 app.delete('/users/:id', (req, res) => {
   if (req.user.role !== 'admin') {
     return sendError(res, 403, 'FORBIDDEN',
@@ -144,11 +144,11 @@ app.get('/users/:id', (req, res) => {
     },
     {
       type: 'heading',
-      content: '401 vs 403 — The Critical Distinction'
+      content: '401 vs 403 - The Critical Distinction'
     },
     {
       type: 'text',
-      content: '401 Unauthorized means "I do not know who you are — please authenticate." 403 Forbidden means "I know exactly who you are, but you are not allowed to do this." Always use 401 when no credentials were provided or they are invalid, and 403 when the authenticated user simply lacks permission.'
+      content: '401 Unauthorized means "I do not know who you are - please authenticate." 403 Forbidden means "I know exactly who you are, but you are not allowed to do this." Always use 401 when no credentials were provided or they are invalid, and 403 when the authenticated user simply lacks permission.'
     },
     {
       type: 'heading',
@@ -196,7 +196,7 @@ var codes = [
   { code: 400, name: 'Bad Request', cat: '4xx', color: '#f59e0b', desc: 'Invalid request syntax or parameters.', when: 'When the request body is malformed, required fields are missing, or query params are invalid.' },
   { code: 401, name: 'Unauthorized', cat: '4xx', color: '#f59e0b', desc: 'No credentials or invalid credentials provided.', when: 'When the request lacks an Authorization header or the token is invalid/expired.' },
   { code: 403, name: 'Forbidden', cat: '4xx', color: '#f59e0b', desc: 'Authenticated but not allowed to perform this action.', when: 'When a valid, authenticated user lacks permission for the requested resource or action.' },
-  { code: 404, name: 'Not Found', cat: '4xx', color: '#f59e0b', desc: 'No resource found at this URL.', when: 'When the requested resource does not exist. Also use for privacy — hide that restricted resources exist.' },
+  { code: 404, name: 'Not Found', cat: '4xx', color: '#f59e0b', desc: 'No resource found at this URL.', when: 'When the requested resource does not exist. Also use for privacy - hide that restricted resources exist.' },
   { code: 409, name: 'Conflict', cat: '4xx', color: '#f59e0b', desc: 'Request conflicts with current state.', when: 'When creating a resource with a duplicate unique field (e.g., email already exists).' },
   { code: 422, name: 'Unprocessable Entity', cat: '4xx', color: '#f59e0b', desc: 'Validation failed on structurally valid data.', when: 'When JSON is valid but field values fail business logic validation (invalid email format, negative price).' },
   { code: 429, name: 'Too Many Requests', cat: '4xx', color: '#f59e0b', desc: 'Rate limit exceeded.', when: 'When the client sends too many requests. Include Retry-After header indicating when to retry.' },
@@ -272,7 +272,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         '400 Bad Request'
       ],
       correct: 2,
-      explanation: '401 Unauthorized is correct when authentication credentials are missing or invalid. The server is saying "I do not know who you are — please provide credentials." 403 would be used if the user was authenticated but lacked permission.'
+      explanation: '401 Unauthorized is correct when authentication credentials are missing or invalid. The server is saying "I do not know who you are - please provide credentials." 403 would be used if the user was authenticated but lacked permission.'
     },
     {
       id: 'ex-04-2',
@@ -298,7 +298,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         '202 Accepted with a job ID'
       ],
       correct: 2,
-      explanation: '204 No Content is the standard response for a successful DELETE. There is nothing meaningful to return — the resource is gone. 200 OK with a body is also acceptable if you want to return the deleted resource for reference, but 204 is the most common convention.'
+      explanation: '204 No Content is the standard response for a successful DELETE. There is nothing meaningful to return - the resource is gone. 200 OK with a body is also acceptable if you want to return the deleted resource for reference, but 204 is the most common convention.'
     }
   ],
   quiz: [
@@ -312,7 +312,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         '401 and 403 have the same meaning and are interchangeable'
       ],
       correct: 0,
-      explanation: '401 means the request has no valid authentication credentials — the server does not know who you are. 403 means the server knows exactly who you are (you are authenticated) but you do not have permission to access this resource.'
+      explanation: '401 means the request has no valid authentication credentials - the server does not know who you are. 403 means the server knows exactly who you are (you are authenticated) but you do not have permission to access this resource.'
     },
     {
       id: 'q-04-2',
@@ -330,13 +330,13 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
       id: 'q-04-3',
       question: 'Your API returns 500 for all errors. Why is this a problem?',
       options: [
-        'It is not a problem — 500 is the correct code for all errors',
+        'It is not a problem - 500 is the correct code for all errors',
         'It makes debugging harder because clients cannot tell if the error was their fault or the server\'s',
         '500 is a 5xx code and browsers automatically retry these, which causes duplicate operations',
         '500 responses are always cached by proxies'
       ],
       correct: 1,
-      explanation: 'Returning 500 for all errors conflates server bugs with client mistakes. Clients cannot distinguish "I sent bad data" (4xx — fixable by the client) from "the server crashed" (5xx — a server problem). Proper status codes let clients handle errors appropriately and help operators debug issues faster.'
+      explanation: 'Returning 500 for all errors conflates server bugs with client mistakes. Clients cannot distinguish "I sent bad data" (4xx - fixable by the client) from "the server crashed" (5xx - a server problem). Proper status codes let clients handle errors appropriately and help operators debug issues faster.'
     }
   ]
 };

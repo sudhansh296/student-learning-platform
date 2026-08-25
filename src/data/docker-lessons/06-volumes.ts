@@ -12,7 +12,7 @@ export const lesson06: DockerLesson = {
   sections: [
     {
       type: 'text',
-      content: 'By default, all data written inside a container lives in its writable layer and is permanently deleted when the container is removed. For databases, uploaded files, or any stateful application, you need a way to persist data outside the container lifecycle — that is what Docker volumes provide.'
+      content: 'By default, all data written inside a container lives in its writable layer and is permanently deleted when the container is removed. For databases, uploaded files, or any stateful application, you need a way to persist data outside the container lifecycle - that is what Docker volumes provide.'
     },
     {
       type: 'heading',
@@ -48,7 +48,7 @@ export const lesson06: DockerLesson = {
     },
     {
       type: 'example',
-      title: 'docker volume — create, list, inspect, remove',
+      title: 'docker volume - create, list, inspect, remove',
       content: 'These are the core commands for managing named volumes. Named volumes persist even after all containers using them are removed, making them the correct choice for database storage and any data that must survive container restarts and recreations.',
       code: `# Create a named volume
 docker volume create mydata
@@ -135,7 +135,7 @@ docker run -d \
     {
       type: 'example',
       title: 'Two containers sharing a named volume',
-      content: 'Named volumes can be mounted into multiple containers simultaneously. This is how sidecar patterns work — a main application container and a log-shipping container can share the same log volume, with one writing and one reading.',
+      content: 'Named volumes can be mounted into multiple containers simultaneously. This is how sidecar patterns work - a main application container and a log-shipping container can share the same log volume, with one writing and one reading.',
       code: `# Create a shared volume
 docker volume create shared_logs
 
@@ -155,7 +155,7 @@ docker run -d \
     {
       type: 'example',
       title: 'Read-only volume mounts',
-      content: 'Adding :ro to a volume mount makes it read-only inside the container. This is a security best practice for configuration files and secrets — the container can read the values but cannot modify them, preventing accidental or malicious changes.',
+      content: 'Adding :ro to a volume mount makes it read-only inside the container. This is a security best practice for configuration files and secrets - the container can read the values but cannot modify them, preventing accidental or malicious changes.',
       code: `# Read-only config bind mount
 docker run -d \
   -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf:ro \
@@ -260,7 +260,7 @@ h3 { color: #2496ED; margin: 0 0 12px 0; font-size: 15px; }
     {
       type: 'warning',
       title: 'docker volume prune Deletes All Unused Volumes',
-      content: 'Running docker volume prune removes all volumes not currently mounted by any container — including ones with important data. Always verify with docker volume ls before pruning, and make sure your databases are running (even stopped containers keep volumes attached).'
+      content: 'Running docker volume prune removes all volumes not currently mounted by any container - including ones with important data. Always verify with docker volume ls before pruning, and make sure your databases are running (even stopped containers keep volumes attached).'
     }
   ],
   exercises: [
@@ -315,7 +315,7 @@ h3 { color: #2496ED; margin: 0 0 12px 0; font-size: 15px; }
         'Named volumes are read-only; bind mounts are read-write'
       ],
       correct: 1,
-      explanation: 'Named volumes are fully managed by Docker — Docker decides where they are stored on the host. Bind mounts map an exact path on your host filesystem into the container, giving you full control over the location but coupling the container to the host\'s directory structure.'
+      explanation: 'Named volumes are fully managed by Docker - Docker decides where they are stored on the host. Bind mounts map an exact path on your host filesystem into the container, giving you full control over the location but coupling the container to the host\'s directory structure.'
     },
     {
       id: 'q-docker-6-2',
@@ -339,7 +339,7 @@ h3 { color: #2496ED; margin: 0 0 12px 0; font-size: 15px; }
         'docker rm volumes'
       ],
       correct: 2,
-      explanation: 'docker volume prune removes all volumes not currently referenced by any container (running or stopped). Use it carefully — volumes containing database data for stopped containers will be deleted. Add -f to skip the confirmation prompt.'
+      explanation: 'docker volume prune removes all volumes not currently referenced by any container (running or stopped). Use it carefully - volumes containing database data for stopped containers will be deleted. Add -f to skip the confirmation prompt.'
     }
   ]
 };

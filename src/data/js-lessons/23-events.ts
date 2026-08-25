@@ -1,14 +1,14 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsEventsLesson: JSLesson = {
-  id:'js-events',title:'Events — Deep Dive',slug:'events',chapter:'dom',order:24,difficulty:'intermediate',readingTime:12,
-  description:'Master browser events — propagation, delegation, custom events, keyboard/mouse/form/touch events, and debouncing.',
+  id:'js-events',title:'Events - Deep Dive',slug:'events',chapter:'dom',order:24,difficulty:'intermediate',readingTime:12,
+  description:'Master browser events - propagation, delegation, custom events, keyboard/mouse/form/touch events, and debouncing.',
   sections:[
     {type:'text',content:'Events are the heartbeat of interactive web applications. Every click, keypress, scroll, resize, and network response triggers an event. JavaScript listens to these events and responds. Deep knowledge of the event system separates good developers from great ones.'},
-    {type:'heading',content:'Event Propagation — Bubbling and Capturing'},
+    {type:'heading',content:'Event Propagation - Bubbling and Capturing'},
     {type:'example',title:'How events travel through the DOM',content:'When you click an element, the event does not just fire on that element. It travels through the DOM in three phases: capture (top to bottom), target (the clicked element), then bubble (bottom to top). By default, addEventListener uses the bubble phase. Passing true as the third argument switches to capture. stopPropagation() stops the event from continuing its journey up or down the tree.',language:'javascript',code:`// Events flow in 3 phases:
-// 1. CAPTURE — from document down to target
-// 2. TARGET — the element that was clicked
-// 3. BUBBLE — from target back up to document
+// 1. CAPTURE - from document down to target
+// 2. TARGET - the element that was clicked
+// 3. BUBBLE - from target back up to document
 
 // By default, listeners use BUBBLE phase
 document.querySelector('#outer').addEventListener('click', () => {
@@ -18,7 +18,7 @@ document.querySelector('#inner').addEventListener('click', () => {
   console.log('inner - bubble'); // fires 1st (target)
 });
 
-// Capture phase — fires first (before bubble)
+// Capture phase - fires first (before bubble)
 document.querySelector('#outer').addEventListener('click', () => {
   console.log('outer - capture'); // fires 0th (before anything)
 }, true); // true = capture phase
@@ -28,17 +28,17 @@ document.querySelector('#outer').addEventListener('click', () => {
 // "inner - bubble" (target phase)
 // "outer - bubble" (bubble phase)
 
-// stopPropagation — stop the event from bubbling
+// stopPropagation - stop the event from bubbling
 document.querySelector('#inner').addEventListener('click', (e) => {
   e.stopPropagation(); // event stops here, won't reach #outer
 });
 
-// stopImmediatePropagation — stops ALL listeners on this element too
+// stopImmediatePropagation - stops ALL listeners on this element too
 el.addEventListener('click', (e) => {
   e.stopImmediatePropagation();
 });`},
-    {type:'heading',content:'Event Delegation — One Listener for Many Elements'},
-    {type:'example',title:'Handle dynamic lists efficiently',content:'Instead of adding a click listener to every list item (expensive and breaks for dynamically added items), add ONE listener to the parent container. When anything inside is clicked, the event bubbles up to the parent. Use event.target.closest("li") to find which item was clicked — closest() walks up the DOM tree until it finds a matching element. Check data attributes like dataset.action to know what action to take.',language:'javascript',code:`// INSTEAD of adding a listener to every <li>:
+    {type:'heading',content:'Event Delegation - One Listener for Many Elements'},
+    {type:'example',title:'Handle dynamic lists efficiently',content:'Instead of adding a click listener to every list item (expensive and breaks for dynamically added items), add ONE listener to the parent container. When anything inside is clicked, the event bubbles up to the parent. Use event.target.closest("li") to find which item was clicked - closest() walks up the DOM tree until it finds a matching element. Check data attributes like dataset.action to know what action to take.',language:'javascript',code:`// INSTEAD of adding a listener to every <li>:
 // document.querySelectorAll('li').forEach(li => li.addEventListener('click', handler));
 // (breaks for dynamically added elements!)
 
@@ -74,7 +74,7 @@ function addItem(text, id) {
   list.appendChild(li);
 }`},
     {type:'heading',content:'Custom Events'},
-    {type:'example',title:'Create and dispatch your own events',content:'CustomEvent lets you create your own named events and dispatch them on any DOM element. Pass data in the detail property. Any code that listens for that event name will receive it. The EventEmitter class shown here is a pure JavaScript implementation of the same pattern — used for communication between non-DOM components without any framework.',language:'javascript',code:`// Create custom event
+    {type:'example',title:'Create and dispatch your own events',content:'CustomEvent lets you create your own named events and dispatch them on any DOM element. Pass data in the detail property. Any code that listens for that event name will receive it. The EventEmitter class shown here is a pure JavaScript implementation of the same pattern - used for communication between non-DOM components without any framework.',language:'javascript',code:`// Create custom event
 const event = new CustomEvent('userLoggedIn', {
   detail: { userId: 1, name: 'Alex', role: 'admin' },
   bubbles: true,    // bubbles up the DOM
@@ -123,7 +123,7 @@ const emitter = new EventEmitter();
 emitter.on('data', data => console.log('Received:', data));
 emitter.emit('data', { id: 1 }); // "Received: { id: 1 }"`},
     {type:'heading',content:'Debounce and Throttle'},
-    {type:'example',title:'Control event frequency',content:'Some events fire dozens of times per second — scroll, resize, and input can overwhelm your app if you react to every single one. Debounce delays execution until the user stops — perfect for search inputs where you only want to fire the API call after they stop typing. Throttle caps execution to once per time window — perfect for scroll handlers where you want updates but not too frequently.',language:'javascript',code:`// DEBOUNCE — wait N ms after last call before executing
+    {type:'example',title:'Control event frequency',content:'Some events fire dozens of times per second - scroll, resize, and input can overwhelm your app if you react to every single one. Debounce delays execution until the user stops - perfect for search inputs where you only want to fire the API call after they stop typing. Throttle caps execution to once per time window - perfect for scroll handlers where you want updates but not too frequently.',language:'javascript',code:`// DEBOUNCE - wait N ms after last call before executing
 // Use for: search input, window resize, save drafts
 function debounce(fn, delay) {
   let timer;
@@ -140,7 +140,7 @@ const debouncedSearch = debounce((query) => {
 
 searchInput.addEventListener('input', e => debouncedSearch(e.target.value));
 
-// THROTTLE — execute at most once per N ms
+// THROTTLE - execute at most once per N ms
 // Use for: scroll events, mouse move, game loops
 function throttle(fn, limit) {
   let inThrottle = false;
@@ -240,6 +240,6 @@ function fireCustomEvent() {
   }));
 }`,mode:'full'},
   ],
-  exercises:[{id:'ev1',question:'What is event bubbling?',type:'multiple-choice',options:['Events only fire on the element clicked','Events travel UP from target element to document after firing','Events are delayed','Events fire multiple times'],correct:1,explanation:'After an event fires on the target element, it bubbles up through all ancestor elements (parent, grandparent, etc.) to the document. This is why event delegation works — you catch events from children on the parent.'}],
-  quiz:[{id:'eq1',question:'When should you use debounce vs throttle?',options:['They are the same thing','Debounce: wait for user to STOP (search input); Throttle: limit rate of execution (scroll, resize)','Throttle for search, debounce for scroll','Use only debounce'],correct:1,explanation:'Debounce waits for activity to STOP — perfect for search (run query after user stops typing). Throttle limits how often a function runs regardless — perfect for scroll/resize where you want updates but not too many.'}],
+  exercises:[{id:'ev1',question:'What is event bubbling?',type:'multiple-choice',options:['Events only fire on the element clicked','Events travel UP from target element to document after firing','Events are delayed','Events fire multiple times'],correct:1,explanation:'After an event fires on the target element, it bubbles up through all ancestor elements (parent, grandparent, etc.) to the document. This is why event delegation works - you catch events from children on the parent.'}],
+  quiz:[{id:'eq1',question:'When should you use debounce vs throttle?',options:['They are the same thing','Debounce: wait for user to STOP (search input); Throttle: limit rate of execution (scroll, resize)','Throttle for search, debounce for scroll','Use only debounce'],correct:1,explanation:'Debounce waits for activity to STOP - perfect for search (run query after user stops typing). Throttle limits how often a function runs regardless - perfect for scroll/resize where you want updates but not too many.'}],
 };

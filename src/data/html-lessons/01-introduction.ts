@@ -1,4 +1,4 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 
 export const htmlIntroLesson: HtmlLesson = {
   id: 'html-intro',
@@ -12,12 +12,12 @@ export const htmlIntroLesson: HtmlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'HTML stands for HyperText Markup Language. It is the standard language used to create and structure content on the web. Every single webpage you have ever visited — Google, YouTube, Instagram — is built with HTML at its foundation.',
+      content: 'HTML stands for HyperText Markup Language. It is the standard language used to create and structure content on the web. Every single webpage you have ever visited - Google, YouTube, Instagram - is built with HTML at its foundation.',
     },
     {
       type: 'analogy',
       title: 'HTML is the skeleton of a webpage',
-      content: 'Think of a website like a human body. HTML is the skeleton — it gives the page its structure and shape. CSS is the skin and clothing — it controls how it looks. JavaScript is the muscles — it makes things move and interact. You cannot have a working website without the HTML skeleton.',
+      content: 'Think of a website like a human body. HTML is the skeleton - it gives the page its structure and shape. CSS is the skin and clothing - it controls how it looks. JavaScript is the muscles - it makes things move and interact. You cannot have a working website without the HTML skeleton.',
     },
     {
       type: 'heading',
@@ -26,9 +26,9 @@ export const htmlIntroLesson: HtmlLesson = {
     {
       type: 'list',
       items: [
-        'HyperText — Text that contains links to other texts. When you click a link and go to another page, that is "hyper" text navigation.',
-        'Markup — HTML uses special tags like <h1>, <p>, <a> to "mark up" ordinary text with meaning. The tag <h1> means "this is a main heading." The tag <p> means "this is a paragraph."',
-        'Language — It is a formal language with specific rules and syntax the browser understands.',
+        'HyperText - Text that contains links to other texts. When you click a link and go to another page, that is "hyper" text navigation.',
+        'Markup - HTML uses special tags like <h1>, <p>, <a> to "mark up" ordinary text with meaning. The tag <h1> means "this is a main heading." The tag <p> means "this is a paragraph."',
+        'Language - It is a formal language with specific rules and syntax the browser understands.',
       ],
     },
     {
@@ -78,15 +78,15 @@ export const htmlIntroLesson: HtmlLesson = {
       type: 'list',
       title: 'Line by line explanation:',
       items: [
-        '<!DOCTYPE html> — Tells the browser "this is an HTML5 document." Always the very first line.',
-        '<html lang="en"> — The root element. Everything goes inside this. lang="en" tells browsers and screen readers the language is English.',
-        '<head> — Contains information ABOUT the page (not visible content). Like metadata, title, CSS links.',
-        '<meta charset="UTF-8"> — Tells the browser to use UTF-8 encoding, which supports all characters including é, ñ, ü, Arabic, Chinese, etc.',
-        '<meta name="viewport"> — Makes the page look correct on mobile phones. Without this, your site looks zoomed out on phones.',
-        '<title> — The text shown in the browser tab. Also shown in Google search results.',
-        '<body> — Everything visible on the page goes here: text, images, buttons, forms.',
-        '<h1> — The main heading. Large and bold by default.',
-        '<p> — A paragraph of text.',
+        '<!DOCTYPE html> - Tells the browser "this is an HTML5 document." Always the very first line.',
+        '<html lang="en"> - The root element. Everything goes inside this. lang="en" tells browsers and screen readers the language is English.',
+        '<head> - Contains information ABOUT the page (not visible content). Like metadata, title, CSS links.',
+        '<meta charset="UTF-8"> - Tells the browser to use UTF-8 encoding, which supports all characters including é, ñ, ü, Arabic, Chinese, etc.',
+        '<meta name="viewport"> - Makes the page look correct on mobile phones. Without this, your site looks zoomed out on phones.',
+        '<title> - The text shown in the browser tab. Also shown in Google search results.',
+        '<body> - Everything visible on the page goes here: text, images, buttons, forms.',
+        '<h1> - The main heading. Large and bold by default.',
+        '<p> - A paragraph of text.',
       ],
     },
     {
@@ -123,7 +123,7 @@ p  { color: #444; }`,
     },
     {
       type: 'text',
-      content: 'When you open a webpage, your browser (Chrome, Firefox, Safari) downloads the HTML file from a server. It then reads the tags from top to bottom and renders the page visually. The browser does NOT show you the tags — it uses them as instructions. So <h1>Hello</h1> shows as a large bold "Hello" — the <h1> and </h1> are invisible to the user.',
+      content: 'When you open a webpage, your browser (Chrome, Firefox, Safari) downloads the HTML file from a server. It then reads the tags from top to bottom and renders the page visually. The browser does NOT show you the tags - it uses them as instructions. So <h1>Hello</h1> shows as a large bold "Hello" - the <h1> and </h1> are invisible to the user.',
     },
     {
       type: 'note',
@@ -132,7 +132,7 @@ p  { color: #444; }`,
     },
     {
       type: 'heading',
-      content: 'HTML History — Why It Matters',
+      content: 'HTML History - Why It Matters',
     },
     {
       type: 'table',
@@ -142,7 +142,7 @@ p  { color: #444; }`,
         ['1991', 'HTML 1.0', 'Tim Berners-Lee invented HTML for sharing scientific documents'],
         ['1999', 'HTML 4.01', 'Added CSS support, forms, tables, frames'],
         ['2000', 'XHTML 1.0', 'Stricter version of HTML with XML rules'],
-        ['2014', 'HTML5', 'Added video, audio, canvas, semantic tags — what we use today'],
+        ['2014', 'HTML5', 'Added video, audio, canvas, semantic tags - what we use today'],
         ['Now',  'Living Standard', 'HTML is continuously updated by WHATWG'],
       ],
     },
@@ -167,7 +167,7 @@ p  { color: #444; }`,
       type: 'multiple-choice',
       options: ['<body>', '<head>', '<html>', '<main>'],
       correct: 2,
-      explanation: 'The <html> element is the root element. Everything in an HTML document — both <head> and <body> — goes inside <html>.',
+      explanation: 'The <html> element is the root element. Everything in an HTML document - both <head> and <body> - goes inside <html>.',
     },
     {
       id: 'intro-3',

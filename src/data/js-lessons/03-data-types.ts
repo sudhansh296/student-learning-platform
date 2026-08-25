@@ -8,11 +8,11 @@ export const jsDataTypesLesson: JSLesson = {
   order: 4,
   difficulty: 'beginner',
   readingTime: 14,
-  description: 'Master all 8 JavaScript data types — strings, numbers, booleans, null, undefined, symbol, bigint, and objects. Plus type checking and type conversion.',
+  description: 'Master all 8 JavaScript data types - strings, numbers, booleans, null, undefined, symbol, bigint, and objects. Plus type checking and type conversion.',
   sections: [
     {
       type: 'text',
-      content: 'JavaScript has 8 data types. The first 7 are called "primitive" types — they hold a single immutable value. The 8th is "object" — it holds collections of key-value pairs. JavaScript is dynamically typed: a variable can hold any type and you can change it at runtime.',
+      content: 'JavaScript has 8 data types. The first 7 are called "primitive" types - they hold a single immutable value. The 8th is "object" - it holds collections of key-value pairs. JavaScript is dynamically typed: a variable can hold any type and you can change it at runtime.',
     },
     {
       type: 'heading',
@@ -21,13 +21,13 @@ export const jsDataTypesLesson: JSLesson = {
     {
       type: 'example',
       title: 'Every data type with examples',
-      content: 'JavaScript has 8 types of data. The first 7 (string, number, boolean, undefined, null, symbol, bigint) are "primitive" — they store a single value. The 8th is "object" — it stores collections. The most important thing to understand: JavaScript is dynamically typed, meaning a variable can hold any type at any time.',
-      code: `// 1. STRING — text in quotes
+      content: 'JavaScript has 8 types of data. The first 7 (string, number, boolean, undefined, null, symbol, bigint) are "primitive" - they store a single value. The 8th is "object" - it stores collections. The most important thing to understand: JavaScript is dynamically typed, meaning a variable can hold any type at any time.',
+      code: `// 1. STRING - text in quotes
 const single  = 'Hello World';
 const double  = "Hello World";
 const template = \`Hello, \${"World"}!\`;  // template literal
 
-// 2. NUMBER — integers AND decimals (ONE type handles both)
+// 2. NUMBER - integers AND decimals (ONE type handles both)
 const integer = 42;
 const decimal = 3.14;
 const negative = -100;
@@ -36,27 +36,27 @@ const infinity = Infinity;
 const minusInfinity = -Infinity;
 const notANumber = NaN;      // result of invalid math
 
-// 3. BOOLEAN — only true or false
+// 3. BOOLEAN - only true or false
 const isActive = true;
 const isDeleted = false;
 
-// 4. UNDEFINED — variable declared but no value assigned
+// 4. UNDEFINED - variable declared but no value assigned
 let notAssigned;
 console.log(notAssigned); // undefined
 
-// 5. NULL — intentional absence of value
+// 5. NULL - intentional absence of value
 const selectedUser = null;  // "there is no user"
 
-// 6. SYMBOL — unique, immutable identifier
+// 6. SYMBOL - unique, immutable identifier
 const id1 = Symbol("id");
 const id2 = Symbol("id");
-console.log(id1 === id2); // false — always unique!
+console.log(id1 === id2); // false - always unique!
 
-// 7. BIGINT — integers too large for Number
+// 7. BIGINT - integers too large for Number
 const huge = 9007199254740991n;  // note the n suffix
 const bigCalc = 1000000000000000000n * 2n;
 
-// 8. OBJECT — collection of key-value pairs
+// 8. OBJECT - collection of key-value pairs
 const person = { name: "Alex", age: 25 };
 const arr = [1, 2, 3];   // arrays ARE objects
 const fn = function() {}; // functions ARE objects`,
@@ -72,7 +72,7 @@ const fn = function() {}; // functions ARE objects`,
       content: 'The typeof operator is how you check what type of data a value is. It always returns a string. Watch out for two surprises: typeof null returns "object" (a 30-year-old JavaScript bug) and typeof [] also returns "object" (arrays are objects). Use Array.isArray() to check for arrays specifically.',
       code: `console.log(typeof "hello");        // "string"
 console.log(typeof 42);             // "number"
-console.log(typeof 3.14);           // "number" — same type!
+console.log(typeof 3.14);           // "number" - same type!
 console.log(typeof true);           // "boolean"
 console.log(typeof undefined);      // "undefined"
 console.log(typeof null);           // "object" ← FAMOUS BUG!
@@ -101,12 +101,12 @@ console.log(Array.isArray({}));     // false`,
     {
       type: 'example',
       title: 'String creation and template literals',
-      content: 'Strings hold text. You can use single quotes, double quotes, or backticks. Backticks (template literals) are the most powerful — they let you embed JavaScript expressions directly inside the string using ${} and they support multi-line strings without escape characters.',
+      content: 'Strings hold text. You can use single quotes, double quotes, or backticks. Backticks (template literals) are the most powerful - they let you embed JavaScript expressions directly inside the string using ${} and they support multi-line strings without escape characters.',
       code: `// String creation
 const name = "Alice";
 const greeting = 'Hello, World!';
 
-// Template literals — most powerful (backticks)
+// Template literals - most powerful (backticks)
 const age = 30;
 const msg = \`My name is \${name} and I am \${age} years old.\`;
 const math = \`2 + 2 = \${2 + 2}\`;  // expressions work!
@@ -133,7 +133,7 @@ console.log(conditional); // "Status: Adult"`,
     {
       type: 'example',
       title: 'Essential string methods',
-      content: 'JavaScript strings have built-in methods you can call with a dot. Important: strings are immutable — these methods never change the original string, they always return a new one. The most useful are: length (property, not method), includes(), indexOf(), slice(), replace(), split(), and trim().',
+      content: 'JavaScript strings have built-in methods you can call with a dot. Important: strings are immutable - these methods never change the original string, they always return a new one. The most useful are: length (property, not method), includes(), indexOf(), slice(), replace(), split(), and trim().',
       code: `const str = "Hello, JavaScript World!";
 
 // Length
@@ -182,7 +182,7 @@ console.log(["a","b","c"].join("-")); // "a-b-c"`,
     {
       type: 'example',
       title: 'Number methods and the Math object',
-      content: 'JavaScript has a built-in Math object with useful math functions. Note: toFixed() returns a STRING, not a number — so if you need arithmetic after formatting, convert it back with Number(). Math.random() gives 0 to 0.9999 — multiply by the range you want and use Math.floor() to get whole numbers.',
+      content: 'JavaScript has a built-in Math object with useful math functions. Note: toFixed() returns a STRING, not a number - so if you need arithmetic after formatting, convert it back with Number(). Math.random() gives 0 to 0.9999 - multiply by the range you want and use Math.floor() to get whole numbers.',
       code: `const n = 3.14159;
 
 // Number methods
@@ -208,7 +208,7 @@ console.log(parseFloat("3.14em"));  // 3.14
 // Check special values
 console.log(isNaN("hello"));        // true
 console.log(isNaN(42));             // false
-console.log(Number.isNaN(NaN));     // true (stricter — only actual NaN)
+console.log(Number.isNaN(NaN));     // true (stricter - only actual NaN)
 console.log(Number.isFinite(Infinity)); // false
 console.log(Number.isInteger(42));  // true
 console.log(Number.isInteger(42.5));// false
@@ -236,7 +236,7 @@ console.log(randomInt(1, 6));      // dice roll: 1-6`,
     },
     {
       type: 'heading',
-      content: 'Type Coercion — JavaScript\'s Automatic Conversion',
+      content: 'Type Coercion - JavaScript\'s Automatic Conversion',
     },
     {
       type: 'example',
@@ -282,7 +282,7 @@ if ({})      console.log("empty object is truthy");     // printed!`,
     {
       type: 'example',
       title: 'Converting between types manually',
-      content: 'Sometimes JavaScript does not automatically convert types the way you want, so you do it yourself. Number("42") converts a string to a number. String(42) converts a number to text. Boolean(value) converts anything to true or false — falsy values (0, "", null, undefined, NaN) become false, everything else becomes true.',
+      content: 'Sometimes JavaScript does not automatically convert types the way you want, so you do it yourself. Number("42") converts a string to a number. String(42) converts a number to text. Boolean(value) converts anything to true or false - falsy values (0, "", null, undefined, NaN) become false, everything else becomes true.',
       code: `// To String
 String(42)          // "42"
 String(true)        // "true"
@@ -368,17 +368,17 @@ code{background:#f3f4f6;padding:2px 6px;border-radius:4px;color:#dc2626;font-siz
   lines.push('Trim: "' + raw.trim() + '"');
   lines.push('UpperCase: "' + raw.toUpperCase() + '"');
   lines.push('parseInt: ' + parseInt(raw));
-  document.getElementById('result').textContent = lines.join('\\n');
+  document.getElementById('result').textContent = lines.join('\ ');
 }
 
 function quizAnswer(correct, chosen) {
   const el = document.getElementById('quiz-result');
   if (chosen === correct) {
     el.style.color = '#16a34a';
-    el.textContent = '✅ Correct! "5" + 3 = "53" — the + operator with a string concatenates, not adds.';
+    el.textContent = '✅ Correct! "5" + 3 = "53" - the + operator with a string concatenates, not adds.';
   } else {
     el.style.color = '#dc2626';
-    el.textContent = '❌ Wrong! "5" + 3 = "53" — when using + with a string, JavaScript concatenates. Try "5" - 3 which gives 2.';
+    el.textContent = '❌ Wrong! "5" + 3 = "53" - when using + with a string, JavaScript concatenates. Try "5" - 3 which gives 2.';
   }
 }`,
       mode: 'full',
@@ -391,7 +391,7 @@ function quizAnswer(correct, chosen) {
       type: 'multiple-choice',
       options: ['"null"', '"undefined"', '"object"', '"boolean"'],
       correct: 2,
-      explanation: 'typeof null returns "object" — this is a famous, decades-old JavaScript bug that cannot be fixed without breaking existing code. To check for null specifically, always use === null.',
+      explanation: 'typeof null returns "object" - this is a famous, decades-old JavaScript bug that cannot be fixed without breaking existing code. To check for null specifically, always use === null.',
     },
     {
       id: 'dt-2',
@@ -406,7 +406,7 @@ function quizAnswer(correct, chosen) {
       type: 'multiple-choice',
       options: ['"false" (the string)', '[] (empty array)', '0', '{} (empty object)'],
       correct: 2,
-      explanation: '0 is falsy. The string "false" is truthy (non-empty string). Empty arrays [] and empty objects {} are truthy — this surprises many beginners. Only 6 values are falsy: false, 0, "", null, undefined, NaN.',
+      explanation: '0 is falsy. The string "false" is truthy (non-empty string). Empty arrays [] and empty objects {} are truthy - this surprises many beginners. Only 6 values are falsy: false, 0, "", null, undefined, NaN.',
     },
   ],
   quiz: [

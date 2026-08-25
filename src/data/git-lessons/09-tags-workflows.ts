@@ -25,7 +25,7 @@ export const lesson09: GitLesson = {
     {
       type: 'example',
       title: 'Lightweight vs Annotated Tags',
-      content: 'Lightweight tags are simple pointers. Annotated tags store extra metadata like the tagger name, date, and a message — use these for releases.',
+      content: 'Lightweight tags are simple pointers. Annotated tags store extra metadata like the tagger name, date, and a message - use these for releases.',
       code: `# Create a lightweight tag (simple pointer)
 git tag v1.0.0
 

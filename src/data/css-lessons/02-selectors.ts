@@ -3,28 +3,28 @@ import type { CssLesson } from '../css-curriculum';
 export const cssSelectorsLesson: CssLesson = {
   id: 'css-selectors', title: 'CSS Selectors', slug: 'selectors',
   chapter: 'selectors', order: 2, difficulty: 'beginner', readingTime: 14,
-  description: 'Master all CSS selectors — element, class, ID, attribute, pseudo-classes, pseudo-elements, combinators, and specificity.',
+  description: 'Master all CSS selectors - element, class, ID, attribute, pseudo-classes, pseudo-elements, combinators, and specificity.',
   sections: [
     { type: 'text', content: 'A CSS selector targets HTML elements so you can apply styles to them. Knowing all the ways to select elements is one of the most powerful skills in CSS. The selector is everything that comes before the opening curly brace { }.' },
     { type: 'heading', content: 'Basic Selectors' },
-    { type: 'code', language: 'css', code: `/* 1. Element/Type selector — targets all <p> tags */
+    { type: 'code', language: 'css', code: `/* 1. Element/Type selector - targets all <p> tags */
 p { color: #374151; }
 h1 { font-size: 2rem; }
 button { cursor: pointer; }
 
-/* 2. Class selector — targets any element with class="card" */
+/* 2. Class selector - targets any element with class="card" */
 .card { background: white; border-radius: 12px; }
 .btn-primary { background: #2563eb; color: white; }
 .hidden { display: none; }
 
-/* 3. ID selector — targets ONE unique element */
+/* 3. ID selector - targets ONE unique element */
 #hero { background: linear-gradient(135deg, #1e40af, #7c3aed); }
 #main-nav { position: sticky; top: 0; }
 
-/* 4. Universal selector — targets EVERYTHING */
+/* 4. Universal selector - targets EVERYTHING */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* 5. Multiple selectors — apply same styles to many */
+/* 5. Multiple selectors - apply same styles to many */
 h1, h2, h3, h4 { font-weight: 700; color: #111; }
 .card, .panel, .modal { background: white; border-radius: 8px; }` },
     { type: 'heading', content: 'Attribute Selectors' },
@@ -44,18 +44,18 @@ a[target="_blank"]::after {
 
 /* Style disabled form elements */
 input[disabled] { opacity: 0.5; cursor: not-allowed; }` },
-    { type: 'heading', content: 'Pseudo-Classes — Element States' },
-    { type: 'code', language: 'css', code: `/* :hover — mouse is over the element */
+    { type: 'heading', content: 'Pseudo-Classes - Element States' },
+    { type: 'code', language: 'css', code: `/* :hover - mouse is over the element */
 button:hover { background: #1d4ed8; transform: translateY(-1px); }
 a:hover { text-decoration: underline; }
 
-/* :focus — element has keyboard/click focus */
+/* :focus - element has keyboard/click focus */
 input:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
 
-/* :active — element is being clicked */
+/* :active - element is being clicked */
 button:active { transform: scale(0.98); }
 
-/* :visited — link that has been clicked */
+/* :visited - link that has been clicked */
 a:visited { color: #7c3aed; }
 
 /* :first-child, :last-child, :nth-child */
@@ -67,25 +67,25 @@ li:nth-child(3)    { color: red; }              /* exactly 3rd */
 li:nth-child(2n)   { color: blue; }             /* every even item */
 li:nth-child(3n+1) { font-weight: bold; }       /* every 3rd starting at 1 */
 
-/* :not() — exclude elements */
+/* :not() - exclude elements */
 p:not(.intro)   { color: #6b7280; }
 li:not(:last-child) { border-bottom: 1px solid #e5e7eb; }
 
-/* :checked, :disabled, :required, :valid, :invalid — form states */
+/* :checked, :disabled, :required, :valid, :invalid - form states */
 input:checked + label { font-weight: bold; color: #2563eb; }
 input:invalid { border-color: #ef4444; }
 input:valid   { border-color: #22c55e; }
 
-/* :empty — element with no children */
+/* :empty - element with no children */
 .placeholder:empty { background: #f3f4f6; min-height: 40px; }
 
-/* :root — the <html> element, used for CSS variables */
+/* :root - the <html> element, used for CSS variables */
 :root {
   --blue: #2563eb;
   --font-size-base: 16px;
 }` },
-    { type: 'heading', content: 'Pseudo-Elements — Decorate Elements' },
-    { type: 'code', language: 'css', code: `/* ::before and ::after — insert content before/after element */
+    { type: 'heading', content: 'Pseudo-Elements - Decorate Elements' },
+    { type: 'code', language: 'css', code: `/* ::before and ::after - insert content before/after element */
 .btn::before { content: "→ "; }
 .required::after { content: " *"; color: red; }
 
@@ -93,36 +93,36 @@ input:valid   { border-color: #22c55e; }
 blockquote::before { content: '"'; font-size: 3rem; color: #ccc; line-height: 0; }
 blockquote::after  { content: '"'; font-size: 3rem; color: #ccc; line-height: 0; }
 
-/* ::first-line — style only the first line */
+/* ::first-line - style only the first line */
 p::first-line { font-weight: bold; font-size: 1.1em; }
 
-/* ::first-letter — drop cap effect */
+/* ::first-letter - drop cap effect */
 p::first-letter { font-size: 3em; float: left; line-height: 0.8; margin-right: 8px; color: #2563eb; }
 
-/* ::placeholder — style input placeholder text */
+/* ::placeholder - style input placeholder text */
 input::placeholder { color: #9ca3af; font-style: italic; }
 
-/* ::selection — text selected by user */
+/* ::selection - text selected by user */
 ::selection { background: #dbeafe; color: #1e40af; }
 
-/* ::marker — list item markers */
+/* ::marker - list item markers */
 li::marker { color: #2563eb; font-size: 1.2em; }` },
     { type: 'heading', content: 'Combinator Selectors' },
-    { type: 'code', language: 'css', code: `/* Descendant (space) — any nested element */
+    { type: 'code', language: 'css', code: `/* Descendant (space) - any nested element */
 .card p { color: #6b7280; }            /* all <p> inside .card */
 nav a { text-decoration: none; }       /* all <a> inside nav */
 
-/* Child (>) — DIRECT children only */
+/* Child (>) - DIRECT children only */
 .nav > li { display: inline-block; }   /* direct <li> children of .nav */
 .form > label { font-weight: 600; }    /* direct <label> children */
 
-/* Adjacent sibling (+) — immediately following sibling */
+/* Adjacent sibling (+) - immediately following sibling */
 h2 + p { font-size: 1.1rem; color: #374151; }  /* <p> right after <h2> */
 input + label { margin-left: 8px; }
 
-/* General sibling (~) — all following siblings */
+/* General sibling (~) - all following siblings */
 h2 ~ p { margin-left: 20px; }         /* all <p> after a <h2> same parent */` },
-    { type: 'heading', content: 'CSS Specificity — Which Rule Wins?' },
+    { type: 'heading', content: 'CSS Specificity - Which Rule Wins?' },
     { type: 'text', content: 'When two CSS rules target the same element, specificity determines which one applies. Think of it as a points system: inline styles get 1000 points, IDs get 100, classes/attributes/pseudo-classes get 10, elements/pseudo-elements get 1.' },
     { type: 'table', title: 'Specificity Scoring', headers: ['Selector', 'Points', 'Example'], rows: [
       ['Inline style', '1000', 'style="color:red"'],
@@ -137,14 +137,14 @@ h2 ~ p { margin-left: 20px; }         /* all <p> after a <h2> same parent */` },
     ]},
     { type: 'code', language: 'css', code: `/* Specificity examples */
 p           { color: gray; }       /* 1 point */
-.intro      { color: blue; }       /* 10 points — wins over p */
+.intro      { color: blue; }       /* 10 points - wins over p */
 #main p     { color: green; }      /* 101 points */
-#main .intro{ color: purple; }     /* 110 points — wins */
+#main .intro{ color: purple; }     /* 110 points - wins */
 
-/* !important — nuclear option, avoid if possible */
+/* !important - nuclear option, avoid if possible */
 p { color: gray !important; }      /* beats everything */
 
-/* Tip: keep specificity low — use classes, avoid IDs for CSS */` },
+/* Tip: keep specificity low - use classes, avoid IDs for CSS */` },
     { type: 'warning', title: 'Avoid overusing !important', content: '!important overrides all other CSS. Overusing it leads to a "specificity war" where you need more !important everywhere. Instead, write more specific selectors or restructure your CSS.' },
     { type: 'tryit', title: 'Try It: Selectors',
       html: `<div id="app">

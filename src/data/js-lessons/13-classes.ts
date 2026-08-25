@@ -1,14 +1,14 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsClassesLesson: JSLesson = {
   id:'js-classes',title:'Classes & OOP',slug:'classes',
   chapter:'advanced',order:14,difficulty:'intermediate',readingTime:14,
-  description:'Master ES6 classes — constructor, methods, inheritance, static, private fields, and the prototype chain.',
+  description:'Master ES6 classes - constructor, methods, inheritance, static, private fields, and the prototype chain.',
   sections:[
     {type:'text',content:'Classes in JavaScript (introduced in ES6) are syntactic sugar over prototypes. They provide a clean, readable way to create objects with shared behavior. If you are coming from another language like Java or Python, JavaScript classes will feel familiar.'},
     {type:'heading',content:'Basic Class Syntax'},
-    {type:'example',title:'Creating and using a class',content:'A class is a blueprint for creating objects. The constructor() runs automatically when you use new ClassName(). Instance methods are functions that belong to every object created from the class. The get keyword creates a computed property — it looks like a property but runs a function. Static methods belong to the class itself, not to instances — useful for factory functions and utility methods.',language:'javascript',code:`class Person {
-  // Constructor — runs when you create a new instance
+    {type:'example',title:'Creating and using a class',content:'A class is a blueprint for creating objects. The constructor() runs automatically when you use new ClassName(). Instance methods are functions that belong to every object created from the class. The get keyword creates a computed property - it looks like a property but runs a function. Static methods belong to the class itself, not to instances - useful for factory functions and utility methods.',language:'javascript',code:`class Person {
+  // Constructor - runs when you create a new instance
   constructor(name, age) {
     this.name = name;  // instance property
     this.age  = age;
@@ -24,7 +24,7 @@ export const jsClassesLesson: JSLesson = {
     return \`Happy birthday \${this.name}! Now \${this.age}.\`;
   }
 
-  // Getter — access like a property but computed
+  // Getter - access like a property but computed
   get info() {
     return \`\${this.name} (\${this.age})\`;
   }
@@ -36,12 +36,12 @@ export const jsClassesLesson: JSLesson = {
     this._lastName = parts[1];
   }
 
-  // Static method — belongs to class, not instance
+  // Static method - belongs to class, not instance
   static create(name, age) {
     return new Person(name, age);
   }
 
-  // toString — called automatically when object used as string
+  // toString - called automatically when object used as string
   toString() {
     return \`Person { name: "\${this.name}", age: \${this.age} }\`;
   }
@@ -52,12 +52,12 @@ const alice = new Person("Alice", 28);
 const bob   = Person.create("Bob", 32); // using static method
 
 console.log(alice.greet());    // "Hi! I'm Alice, 28 years old."
-console.log(alice.info);       // "Alice (28)" — getter
+console.log(alice.info);       // "Alice (28)" - getter
 console.log(alice.birthday()); // "Happy birthday Alice! Now 29."
 console.log(alice + "");       // "Person { name: "Alice", age: 29 }"
-console.log(typeof Person);    // "function" — classes ARE functions!`},
+console.log(typeof Person);    // "function" - classes ARE functions!`},
     {type:'heading',content:'Inheritance with extends'},
-    {type:'example',title:'Extending classes',content:'Inheritance lets one class reuse everything from another. The extends keyword creates a subclass. super() calls the parent constructor — you MUST call it before using this in a subclass. super.method() calls the parent version of a method, so you can extend its behavior without rewriting it. instanceof checks the entire inheritance chain.',language:'javascript',code:`class Animal {
+    {type:'example',title:'Extending classes',content:'Inheritance lets one class reuse everything from another. The extends keyword creates a subclass. super() calls the parent constructor - you MUST call it before using this in a subclass. super.method() calls the parent version of a method, so you can extend its behavior without rewriting it. instanceof checks the entire inheritance chain.',language:'javascript',code:`class Animal {
   constructor(name, sound) {
     this.name  = name;
     this.sound = sound;
@@ -109,8 +109,8 @@ console.log(dog.fetch()); // "Rex fetches the ball!"
 console.log(dog instanceof Dog);    // true
 console.log(dog instanceof Animal); // true (inherits!)`},
     {type:'heading',content:'Private Fields and Methods (ES2022)'},
-    {type:'example',title:'Truly private data with # prefix',content:'The # prefix creates fields that are TRULY private — the JavaScript engine enforces this at the syntax level. Accessing #balance from outside the class throws a SyntaxError, not just a convention violation. This is different from the old _ prefix which was just a naming convention anyone could ignore. Use private fields to protect sensitive data like account balances, passwords, or internal state.',language:'javascript',code:`class BankAccount {
-  // Private fields — CANNOT be accessed outside the class
+    {type:'example',title:'Truly private data with # prefix',content:'The # prefix creates fields that are TRULY private - the JavaScript engine enforces this at the syntax level. Accessing #balance from outside the class throws a SyntaxError, not just a convention violation. This is different from the old _ prefix which was just a naming convention anyone could ignore. Use private fields to protect sensitive data like account balances, passwords, or internal state.',language:'javascript',code:`class BankAccount {
+  // Private fields - CANNOT be accessed outside the class
   #balance;
   #transactionHistory = [];
 
@@ -151,14 +151,14 @@ const account = new BankAccount("Alex", 1000);
 console.log(account.deposit(500));   // "Deposited $500. Balance: $1500"
 console.log(account.withdraw(200));  // "Withdrew $200. Balance: $1300"
 console.log(account.balance);        // 1300 (getter)
-// account.#balance;                 // ❌ SyntaxError — truly private!`},
+// account.#balance;                 // ❌ SyntaxError - truly private!`},
     {type:'heading',content:'Static Fields and Methods'},
-    {type:'example',title:'Class-level properties',content:'Static fields and methods belong to the CLASS itself, not to any instance. You call them as MathUtils.square(5), not new MathUtils().square(5). Static fields are shared across all instances — great for counters, caches, and configuration. A private static field (static #count) combined with a static getter gives you a read-only class-level counter.',language:'javascript',code:`class MathUtils {
-  // Static fields — shared across all instances, belong to class
+    {type:'example',title:'Class-level properties',content:'Static fields and methods belong to the CLASS itself, not to any instance. You call them as MathUtils.square(5), not new MathUtils().square(5). Static fields are shared across all instances - great for counters, caches, and configuration. A private static field (static #count) combined with a static getter gives you a read-only class-level counter.',language:'javascript',code:`class MathUtils {
+  // Static fields - shared across all instances, belong to class
   static PI = 3.14159265358979;
   static E  = 2.71828182845905;
 
-  // Static methods — called on class, not instance
+  // Static methods - called on class, not instance
   static square(n) { return n * n; }
   static cube(n)   { return n * n * n; }
   static clamp(value, min, max) { return Math.min(Math.max(value, min), max); }
@@ -266,6 +266,6 @@ function render() {
   document.getElementById('stats').textContent = \`\${mgr.all.length} tasks · \${mgr.done.length} completed · \${mgr.pending.length} pending\`;
 }`,mode:'full'},
   ],
-  exercises:[{id:'cls-1',question:'What does the super() call do in a subclass constructor?',type:'multiple-choice',options:['Creates a new instance','Calls the parent class constructor — required before using this in subclass','Deletes the parent class','Overrides all parent methods'],correct:1,explanation:'super() calls the parent class constructor. In a subclass constructor, you MUST call super() before accessing this. If you forget, you get a ReferenceError: Must call super constructor in derived class before accessing this.'}],
+  exercises:[{id:'cls-1',question:'What does the super() call do in a subclass constructor?',type:'multiple-choice',options:['Creates a new instance','Calls the parent class constructor - required before using this in subclass','Deletes the parent class','Overrides all parent methods'],correct:1,explanation:'super() calls the parent class constructor. In a subclass constructor, you MUST call super() before accessing this. If you forget, you get a ReferenceError: Must call super constructor in derived class before accessing this.'}],
   quiz:[{id:'qcl1',question:'What makes a field truly private in modern JavaScript classes?',options:['Using _ prefix (convention only)','Using # prefix (enforced by the language)','Declaring inside constructor only','Using the private keyword'],correct:1,explanation:'The # prefix (introduced in ES2022) creates truly private fields. Unlike _ prefix (just a convention), # fields throw a SyntaxError if accessed outside the class. They are part of the class syntax, not just naming.'}],
 };

@@ -92,8 +92,8 @@ CMD ["node", "server.js"]`,
     },
     {
       type: 'example',
-      title: '.dockerignore — exclude files from the build context',
-      content: 'The .dockerignore file tells Docker which files and directories to exclude when sending the build context to the daemon. Without it, Docker sends your entire project directory including node_modules, .git, and test files — making builds much slower.',
+      title: '.dockerignore - exclude files from the build context',
+      content: 'The .dockerignore file tells Docker which files and directories to exclude when sending the build context to the daemon. Without it, Docker sends your entire project directory including node_modules, .git, and test files - making builds much slower.',
       code: `# .dockerignore
 node_modules
 .git
@@ -115,7 +115,7 @@ Thumbs.db`,
     },
     {
       type: 'example',
-      title: 'docker build — creating an image from a Dockerfile',
+      title: 'docker build - creating an image from a Dockerfile',
       content: 'The docker build command reads the Dockerfile and executes each instruction to produce an image. The -t flag names and tags the image, and the final argument is the build context directory (usually . for current directory).',
       code: `# Build with a name and tag
 docker build -t myapp:1.0.0 .
@@ -167,7 +167,7 @@ RUN npm ci --only=production`,
     },
     {
       type: 'text',
-      content: 'Multi-stage builds use multiple FROM instructions in one Dockerfile. Each stage can use a different base image. The final stage copies only the built artifacts from earlier stages — discarding compilers, test tools, and source code. This dramatically reduces final image size.'
+      content: 'Multi-stage builds use multiple FROM instructions in one Dockerfile. Each stage can use a different base image. The final stage copies only the built artifacts from earlier stages - discarding compilers, test tools, and source code. This dramatically reduces final image size.'
     },
     {
       type: 'example',
@@ -200,7 +200,7 @@ CMD ["node", "dist/server.js"]`,
     {
       type: 'note',
       title: 'Non-Root User Security',
-      content: 'By default, containers run as root. This is a security risk — a compromised application running as root can affect the host system. Always create a dedicated non-root user in production Dockerfiles using adduser (Alpine) or useradd (Debian/Ubuntu) and switch to it with USER.'
+      content: 'By default, containers run as root. This is a security risk - a compromised application running as root can affect the host system. Always create a dedicated non-root user in production Dockerfiles using adduser (Alpine) or useradd (Debian/Ubuntu) and switch to it with USER.'
     },
     {
       type: 'tip',
@@ -239,7 +239,7 @@ function renderDockerfile() {
     pre.textContent = '# Your Dockerfile will appear here...';
     return;
   }
-  pre.textContent = dockerfile.join('\\n');
+  pre.textContent = dockerfile.join('\ ');
 }
 
 document.getElementById('add-btn').addEventListener('click', function() {

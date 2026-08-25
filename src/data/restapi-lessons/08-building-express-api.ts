@@ -8,7 +8,7 @@ export const lesson08: RestapiLesson = {
   order: 8,
   difficulty: 'intermediate',
   readingTime: 15,
-  description: 'Build a complete CRUD REST API from scratch using Node.js and Express — from setup to all 5 routes with proper error handling.',
+  description: 'Build a complete CRUD REST API from scratch using Node.js and Express - from setup to all 5 routes with proper error handling.',
   sections: [
     {
       type: 'text',
@@ -26,7 +26,7 @@ export const lesson08: RestapiLesson = {
       type: 'example',
       title: 'Complete Express server setup with all CRUD routes',
       content: 'This is a complete, runnable Express API for a users resource. It uses an in-memory array as the data store (replace with a database in production). Every REST convention is followed: plural resource name, correct HTTP methods, proper status codes, and JSON responses throughout.',
-      code: `// server.js — complete users CRUD API
+      code: `// server.js - complete users CRUD API
 const express = require('express');
 const app = express();
 
@@ -41,19 +41,19 @@ let users = [
 ];
 let nextId = 4;
 
-// GET /users — list all users
+// GET /users - list all users
 app.get('/users', (req, res) => {
   res.json({ data: users, meta: { total: users.length } });
 });
 
-// GET /users/:id — get one user
+// GET /users/:id - get one user
 app.get('/users/:id', (req, res) => {
   const user = users.find(u => u.id === parseInt(req.params.id));
   if (!user) return res.status(404).json({ error: 'NOT_FOUND', message: 'User not found' });
   res.json({ data: user });
 });
 
-// POST /users — create a user
+// POST /users - create a user
 app.post('/users', (req, res) => {
   const { name, email, role = 'user' } = req.body;
   if (!name || !email) {
@@ -67,7 +67,7 @@ app.post('/users', (req, res) => {
   res.status(201).json({ data: user });
 });
 
-// PUT /users/:id — replace a user
+// PUT /users/:id - replace a user
 app.put('/users/:id', (req, res) => {
   const idx = users.findIndex(u => u.id === parseInt(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'NOT_FOUND', message: 'User not found' });
@@ -79,7 +79,7 @@ app.put('/users/:id', (req, res) => {
   res.json({ data: users[idx] });
 });
 
-// DELETE /users/:id — remove a user
+// DELETE /users/:id - remove a user
 app.delete('/users/:id', (req, res) => {
   const idx = users.findIndex(u => u.id === parseInt(req.params.id));
   if (idx === -1) return res.status(404).json({ error: 'NOT_FOUND', message: 'User not found' });
@@ -166,8 +166,8 @@ POST /users { name, email } -> 201 { data: { id: 4, ... } }`
     {
       type: 'example',
       title: 'Error handling middleware',
-      content: 'The error handler must have exactly four parameters — err, req, res, next — for Express to recognize it as an error handler rather than a regular route. It is registered after all routes so it catches errors thrown or passed via next(err) from any route handler.',
-      code: `// Must have exactly 4 parameters — this is how Express identifies error middleware
+      content: 'The error handler must have exactly four parameters - err, req, res, next - for Express to recognize it as an error handler rather than a regular route. It is registered after all routes so it catches errors thrown or passed via next(err) from any route handler.',
+      code: `// Must have exactly 4 parameters - this is how Express identifies error middleware
 app.use((err, req, res, next) => {
   console.error(err.stack); // log for debugging, do not send to client
 
@@ -187,7 +187,7 @@ app.use((err, req, res, next) => {
     });
   }
 
-  // Unexpected errors — do not leak internal details
+  // Unexpected errors - do not leak internal details
   res.status(500).json({
     error: 'INTERNAL_ERROR',
     message: 'An unexpected error occurred'
@@ -206,7 +206,7 @@ app.get('/users/:id', async (req, res, next) => {
     }
     res.json({ data: user });
   } catch (dbError) {
-    next(dbError); // unexpected error — 500
+    next(dbError); // unexpected error - 500
   }
 });`,
       language: 'javascript',
@@ -264,13 +264,13 @@ DELETE /users/3 -> HTTP Status: 204`
       type: 'list',
       title: 'Recommended Express project layout:',
       items: [
-        'server.js — entry point, starts the HTTP server',
-        'app.js — creates and configures the Express app (exported for testing)',
-        'routes/users.js — user-specific route handlers',
-        'routes/index.js — mounts all routers onto the app',
-        'middleware/auth.js — authentication middleware',
-        'middleware/validate.js — request validation helpers',
-        'models/user.js — data access layer (database queries)'
+        'server.js - entry point, starts the HTTP server',
+        'app.js - creates and configures the Express app (exported for testing)',
+        'routes/users.js - user-specific route handlers',
+        'routes/index.js - mounts all routers onto the app',
+        'middleware/auth.js - authentication middleware',
+        'middleware/validate.js - request validation helpers',
+        'models/user.js - data access layer (database queries)'
       ]
     },
     {
@@ -400,12 +400,12 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
       type: 'multiple-choice',
       options: [
         'It is a Node.js requirement for asynchronous callbacks',
-        'Express identifies error handlers by the 4-parameter signature — without the err first parameter it is treated as a regular middleware',
+        'Express identifies error handlers by the 4-parameter signature - without the err first parameter it is treated as a regular middleware',
         '4 parameters ensure the middleware runs synchronously',
         'The extra parameter allows the middleware to access the route definition'
       ],
       correct: 1,
-      explanation: 'Express uses the function\'s parameter count (its arity) to differentiate error-handling middleware from regular middleware. If you write (req, res, next) it is regular middleware. If you write (err, req, res, next) it becomes an error handler. This is a core Express convention — if you write it with 3 params and put it at the end, Express will never call it for errors.'
+      explanation: 'Express uses the function\'s parameter count (its arity) to differentiate error-handling middleware from regular middleware. If you write (req, res, next) it is regular middleware. If you write (err, req, res, next) it becomes an error handler. This is a core Express convention - if you write it with 3 params and put it at the end, Express will never call it for errors.'
     },
     {
       id: 'ex-08-2',
@@ -418,7 +418,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         'The Content-Type header in the request must be set to text/plain'
       ],
       correct: 1,
-      explanation: 'Without app.use(express.json()), Express does not parse the request body at all, so req.body is undefined. You must add this middleware before your routes. It reads the raw body stream, parses the JSON, and attaches the result to req.body — but only for requests with Content-Type: application/json.'
+      explanation: 'Without app.use(express.json()), Express does not parse the request body at all, so req.body is undefined. You must add this middleware before your routes. It reads the raw body stream, parses the JSON, and attaches the result to req.body - but only for requests with Content-Type: application/json.'
     },
     {
       id: 'ex-08-3',
@@ -431,7 +431,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         '202 Accepted indicating the deletion is queued'
       ],
       correct: 2,
-      explanation: '204 No Content is the standard for successful DELETE responses. The resource has been removed — there is nothing meaningful to return. The 204 status confirms success. Some APIs return 200 with the deleted resource for convenience, but 204 is the more widely used convention.'
+      explanation: '204 No Content is the standard for successful DELETE responses. The resource has been removed - there is nothing meaningful to return. The 204 status confirms success. Some APIs return 200 with the deleted resource for convenience, but 204 is the more widely used convention.'
     }
   ],
   quiz: [

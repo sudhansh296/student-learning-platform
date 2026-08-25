@@ -25,7 +25,7 @@ export const lesson07: DockerLesson = {
       rows: [
         ['bridge', 'Default. Creates a private internal network on the host', 'Single-host container communication'],
         ['host', 'Container shares host network stack directly', 'Performance-critical, single container'],
-        ['none', 'No networking — completely isolated', 'Maximum security, no network needed'],
+        ['none', 'No networking - completely isolated', 'Maximum security, no network needed'],
         ['overlay', 'Spans multiple Docker hosts (Swarm)', 'Multi-host microservices, Swarm mode'],
         ['macvlan', 'Container gets its own MAC and IP on LAN', 'Legacy apps needing direct LAN access']
       ]
@@ -36,7 +36,7 @@ export const lesson07: DockerLesson = {
     },
     {
       type: 'text',
-      content: 'When you run a container without specifying a network, it joins the default bridge network (docker0). Containers on the default bridge can communicate via IP addresses, but not by container name — hostname-based DNS resolution only works on custom bridge networks.'
+      content: 'When you run a container without specifying a network, it joins the default bridge network (docker0). Containers on the default bridge can communicate via IP addresses, but not by container name - hostname-based DNS resolution only works on custom bridge networks.'
     },
     {
       type: 'note',
@@ -50,7 +50,7 @@ export const lesson07: DockerLesson = {
     {
       type: 'example',
       title: 'Creating and using a custom bridge network',
-      content: 'This example creates a custom bridge network, then runs two containers attached to it. Containers on the same custom bridge network can communicate using their container names as hostnames — no need to know IP addresses.',
+      content: 'This example creates a custom bridge network, then runs two containers attached to it. Containers on the same custom bridge network can communicate using their container names as hostnames - no need to know IP addresses.',
       code: `# Create a custom bridge network
 docker network create myapp-network
 
@@ -143,7 +143,7 @@ docker port my-container`,
     {
       type: 'example',
       title: 'Containers on the same network communicating by name',
-      content: 'When containers share a custom bridge network, Docker\'s embedded DNS server resolves container names to their internal IP addresses automatically. This is how docker-compose works under the hood — it creates a network and all services use names to find each other.',
+      content: 'When containers share a custom bridge network, Docker\'s embedded DNS server resolves container names to their internal IP addresses automatically. This is how docker-compose works under the hood - it creates a network and all services use names to find each other.',
       code: `# Create application network
 docker network create app-net
 
@@ -169,7 +169,7 @@ docker exec app ping redis`,
     },
     {
       type: 'text',
-      content: 'Containers on different networks cannot communicate with each other — providing isolation between application stacks. A container can be attached to multiple networks simultaneously, acting as a bridge between isolated groups of containers.'
+      content: 'Containers on different networks cannot communicate with each other - providing isolation between application stacks. A container can be attached to multiple networks simultaneously, acting as a bridge between isolated groups of containers.'
     },
     {
       type: 'example',
@@ -197,7 +197,7 @@ docker run -d \
     {
       type: 'tip',
       title: 'Use docker-compose for Network Configuration',
-      content: 'Manually managing networks with docker network commands gets complex for multi-container apps. Docker Compose handles all of this automatically — it creates a default network for your project and all services can reach each other by service name. See the Docker Compose lesson.'
+      content: 'Manually managing networks with docker network commands gets complex for multi-container apps. Docker Compose handles all of this automatically - it creates a default network for your project and all services can reach each other by service name. See the Docker Compose lesson.'
     },
     {
       type: 'tryit',
@@ -278,7 +278,7 @@ select { background: white; border: 1px solid #dee2e6; padding: 6px 10px; border
     {
       type: 'warning',
       title: 'Avoid the Default Bridge Network for Production',
-      content: 'The default bridge network does not support DNS-based container name resolution. Always create a custom named network for your applications. This is not just a best practice — docker-compose does it automatically for every project.'
+      content: 'The default bridge network does not support DNS-based container name resolution. Always create a custom named network for your applications. This is not just a best practice - docker-compose does it automatically for every project.'
     }
   ],
   exercises: [

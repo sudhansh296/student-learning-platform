@@ -1,12 +1,12 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 export const htmlResponsiveLesson: HtmlLesson = {
   id: 'html-responsive', title: 'HTML Responsive Design', slug: 'responsive', chapter: 'advanced', order: 16,
-  difficulty: 'intermediate', readingTime: 10, description: 'Make websites work on all screen sizes — viewport meta, flexible images, media queries, and mobile-first design.',
+  difficulty: 'intermediate', readingTime: 10, description: 'Make websites work on all screen sizes - viewport meta, flexible images, media queries, and mobile-first design.',
   sections: [
-    { type: 'text', content: 'Responsive web design means your website looks and works great on ALL screen sizes — from a large 4K monitor to a small phone screen. In 2026, over 60% of web traffic is from mobile devices. If your site is not responsive, you are losing more than half your visitors.' },
+    { type: 'text', content: 'Responsive web design means your website looks and works great on ALL screen sizes - from a large 4K monitor to a small phone screen. In 2026, over 60% of web traffic is from mobile devices. If your site is not responsive, you are losing more than half your visitors.' },
     { type: 'heading', content: 'Step 1: The Viewport Meta Tag' },
     { type: 'code', language: 'html',       content: 'The viewport meta tag is required for responsive design. Without it, mobile browsers render at desktop width and zoom out making text tiny. width=device-width uses the actual screen width. initial-scale=1 sets 1:1 pixel mapping.',
-      code: `<!-- Always include this in <head> — the foundation of responsive design -->
+      code: `<!-- Always include this in <head> - the foundation of responsive design -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- width=device-width: use the device's actual screen width -->
@@ -15,7 +15,7 @@ export const htmlResponsiveLesson: HtmlLesson = {
 <!-- Without this tag: Mobile browser shows desktop version zoomed out -->
 <!-- With this tag:    Page scales correctly to the device screen -->` },
     { type: 'heading', content: 'Step 2: Flexible Images' },
-    { type: 'code', language: 'html',       content: 'srcset provides multiple image sizes and lets the browser pick the best one for the screen density. sizes tells the browser how wide the image displays at different viewports. Mobile downloads small images and desktop gets high-res ones — critical for performance.',
+    { type: 'code', language: 'html',       content: 'srcset provides multiple image sizes and lets the browser pick the best one for the screen density. sizes tells the browser how wide the image displays at different viewports. Mobile downloads small images and desktop gets high-res ones - critical for performance.',
       code: `<!-- Make images scale with their container -->
 <style>
   img {
@@ -25,7 +25,7 @@ export const htmlResponsiveLesson: HtmlLesson = {
   }
 </style>
 
-<!-- Responsive image using srcset — serve different sizes -->
+<!-- Responsive image using srcset - serve different sizes -->
 <img
   src="hero-800.jpg"
   srcset="hero-400.jpg 400w,
@@ -39,20 +39,20 @@ export const htmlResponsiveLesson: HtmlLesson = {
     { type: 'heading', content: 'Step 3: CSS Media Queries' },
     { type: 'code', language: 'html',       content: 'The mobile-first approach writes base CSS for small screens then overrides for larger screens with min-width media queries. This is easier to maintain than desktop-first. Most web traffic comes from mobile devices so starting small and enhancing upward is the right default strategy.',
       code: `<style>
-  /* Mobile first — default styles for small screens */
+  /* Mobile first - default styles for small screens */
   .container { padding: 16px; }
   .grid { display: flex; flex-direction: column; gap: 16px; }
   .nav { display: none; }  /* Hide nav on mobile */
   .hamburger { display: block; }  /* Show hamburger on mobile */
 
-  /* Tablet — 600px and up */
+  /* Tablet - 600px and up */
   @media (min-width: 600px) {
     .container { padding: 24px; }
     .grid { flex-direction: row; flex-wrap: wrap; }
     .grid > * { width: calc(50% - 8px); }
   }
 
-  /* Desktop — 900px and up */
+  /* Desktop - 900px and up */
   @media (min-width: 900px) {
     .container { max-width: 1200px; margin: 0 auto; padding: 32px; }
     .grid > * { width: calc(33.33% - 11px); }
@@ -60,7 +60,7 @@ export const htmlResponsiveLesson: HtmlLesson = {
     .hamburger { display: none; }
   }
 
-  /* Large desktop — 1200px and up */
+  /* Large desktop - 1200px and up */
   @media (min-width: 1200px) {
     .container { padding: 40px; }
   }
@@ -68,14 +68,14 @@ export const htmlResponsiveLesson: HtmlLesson = {
     { type: 'heading', content: 'Common Breakpoints' },
     { type: 'table', headers: ['Breakpoint', 'Width', 'Target Devices'], rows: [
       ['Extra small', '< 480px', 'Small phones'],
-      ['Small', '480px – 767px', 'Most phones'],
-      ['Medium', '768px – 1023px', 'Tablets'],
-      ['Large', '1024px – 1279px', 'Laptops, small desktops'],
+      ['Small', '480px - 767px', 'Most phones'],
+      ['Medium', '768px - 1023px', 'Tablets'],
+      ['Large', '1024px - 1279px', 'Laptops, small desktops'],
       ['Extra large', '≥ 1280px', 'Large desktops, 4K'],
     ]},
-    { type: 'heading', content: 'Responsive CSS Grid — Modern Approach' },
-    { type: 'code', language: 'html',       content: 'Relative units scale with context. % is relative to the parent. vw and vh are percentages of the viewport. rem is relative to the root font size — ideal for consistent spacing. clamp(min,preferred,max) limits a value within a range for fluid typography.',
-      code: `<!-- CSS Grid with auto-fit — automatically responsive! -->
+    { type: 'heading', content: 'Responsive CSS Grid - Modern Approach' },
+    { type: 'code', language: 'html',       content: 'Relative units scale with context. % is relative to the parent. vw and vh are percentages of the viewport. rem is relative to the root font size - ideal for consistent spacing. clamp(min,preferred,max) limits a value within a range for fluid typography.',
+      code: `<!-- CSS Grid with auto-fit - automatically responsive! -->
 <style>
   .card-grid {
     display: grid;

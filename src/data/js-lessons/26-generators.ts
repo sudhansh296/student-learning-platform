@@ -1,11 +1,11 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 export const jsGeneratorsLesson: JSLesson = {
   id:'js-generators',title:'Generators & Iterators',slug:'generators',chapter:'advanced',order:27,difficulty:'advanced',readingTime:12,
-  description:'Master iterators and generator functions — lazy sequences, infinite generators, async generators, and Symbol.iterator.',
+  description:'Master iterators and generator functions - lazy sequences, infinite generators, async generators, and Symbol.iterator.',
   sections:[
     {type:'text',content:'Generators are functions that can pause and resume. They produce values one at a time using yield, enabling lazy evaluation of potentially infinite sequences. They are also the foundation of async/await under the hood.'},
     {type:'heading',content:'The Iterator Protocol'},
-    {type:'example',title:'What makes something iterable',content:'An iterator is any object with a next() method that returns {value, done}. An iterable is any object with a [Symbol.iterator]() method that returns an iterator. Arrays, strings, Maps, and Sets are all iterables built into JavaScript. You can make your own class iterable by implementing [Symbol.iterator]() — then it works in for...of, spread [...obj], and destructuring.',language:'javascript',code:`// An iterator is an object with a next() method
+    {type:'example',title:'What makes something iterable',content:'An iterator is any object with a next() method that returns {value, done}. An iterable is any object with a [Symbol.iterator]() method that returns an iterator. Arrays, strings, Maps, and Sets are all iterables built into JavaScript. You can make your own class iterable by implementing [Symbol.iterator]() - then it works in for...of, spread [...obj], and destructuring.',language:'javascript',code:`// An iterator is an object with a next() method
 // next() returns { value, done }
 
 // Manual iterator
@@ -30,7 +30,7 @@ console.log(it.next()); // { value: 2, done: false }
 class Range {
   constructor(start, end) { this.start = start; this.end = end; }
 
-  // Symbol.iterator — the magic property that makes for...of work
+  // Symbol.iterator - the magic property that makes for...of work
   [Symbol.iterator]() {
     let current = this.start;
     const end = this.end;
@@ -49,7 +49,7 @@ for (const n of r) console.log(n);    // 1 2 3 4 5
 console.log([...r]);                   // [1, 2, 3, 4, 5]
 const [a, b, ...rest] = r;            // destructuring works!`},
     {type:'heading',content:'Generator Functions'},
-    {type:'example',title:'function* and yield',content:'Generator functions use function* syntax and contain yield statements. Calling a generator function does NOT run the code — it returns a generator object. Each call to .next() runs the code until the next yield, pauses, and returns the yielded value. Generators enable lazy sequences — they compute values on demand rather than all at once, making infinite sequences possible without running out of memory.',language:'javascript',code:`// Generator function — uses function* and yield
+    {type:'example',title:'function* and yield',content:'Generator functions use function* syntax and contain yield statements. Calling a generator function does NOT run the code - it returns a generator object. Each call to .next() runs the code until the next yield, pauses, and returns the yielded value. Generators enable lazy sequences - they compute values on demand rather than all at once, making infinite sequences possible without running out of memory.',language:'javascript',code:`// Generator function - uses function* and yield
 function* counter(start = 0) {
   let n = start;
   while (true) {
@@ -78,7 +78,7 @@ for (const n of range(0, 10, 2)) {
 // Spread
 console.log([...range(1, 5)]); // [1, 2, 3, 4, 5]
 
-// yield* — delegate to another generator
+// yield* - delegate to another generator
 function* concat(...iterables) {
   for (const it of iterables) {
     yield* it; // yield all values from it
@@ -102,7 +102,7 @@ calc.next(5);      // send 5 in → result = 5
 calc.next(10);     // send 10 in → result = 15
 console.log(calc.next(3).value); // send 3 → result = 18`},
     {type:'heading',content:'Async Generators'},
-    {type:'example',title:'Async iteration',content:'An async generator combines async/await with generators — you can yield Promises and await inside the function body. Use them with for await...of to process streams of data page by page, chunk by chunk. This is the proper way to paginate API results, process large files line by line, or handle any data that arrives in batches over time.',language:'javascript',code:`// Async generator — yield Promises
+    {type:'example',title:'Async iteration',content:'An async generator combines async/await with generators - you can yield Promises and await inside the function body. Use them with for await...of to process streams of data page by page, chunk by chunk. This is the proper way to paginate API results, process large files line by line, or handle any data that arrives in batches over time.',language:'javascript',code:`// Async generator - yield Promises
 async function* fetchPages(baseUrl) {
   let page = 1;
   while (true) {
@@ -158,7 +158,7 @@ console.log(first10); // [0,1,1,2,3,5,8,13,21,34]`},
 button{padding:8px 14px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;margin:4px;}
 pre{background:#0d1117;color:#3fb950;padding:14px;border-radius:10px;font-size:12px;white-space:pre-wrap;margin-top:12px;}`,
      js:`const out = document.getElementById('out');
-function log(lines) { out.textContent = lines.join('\\n'); }
+function log(lines) { out.textContent = lines.join('\ '); }
 
 function* rangeGen(start, end, step=1) {
   for (let i=start; i<=end; i+=step) yield i;

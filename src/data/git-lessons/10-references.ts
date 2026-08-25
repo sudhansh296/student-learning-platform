@@ -230,7 +230,7 @@ git commit -m "Upgrade React to v18 for concurrent features"`,
     {
       type: 'tip',
       title: 'Secrets in Git History',
-      content: 'If you accidentally commit a secret, simply deleting the file in a new commit is not enough — the secret is still visible in git history. You must use git filter-repo to rewrite history and immediately rotate the compromised credential.'
+      content: 'If you accidentally commit a secret, simply deleting the file in a new commit is not enough - the secret is still visible in git history. You must use git filter-repo to rewrite history and immediately rotate the compromised credential.'
     },
     {
       type: 'tryit',

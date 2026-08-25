@@ -1,20 +1,20 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsArraysLesson: JSLesson = {
-  id: 'js-arrays-complete', title: 'Arrays — Complete Guide', slug: 'arrays',
+  id: 'js-arrays-complete', title: 'Arrays - Complete Guide', slug: 'arrays',
   chapter: 'data', order: 9, difficulty: 'beginner', readingTime: 16,
-  description: 'Master JavaScript arrays — creation, all methods, destructuring, spread, sorting, searching, and real-world patterns.',
+  description: 'Master JavaScript arrays - creation, all methods, destructuring, spread, sorting, searching, and real-world patterns.',
   sections: [
-    { type: 'text', content: 'Arrays are ordered lists of values. In JavaScript, arrays can hold any mix of types — numbers, strings, objects, even other arrays. Arrays are everywhere: lists of users, API responses, React state, database results — mastering array methods is one of the most important skills for a JavaScript developer.' },
+    { type: 'text', content: 'Arrays are ordered lists of values. In JavaScript, arrays can hold any mix of types - numbers, strings, objects, even other arrays. Arrays are everywhere: lists of users, API responses, React state, database results - mastering array methods is one of the most important skills for a JavaScript developer.' },
     { type: 'heading', content: 'Creating Arrays' },
-    { type: 'example', title: 'Ways to create arrays', language: 'javascript',       content: 'JavaScript provides several ways to create arrays. The array literal [] is always preferred. Array.from() converts iterables (strings, Sets, NodeLists) to arrays and can generate ranges. Array.from({length:5},(_,i)=>i+1) creates [1,2,3,4,5]. The .at() method accepts negative indices — .at(-1) gets the last element cleanly.',
-      code: `// Array literal — always use this
+    { type: 'example', title: 'Ways to create arrays', language: 'javascript',       content: 'JavaScript provides several ways to create arrays. The array literal [] is always preferred. Array.from() converts iterables (strings, Sets, NodeLists) to arrays and can generate ranges. Array.from({length:5},(_,i)=>i+1) creates [1,2,3,4,5]. The .at() method accepts negative indices - .at(-1) gets the last element cleanly.',
+      code: `// Array literal - always use this
 const fruits   = ["apple", "banana", "cherry"];
 const numbers  = [1, 2, 3, 4, 5];
 const mixed    = [1, "hello", true, null, { id: 1 }];
 const empty    = [];
 
-// Array.from() — create from iterables or generate
+// Array.from() - create from iterables or generate
 const fromStr  = Array.from("hello");         // ["h","e","l","l","o"]
 const fromSet  = Array.from(new Set([1,2,2,3])); // [1,2,3]
 const range    = Array.from({length:5}, (_,i) => i+1); // [1,2,3,4,5]
@@ -32,10 +32,10 @@ console.log(fruits[fruits.length - 1]);   // "cherry" (last)
 console.log(fruits.at(-1));               // "cherry" (ES2022, cleaner)
 console.log(fruits.at(-2));               // "banana"`, output: 'apple | cherry | o | [h,e,l,l,o] | [1,2,3,4,5]' },
     { type: 'heading', content: 'Adding and Removing Elements' },
-    { type: 'example', title: 'Mutating array methods', content: 'These methods CHANGE the original array in place. push() adds to the end, pop() removes from the end. unshift() adds to the start, shift() removes from the start. splice() is the most flexible — it can remove, insert, or replace at any position. Important: sort() and reverse() also mutate — use [...array].sort() to avoid changing the original.', language: 'javascript', code: `const arr = [1, 2, 3, 4, 5];
+    { type: 'example', title: 'Mutating array methods', content: 'These methods CHANGE the original array in place. push() adds to the end, pop() removes from the end. unshift() adds to the start, shift() removes from the start. splice() is the most flexible - it can remove, insert, or replace at any position. Important: sort() and reverse() also mutate - use [...array].sort() to avoid changing the original.', language: 'javascript', code: `const arr = [1, 2, 3, 4, 5];
 
 // Add/remove at END
-arr.push(6, 7);          // [1,2,3,4,5,6,7] — add to end
+arr.push(6, 7);          // [1,2,3,4,5,6,7] - add to end
 const last = arr.pop();  // removes and returns 7 → arr: [1,2,3,4,5,6]
 
 // Add/remove at START
@@ -59,27 +59,27 @@ const partial = [1,2,3,4,5].fill(9,1,4); // [1,9,9,9,5]` },
   { id:4, name:"Dave",  age:19, active:true,  role:"user"   },
 ];
 
-// MAP — transform every item, returns same-length array
+// MAP - transform every item, returns same-length array
 const names  = users.map(u => u.name);                 // ["Alice","Bob","Carol","Dave"]
 const badges = users.map(u => ({ ...u, badge: u.role.toUpperCase() }));
 
-// FILTER — keep items that pass the test
+// FILTER - keep items that pass the test
 const active  = users.filter(u => u.active);            // [Alice, Carol, Dave]
 const admins  = users.filter(u => u.role === "admin");  // [Alice]
 const adults  = users.filter(u => u.age >= 21);         // [Alice, Carol]
 
-// REDUCE — accumulate to a single value
+// REDUCE - accumulate to a single value
 const totalAge = users.reduce((sum, u) => sum + u.age, 0); // 104
 const byRole = users.reduce((acc, u) => {
   (acc[u.role] ??= []).push(u.name);
   return acc;
 }, {}); // { admin:["Alice"], user:["Bob","Dave"], editor:["Carol"] }
 
-// FIND — first matching item (or undefined)
+// FIND - first matching item (or undefined)
 const alice = users.find(u => u.name === "Alice");      // { id:1, name:"Alice", ... }
 const bob   = users.find(u => u.id === 2);              // { id:2, name:"Bob", ... }
 
-// FOREACH — run code for each (no return value)
+// FOREACH - run code for each (no return value)
 users.forEach(u => console.log(u.name));
 
 // Chaining
@@ -88,33 +88,33 @@ const activeAdminNames = users
   .map(u => u.name.toUpperCase());
 // ["ALICE", "CAROL"]`, output: 'Names:[Alice,Bob,Carol,Dave] | Active:[Alice,Carol,Dave] | TotalAge:104' },
     { type: 'heading', content: 'Searching and Testing' },
-    { type: 'example', title: 'indexOf, includes, findIndex, some, every', content: 'These methods search an array and return information. includes() is the simplest — just true/false. indexOf() gives you the position. findIndex() finds the position of an object based on a condition. some() checks if at least one element passes. every() checks if ALL elements pass.', language: 'javascript', code: `const nums = [10, 20, 30, 40, 50];
+    { type: 'example', title: 'indexOf, includes, findIndex, some, every', content: 'These methods search an array and return information. includes() is the simplest - just true/false. indexOf() gives you the position. findIndex() finds the position of an object based on a condition. some() checks if at least one element passes. every() checks if ALL elements pass.', language: 'javascript', code: `const nums = [10, 20, 30, 40, 50];
 
-// indexOf — returns index of first match, -1 if not found
+// indexOf - returns index of first match, -1 if not found
 console.log(nums.indexOf(30));        // 2
 console.log(nums.indexOf(99));        // -1
 
-// includes — true/false
+// includes - true/false
 console.log(nums.includes(30));       // true
 console.log(nums.includes(99));       // false
 
-// findIndex — index of first item that passes test
+// findIndex - index of first item that passes test
 const users = [{ id:1, name:"Alice" }, { id:2, name:"Bob" }];
 const idx = users.findIndex(u => u.id === 2); // 1
 
-// some — true if AT LEAST ONE passes
+// some - true if AT LEAST ONE passes
 const hasEven = nums.some(n => n % 2 === 0);     // true
 const hasNeg  = nums.some(n => n < 0);            // false
 
-// every — true if ALL pass
+// every - true if ALL pass
 const allPos = nums.every(n => n > 0);             // true
 const allEven = nums.every(n => n % 2 === 0);     // true` },
     { type: 'heading', content: 'Sorting Arrays' },
-    { type: 'example', title: 'Sort strings, numbers, and objects', content: 'sort() without a comparator sorts alphabetically — which gives wrong results for numbers (10 sorts before 2). Always provide a comparator function: (a, b) => a - b for ascending numbers, (a, b) => b - a for descending. To sort objects, compare their properties. sort() mutates the array — use [...arr].sort() or .toSorted() for a copy.', language: 'javascript', code: `// String sort (default — alphabetical)
+    { type: 'example', title: 'Sort strings, numbers, and objects', content: 'sort() without a comparator sorts alphabetically - which gives wrong results for numbers (10 sorts before 2). Always provide a comparator function: (a, b) => a - b for ascending numbers, (a, b) => b - a for descending. To sort objects, compare their properties. sort() mutates the array - use [...arr].sort() or .toSorted() for a copy.', language: 'javascript', code: `// String sort (default - alphabetical)
 ["banana","apple","cherry"].sort();
 // ["apple","banana","cherry"]
 
-// Number sort — MUST provide comparator!
+// Number sort - MUST provide comparator!
 [10,1,5,8,3].sort();          // [1,10,3,5,8] ← WRONG! (lexicographic)
 [10,1,5,8,3].sort((a,b) => a-b); // [1,3,5,8,10] ← correct ascending
 [10,1,5,8,3].sort((a,b) => b-a); // [10,8,5,3,1] ← descending
@@ -132,10 +132,10 @@ people.sort((a,b) => a.name.localeCompare(b.name)); // alphabetically
 const sorted = [...people].sort((a,b) => a.age - b.age);
 
 // Reverse
-[1,2,3,4,5].reverse();          // [5,4,3,2,1] — MUTATES
-[1,2,3,4,5].toReversed();       // [5,4,3,2,1] — new array (ES2023)` },
+[1,2,3,4,5].reverse();          // [5,4,3,2,1] - MUTATES
+[1,2,3,4,5].toReversed();       // [5,4,3,2,1] - new array (ES2023)` },
     { type: 'heading', content: 'Array Destructuring and Spread' },
-    { type: 'example', title: 'Destructuring, spread, and flat', content: 'Destructuring pulls values out of arrays into named variables — const [first, ...rest] = arr gives you the first element and everything else. The spread operator (...) expands an array into individual elements, useful for copying and merging. flat() flattens nested arrays, and flatMap() does map then flat in one step.', language: 'javascript', code: `// Destructuring
+    { type: 'example', title: 'Destructuring, spread, and flat', content: 'Destructuring pulls values out of arrays into named variables - const [first, ...rest] = arr gives you the first element and everything else. The spread operator (...) expands an array into individual elements, useful for copying and merging. flat() flattens nested arrays, and flatMap() does map then flat in one step.', language: 'javascript', code: `// Destructuring
 const [a, b, c] = [10, 20, 30];
 console.log(a, b, c); // 10 20 30
 
@@ -163,7 +163,7 @@ nested.flat();      // [1, 2, 3, 4, [5, 6]] (1 level)
 nested.flat(2);     // [1, 2, 3, 4, 5, 6]   (2 levels)
 nested.flat(Infinity); // fully flattened
 
-// flatMap — map then flatten 1 level
+// flatMap - map then flatten 1 level
 const sentences = ["Hello World", "Foo Bar"];
 sentences.flatMap(s => s.split(" ")); // ["Hello","World","Foo","Bar"]` },
     { type: 'tryit', title: 'Student Grade Book',
@@ -171,7 +171,7 @@ sentences.flatMap(s => s.split(" ")); // ["Hello","World","Foo","Bar"]` },
   <div class="topbar">
     <div>
       <h2>📚 Student Grade Book</h2>
-      <p class="sub">map · filter · reduce · sort — all in action</p>
+      <p class="sub">map · filter · reduce · sort - all in action</p>
     </div>
     <div class="sort-row">
       Sort: <select id="sortBy" onchange="renderTable()">
@@ -294,6 +294,6 @@ renderTable();`,
   ],
   quiz: [
     { id: 'qar1', question: 'Which array method would you use to find the total sum of all numbers?', options: ['map()', 'filter()', 'reduce()', 'sum()'], correct: 2, explanation: 'reduce() accumulates values: nums.reduce((acc, n) => acc + n, 0). The 0 is the initial accumulator value. reduce() can compute any single result from an array.' },
-    { id: 'qar2', question: 'What does [...arr1, ...arr2] do?', options: ['Nests arr2 inside arr1', 'Creates a new merged array with all elements from both', 'Mutates arr1', 'Nothing — invalid syntax'], correct: 1, explanation: 'The spread operator (...) inside an array literal spreads the elements. [...arr1, ...arr2] creates a new array with all elements of arr1 followed by all elements of arr2.' },
+    { id: 'qar2', question: 'What does [...arr1, ...arr2] do?', options: ['Nests arr2 inside arr1', 'Creates a new merged array with all elements from both', 'Mutates arr1', 'Nothing - invalid syntax'], correct: 1, explanation: 'The spread operator (...) inside an array literal spreads the elements. [...arr1, ...arr2] creates a new array with all elements of arr1 followed by all elements of arr2.' },
   ],
 };

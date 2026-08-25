@@ -1,8 +1,8 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsDomLesson: JSLesson = {
   id: 'js-dom',
-  title: 'DOM — Document Object Model',
+  title: 'DOM - Document Object Model',
   slug: 'dom',
   chapter: 'dom',
   order: 11,
@@ -18,15 +18,15 @@ export const jsDomLesson: JSLesson = {
     {
       type: 'example',
       title: 'querySelector and getElementById',
-      content: 'querySelector() is the modern way to select elements — it accepts any CSS selector. querySelectorAll() returns ALL matching elements as a NodeList. getElementById() is the fastest for ID lookups. Scope your queries by searching inside a specific element (card.querySelector("h2")) rather than the whole document when possible.',
+      content: 'querySelector() is the modern way to select elements - it accepts any CSS selector. querySelectorAll() returns ALL matching elements as a NodeList. getElementById() is the fastest for ID lookups. Scope your queries by searching inside a specific element (card.querySelector("h2")) rather than the whole document when possible.',
       language: 'javascript',
-      code: `// querySelector — returns FIRST matching element (like CSS selector)
+      code: `// querySelector - returns FIRST matching element (like CSS selector)
 const heading  = document.querySelector('h1');
 const button   = document.querySelector('.btn');
 const input    = document.querySelector('#email-input');
 const firstLi  = document.querySelector('ul li:first-child');
 
-// querySelectorAll — returns NodeList of ALL matches
+// querySelectorAll - returns NodeList of ALL matches
 const allBtns  = document.querySelectorAll('.btn');
 const allItems = document.querySelectorAll('li');
 
@@ -47,15 +47,15 @@ const cardTitle = card.querySelector('h2');  // only inside .card`, output: 'Sel
     {
       type: 'example',
       title: 'Change text, HTML, and attributes',
-      content: 'textContent safely sets plain text — any HTML tags are displayed as literal text, preventing XSS attacks. Use it for user-provided content. innerHTML parses HTML — only use with trusted content. setAttribute works with any HTML attribute. The dataset property gives clean access to data-* attributes without needing getAttribute.',
+      content: 'textContent safely sets plain text - any HTML tags are displayed as literal text, preventing XSS attacks. Use it for user-provided content. innerHTML parses HTML - only use with trusted content. setAttribute works with any HTML attribute. The dataset property gives clean access to data-* attributes without needing getAttribute.',
       language: 'javascript',
       code: `const el = document.querySelector('#output');
 
-// Change text (SAFE — no HTML parsing)
+// Change text (SAFE - no HTML parsing)
 el.textContent = 'Hello, World!';
 el.textContent = '<script>alert("XSS")</script>'; // displays literally, safe!
 
-// Change HTML (use carefully — only with trusted content)
+// Change HTML (use carefully - only with trusted content)
 el.innerHTML = '<strong>Bold text</strong> with <em>italic</em>';
 
 // Get/set attributes
@@ -81,11 +81,11 @@ btn.dataset.action = 'delete'; // set data-action`,
     {
       type: 'example',
       title: 'classList is the professional way',
-      content: 'classList methods are the correct way to manage CSS classes. toggle() is especially useful — it adds the class if missing, removes it if present. This is how you implement show/hide toggles, active states, and theme switching. Directly modifying element.className as a string overwrites all classes; classList modifies individual ones.',
+      content: 'classList methods are the correct way to manage CSS classes. toggle() is especially useful - it adds the class if missing, removes it if present. This is how you implement show/hide toggles, active states, and theme switching. Directly modifying element.className as a string overwrites all classes; classList modifies individual ones.',
       language: 'javascript',
       code: `const el = document.querySelector('.card');
 
-// classList methods — BEST PRACTICE
+// classList methods - BEST PRACTICE
 el.classList.add('active');          // add class
 el.classList.remove('hidden');       // remove class
 el.classList.toggle('open');         // add if missing, remove if present
@@ -95,7 +95,7 @@ el.classList.replace('old', 'new');  // replace a class
 // Multiple classes at once
 el.classList.add('highlight', 'large', 'border-blue');
 
-// Inline styles — use sparingly
+// Inline styles - use sparingly
 el.style.color = '#2563eb';
 el.style.fontSize = '24px';
 el.style.backgroundColor = '#f0f9ff'; // camelCase!
@@ -110,7 +110,7 @@ console.log(computed.fontSize);`,
     {
       type: 'example',
       title: 'Building and adding DOM nodes',
-      content: 'createElement() creates a new element in memory. Build it up with className, textContent, or innerHTML, then insert it with append(), prepend(), before(), or after(). insertAdjacentHTML() is faster for inserting HTML strings at specific positions relative to an element — use "beforeend" to append inside, "afterend" to insert after.',
+      content: 'createElement() creates a new element in memory. Build it up with className, textContent, or innerHTML, then insert it with append(), prepend(), before(), or after(). insertAdjacentHTML() is faster for inserting HTML strings at specific positions relative to an element - use "beforeend" to append inside, "afterend" to insert after.',
       language: 'javascript',
       code: `// Create a new element
 const card = document.createElement('div');
@@ -132,7 +132,7 @@ list.prepend(card);                // at start
 list.before(card);                 // before the list
 list.after(card);                  // after the list
 
-// insertAdjacentHTML — very useful
+// insertAdjacentHTML - very useful
 el.insertAdjacentHTML('beforebegin', '<p>Before element</p>');
 el.insertAdjacentHTML('afterbegin',  '<p>First child</p>');
 el.insertAdjacentHTML('beforeend',   '<p>Last child</p>');
@@ -148,7 +148,7 @@ const clone = card.cloneNode(true); // true = deep clone (with children)`,
     { type: 'heading', content: 'Events' },
     {
       type: 'example',
-      title: 'addEventListener — the professional way',
+      title: 'addEventListener - the professional way',
       content: 'addEventListener() attaches event handlers without overwriting others. The event object passed to the callback contains event.target (what was clicked), event.currentTarget (where the listener is attached), and event.type. Always use e.preventDefault() on form submit events to stop the page from reloading.',
       language: 'javascript',
       code: `const btn = document.querySelector('#myBtn');
@@ -187,16 +187,16 @@ function handleClick() { console.log('clicked'); }
 btn.addEventListener('click', handleClick);
 btn.removeEventListener('click', handleClick);
 
-// Once — fires only one time
+// Once - fires only one time
 btn.addEventListener('click', handler, { once: true });`,
     },
     { type: 'heading', content: 'Event Delegation' },
     {
       type: 'example',
       title: 'Handle many elements with one listener',
-      content: 'Event delegation uses event bubbling — clicks on a child element bubble up to all ancestors. Instead of adding one listener per list item, add ONE listener to the parent. Use event.target.closest("li") to find the nearest matching ancestor of what was clicked. This also works for dynamically added items since the listener is on the parent, not the individual items.',
+      content: 'Event delegation uses event bubbling - clicks on a child element bubble up to all ancestors. Instead of adding one listener per list item, add ONE listener to the parent. Use event.target.closest("li") to find the nearest matching ancestor of what was clicked. This also works for dynamically added items since the listener is on the parent, not the individual items.',
       language: 'javascript',
-      code: `// SOLUTION: Event delegation — listen on the PARENT
+      code: `// SOLUTION: Event delegation - listen on the PARENT
 const list = document.querySelector('#item-list');
 
 list.addEventListener('click', (event) => {
@@ -214,7 +214,7 @@ function addItem(text) {
   li.dataset.id = Date.now();
   li.textContent = text;
   list.appendChild(li);
-  // No need to add a listener — the parent handles it!
+  // No need to add a listener - the parent handles it!
 }`,
     },
     {
@@ -304,9 +304,9 @@ function updateStats() {
       id: 'dom-2',
       question: 'Why is textContent safer than innerHTML?',
       type: 'multiple-choice',
-      options: ['textContent is faster', 'textContent treats content as plain text — no HTML parsing, preventing XSS attacks', 'innerHTML does not work on all browsers', 'They are identical'],
+      options: ['textContent is faster', 'textContent treats content as plain text - no HTML parsing, preventing XSS attacks', 'innerHTML does not work on all browsers', 'They are identical'],
       correct: 1,
-      explanation: 'innerHTML parses HTML — user input containing script tags could execute malicious code. textContent treats everything as literal text, so it is safe for user-provided content.',
+      explanation: 'innerHTML parses HTML - user input containing script tags could execute malicious code. textContent treats everything as literal text, so it is safe for user-provided content.',
     },
   ],
   quiz: [
@@ -315,7 +315,7 @@ function updateStats() {
       question: 'What is Event Delegation?',
       options: ['Removing event listeners', 'Adding a listener to a PARENT element to handle events from CHILD elements', 'Delaying events', 'Copying events between elements'],
       correct: 1,
-      explanation: 'Event delegation uses event bubbling — events bubble up from child to parent. By listening on the parent, you handle clicks on any child (even dynamically added ones) without adding individual listeners to each child.',
+      explanation: 'Event delegation uses event bubbling - events bubble up from child to parent. By listening on the parent, you handle clicks on any child (even dynamically added ones) without adding individual listeners to each child.',
     },
     {
       id: 'qdom2',

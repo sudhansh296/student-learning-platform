@@ -40,7 +40,7 @@ export const lesson10: RestapiLesson = {
       headers: ['Code', 'Name', 'When to use'],
       rows: [
         ['200', 'OK',         'Successful GET, PUT, PATCH'],
-        ['201', 'Created',    'Successful POST — resource created'],
+        ['201', 'Created',    'Successful POST - resource created'],
         ['202', 'Accepted',   'Request accepted, processing async'],
         ['204', 'No Content', 'Success with no response body (DELETE)'],
         ['206', 'Partial Content', 'Range requests (file downloads)']
@@ -86,7 +86,7 @@ export const lesson10: RestapiLesson = {
         ['Accept',        'application/json',        'Expected format of the response'],
         ['Authorization', 'Bearer <token>',          'JWT or OAuth token'],
         ['X-API-Key',     '<key>',                   'API key authentication'],
-        ['If-None-Match', '"<etag>"',                'Conditional GET — skip if unchanged'],
+        ['If-None-Match', '"<etag>"',                'Conditional GET - skip if unchanged'],
         ['If-Modified-Since', 'HTTP-date',           'Conditional GET by date']
       ]
     },
@@ -133,30 +133,30 @@ export const lesson10: RestapiLesson = {
       type: 'example',
       title: 'curl commands for GET, POST, PUT, PATCH, DELETE',
       content: 'These curl commands cover every common REST API operation. The -s flag silences the progress bar, -X sets the method, -H adds a header, -d provides the body, and -w appends a custom format string (useful for printing the HTTP status code).',
-      code: `# GET — read resource(s)
+      code: `# GET - read resource(s)
 curl -s https://api.example.com/users
 curl -s https://api.example.com/users/1
 curl -s "https://api.example.com/users?role=admin&page=1&limit=10"
 
-# POST — create a resource
+# POST - create a resource
 curl -s -X POST https://api.example.com/users \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer <token>" \\
   -d '{"name": "Alice", "email": "alice@example.com"}'
 
-# PUT — replace a resource
+# PUT - replace a resource
 curl -s -X PUT https://api.example.com/users/1 \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer <token>" \\
   -d '{"name": "Alice Johnson", "email": "alice@example.com", "role": "admin"}'
 
-# PATCH — partial update
+# PATCH - partial update
 curl -s -X PATCH https://api.example.com/users/1 \\
   -H "Content-Type: application/json" \\
   -H "Authorization: Bearer <token>" \\
   -d '{"role": "user"}'
 
-# DELETE — remove a resource
+# DELETE - remove a resource
 curl -s -X DELETE https://api.example.com/users/1 \\
   -H "Authorization: Bearer <token>" \\
   -w "\\nHTTP Status: %{http_code}\\n"
@@ -184,7 +184,7 @@ DELETE /users/1 -> HTTP Status: 204`
       code: `const BASE = 'https://api.example.com';
 const token = () => localStorage.getItem('token');
 
-// GET — no body, no Content-Type needed
+// GET - no body, no Content-Type needed
 const getUser = async (id) => {
   const res = await fetch(BASE + '/users/' + id, {
     headers: { 'Authorization': 'Bearer ' + token() }
@@ -193,7 +193,7 @@ const getUser = async (id) => {
   return res.json(); // -> { data: { id, name, ... } }
 };
 
-// POST — JSON body + Content-Type
+// POST - JSON body + Content-Type
 const createUser = async (data) => {
   const res = await fetch(BASE + '/users', {
     method: 'POST',
@@ -207,7 +207,7 @@ const createUser = async (data) => {
   return res.json(); // -> { data: { id: 5, ... } }
 };
 
-// PUT — same as POST but targets an existing resource
+// PUT - same as POST but targets an existing resource
 const replaceUser = async (id, data) => {
   const res = await fetch(BASE + '/users/' + id, {
     method: 'PUT',
@@ -221,7 +221,7 @@ const replaceUser = async (id, data) => {
   return res.json();
 };
 
-// PATCH — send only the fields to change
+// PATCH - send only the fields to change
 const updateUser = async (id, changes) => {
   const res = await fetch(BASE + '/users/' + id, {
     method: 'PATCH',
@@ -235,14 +235,14 @@ const updateUser = async (id, changes) => {
   return res.json();
 };
 
-// DELETE — no body, check for 204 before parsing
+// DELETE - no body, check for 204 before parsing
 const deleteUser = async (id) => {
   const res = await fetch(BASE + '/users/' + id, {
     method: 'DELETE',
     headers: { 'Authorization': 'Bearer ' + token() }
   });
   if (!res.ok) throw new Error(await res.text());
-  // 204 has no body — do not call res.json()
+  // 204 has no body - do not call res.json()
   return res.status === 204 ? null : res.json();
 };`,
       language: 'javascript',
@@ -264,7 +264,7 @@ deleteUser(1)           -> null (204 No Content)`
         ['Postman',   'GUI client',     'Testing, documenting, and sharing API collections'],
         ['Insomnia',  'GUI client',     'Lightweight alternative to Postman with a cleaner UI'],
         ['HTTPie',    'CLI client',     'Readable command-line HTTP requests (simpler than curl)'],
-        ['curl',      'CLI client',     'Universal — available everywhere, scriptable in bash'],
+        ['curl',      'CLI client',     'Universal - available everywhere, scriptable in bash'],
         ['Swagger UI', 'Documentation', 'Interactive API docs from an OpenAPI spec'],
         ['Bruno',     'GUI client',     'Offline-first, git-friendly API client, stores collections as files']
       ]
@@ -288,22 +288,22 @@ var cards = [
   { cat: 'Status Codes', name: '401 Unauthorized', desc: 'No credentials or invalid token. Prompt the user to authenticate.' },
   { cat: 'Status Codes', name: '403 Forbidden', desc: 'Authenticated but lacks permission. Do not return 401 or 404.' },
   { cat: 'Status Codes', name: '404 Not Found', desc: 'Resource does not exist at this URL.' },
-  { cat: 'Status Codes', name: '409 Conflict', desc: 'Resource conflict — e.g. duplicate email on signup.' },
+  { cat: 'Status Codes', name: '409 Conflict', desc: 'Resource conflict - e.g. duplicate email on signup.' },
   { cat: 'Status Codes', name: '429 Too Many Requests', desc: 'Rate limit exceeded. Include Retry-After header.' },
   { cat: 'Status Codes', name: '500 Internal Server Error', desc: 'Unexpected server crash. Never expose stack traces to clients.' },
-  { cat: 'Headers', name: 'Content-Type', desc: 'application/json — tells the server the format of your request body.' },
-  { cat: 'Headers', name: 'Accept', desc: 'application/json — tells the server what format you want in response.' },
-  { cat: 'Headers', name: 'Authorization', desc: 'Bearer <token> — sends JWT or OAuth token with every request.' },
-  { cat: 'Headers', name: 'X-API-Key', desc: 'Custom header for API key authentication — keep it out of the URL.' },
-  { cat: 'Headers', name: 'Cache-Control', desc: 'no-store, private, or public max-age — controls caching behavior.' },
+  { cat: 'Headers', name: 'Content-Type', desc: 'application/json - tells the server the format of your request body.' },
+  { cat: 'Headers', name: 'Accept', desc: 'application/json - tells the server what format you want in response.' },
+  { cat: 'Headers', name: 'Authorization', desc: 'Bearer <token> - sends JWT or OAuth token with every request.' },
+  { cat: 'Headers', name: 'X-API-Key', desc: 'Custom header for API key authentication - keep it out of the URL.' },
+  { cat: 'Headers', name: 'Cache-Control', desc: 'no-store, private, or public max-age - controls caching behavior.' },
   { cat: 'Headers', name: 'ETag', desc: 'Resource version tag used with If-None-Match for conditional requests.' },
   { cat: 'Headers', name: 'X-RateLimit-Remaining', desc: 'How many requests remain in the current rate limit window.' },
-  { cat: 'Patterns', name: 'Response Envelope', desc: '{ data: {...}, meta: {...} } — wrap all responses for extensibility.' },
-  { cat: 'Patterns', name: 'Error Format', desc: '{ error: { code, message, details } } — consistent across all endpoints.' },
-  { cat: 'Patterns', name: 'Pagination', desc: '?page=2&limit=20 — always paginate lists; include total and totalPages.' },
-  { cat: 'Patterns', name: 'ISO 8601 Dates', desc: '\\"2026-08-19T14:00:00Z\\" — always use ISO format for all date fields.' },
-  { cat: 'Patterns', name: 'Versioning', desc: '/api/v1/users — prefix all routes with a version number.' },
-  { cat: 'Patterns', name: 'Plural Nouns', desc: '/users not /user — always use plural nouns for collection endpoints.' },
+  { cat: 'Patterns', name: 'Response Envelope', desc: '{ data: {...}, meta: {...} } - wrap all responses for extensibility.' },
+  { cat: 'Patterns', name: 'Error Format', desc: '{ error: { code, message, details } } - consistent across all endpoints.' },
+  { cat: 'Patterns', name: 'Pagination', desc: '?page=2&limit=20 - always paginate lists; include total and totalPages.' },
+  { cat: 'Patterns', name: 'ISO 8601 Dates', desc: '\\"2026-08-19T14:00:00Z\\" - always use ISO format for all date fields.' },
+  { cat: 'Patterns', name: 'Versioning', desc: '/api/v1/users - prefix all routes with a version number.' },
+  { cat: 'Patterns', name: 'Plural Nouns', desc: '/users not /user - always use plural nouns for collection endpoints.' },
   { cat: 'Tools', name: 'Postman', desc: 'GUI tool for building, testing, and sharing REST API request collections.' },
   { cat: 'Tools', name: 'Insomnia', desc: 'Lightweight GUI REST client with a clean interface and plugin support.' },
   { cat: 'Tools', name: 'curl', desc: 'Command-line tool available on every system. Essential for scripting and CI.' },
@@ -364,13 +364,13 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
       question: 'You want to update only the "status" field of an order without changing other fields. Which HTTP method and why?',
       type: 'multiple-choice',
       options: [
-        'POST /orders — because you are sending data to the server',
-        'PUT /orders/:id — because PUT is the standard update method',
-        'PATCH /orders/:id — because PATCH updates only the fields you specify, leaving the rest unchanged',
-        'GET /orders/:id?status=shipped — because the status change is a filter'
+        'POST /orders - because you are sending data to the server',
+        'PUT /orders/:id - because PUT is the standard update method',
+        'PATCH /orders/:id - because PATCH updates only the fields you specify, leaving the rest unchanged',
+        'GET /orders/:id?status=shipped - because the status change is a filter'
       ],
       correct: 2,
-      explanation: 'PATCH is designed for partial updates. You send only { "status": "shipped" } and the server merges it with the existing order. PUT would require sending the complete order object — omitting any field would null it out. GET is read-only. PATCH is the correct, precise tool for this operation.'
+      explanation: 'PATCH is designed for partial updates. You send only { "status": "shipped" } and the server merges it with the existing order. PUT would require sending the complete order object - omitting any field would null it out. GET is read-only. PATCH is the correct, precise tool for this operation.'
     },
     {
       id: 'ex-10-2',
@@ -378,7 +378,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
       type: 'multiple-choice',
       options: [
         'fetch() throws an exception for any non-200 status',
-        'Check response.ok — it is false for 4xx and 5xx responses; then read the status code from response.status',
+        'Check response.ok - it is false for 4xx and 5xx responses; then read the status code from response.status',
         'The response body will be null for error responses',
         '403 causes a CORS error that fetch() catches automatically'
       ],
@@ -409,7 +409,7 @@ h3 { color: #1e293b; margin: 0 0 10px 0; font-size: 15px; }
         'Access-Control-Allow-Credentials: true'
       ],
       correct: 1,
-      explanation: 'Access-Control-Allow-Origin: * allows any origin to call your API from the browser. This is appropriate for truly public APIs. Note that the wildcard is incompatible with Access-Control-Allow-Credentials: true — if you need to send cookies or auth headers, you must specify exact origins.'
+      explanation: 'Access-Control-Allow-Origin: * allows any origin to call your API from the browser. This is appropriate for truly public APIs. Note that the wildcard is incompatible with Access-Control-Allow-Credentials: true - if you need to send cookies or auth headers, you must specify exact origins.'
     }
   ]
 };

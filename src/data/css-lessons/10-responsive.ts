@@ -1,18 +1,18 @@
-﻿import type { CssLesson } from '../css-curriculum';
+import type { CssLesson } from '../css-curriculum';
 export const cssResponsiveLesson: CssLesson = {
   id:'css-responsive',title:'Responsive Design',slug:'responsive',
   chapter:'responsive',order:10,difficulty:'intermediate',readingTime:12,
   description:'Build websites that work on all screen sizes using media queries, fluid layouts, and responsive units.',
   sections:[
-    {type:'text',content:'Responsive design means your website adapts to any screen size — from a 4K monitor to a small phone. In 2026, over 60% of web traffic comes from mobile. A non-responsive website loses more than half its visitors.'},
-    {type:'heading',content:'Viewport Meta Tag — Required'},
-    {type:'code',language:'html',content:'The viewport meta tag is required for all responsive designs. Without it, mobile browsers zoom out and show the desktop layout. width=device-width tells the browser to use the actual screen width. initial-scale=1 ensures 1:1 pixel mapping.',code:`<!-- MUST have this in <head> — without it, mobile shows desktop zoom-out -->
+    {type:'text',content:'Responsive design means your website adapts to any screen size - from a 4K monitor to a small phone. In 2026, over 60% of web traffic comes from mobile. A non-responsive website loses more than half its visitors.'},
+    {type:'heading',content:'Viewport Meta Tag - Required'},
+    {type:'code',language:'html',content:'The viewport meta tag is required for all responsive designs. Without it, mobile browsers zoom out and show the desktop layout. width=device-width tells the browser to use the actual screen width. initial-scale=1 ensures 1:1 pixel mapping.',code:`<!-- MUST have this in <head> - without it, mobile shows desktop zoom-out -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">`},
     {type:'heading',content:'Media Queries'},
     {type:'code',language:'css',content:'Media queries apply CSS only when conditions match. The mobile-first approach: write base styles for mobile, then add min-width queries to enhance for larger screens. Common breakpoints: 640px (sm), 768px (md), 1024px (lg), 1280px (xl).',code:`/* Media query syntax */
 @media (condition) { /* CSS rules */ }
 
-/* Breakpoints — mobile first approach */
+/* Breakpoints - mobile first approach */
 /* Mobile: default styles (no media query needed) */
 .container { padding: 16px; }
 .grid { grid-template-columns: 1fr; }
@@ -33,7 +33,7 @@ export const cssResponsiveLesson: CssLesson = {
   .grid { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* Max-width queries (desktop first — less common) */
+/* Max-width queries (desktop first - less common) */
 @media (max-width: 768px) {
   .sidebar { display: none; }
   nav { flex-direction: column; }
@@ -47,24 +47,24 @@ export const cssResponsiveLesson: CssLesson = {
 @media (prefers-color-scheme: dark) { body { background: #0d1117; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }`},
     {type:'heading',content:'Responsive Units'},
-    {type:'code',language:'css',content:'Relative units automatically adapt to context. % is relative to the parent. vw/vh are percentages of the viewport. rem is relative to the root font-size — use it for spacing and typography. em is relative to the current element font size. Prefer these over fixed px for responsive layouts.',code:`/* px — absolute, same on all screens */
+    {type:'code',language:'css',content:'Relative units automatically adapt to context. % is relative to the parent. vw/vh are percentages of the viewport. rem is relative to the root font-size - use it for spacing and typography. em is relative to the current element font size. Prefer these over fixed px for responsive layouts.',code:`/* px - absolute, same on all screens */
 .fixed { width: 400px; }
 
-/* % — relative to parent */
+/* % - relative to parent */
 .half { width: 50%; }
 
-/* vw / vh — viewport width/height */
+/* vw / vh - viewport width/height */
 .fullscreen { width: 100vw; height: 100vh; }
 .hero { height: 60vh; }
 
-/* rem — relative to root font-size (16px default) */
+/* rem - relative to root font-size (16px default) */
 h1 { font-size: 2.5rem; }  /* 40px */
 p  { font-size: 1rem; }    /* 16px */
 
-/* em — relative to PARENT font-size */
+/* em - relative to PARENT font-size */
 .button { padding: 0.75em 1.5em; } /* scales with button's font-size */
 
-/* clamp(min, preferred, max) — fluid values */
+/* clamp(min, preferred, max) - fluid values */
 h1 { font-size: clamp(1.5rem, 5vw, 3rem); }
 .container { width: clamp(320px, 90%, 1200px); }
 p { line-height: clamp(1.4, 2vw, 1.8); }`},
@@ -86,7 +86,7 @@ img, video {
 .thumbnail {
   width: 100%;
   height: 200px;
-  object-fit: cover;   /* crop to fill — like background-size: cover */
+  object-fit: cover;   /* crop to fill - like background-size: cover */
   object-position: center top; /* focus area */
 }
 .contain-img {
@@ -158,6 +158,6 @@ p{color:#6b7280;font-size:14px;margin-bottom:20px;}
 .card p{font-size:12px;color:#6b7280;margin:0;}`,
      mode:'html'},
   ],
-  exercises:[{id:'rsp1',question:'Which approach is recommended — mobile-first or desktop-first?',type:'multiple-choice',options:['Desktop-first, use max-width queries','Mobile-first, use min-width queries','They are equivalent','Neither, use JavaScript for responsive design'],correct:1,explanation:'Mobile-first means writing default CSS for small screens, then using @media (min-width: ...) to enhance for larger screens. It is easier, produces cleaner code, and performs better since mobile devices download less CSS.'}],
+  exercises:[{id:'rsp1',question:'Which approach is recommended - mobile-first or desktop-first?',type:'multiple-choice',options:['Desktop-first, use max-width queries','Mobile-first, use min-width queries','They are equivalent','Neither, use JavaScript for responsive design'],correct:1,explanation:'Mobile-first means writing default CSS for small screens, then using @media (min-width: ...) to enhance for larger screens. It is easier, produces cleaner code, and performs better since mobile devices download less CSS.'}],
   quiz:[{id:'rq1',question:'What does clamp(1rem, 3vw, 2rem) do for font-size?',options:['Sets font to 3px','Creates a fluid font that scales with viewport but never smaller than 1rem or larger than 2rem','Only works on mobile','Sets minimum font size'],correct:1,explanation:'clamp(min, preferred, max) creates a value that scales with the preferred value but is clamped between minimum and maximum. For fonts: never smaller than 1rem (16px), scales with viewport width, never larger than 2rem (32px).'}],
 };

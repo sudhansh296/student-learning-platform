@@ -12,7 +12,7 @@ export const lesson04: SqliteLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Real-world data has relationships. A user has many orders. An order has many products. A product belongs to many categories. SQLite supports all standard relationship patterns through foreign keys and JOIN queries — with one critical difference from PostgreSQL: foreign key enforcement is disabled by default and must be explicitly enabled.'
+      content: 'Real-world data has relationships. A user has many orders. An order has many products. A product belongs to many categories. SQLite supports all standard relationship patterns through foreign keys and JOIN queries - with one critical difference from PostgreSQL: foreign key enforcement is disabled by default and must be explicitly enabled.'
     },
     {
       type: 'heading',
@@ -20,7 +20,7 @@ export const lesson04: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'In SQLite, foreign key constraints exist in the schema definition but are not enforced unless you run PRAGMA foreign_keys = ON. This pragma must be set on every database connection — it is not persisted in the database file. If you omit it, you can insert rows with invalid foreign key values and delete parent rows while child rows still reference them.'
+      content: 'In SQLite, foreign key constraints exist in the schema definition but are not enforced unless you run PRAGMA foreign_keys = ON. This pragma must be set on every database connection - it is not persisted in the database file. If you omit it, you can insert rows with invalid foreign key values and delete parent rows while child rows still reference them.'
     },
     {
       type: 'warning',
@@ -41,7 +41,7 @@ export const lesson04: SqliteLesson = {
     },
     {
       type: 'text',
-      content: 'A many-to-many relationship means one row in A can relate to many rows in B AND one row in B can relate to many rows in A. Examples: articles have many tags, tags apply to many articles. SQL has no direct syntax for many-to-many — you model it with a junction table (also called a pivot or linking table) that has foreign keys to both sides.'
+      content: 'A many-to-many relationship means one row in A can relate to many rows in B AND one row in B can relate to many rows in A. Examples: articles have many tags, tags apply to many articles. SQL has no direct syntax for many-to-many - you model it with a junction table (also called a pivot or linking table) that has foreign keys to both sides.'
     },
     {
       type: 'example',
@@ -159,7 +159,7 @@ const tagsForArticle = db.prepare(\`
     {
       type: 'tip',
       title: 'ON DELETE CASCADE vs RESTRICT',
-      content: 'ON DELETE CASCADE automatically removes child rows when the parent is deleted. ON DELETE RESTRICT prevents deleting a parent if children exist. CASCADE is convenient but dangerous if misused. RESTRICT is safer — it forces you to handle child rows explicitly. Choose based on your data model requirements.'
+      content: 'ON DELETE CASCADE automatically removes child rows when the parent is deleted. ON DELETE RESTRICT prevents deleting a parent if children exist. CASCADE is convenient but dangerous if misused. RESTRICT is safer - it forces you to handle child rows explicitly. Choose based on your data model requirements.'
     },
     {
       type: 'tryit',
@@ -291,7 +291,7 @@ p { color: #718096; font-size: 13px; margin: 0 0 14px 0; }
         'It automatically creates indexes on both columns'
       ],
       correct: 1,
-      explanation: 'A composite primary key on (article_id, tag_id) ensures uniqueness for the combination — you cannot tag an article with the same tag twice. It also creates an implicit index on the leftmost column (article_id), speeding up article-to-tags lookups.'
+      explanation: 'A composite primary key on (article_id, tag_id) ensures uniqueness for the combination - you cannot tag an article with the same tag twice. It also creates an implicit index on the leftmost column (article_id), speeding up article-to-tags lookups.'
     },
     {
       id: 'q-sqlite-4-2',

@@ -1,17 +1,17 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsScopeClosuresLesson: JSLesson = {
   id:'js-scope',title:'Scope, Hoisting & Closures',slug:'scope-closures',
   chapter:'advanced',order:17,difficulty:'advanced',readingTime:14,
-  description:'Deep dive into JavaScript scope, the execution context, hoisting, temporal dead zone, and closures — the concepts behind how JS really works.',
+  description:'Deep dive into JavaScript scope, the execution context, hoisting, temporal dead zone, and closures - the concepts behind how JS really works.',
   sections:[
     {type:'text',content:'Understanding scope and closures separates developers who write JavaScript from those who truly understand it. These concepts explain WHY JavaScript behaves the way it does and enable powerful patterns like module patterns, memoization, and private data.'},
-    {type:'heading',content:'Scope — Where Variables Exist'},
-    {type:'example',title:'Three types of scope',content:'Scope controls where a variable can be accessed. Global scope means accessible everywhere. Function scope means only inside that function. Block scope (let and const) means only inside the { } where it was declared. The scope chain is what lets inner functions read outer variables — JavaScript looks outward through each scope layer until it finds the variable or reaches the global scope.',language:'javascript',code:`// 1. GLOBAL SCOPE — accessible everywhere
+    {type:'heading',content:'Scope - Where Variables Exist'},
+    {type:'example',title:'Three types of scope',content:'Scope controls where a variable can be accessed. Global scope means accessible everywhere. Function scope means only inside that function. Block scope (let and const) means only inside the { } where it was declared. The scope chain is what lets inner functions read outer variables - JavaScript looks outward through each scope layer until it finds the variable or reaches the global scope.',language:'javascript',code:`// 1. GLOBAL SCOPE - accessible everywhere
 const global = "I am global";
 window.globalVar = "also global"; // in browsers, window IS global
 
-// 2. FUNCTION SCOPE — only inside the function
+// 2. FUNCTION SCOPE - only inside the function
 function example() {
   var functionScoped = "only inside function";
   const alsoFunction = "also function scope";
@@ -20,7 +20,7 @@ function example() {
 }
 // console.log(functionScoped); // ❌ ReferenceError
 
-// 3. BLOCK SCOPE — inside { } (let and const only!)
+// 3. BLOCK SCOPE - inside { } (let and const only!)
 {
   let blockVar   = "only in this block";
   const blockConst = "also block scoped";
@@ -29,7 +29,7 @@ function example() {
 // console.log(blockVar);  // ❌ ReferenceError
 console.log(escaped);       // ✅ var leaks out of blocks!
 
-// Scope chain — inner functions can access outer variables
+// Scope chain - inner functions can access outer variables
 function outer() {
   const outerVar = "outer";
   function inner() {
@@ -41,7 +41,7 @@ function outer() {
   // console.log(innerVar); // ❌
 }`},
     {type:'heading',content:'Execution Context and Call Stack'},
-    {type:'example',title:'How JS executes code',content:'Every time JavaScript calls a function, it creates an "execution context" and pushes it onto the call stack. When the function returns, its context is popped off. The call stack is why error stack traces show a list of function names — it is the literal history of which functions called which. JavaScript is single-threaded, meaning only one execution context is active at any moment.',language:'javascript',code:`// JavaScript creates an Execution Context for every function call
+    {type:'example',title:'How JS executes code',content:'Every time JavaScript calls a function, it creates an "execution context" and pushes it onto the call stack. When the function returns, its context is popped off. The call stack is why error stack traces show a list of function names - it is the literal history of which functions called which. JavaScript is single-threaded, meaning only one execution context is active at any moment.',language:'javascript',code:`// JavaScript creates an Execution Context for every function call
 // Each context has: variable environment + outer scope reference
 
 // When JS starts: Global Execution Context is created
@@ -74,8 +74,8 @@ first();
 // third
 // second: end
 // first: end`},
-    {type:'heading',content:'Closures — Functions Remember Their Scope'},
-    {type:'example',title:'Closures in depth',content:'A closure is formed when a function retains access to its outer scope even after the outer function has finished executing. When makeMultiplier(2) returns, the factor variable should be gone — but the returned function still has access to it. This is a closure. Each call to makeMultiplier() creates a completely separate closure with its own private copy of factor. Closures are how you create private state in JavaScript.',language:'javascript',code:`// A closure: function + its lexical scope (environment at creation)
+    {type:'heading',content:'Closures - Functions Remember Their Scope'},
+    {type:'example',title:'Closures in depth',content:'A closure is formed when a function retains access to its outer scope even after the outer function has finished executing. When makeMultiplier(2) returns, the factor variable should be gone - but the returned function still has access to it. This is a closure. Each call to makeMultiplier() creates a completely separate closure with its own private copy of factor. Closures are how you create private state in JavaScript.',language:'javascript',code:`// A closure: function + its lexical scope (environment at creation)
 function makeMultiplier(factor) {
   // factor is "enclosed" in the returned function
   return function(number) {
@@ -86,8 +86,8 @@ function makeMultiplier(factor) {
 const double = makeMultiplier(2);
 const triple = makeMultiplier(3);
 // makeMultiplier has returned, but factor is preserved!
-console.log(double(5));  // 10 — factor=2 preserved
-console.log(triple(4));  // 12 — factor=3 preserved
+console.log(double(5));  // 10 - factor=2 preserved
+console.log(triple(4));  // 12 - factor=3 preserved
 
 // Each call creates a new closure with its OWN scope
 const counter1 = (() => {
@@ -106,10 +106,10 @@ const counter2 = (() => {
 
 counter1.increment(); counter1.increment();
 counter2.increment();
-console.log(counter1.value()); // 2 — independent from counter2
+console.log(counter1.value()); // 2 - independent from counter2
 console.log(counter2.value()); // 1
 
-// Closure in loops — the classic problem and solution
+// Closure in loops - the classic problem and solution
 // PROBLEM:
 const funcs = [];
 for (var i = 0; i < 3; i++) {
@@ -131,7 +131,7 @@ for (var k = 0; k < 3; k++) {
 }
 funcs3.forEach(f => f()); // 0, 1, 2 ✅`},
     {type:'heading',content:'Practical Closure Patterns'},
-    {type:'example',title:'Real-world closure applications',content:'Closures power some of the most important patterns in JavaScript. Memoization uses a closure to cache results — the cache Map lives inside the closure and persists between calls. Partial application uses a closure to "remember" preset arguments. The once() pattern uses a closed-over called flag to make a function run only one time. These are the patterns you will see in libraries like React hooks and Lodash.',language:'javascript',code:`// 1. MEMOIZATION — cache expensive results
+    {type:'example',title:'Real-world closure applications',content:'Closures power some of the most important patterns in JavaScript. Memoization uses a closure to cache results - the cache Map lives inside the closure and persists between calls. Partial application uses a closure to "remember" preset arguments. The once() pattern uses a closed-over called flag to make a function run only one time. These are the patterns you will see in libraries like React hooks and Lodash.',language:'javascript',code:`// 1. MEMOIZATION - cache expensive results
 function memoize(fn) {
   const cache = new Map();
   return function(...args) {
@@ -154,9 +154,9 @@ const expensiveCalc = memoize((n) => {
 });
 
 expensiveCalc(1000000); // computes
-expensiveCalc(1000000); // "Cache hit!" — instant!
+expensiveCalc(1000000); // "Cache hit!" - instant!
 
-// 2. PARTIAL APPLICATION — preset some arguments
+// 2. PARTIAL APPLICATION - preset some arguments
 function partial(fn, ...presetArgs) {
   return function(...laterArgs) {
     return fn(...presetArgs, ...laterArgs);
@@ -168,7 +168,7 @@ const add5 = partial(add, 5);
 add5(3); // 8
 add5(10); // 15
 
-// 3. ONCE — function that runs only once
+// 3. ONCE - function that runs only once
 function once(fn) {
   let called = false, result;
   return function(...args) {
@@ -185,8 +185,8 @@ const initDB = once(() => {
   return { connected: true };
 });
 
-initDB(); // "DB initialized" — runs
-initDB(); // silent — won't run again
+initDB(); // "DB initialized" - runs
+initDB(); // silent - won't run again
 initDB(); // silent`},
     {type:'tryit',title:'Try It: Closures in Practice',
      html:`<div id="app">
@@ -242,7 +242,7 @@ function memoize(fn) {
 
 const fib = memoize(function(n) {
   if (n <= 1) return n;
-  return fib(n-1) + fib(n-2); // recursive — cache makes this fast
+  return fib(n-1) + fib(n-2); // recursive - cache makes this fast
 });
 
 function calcFib() {
@@ -271,9 +271,9 @@ function demoFactory() {
     'hi("Bob")        → ' + hi("Bob"),
     'bonjour("Marie") → ' + bonjour("Marie"),
   ];
-  document.getElementById('factoryResult').textContent = lines.join('\\n');
+  document.getElementById('factoryResult').textContent = lines.join('\ ');
 }`,mode:'full'},
   ],
   exercises:[{id:'sc-1',question:'What is a closure?',type:'multiple-choice',options:['A function with no return value','A function that has access to variables from its outer scope even after the outer function has returned','A self-invoking function','A function that calls itself'],correct:1,explanation:'A closure is formed when a function retains access to its lexical scope (outer variables) after the outer function has returned. The inner function "closes over" the outer variables, keeping them alive.'}],
-  quiz:[{id:'qsc1',question:'Why does this print 3,3,3: for(var i=0;i<3;i++){setTimeout(()=>console.log(i),0)}?',options:['setTimeout is broken','var is function-scoped — there is only ONE i, and by the time callbacks run, i=3','setTimeout delays by 3 seconds','console.log is asynchronous'],correct:1,explanation:'var is function-scoped (not block-scoped), so all three closures share the SAME i variable. By the time the setTimeout callbacks run (even with 0ms), the loop has finished and i=3. Fix: use let (creates a new i per iteration).'}],
+  quiz:[{id:'qsc1',question:'Why does this print 3,3,3: for(var i=0;i<3;i++){setTimeout(()=>console.log(i),0)}?',options:['setTimeout is broken','var is function-scoped - there is only ONE i, and by the time callbacks run, i=3','setTimeout delays by 3 seconds','console.log is asynchronous'],correct:1,explanation:'var is function-scoped (not block-scoped), so all three closures share the SAME i variable. By the time the setTimeout callbacks run (even with 0ms), the loop has finished and i=3. Fix: use let (creates a new i per iteration).'}],
 };

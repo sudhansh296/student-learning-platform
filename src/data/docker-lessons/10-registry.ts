@@ -66,7 +66,7 @@ For better security, log in with a limited-privilege personal access token.`
     },
     {
       type: 'text',
-      content: 'Before you can push an image to Docker Hub, it must be tagged with your username and repository name. The docker tag command creates a new tag pointing to the same image layers — no data is duplicated. Image tags follow the convention username/repository:tag.'
+      content: 'Before you can push an image to Docker Hub, it must be tagged with your username and repository name. The docker tag command creates a new tag pointing to the same image layers - no data is duplicated. Image tags follow the convention username/repository:tag.'
     },
     {
       type: 'example',
@@ -119,12 +119,12 @@ e3d7e1c56a99: Layer already exists
       title: 'Image tagging strategies',
       headers: ['Strategy', 'Example Tag', 'Use Case'],
       rows: [
-        ['Semantic version', 'myapp:2.1.0', 'Production releases — predictable and immutable'],
-        ['Git SHA', 'myapp:a3f2e81', 'CI/CD pipelines — exact code traceability'],
+        ['Semantic version', 'myapp:2.1.0', 'Production releases - predictable and immutable'],
+        ['Git SHA', 'myapp:a3f2e81', 'CI/CD pipelines - exact code traceability'],
         ['Branch + SHA', 'myapp:main-a3f2e81', 'Staging environments per branch'],
         ['Date-based', 'myapp:2026-08-19', 'Nightly builds and scheduled releases'],
         ['Environment', 'myapp:prod', 'Only when referencing the latest of a channel'],
-        ['Avoid in prod', 'myapp:latest', 'Unpredictable — tag changes with each push']
+        ['Avoid in prod', 'myapp:latest', 'Unpredictable - tag changes with each push']
       ]
     },
     {

@@ -363,8 +363,8 @@ function fmtResult(rows, rowCount) {
   const colW = cols.map(c => Math.max(c.length, Math.max(...rows.map(r => String(r[c]).length))));
   const header = cols.map((c,i) => c.padEnd(colW[i])).join(' | ');
   const sep = colW.map(w => '-'.repeat(w)).join('-+-');
-  const body = rows.map(r => cols.map((c,i) => String(r[c]).padEnd(colW[i])).join(' | ')).join('\\n');
-  return header + '\\n' + sep + '\\n' + body + '\\n(' + rows.length + ' row' + (rows.length===1?'':'s') + ')';
+  const body = rows.map(r => cols.map((c,i) => String(r[c]).padEnd(colW[i])).join(' | ')).join('\ ');
+  return header + '\ ' + sep + '\ ' + body + '\\n(' + rows.length + ' row' + (rows.length===1?'':'s') + ')';
 }
 
 function execQuery(q) {

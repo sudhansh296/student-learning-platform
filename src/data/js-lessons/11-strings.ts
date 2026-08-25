@@ -1,15 +1,15 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsStringsLesson: JSLesson = {
-  id:'js-strings',title:'Strings — Complete Guide',slug:'strings',
+  id:'js-strings',title:'Strings - Complete Guide',slug:'strings',
   chapter:'data',order:12,difficulty:'beginner',readingTime:14,
-  description:'Master every string method — search, extract, replace, split, template literals, and real-world patterns.',
+  description:'Master every string method - search, extract, replace, split, template literals, and real-world patterns.',
   sections:[
-    {type:'text',content:'Strings are one of the most-used data types in JavaScript. You work with strings constantly — user names, messages, URLs, HTML content, API responses. Mastering string methods will save you hours of manual work.'},
+    {type:'text',content:'Strings are one of the most-used data types in JavaScript. You work with strings constantly - user names, messages, URLs, HTML content, API responses. Mastering string methods will save you hours of manual work.'},
     {type:'heading',content:'String Creation and Basics'},
-    {type:'example',title:'String creation',content:'JavaScript has three ways to write strings: single quotes, double quotes, and backtick template literals. Template literals are the most powerful — they let you embed variables and expressions directly inside the string using ${...}. They also support multi-line strings without special characters.',language:'javascript',code:`const s1 = 'single quotes';
+    {type:'example',title:'String creation',content:'JavaScript has three ways to write strings: single quotes, double quotes, and backtick template literals. Template literals are the most powerful - they let you embed variables and expressions directly inside the string using ${...}. They also support multi-line strings without special characters.',language:'javascript',code:`const s1 = 'single quotes';
 const s2 = "double quotes";
-const s3 = \`template literal — most powerful\`;
+const s3 = \`template literal - most powerful\`;
 
 // Template literals
 const name = "Alex", age = 25;
@@ -32,12 +32,12 @@ const html = \`
 
 // Access characters
 "hello"[0];        // "h"
-"hello".at(-1);    // "o" (last char — ES2022)
+"hello".at(-1);    // "o" (last char - ES2022)
 "hello".charAt(1); // "e"`},
     {type:'heading',content:'Searching Strings'},
-    {type:'example',title:'Finding things inside strings',content:'These methods let you check if a string contains something and where. includes() is the simplest — returns true or false. indexOf() returns the position of the match (or -1 if not found). startsWith() and endsWith() check the beginning and end. match() with a regex lets you extract pieces of a string.',language:'javascript',code:`const str = "Hello, JavaScript World!";
+    {type:'example',title:'Finding things inside strings',content:'These methods let you check if a string contains something and where. includes() is the simplest - returns true or false. indexOf() returns the position of the match (or -1 if not found). startsWith() and endsWith() check the beginning and end. match() with a regex lets you extract pieces of a string.',language:'javascript',code:`const str = "Hello, JavaScript World!";
 
-// includes — true/false (case sensitive)
+// includes - true/false (case sensitive)
 str.includes("JavaScript"); // true
 str.includes("python");     // false
 
@@ -47,30 +47,30 @@ str.startsWith("World", 14);// true (from index 14)
 str.endsWith("!");           // true
 str.endsWith("World", 22);  // true (check first 22 chars)
 
-// indexOf / lastIndexOf — returns index or -1
+// indexOf / lastIndexOf - returns index or -1
 str.indexOf("o");            // 4
 str.lastIndexOf("o");        // 22
 str.indexOf("Python");       // -1 (not found)
 
-// search — like indexOf but accepts regex
+// search - like indexOf but accepts regex
 str.search(/JavaScript/i);  // 7
 str.search(/python/i);       // -1
 
-// match — returns matches
+// match - returns matches
 "test123".match(/\d+/);      // ["123"]
 "a1b2c3".match(/\d/g);       // ["1","2","3"] (g flag = all matches)`},
     {type:'heading',content:'Extracting Parts'},
-    {type:'example',title:'slice, substring, split',content:'slice(start, end) cuts out a piece of a string — negative numbers count from the end, so slice(-3) gives you the last 3 characters. split() turns a string into an array by breaking it at a separator character. This is how you parse CSV data, split a sentence into words, or break a URL into parts.',language:'javascript',code:`const str = "Hello, JavaScript World!";
+    {type:'example',title:'slice, substring, split',content:'slice(start, end) cuts out a piece of a string - negative numbers count from the end, so slice(-3) gives you the last 3 characters. split() turns a string into an array by breaking it at a separator character. This is how you parse CSV data, split a sentence into words, or break a URL into parts.',language:'javascript',code:`const str = "Hello, JavaScript World!";
 
-// slice(start, end) — negative index counts from end
+// slice(start, end) - negative index counts from end
 str.slice(7, 17);    // "JavaScript"
 str.slice(-6);       // "orld!" (last 6 chars)
 str.slice(7);        // "JavaScript World!" (to end)
 
-// substring(start, end) — no negatives (treats negatives as 0)
+// substring(start, end) - no negatives (treats negatives as 0)
 str.substring(7, 17); // "JavaScript"
 
-// split — string to array
+// split - string to array
 "a,b,c,d".split(",");         // ["a","b","c","d"]
 "hello".split("");             // ["h","e","l","l","o"]
 "one two three".split(" ");   // ["one","two","three"]
@@ -80,13 +80,13 @@ str.substring(7, 17); // "JavaScript"
 ["one","two","three"].join(", "); // "one, two, three"
 ["Hello","World"].join(" ");      // "Hello World"`},
     {type:'heading',content:'Modifying Strings'},
-    {type:'example',title:'Replace, transform, trim',content:'replace() swaps the first match in a string. Use a regex with the /g flag to replace ALL matches. trim() removes whitespace from both ends — essential for cleaning user input. padStart() is great for formatting numbers with leading zeros (like "007" from 7). These methods all return NEW strings — strings in JavaScript are immutable.',language:'javascript',code:`const str = "Hello World Hello";
+    {type:'example',title:'Replace, transform, trim',content:'replace() swaps the first match in a string. Use a regex with the /g flag to replace ALL matches. trim() removes whitespace from both ends - essential for cleaning user input. padStart() is great for formatting numbers with leading zeros (like "007" from 7). These methods all return NEW strings - strings in JavaScript are immutable.',language:'javascript',code:`const str = "Hello World Hello";
 
-// replace — replaces FIRST match
+// replace - replaces FIRST match
 str.replace("Hello", "Hi");         // "Hi World Hello"
 str.replace(/hello/gi, "Hey");      // "Hey World Hey" (case insensitive, all)
 
-// replaceAll — replaces ALL matches (ES2021)
+// replaceAll - replaces ALL matches (ES2021)
 str.replaceAll("Hello", "Hi");      // "Hi World Hi"
 
 // Case
@@ -99,7 +99,7 @@ str.replaceAll("Hello", "Hi");      // "Hi World Hi"
 "  hello world  ".trimEnd();         // "  hello world"
 
 // Padding
-"5".padStart(3, "0");               // "005" — leading zeros!
+"5".padStart(3, "0");               // "005" - leading zeros!
 "hi".padEnd(10, ".");               // "hi........"
 
 // Repeat
@@ -109,7 +109,7 @@ str.replaceAll("Hello", "Hi");      // "Hi World Hi"
 "Hello" + " " + "World";            // "Hello World"
 "Hello".concat(" ", "World");       // "Hello World"`},
     {type:'heading',content:'Real-World String Patterns'},
-    {type:'example',title:'Common string tasks every developer does',content:'These are the string utility functions you will write or use in almost every real project. capitalize() fixes the casing of names. truncate() cuts long text for card previews. slugify() converts titles into clean URL paths. Knowing these patterns saves you from writing the same code over and over — or better yet, you will recognize them when you see them in open-source code.',language:'javascript',code:`// 1. Capitalize first letter
+    {type:'example',title:'Common string tasks every developer does',content:'These are the string utility functions you will write or use in almost every real project. capitalize() fixes the casing of names. truncate() cuts long text for card previews. slugify() converts titles into clean URL paths. Knowing these patterns saves you from writing the same code over and over - or better yet, you will recognize them when you see them in open-source code.',language:'javascript',code:`// 1. Capitalize first letter
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 capitalize("hELLO wORLD"); // "Hello world"
 
@@ -204,6 +204,6 @@ function doReplace() {
   document.getElementById('replaceResult').innerHTML = highlighted;
 }`,mode:'full'},
   ],
-  exercises:[{id:'str-1',question:'What does "hello".at(-1) return?',type:'code-output',correct:'o',explanation:'.at() accepts negative indices — -1 means last character. "hello".at(-1) returns "o". This is cleaner than str[str.length-1].'}],
+  exercises:[{id:'str-1',question:'What does "hello".at(-1) return?',type:'code-output',correct:'o',explanation:'.at() accepts negative indices - -1 means last character. "hello".at(-1) returns "o". This is cleaner than str[str.length-1].'}],
   quiz:[{id:'sq-str1',question:'What is the difference between indexOf() and includes()?',options:['No difference','indexOf returns the position (or -1), includes returns true/false','includes is newer and always preferred','indexOf is faster'],correct:1,explanation:'indexOf returns the numeric index of the match (-1 if not found). includes returns a boolean. Use includes when you just need to know IF something exists; use indexOf when you need the position.'}],
 };

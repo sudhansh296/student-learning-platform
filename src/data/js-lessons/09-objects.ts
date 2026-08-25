@@ -2,17 +2,17 @@ import type { JSLesson } from '../js-curriculum';
 
 export const jsObjectsLesson: JSLesson = {
   id: 'js-objects-complete',
-  title: 'Objects — Complete Guide',
+  title: 'Objects - Complete Guide',
   slug: 'objects',
   chapter: 'data',
   order: 10,
   difficulty: 'beginner',
   readingTime: 16,
-  description: 'Master JavaScript objects — creation, access, methods, destructuring, spread, Object methods, and JSON.',
+  description: 'Master JavaScript objects - creation, access, methods, destructuring, spread, Object methods, and JSON.',
   sections: [
     {
       type: 'text',
-      content: 'Objects are the most important data structure in JavaScript. Everything is either a primitive or an object. Objects store key-value pairs called properties. In modern JavaScript — React props, API responses, MongoDB documents, Express requests — everything is an object.',
+      content: 'Objects are the most important data structure in JavaScript. Everything is either a primitive or an object. Objects store key-value pairs called properties. In modern JavaScript - React props, API responses, MongoDB documents, Express requests - everything is an object.',
     },
     { type: 'heading', content: 'Creating and Accessing Objects' },
     {
@@ -34,7 +34,7 @@ const user = {
 console.log(user.name);         // "Alex"
 console.log(user.address.city); // "New York"
 
-// Bracket notation — for dynamic keys
+// Bracket notation - for dynamic keys
 const key = "name";
 console.log(user[key]);         // "Alex"
 
@@ -51,7 +51,7 @@ console.log(user.hasOwnProperty("email")); // true`,
     {
       type: 'example',
       title: 'Functions inside objects',
-      content: 'Methods are functions stored as object properties. Inside a method, "this" refers to the object the method is called on. Returning "this" enables method chaining — calling multiple methods in a single expression.',
+      content: 'Methods are functions stored as object properties. Inside a method, "this" refers to the object the method is called on. Returning "this" enables method chaining - calling multiple methods in a single expression.',
       language: 'javascript',
       code: `const calculator = {
   value: 0,
@@ -83,7 +83,7 @@ console.log(person.birthday());`,
     {
       type: 'example',
       title: 'Extract properties cleanly',
-      content: 'Destructuring pulls properties into variables in one line. Rename with (name: userName), set defaults with (role = "user"), and destructure nested objects inline. Used everywhere in React — props are always destructured.',
+      content: 'Destructuring pulls properties into variables in one line. Rename with (name: userName), set defaults with (role = "user"), and destructure nested objects inline. Used everywhere in React - props are always destructured.',
       language: 'javascript',
       code: `const user = { id:1, name:"Alex", email:"alex@example.com", age:25, address:{ city:"NYC" } };
 
@@ -103,9 +103,9 @@ const { address: { city } } = user;
 const { id, name: nm, ...rest } = user;
 console.log(rest); // { email, age, address }
 
-// Function params — common in React
+// Function params - common in React
 function renderUser({ name, email, role = "user" }) {
-  return \`\${name} (\${email}) — \${role}\`;
+  return \`\${name} (\${email}) - \${role}\`;
 }
 console.log(renderUser(user));`,
     },
@@ -113,12 +113,12 @@ console.log(renderUser(user));`,
     {
       type: 'example',
       title: 'Object spread and assignment',
-      content: 'Spread (...) creates a shallow copy or merges objects. In React you use it constantly to update state immutably. Warning: spread is shallow — nested objects are still shared references. Use structuredClone() for a deep copy.',
+      content: 'Spread (...) creates a shallow copy or merges objects. In React you use it constantly to update state immutably. Warning: spread is shallow - nested objects are still shared references. Use structuredClone() for a deep copy.',
       language: 'javascript',
       code: `const defaults = { theme:"light", lang:"en", notifications:true };
 const userPrefs = { theme:"dark", fontSize:16 };
 
-// Merge — later properties win
+// Merge - later properties win
 const config = { ...defaults, ...userPrefs };
 // { theme:"dark", lang:"en", notifications:true, fontSize:16 }
 
@@ -128,7 +128,7 @@ const clone = { ...original };
 clone.score = 200;
 console.log(original.score); // 100 (unchanged)
 
-// SHALLOW WARNING — nested objects are still shared
+// SHALLOW WARNING - nested objects are still shared
 const user = { name:"Alex", address:{ city:"NYC" } };
 const copy = { ...user };
 copy.address.city = "LA";
@@ -139,7 +139,7 @@ const deepClone = structuredClone(user);
 deepClone.address.city = "Paris";
 console.log(user.address.city); // "LA" (unchanged)`,
     },
-    { type: 'heading', content: 'Object Methods — keys, values, entries' },
+    { type: 'heading', content: 'Object Methods - keys, values, entries' },
     {
       type: 'example',
       title: 'Iterate and transform objects',
@@ -168,11 +168,11 @@ const doubled = Object.fromEntries(
   Object.entries(scores).map(([k,v]) => [k, v*2])
 );
 
-// Object.assign — merge into target (mutates!)
+// Object.assign - merge into target (mutates!)
 const target = { a:1, b:2 };
 Object.assign(target, { b:3, c:4 }); // { a:1, b:3, c:4 }
 
-// Object.freeze — make immutable
+// Object.freeze - make immutable
 const cfg = Object.freeze({ apiKey:"secret" });
 cfg.apiKey = "hacked"; // silently ignored
 console.log(cfg.apiKey); // "secret"`,
@@ -197,7 +197,7 @@ console.log(parsed.name); // "Alex"
 
 // Functions are dropped
 const obj = { name:"Alex", greet: () => "hi" };
-JSON.stringify(obj); // '{"name":"Alex"}' — greet removed
+JSON.stringify(obj); // '{"name":"Alex"}' - greet removed
 
 // Real-world: fetch
 const response = await fetch("https://api.example.com/users");
@@ -372,7 +372,7 @@ render();`,
       id: 'obj-2',
       question: 'What does structuredClone(obj) do?',
       type: 'multiple-choice',
-      options: ['Shallow copies obj', 'Creates a deep clone — nested objects are fully independent', 'Freezes the object', 'Converts to JSON'],
+      options: ['Shallow copies obj', 'Creates a deep clone - nested objects are fully independent', 'Freezes the object', 'Converts to JSON'],
       correct: 1,
       explanation: 'structuredClone() creates a deep clone. Changes to the clone do not affect the original, even for nested objects.',
     },

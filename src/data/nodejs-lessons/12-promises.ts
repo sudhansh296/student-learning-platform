@@ -289,7 +289,7 @@ fsPromises.readFile('data.txt', 'utf8')
 function addLog(msg) {
   log.push(msg);
   if (log.length > 20) log.shift();
-  document.getElementById('output').textContent = log.join('\\n');
+  document.getElementById('output').textContent = log.join('\ ');
 }
 
 function clearLog() {

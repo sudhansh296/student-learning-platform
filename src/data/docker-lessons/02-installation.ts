@@ -12,7 +12,7 @@ export const lesson02: DockerLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Getting Docker installed and running your first commands is the critical first milestone. Docker Desktop provides everything you need on macOS and Windows — including the daemon, CLI, and a GUI dashboard — in a single installer.'
+      content: 'Getting Docker installed and running your first commands is the critical first milestone. Docker Desktop provides everything you need on macOS and Windows - including the daemon, CLI, and a GUI dashboard - in a single installer.'
     },
     {
       type: 'heading',
@@ -76,7 +76,7 @@ Server: Docker Engine - Community
     {
       type: 'example',
       title: 'docker info',
-      content: 'The docker info command provides a detailed summary of your Docker installation — total containers, images, storage driver, kernel version, and CPU/memory available to Docker.',
+      content: 'The docker info command provides a detailed summary of your Docker installation - total containers, images, storage driver, kernel version, and CPU/memory available to Docker.',
       code: `docker info`,
       language: 'bash',
       output: `Client:
@@ -122,7 +122,7 @@ This message shows that your installation appears to be working correctly.`
     },
     {
       type: 'example',
-      title: 'docker ps — list running containers',
+      title: 'docker ps - list running containers',
       content: 'The docker ps command lists all currently running containers with their ID, image, command, creation time, status, port mappings, and name. Think of it as the Docker equivalent of the ps command in Unix.',
       code: `docker ps`,
       language: 'bash',
@@ -131,8 +131,8 @@ a1b2c3d4e5f6   nginx:alpine  "/docker-entrypoint.…"   2 minutes ago   Up 2 min
     },
     {
       type: 'example',
-      title: 'docker ps -a — list all containers',
-      content: 'Adding the -a (--all) flag shows every container — running, stopped, and exited. This is essential for finding containers that have crashed or been stopped but not removed.',
+      title: 'docker ps -a - list all containers',
+      content: 'Adding the -a (--all) flag shows every container - running, stopped, and exited. This is essential for finding containers that have crashed or been stopped but not removed.',
       code: `docker ps -a`,
       language: 'bash',
       output: `CONTAINER ID   IMAGE         COMMAND       CREATED        STATUS                    NAMES
@@ -142,8 +142,8 @@ c3d4e5f6a7b8   node:20       "node app.js" 1 hour ago     Exited (1) 59 min ago 
     },
     {
       type: 'example',
-      title: 'docker images — list local images',
-      content: 'This command shows all Docker images stored on your machine with their repository, tag, ID, creation date, and size. Images accumulate over time and can take up disk space — use docker rmi to remove ones you no longer need.',
+      title: 'docker images - list local images',
+      content: 'This command shows all Docker images stored on your machine with their repository, tag, ID, creation date, and size. Images accumulate over time and can take up disk space - use docker rmi to remove ones you no longer need.',
       code: `docker images`,
       language: 'bash',
       output: `REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
@@ -153,7 +153,7 @@ hello-world   latest    c1ec31eb5944   8 months ago   13.3kB`
     },
     {
       type: 'example',
-      title: 'docker pull — download an image',
+      title: 'docker pull - download an image',
       content: 'Use docker pull to download an image without running it immediately. This is useful for pre-downloading images during setup or for verifying a specific tag exists before building a Dockerfile.',
       code: `docker pull postgres:16-alpine`,
       language: 'bash',
@@ -167,7 +167,7 @@ docker.io/library/postgres:16-alpine`
     {
       type: 'note',
       title: 'Image Tags',
-      content: 'When you pull an image without specifying a tag (docker pull node), Docker pulls the :latest tag. Always specify an explicit tag like node:20-alpine in production Dockerfiles to ensure reproducible builds — the latest tag changes over time.'
+      content: 'When you pull an image without specifying a tag (docker pull node), Docker pulls the :latest tag. Always specify an explicit tag like node:20-alpine in production Dockerfiles to ensure reproducible builds - the latest tag changes over time.'
     },
     {
       type: 'tip',
@@ -257,7 +257,7 @@ h3 { color: #2496ED; margin: 0 0 12px 0; font-size: 15px; }
         'docker show all'
       ],
       correct: 1,
-      explanation: 'docker ps only shows running containers. The -a (or --all) flag makes it show every container regardless of status — running, stopped, exited, or created.'
+      explanation: 'docker ps only shows running containers. The -a (or --all) flag makes it show every container regardless of status - running, stopped, exited, or created.'
     },
     {
       id: 'ex-docker-2-2',

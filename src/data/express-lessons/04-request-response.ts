@@ -244,7 +244,7 @@ app.get('/login', function(req, res) {
   
   // Parse headers
   if (headers.trim()) {
-    headers.split('\\n').forEach(function(line) {
+    headers.split('\ ').forEach(function(line) {
       var parts = line.split(':');
       if (parts.length === 2) {
         reqObj.headers[parts[0].trim()] = parts[1].trim();
@@ -253,19 +253,19 @@ app.get('/login', function(req, res) {
   }
   
   var reqOutput = '';
-  reqOutput += 'req.method: ' + reqObj.method + '\\n';
-  reqOutput += 'req.url: ' + reqObj.url + '\\n\\n';
+  reqOutput += 'req.method: ' + reqObj.method + '\ ';
+  reqOutput += 'req.url: ' + reqObj.url + '\\n\ ';
   
   if (Object.keys(reqObj.params).length > 0) {
-    reqOutput += 'req.params: ' + JSON.stringify(reqObj.params, null, 2) + '\\n\\n';
+    reqOutput += 'req.params: ' + JSON.stringify(reqObj.params, null, 2) + '\\n\ ';
   }
   
   if (Object.keys(reqObj.query).length > 0) {
-    reqOutput += 'req.query: ' + JSON.stringify(reqObj.query, null, 2) + '\\n\\n';
+    reqOutput += 'req.query: ' + JSON.stringify(reqObj.query, null, 2) + '\\n\ ';
   }
   
   if (reqObj.body) {
-    reqOutput += 'req.body: ' + JSON.stringify(reqObj.body, null, 2) + '\\n\\n';
+    reqOutput += 'req.body: ' + JSON.stringify(reqObj.body, null, 2) + '\\n\ ';
   }
   
   if (Object.keys(reqObj.headers).length > 0) {
@@ -274,8 +274,8 @@ app.get('/login', function(req, res) {
   
   document.getElementById('reqOutput').textContent = reqOutput;
   
-  var resOutput = 'HTTP/200 OK\\n';
-  resOutput += 'Content-Type: application/json\\n\\n';
+  var resOutput = 'HTTP/200 OK\ ';
+  resOutput += 'Content-Type: application/json\\n\ ';
   resOutput += JSON.stringify({
     message: 'Request processed',
     received: reqObj

@@ -1,23 +1,23 @@
-﻿import type { JSLesson } from '../js-curriculum';
+import type { JSLesson } from '../js-curriculum';
 
 export const jsErrorHandlingLesson: JSLesson = {
   id:'js-error-handling',title:'Error Handling',slug:'error-handling',
   chapter:'advanced',order:15,difficulty:'intermediate',readingTime:10,
   description:'Handle errors professionally with try/catch/finally, custom errors, error types, and defensive programming.',
   sections:[
-    {type:'text',content:'Errors are inevitable in any program. Professional JavaScript handles errors gracefully — not crashing, giving users useful messages, and making debugging easy. Unhandled errors break your app; properly handled errors make it resilient.'},
+    {type:'text',content:'Errors are inevitable in any program. Professional JavaScript handles errors gracefully - not crashing, giving users useful messages, and making debugging easy. Unhandled errors break your app; properly handled errors make it resilient.'},
     {type:'heading',content:'Types of Errors'},
-    {type:'example',title:'Built-in error types',content:'JavaScript has several built-in error types, each for a different kind of mistake. TypeError happens when you use the wrong type — like calling a method on null. ReferenceError happens when you use a variable that does not exist. SyntaxError is caught before the code even runs. Every error object has a name, message, and stack trace — the stack shows exactly which function calls led to the error.',language:'javascript',code:`// SyntaxError — invalid JavaScript syntax (caught at parse time)
+    {type:'example',title:'Built-in error types',content:'JavaScript has several built-in error types, each for a different kind of mistake. TypeError happens when you use the wrong type - like calling a method on null. ReferenceError happens when you use a variable that does not exist. SyntaxError is caught before the code even runs. Every error object has a name, message, and stack trace - the stack shows exactly which function calls led to the error.',language:'javascript',code:`// SyntaxError - invalid JavaScript syntax (caught at parse time)
 // eval("let let = 5"); // SyntaxError
 
-// ReferenceError — using undeclared variable
+// ReferenceError - using undeclared variable
 // console.log(undeclaredVar); // ReferenceError
 
-// TypeError — wrong type operation
+// TypeError - wrong type operation
 // null.toString(); // TypeError: Cannot read properties of null
 // (5)();           // TypeError: 5 is not a function
 
-// RangeError — value out of valid range
+// RangeError - value out of valid range
 // new Array(-1);   // RangeError: Invalid array length
 // (1.5).toFixed(200); // RangeError
 
@@ -30,9 +30,9 @@ console.log(err.name);    // "TypeError"
 console.log(err.message); // "Something went wrong"
 console.log(err.stack);   // Stack trace`},
     {type:'heading',content:'try / catch / finally'},
-    {type:'example',title:'Basic error handling',content:'The try block contains code that might fail. If any line in try throws an error, execution immediately jumps to catch — skipping the rest of try. The catch block receives the error object so you can read its message and name. finally always runs at the end, whether there was an error or not — perfect for cleanup like hiding a loading spinner.',language:'javascript',code:`// try — code that might throw
-// catch — runs if error is thrown
-// finally — always runs (cleanup)
+    {type:'example',title:'Basic error handling',content:'The try block contains code that might fail. If any line in try throws an error, execution immediately jumps to catch - skipping the rest of try. The catch block receives the error object so you can read its message and name. finally always runs at the end, whether there was an error or not - perfect for cleanup like hiding a loading spinner.',language:'javascript',code:`// try - code that might throw
+// catch - runs if error is thrown
+// finally - always runs (cleanup)
 
 function divide(a, b) {
   try {
@@ -112,7 +112,7 @@ try {
   }
 }`},
     {type:'heading',content:'Error Handling in Async Code'},
-    {type:'example',title:'Async error handling patterns',content:'In async functions, try/catch works identically to synchronous code — just wrap your await calls. The tryCatch() helper is a Go-language style pattern that turns errors into return values instead of exceptions. Instead of try/catch blocks everywhere, you get [data, err] back and check if err exists. This makes async error handling very clean in complex functions that call multiple APIs.',language:'javascript',code:`// try/catch with async/await
+    {type:'example',title:'Async error handling patterns',content:'In async functions, try/catch works identically to synchronous code - just wrap your await calls. The tryCatch() helper is a Go-language style pattern that turns errors into return values instead of exceptions. Instead of try/catch blocks everywhere, you get [data, err] back and check if err exists. This makes async error handling very clean in complex functions that call multiple APIs.',language:'javascript',code:`// try/catch with async/await
 async function fetchUser(id) {
   try {
     const res = await fetch(\`/api/users/\${id}\`);
@@ -126,10 +126,10 @@ async function fetchUser(id) {
       return null;
     }
     if (error.name === "TypeError") {
-      console.error("Network error — are you offline?");
+      console.error("Network error - are you offline?");
       return null;
     }
-    throw error; // unexpected error — let it bubble up
+    throw error; // unexpected error - let it bubble up
   }
 }
 
@@ -143,7 +143,7 @@ async function tryCatch(promise) {
   }
 }
 
-// Usage — Go-style error handling
+// Usage - Go-style error handling
 const [user, err] = await tryCatch(fetchUser(1));
 if (err) {
   console.error("Failed to load user:", err.message);
@@ -219,7 +219,7 @@ function parseJSON() {
   try {
     const parsed = JSON.parse(document.getElementById('jsonInput').value);
     el.className = 'ok';
-    el.textContent = '✅ Valid JSON:\\n' + JSON.stringify(parsed, null, 2);
+    el.textContent = '✅ Valid JSON:\ ' + JSON.stringify(parsed, null, 2);
   } catch(e) {
     el.className = 'err';
     el.textContent = '❌ [SyntaxError] '+e.message;

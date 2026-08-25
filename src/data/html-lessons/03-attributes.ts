@@ -8,7 +8,7 @@ export const htmlAttributesLesson: HtmlLesson = {
   order: 3,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Learn how HTML attributes add extra information to elements — href, src, alt, class, id, style, and more.',
+  description: 'Learn how HTML attributes add extra information to elements - href, src, alt, class, id, style, and more.',
   sections: [
     {
       type: 'text',
@@ -21,7 +21,7 @@ export const htmlAttributesLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-            content: 'Attributes go inside the opening tag as name="value" pairs. They give elements extra behavior or information — href tells a link where to go, src tells an image where to find the file, class gives an element a reusable CSS label.',
+            content: 'Attributes go inside the opening tag as name="value" pairs. They give elements extra behavior or information - href tells a link where to go, src tells an image where to find the file, class gives an element a reusable CSS label.',
 code: `<!-- Attribute syntax: name="value" inside the opening tag -->
 <tagname attribute="value">Content</tagname>
 
@@ -33,7 +33,7 @@ code: `<!-- Attribute syntax: name="value" inside the opening tag -->
     },
     {
       type: 'heading',
-      content: 'The href Attribute — Links',
+      content: 'The href Attribute - Links',
     },
     {
       type: 'text',
@@ -63,16 +63,16 @@ code: `<!-- Link to an external website -->
     },
     {
       type: 'heading',
-      content: 'The src and alt Attributes — Images',
+      content: 'The src and alt Attributes - Images',
     },
     {
       type: 'text',
-      content: 'The src attribute tells the browser where the image file is located. The alt attribute provides alternative text that shows if the image fails to load, and is read by screen readers for visually impaired users. ALWAYS write a meaningful alt attribute — it is also important for SEO.',
+      content: 'The src attribute tells the browser where the image file is located. The alt attribute provides alternative text that shows if the image fails to load, and is read by screen readers for visually impaired users. ALWAYS write a meaningful alt attribute - it is also important for SEO.',
     },
     {
       type: 'code',
       language: 'html',
-            content: 'src tells the browser where the image file is. alt provides text shown when the image fails to load — also read by screen readers. Always write descriptive alt text for accessibility and SEO. Use empty alt="" for purely decorative images.',
+            content: 'src tells the browser where the image file is. alt provides text shown when the image fails to load - also read by screen readers. Always write descriptive alt text for accessibility and SEO. Use empty alt="" for purely decorative images.',
 code: `<!-- Image from your own website -->
 <img src="images/logo.png" alt="Company Logo">
 
@@ -102,12 +102,12 @@ code: `<!-- Image from your own website -->
     {
       type: 'code',
       language: 'html',
-            content: 'id gives one element a unique name on the page — used to target it from CSS (#id) or JavaScript (getElementById). class is reusable — many elements can share the same class name and be styled together. An element can have multiple classes separated by spaces.',
-code: `<!-- id — must be unique on the page, used for one specific element -->
+            content: 'id gives one element a unique name on the page - used to target it from CSS (#id) or JavaScript (getElementById). class is reusable - many elements can share the same class name and be styled together. An element can have multiple classes separated by spaces.',
+code: `<!-- id - must be unique on the page, used for one specific element -->
 <h1 id="main-title">Welcome to WebDev Atlas</h1>
 <section id="hero-section">...</section>
 
-<!-- class — reusable, used for multiple elements -->
+<!-- class - reusable, used for multiple elements -->
 <p class="intro">First intro paragraph</p>
 <p class="intro">Second intro paragraph</p>
 <div class="card">Card 1</div>
@@ -126,7 +126,7 @@ code: `<!-- id — must be unique on the page, used for one specific element -->
     },
     {
       type: 'heading',
-      content: 'The style Attribute — Inline CSS',
+      content: 'The style Attribute - Inline CSS',
     },
     {
       type: 'text',
@@ -135,7 +135,7 @@ code: `<!-- id — must be unique on the page, used for one specific element -->
     {
       type: 'code',
       language: 'html',
-            content: 'The style attribute applies CSS directly to one element. This works but mixes HTML with presentation — hard to maintain in large projects. The better approach is to add a class and write the CSS in a separate stylesheet.',
+            content: 'The style attribute applies CSS directly to one element. This works but mixes HTML with presentation - hard to maintain in large projects. The better approach is to add a class and write the CSS in a separate stylesheet.',
 code: `<!-- Inline styles (avoid in production, use class + CSS file instead) -->
 <h1 style="color: blue; font-size: 2rem;">Blue Heading</h1>
 <p style="color: red; background: yellow; padding: 10px;">Warning message</p>
@@ -147,7 +147,7 @@ code: `<!-- Inline styles (avoid in production, use class + CSS file instead) --
     },
     {
       type: 'heading',
-      content: 'The title Attribute — Tooltips',
+      content: 'The title Attribute - Tooltips',
     },
     {
       type: 'code',
@@ -281,7 +281,7 @@ a { color: #2563eb; }
         'id uses # in CSS, class uses . in HTML',
       ],
       correct: 1,
-      explanation: 'id must be unique — only one element on the page should have a given id. class is reusable — many elements can share the same class name.',
+      explanation: 'id must be unique - only one element on the page should have a given id. class is reusable - many elements can share the same class name.',
     },
     {
       id: 'qa-2',

@@ -1,4 +1,4 @@
-﻿import type { SqlLesson } from '../sql-curriculum';
+import type { SqlLesson } from '../sql-curriculum';
 
 export const lesson07: SqlLesson = {
   id: 'sql-07',

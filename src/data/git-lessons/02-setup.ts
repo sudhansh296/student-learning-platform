@@ -116,7 +116,7 @@ init.defaultbranch=main`
     {
       type: 'tip',
       title: 'Checking a Single Value',
-      content: 'To check just one config value, use: git config user.name — this prints only your configured name without listing everything else.'
+      content: 'To check just one config value, use: git config user.name - this prints only your configured name without listing everything else.'
     },
     {
       type: 'heading',

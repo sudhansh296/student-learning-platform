@@ -304,7 +304,7 @@ button { padding: 8px 14px; border: none; border-radius: 6px; font-weight: 600; 
         'An alias for git remote origin'
       ],
       correct: 1,
-      explanation: 'origin/main is a remote-tracking branch — a local read-only reference that records the last known state of the main branch on the origin remote. It is updated when you fetch.'
+      explanation: 'origin/main is a remote-tracking branch - a local read-only reference that records the last known state of the main branch on the origin remote. It is updated when you fetch.'
     },
     {
       id: 'q-git-6-2',

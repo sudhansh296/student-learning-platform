@@ -16,23 +16,23 @@ export const htmlHeadingsLesson: HtmlLesson = {
     },
     {
       type: 'text',
-      content: 'HTML has six levels of headings, from h1 (most important) to h6 (least important). Headings define the hierarchy of your content. Search engines use headings to understand the structure and topic of your page. Screen readers use them for navigation. Use them in order — don\'t skip from h1 to h4.',
+      content: 'HTML has six levels of headings, from h1 (most important) to h6 (least important). Headings define the hierarchy of your content. Search engines use headings to understand the structure and topic of your page. Screen readers use them for navigation. Use them in order - don\'t skip from h1 to h4.',
     },
     {
       type: 'code',
       language: 'html',
-      content: 'HTML has six heading levels — h1 through h6. Use only ONE h1 per page for the main title. Use headings in order without skipping levels. Search engines and screen readers use headings to understand content structure.',
-      code: `<h1>Heading 1 — Main Page Title (use ONCE per page)</h1>
-<h2>Heading 2 — Major Section</h2>
-<h3>Heading 3 — Subsection</h3>
-<h4>Heading 4 — Sub-subsection</h4>
-<h5>Heading 5 — Rarely used</h5>
-<h6>Heading 6 — Smallest heading</h6>`,
+      content: 'HTML has six heading levels - h1 through h6. Use only ONE h1 per page for the main title. Use headings in order without skipping levels. Search engines and screen readers use headings to understand content structure.',
+      code: `<h1>Heading 1 - Main Page Title (use ONCE per page)</h1>
+<h2>Heading 2 - Major Section</h2>
+<h3>Heading 3 - Subsection</h3>
+<h4>Heading 4 - Sub-subsection</h4>
+<h5>Heading 5 - Rarely used</h5>
+<h6>Heading 6 - Smallest heading</h6>`,
     },
     {
       type: 'note',
       title: 'SEO Rule: Only ONE h1 per page',
-      content: 'Use only one <h1> tag per page — it should be the main topic of the page. Use h2 for major sections, h3 for subsections within those. This hierarchy helps Google understand your content and improves search rankings.',
+      content: 'Use only one <h1> tag per page - it should be the main topic of the page. Use h2 for major sections, h3 for subsections within those. This hierarchy helps Google understand your content and improves search rankings.',
     },
     {
       type: 'heading',
@@ -45,7 +45,7 @@ export const htmlHeadingsLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-      content: 'The p element creates a paragraph block with automatic spacing above and below. Browsers ignore extra whitespace in HTML — multiple spaces and line breaks in your source code are collapsed to one space. Use br only to force a line break inside a paragraph without starting a new one.',
+      content: 'The p element creates a paragraph block with automatic spacing above and below. Browsers ignore extra whitespace in HTML - multiple spaces and line breaks in your source code are collapsed to one space. Use br only to force a line break inside a paragraph without starting a new one.',
       code: `<p>This is the first paragraph. It can be as long as you want.</p>
 
 <p>This is the second paragraph. Notice the space between them.</p>
@@ -68,14 +68,14 @@ United States</p>`,
     {
       type: 'code',
       language: 'html',
-      content: 'br creates a line break inside a paragraph — useful for addresses and poetry where you want a new line without a new paragraph. hr draws a horizontal dividing line across the page — used to separate sections of content visually.',
-      code: `<!-- <br> — line break (empty element, no closing tag) -->
+      content: 'br creates a line break inside a paragraph - useful for addresses and poetry where you want a new line without a new paragraph. hr draws a horizontal dividing line across the page - used to separate sections of content visually.',
+      code: `<!-- <br> - line break (empty element, no closing tag) -->
 <p>Roses are red,<br>
 Violets are blue,<br>
 HTML is awesome,<br>
 And so are you!</p>
 
-<!-- <hr> — horizontal rule, creates a visible dividing line -->
+<!-- <hr> - horizontal rule, creates a visible dividing line -->
 <h2>Chapter 1</h2>
 <p>Content of chapter one...</p>
 
@@ -95,16 +95,16 @@ And so are you!</p>
     {
       type: 'code',
       language: 'html',
-      content: 'Text formatting elements add meaning or visual style to inline text. Prefer strong over b and em over i — the semantic versions convey meaning to screen readers and search engines. mark highlights text. del shows removed content. code displays monospace text for code snippets.',
+      content: 'Text formatting elements add meaning or visual style to inline text. Prefer strong over b and em over i - the semantic versions convey meaning to screen readers and search engines. mark highlights text. del shows removed content. code displays monospace text for code snippets.',
       code: `<!-- Bold text -->
-<b>Bold — visual only, no special meaning</b>
-<strong>Strong — bold AND semantically important</strong>
+<b>Bold - visual only, no special meaning</b>
+<strong>Strong - bold AND semantically important</strong>
 
 <!-- Italic text -->
-<i>Italic — visual only</i>
-<em>Emphasis — italic AND semantically emphasized</em>
+<i>Italic - visual only</i>
+<em>Emphasis - italic AND semantically emphasized</em>
 
-<!-- Underline (avoid — looks like a link) -->
+<!-- Underline (avoid - looks like a link) -->
 <u>Underlined text</u>
 
 <!-- Strikethrough -->
@@ -117,8 +117,8 @@ And so are you!</p>
 <small>Fine print and disclaimers go here</small>
 
 <!-- Subscript and Superscript -->
-<p>H<sub>2</sub>O (water) — subscript</p>
-<p>E = mc<sup>2</sup> — superscript</p>
+<p>H<sub>2</sub>O (water) - subscript</p>
+<p>E = mc<sup>2</sup> - superscript</p>
 
 <!-- Inline code -->
 <p>Use the <code>console.log()</code> function to debug.</p>
@@ -152,11 +152,11 @@ And so are you!</p>
     },
     {
       type: 'heading',
-      content: 'The <pre> Element — Preformatted Text',
+      content: 'The <pre> Element - Preformatted Text',
     },
     {
       type: 'text',
-      content: 'The <pre> element displays text exactly as written — preserving all spaces, tabs, and line breaks. The text is also displayed in a monospace font. It is mainly used for displaying code samples and ASCII art.',
+      content: 'The <pre> element displays text exactly as written - preserving all spaces, tabs, and line breaks. The text is also displayed in a monospace font. It is mainly used for displaying code samples and ASCII art.',
     },
     {
       type: 'tryit',
@@ -185,11 +185,11 @@ And so are you!</p>
   </p>
 
   <p>
-    <mark>This is highlighted text</mark> — great for search results.
+    <mark>This is highlighted text</mark> - great for search results.
   </p>
 
   <p>
-    Old price: <del>$99.99</del> — New price: <ins>$49.99</ins>
+    Old price: <del>$99.99</del> - New price: <ins>$49.99</ins>
   </p>
 
   <h3>1.3 Code Examples</h3>
@@ -226,9 +226,9 @@ ins { color: #059669; text-decoration: none; font-weight: bold; }`,
       id: 'head-1',
       question: 'How many <h1> tags should a page typically have?',
       type: 'multiple-choice',
-      options: ['As many as needed', 'Exactly 6', 'Only one', 'None — use <title> instead'],
+      options: ['As many as needed', 'Exactly 6', 'Only one', 'None - use <title> instead'],
       correct: 2,
-      explanation: 'A page should have only ONE <h1> — it represents the main topic/title of the page. Multiple h1s confuse search engines and screen readers. Use h2, h3, etc. for sections.',
+      explanation: 'A page should have only ONE <h1> - it represents the main topic/title of the page. Multiple h1s confuse search engines and screen readers. Use h2, h3, etc. for sections.',
     },
     {
       id: 'head-2',
@@ -241,7 +241,7 @@ ins { color: #059669; text-decoration: none; font-weight: bold; }`,
         '<b> only works in forms',
       ],
       correct: 2,
-      explanation: '<strong> marks text as important — search engines and screen readers understand this carries meaning. <b> just makes text bold visually with no semantic value. Prefer <strong> for important content.',
+      explanation: '<strong> marks text as important - search engines and screen readers understand this carries meaning. <b> just makes text bold visually with no semantic value. Prefer <strong> for important content.',
     },
   ],
   quiz: [
@@ -250,19 +250,19 @@ ins { color: #059669; text-decoration: none; font-weight: bold; }`,
       question: 'Which element preserves whitespace and line breaks exactly as written?',
       options: ['<p>', '<br>', '<pre>', '<code>'],
       correct: 2,
-      explanation: '<pre> (preformatted) displays text exactly as typed — preserving all spaces, tabs, and newlines. It uses a monospace font. Perfect for code samples.',
+      explanation: '<pre> (preformatted) displays text exactly as typed - preserving all spaces, tabs, and newlines. It uses a monospace font. Perfect for code samples.',
     },
     {
       id: 'qh-2',
       question: 'What does <em> do and when should you use it?',
       options: [
-        'Makes text larger — use for titles',
-        'Makes text italic with semantic emphasis — use when you would stress a word when speaking',
-        'Makes text bold — use for warnings',
-        'Embeds an image — use for photos',
+        'Makes text larger - use for titles',
+        'Makes text italic with semantic emphasis - use when you would stress a word when speaking',
+        'Makes text bold - use for warnings',
+        'Embeds an image - use for photos',
       ],
       correct: 1,
-      explanation: '<em> (emphasis) makes text italic AND tells browsers/screen readers the word is stressed. Think of how you would say "I did NOT say that" — the "NOT" carries emphasis.',
+      explanation: '<em> (emphasis) makes text italic AND tells browsers/screen readers the word is stressed. Think of how you would say "I did NOT say that" - the "NOT" carries emphasis.',
     },
   ],
 };

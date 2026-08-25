@@ -20,12 +20,12 @@ export const lesson03: DockerLesson = {
     },
     {
       type: 'text',
-      content: 'When you run a container from an image, Docker adds a thin writable layer on top of the image\'s read-only layers. All changes made inside a running container go into this writable layer. When the container is removed, that writable layer is discarded — the original image remains unchanged.'
+      content: 'When you run a container from an image, Docker adds a thin writable layer on top of the image\'s read-only layers. All changes made inside a running container go into this writable layer. When the container is removed, that writable layer is discarded - the original image remains unchanged.'
     },
     {
       type: 'analogy',
       title: 'The Template and Document Analogy',
-      content: 'A Docker image is like a Word template file. The template is read-only — you never modify it directly. Each time you create a new document from the template, you get your own writable copy. Many documents can be open at once from the same template, each with their own changes.'
+      content: 'A Docker image is like a Word template file. The template is read-only - you never modify it directly. Each time you create a new document from the template, you get your own writable copy. Many documents can be open at once from the same template, each with their own changes.'
     },
     {
       type: 'heading',
@@ -89,7 +89,7 @@ Status: Downloaded newer image for node:20-alpine`
     },
     {
       type: 'example',
-      title: 'docker images — list local images',
+      title: 'docker images - list local images',
       content: 'This command lists all images stored locally on your machine with their repository name, tag, image ID, creation date, and total uncompressed size. Use this to inventory what you have downloaded.',
       code: `docker images`,
       language: 'bash',
@@ -101,7 +101,7 @@ hello-world   latest      c1ec31eb5944   8 months ago   13.3kB`
     },
     {
       type: 'example',
-      title: 'docker image inspect — deep metadata',
+      title: 'docker image inspect - deep metadata',
       content: 'The docker image inspect command returns a JSON object with complete metadata about an image: its layers, environment variables, entry point, exposed ports, OS/architecture, and the full history of how it was built.',
       code: `docker image inspect node:20-alpine`,
       language: 'bash',
@@ -124,8 +124,8 @@ hello-world   latest      c1ec31eb5944   8 months ago   13.3kB`
     },
     {
       type: 'example',
-      title: 'docker image ls --filter — filtered listing',
-      content: 'Use filters to find specific images by dangling status, label, or reference. Dangling images are layers that have been superseded by newer builds and are no longer tagged — they waste disk space and should be pruned periodically.',
+      title: 'docker image ls --filter - filtered listing',
+      content: 'Use filters to find specific images by dangling status, label, or reference. Dangling images are layers that have been superseded by newer builds and are no longer tagged - they waste disk space and should be pruned periodically.',
       code: `# List images with a specific label
 docker image ls --filter "reference=node:*"
 
@@ -141,8 +141,8 @@ node         18-alpine   a1b2c3d4e5f6   2 months ago   163MB`
     },
     {
       type: 'example',
-      title: 'docker rmi — remove images',
-      content: 'Use docker rmi to delete images from your local machine and free disk space. You cannot remove an image that has running containers — stop and remove those containers first.',
+      title: 'docker rmi - remove images',
+      content: 'Use docker rmi to delete images from your local machine and free disk space. You cannot remove an image that has running containers - stop and remove those containers first.',
       code: `# Remove by name and tag
 docker rmi node:18-alpine
 
@@ -182,7 +182,7 @@ Deleted: sha256:96526aa774ef...`
     {
       type: 'tip',
       title: 'Use docker history to Understand Layers',
-      content: 'Run docker history IMAGE_NAME to see every layer in an image, the command that created it, and its size. This is invaluable for debugging large images — you can identify which Dockerfile instruction created the largest layers.'
+      content: 'Run docker history IMAGE_NAME to see every layer in an image, the command that created it, and its size. This is invaluable for debugging large images - you can identify which Dockerfile instruction created the largest layers.'
     },
     {
       type: 'tryit',
@@ -232,7 +232,7 @@ h3 { color: #2496ED; margin: 0 0 8px 0; font-size: 15px; font-weight: 700; }
     {
       type: 'warning',
       title: 'Never Use :latest in Production Dockerfiles',
-      content: 'The :latest tag is a moving target — it points to the most recently pushed tag. If you build FROM node:latest today, and rebuild in 6 months, you might get Node.js 22 instead of 20. Always pin to a specific version in Dockerfiles used for production.'
+      content: 'The :latest tag is a moving target - it points to the most recently pushed tag. If you build FROM node:latest today, and rebuild in 6 months, you might get Node.js 22 instead of 20. Always pin to a specific version in Dockerfiles used for production.'
     }
   ],
   exercises: [
@@ -260,7 +260,7 @@ h3 { color: #2496ED; margin: 0 0 8px 0; font-size: 15px; font-weight: 700; }
         'docker images remove dangling'
       ],
       correct: 2,
-      explanation: 'docker image prune removes all dangling images — images that are no longer tagged and not referenced by any container. Add -a to also remove all images not currently used by any container.'
+      explanation: 'docker image prune removes all dangling images - images that are no longer tagged and not referenced by any container. Add -a to also remove all images not currently used by any container.'
     },
     {
       id: 'ex-docker-3-3',

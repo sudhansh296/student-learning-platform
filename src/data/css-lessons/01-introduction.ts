@@ -5,8 +5,8 @@ export const cssIntroLesson: CssLesson = {
   chapter: 'basics', order: 1, difficulty: 'beginner', readingTime: 7,
   description: 'What CSS is, why it exists, how it connects to HTML, and the three ways to add CSS to a page.',
   sections: [
-    { type: 'text', content: 'CSS stands for Cascading Style Sheets. It is the language that controls how HTML elements look on the screen — their colors, fonts, sizes, spacing, and positions. Without CSS, every website would look like a plain text document.' },
-    { type: 'analogy', title: 'HTML vs CSS', content: 'HTML is the skeleton of a web page — it defines structure. CSS is the skin, clothing, and makeup — it defines appearance. The same HTML can look completely different with different CSS applied.' },
+    { type: 'text', content: 'CSS stands for Cascading Style Sheets. It is the language that controls how HTML elements look on the screen - their colors, fonts, sizes, spacing, and positions. Without CSS, every website would look like a plain text document.' },
+    { type: 'analogy', title: 'HTML vs CSS', content: 'HTML is the skeleton of a web page - it defines structure. CSS is the skin, clothing, and makeup - it defines appearance. The same HTML can look completely different with different CSS applied.' },
     { type: 'heading', content: 'A Simple CSS Example' },
     { type: 'code', language: 'css', code: `/* This is a CSS comment */
 
@@ -38,7 +38,7 @@ p {
     { type: 'list', title: '1. External Stylesheet (Recommended)', items: [
       'Create a separate .css file (e.g., styles.css)',
       'Link it in the HTML <head> with <link rel="stylesheet" href="styles.css">',
-      'One file can style all your HTML pages — change once, update everywhere',
+      'One file can style all your HTML pages - change once, update everywhere',
       'This is how all professional websites work',
     ]},
     { type: 'code', language: 'html', code: `<!-- In your HTML file -->
@@ -58,11 +58,11 @@ p {
 </head>` },
     { type: 'list', title: '3. Inline Styles (Avoid in production)', items: [
       'Written directly on the HTML element as a style attribute',
-      'Highest specificity — overrides everything else',
-      'Hard to maintain — avoid except for dynamic JavaScript styling',
+      'Highest specificity - overrides everything else',
+      'Hard to maintain - avoid except for dynamic JavaScript styling',
     ]},
     { type: 'code', language: 'html', code: `<p style="color: red; font-size: 18px;">This is inline CSS.</p>` },
-    { type: 'note', title: 'What does "Cascading" mean?', content: 'The C in CSS means styles cascade — they flow down from parent to child elements, and multiple rules can apply to the same element. When there is a conflict, CSS uses specificity and order to decide which rule wins.' },
+    { type: 'note', title: 'What does "Cascading" mean?', content: 'The C in CSS means styles cascade - they flow down from parent to child elements, and multiple rules can apply to the same element. When there is a conflict, CSS uses specificity and order to decide which rule wins.' },
     { type: 'tryit', title: 'Try It: Your First CSS',
       html: `<h1>Welcome to CSS!</h1>
 <p>CSS makes websites beautiful. Try changing the styles on the left and click Run ▶</p>

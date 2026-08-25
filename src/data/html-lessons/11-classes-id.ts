@@ -1,4 +1,4 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 
 export const htmlClassesIdLesson: HtmlLesson = {
   id: 'html-classes-id',
@@ -8,7 +8,7 @@ export const htmlClassesIdLesson: HtmlLesson = {
   order: 11,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Master the class and id attributes — how they connect HTML to CSS and JavaScript, naming conventions, and best practices.',
+  description: 'Master the class and id attributes - how they connect HTML to CSS and JavaScript, naming conventions, and best practices.',
   sections: [
     { type: 'text', content: 'The class and id attributes are two of the most important tools in web development. They create a bridge between your HTML elements and CSS styles / JavaScript behavior. Understanding them deeply is essential for every web developer.' },
     { type: 'heading', content: 'The class Attribute' },
@@ -33,7 +33,7 @@ export const htmlClassesIdLesson: HtmlLesson = {
 /* const highlights = document.querySelectorAll('.highlight'); */
 /* highlights.forEach(el => el.style.color = 'red'); */` },
     { type: 'heading', content: 'The id Attribute' },
-    { type: 'text', content: 'An id is a UNIQUE identifier — only ONE element on the entire page should have a given id. Use ids for landmark elements, form labels, and JavaScript targeting of specific unique elements.' },
+    { type: 'text', content: 'An id is a UNIQUE identifier - only ONE element on the entire page should have a given id. Use ids for landmark elements, form labels, and JavaScript targeting of specific unique elements.' },
     { type: 'code', language: 'html',       content: 'The id attribute gives one element a unique name on the page. In CSS target it with #header. In JavaScript use getElementById. Only one element per page should have a given id. Use ids for anchor links, JavaScript targeting, and form label associations.',
       code: `<!-- Each id must be unique on the page -->
 <header id="site-header">...</header>
@@ -55,16 +55,16 @@ export const htmlClassesIdLesson: HtmlLesson = {
 /* Anchor links use id */
 <a href="#section2">Jump to Section 2</a>
 <h2 id="section2">Section 2</h2>` },
-    { type: 'heading', content: 'class vs id — When to Use Which' },
+    { type: 'heading', content: 'class vs id - When to Use Which' },
     { type: 'table', headers: ['Feature', 'class', 'id'], rows: [
       ['Uniqueness', 'Can be used on MANY elements', 'Must be UNIQUE (one per page)'],
       ['CSS selector', '.className', '#idName'],
       ['JS selector', 'querySelectorAll(".class")', 'getElementById("id")'],
-      ['Multiple per element', 'Yes — class="a b c"', 'No — only one id per element'],
+      ['Multiple per element', 'Yes - class="a b c"', 'No - only one id per element'],
       ['Anchor links', 'Not used', 'Used with href="#id"'],
       ['Best for', 'Styling components, groups', 'Unique landmarks, form labels, JS targets'],
     ]},
-    { type: 'heading', content: 'CSS Classes — The Component Pattern' },
+    { type: 'heading', content: 'CSS Classes - The Component Pattern' },
     { type: 'code', language: 'html',       content: 'In professional code, classes handle styling and ids handle JavaScript. BEM naming: .card for the block, .card__title for an element inside it, .card--featured for a variant. This keeps CSS organized and avoids naming conflicts.',
       code: `<!-- Real-world component pattern with classes -->
 <!-- Building a card component -->
@@ -144,7 +144,7 @@ body { font-family: system-ui, sans-serif; background: #f9fafb; }
       mode: 'html' },
   ],
   exercises: [
-    { id: 'ci1', question: 'Can two different HTML elements have the same class name?', type: 'multiple-choice', options: ['No, each class must be unique', 'Yes, class can be shared by many elements', 'Only if they are the same tag type', 'Only with !important in CSS'], correct: 1, explanation: 'Class names are REUSABLE. Many elements can share the same class. This is the whole point — one CSS rule styles all elements with that class.' },
+    { id: 'ci1', question: 'Can two different HTML elements have the same class name?', type: 'multiple-choice', options: ['No, each class must be unique', 'Yes, class can be shared by many elements', 'Only if they are the same tag type', 'Only with !important in CSS'], correct: 1, explanation: 'Class names are REUSABLE. Many elements can share the same class. This is the whole point - one CSS rule styles all elements with that class.' },
     { id: 'ci2', question: 'In CSS, how do you select all elements with class="card"?', type: 'multiple-choice', options: ['#card { }', '.card { }', 'card { }', '@card { }'], correct: 1, explanation: 'In CSS, a dot (.) before the name targets a class: .card { }. A hash (#) targets an id: #card { }.' },
   ],
   quiz: [

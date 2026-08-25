@@ -1,4 +1,4 @@
-﻿import type { HtmlLesson } from '../html-curriculum';
+import type { HtmlLesson } from '../html-curriculum';
 
 export const htmlReferencesLesson: HtmlLesson = {
   id: 'html-references',
@@ -8,7 +8,7 @@ export const htmlReferencesLesson: HtmlLesson = {
   order: 19,
   difficulty: 'beginner',
   readingTime: 15,
-  description: 'Complete HTML reference — all tags, global attributes, events, character sets, HTTP methods, URL encoding, and more.',
+  description: 'Complete HTML reference - all tags, global attributes, events, character sets, HTTP methods, URL encoding, and more.',
   sections: [
     // ── HTML TAG LIST ──────────────────────────────────────────
     { type: 'heading', content: 'HTML Tag Reference' },
@@ -35,7 +35,7 @@ export const htmlReferencesLesson: HtmlLesson = {
       title: 'Text Content Tags',
       headers: ['Tag', 'Description', 'Type'],
       rows: [
-        ['<h1>–<h6>', 'Headings — h1 is largest/most important', 'Block'],
+        ['<h1>-<h6>', 'Headings - h1 is largest/most important', 'Block'],
         ['<p>', 'Paragraph', 'Block'],
         ['<br>', 'Line break (empty element)', 'Inline'],
         ['<hr>', 'Horizontal rule / thematic break', 'Block'],
@@ -60,12 +60,12 @@ export const htmlReferencesLesson: HtmlLesson = {
         ['<strong>', 'Bold', 'Important content'],
         ['<b>', 'Bold', 'None (visual only)'],
         ['<em>', 'Italic', 'Stressed emphasis'],
-        ['<i>', 'Italic', 'None (visual only — foreign words, titles)'],
+        ['<i>', 'Italic', 'None (visual only - foreign words, titles)'],
         ['<mark>', 'Highlighted (yellow)', 'Highlighted/relevant text'],
         ['<del>', 'Strikethrough', 'Deleted/removed text'],
         ['<ins>', 'Underlined', 'Inserted/added text'],
         ['<s>', 'Strikethrough', 'No longer accurate'],
-        ['<u>', 'Underlined', 'Annotation (avoid — looks like a link)'],
+        ['<u>', 'Underlined', 'Annotation (avoid - looks like a link)'],
         ['<sub>', 'Subscript (H₂O)', 'Subscript'],
         ['<sup>', 'Superscript (x²)', 'Superscript'],
         ['<small>', 'Smaller text', 'Fine print, disclaimers'],
@@ -92,13 +92,13 @@ export const htmlReferencesLesson: HtmlLesson = {
       rows: [
         ['<a>', 'Hyperlink', 'href, target, rel'],
         ['<img>', 'Image (empty element)', 'src, alt, width, height'],
-        ['<picture>', 'Responsive image container', '—'],
+        ['<picture>', 'Responsive image container', '-'],
         ['<source>', 'Media source inside picture/audio/video', 'src, srcset, type, media'],
         ['<audio>', 'Audio player', 'src, controls, autoplay, loop'],
         ['<video>', 'Video player', 'src, controls, width, height, poster'],
         ['<iframe>', 'Embedded frame', 'src, width, height, title, sandbox'],
-        ['<figure>', 'Self-contained media content', '—'],
-        ['<figcaption>', 'Caption for figure', '—'],
+        ['<figure>', 'Self-contained media content', '-'],
+        ['<figcaption>', 'Caption for figure', '-'],
         ['<map>', 'Image map definition', 'name'],
         ['<area>', 'Clickable area in image map', 'shape, coords, href'],
       ],
@@ -116,8 +116,8 @@ export const htmlReferencesLesson: HtmlLesson = {
         ['<option>', 'Option in a select', 'value, selected'],
         ['<optgroup>', 'Group of options', 'label'],
         ['<button>', 'Clickable button', 'type (submit/reset/button)'],
-        ['<fieldset>', 'Group of related form elements', '—'],
-        ['<legend>', 'Caption for fieldset', '—'],
+        ['<fieldset>', 'Group of related form elements', '-'],
+        ['<legend>', 'Caption for fieldset', '-'],
         ['<datalist>', 'Autocomplete suggestions for input', 'id'],
         ['<output>', 'Result of a calculation', 'name, for'],
         ['<progress>', 'Progress bar', 'value, max'],
@@ -190,8 +190,8 @@ export const htmlReferencesLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-            content: 'data-* attributes store custom data directly on HTML elements. Any attribute starting with data- is valid. JavaScript accesses them through the dataset property — data-user-id becomes element.dataset.userId (camelCase). They are widely used in React, Vue, and vanilla JS for passing data to event handlers.',
-      code: `<!-- data-* attributes — store custom data for JavaScript -->
+            content: 'data-* attributes store custom data directly on HTML elements. Any attribute starting with data- is valid. JavaScript accesses them through the dataset property - data-user-id becomes element.dataset.userId (camelCase). They are widely used in React, Vue, and vanilla JS for passing data to event handlers.',
+      code: `<!-- data-* attributes - store custom data for JavaScript -->
 <button
   id="delete-btn"
   class="btn btn-danger"
@@ -251,7 +251,7 @@ export const htmlReferencesLesson: HtmlLesson = {
       type: 'code',
       language: 'html',
             content: 'Inline event attributes like onclick are the old way to add JavaScript behavior. They mix HTML and JavaScript and are hard to maintain. The modern way is addEventListener() in a separate script file. Avoid inline event attributes in production code.',
-      code: `<!-- Inline event attributes (old way — avoid in production) -->
+      code: `<!-- Inline event attributes (old way - avoid in production) -->
 <button onclick="alert('Clicked!')">Click Me</button>
 <input onkeyup="console.log(this.value)" placeholder="Type here">
 
@@ -274,7 +274,7 @@ export const htmlReferencesLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-            content: 'The audio element embeds a sound player. controls shows the browser built-in play/pause/volume UI. Multiple source elements provide different audio formats — the browser picks the first it can play. MP3 has the widest support. Add type to help the browser decide without downloading.',
+            content: 'The audio element embeds a sound player. controls shows the browser built-in play/pause/volume UI. Multiple source elements provide different audio formats - the browser picks the first it can play. MP3 has the widest support. Add type to help the browser decide without downloading.',
       code: `<!-- Audio player -->
 <audio controls>
   <source src="music.mp3" type="audio/mpeg">
@@ -283,11 +283,11 @@ export const htmlReferencesLesson: HtmlLesson = {
 </audio>
 
 <!-- Audio attributes: -->
-<!-- controls    — shows play/pause/volume UI -->
-<!-- autoplay    — plays automatically (often blocked by browsers) -->
-<!-- loop        — repeats when done -->
-<!-- muted       — starts muted -->
-<!-- preload     — "auto" | "metadata" | "none" -->
+<!-- controls    - shows play/pause/volume UI -->
+<!-- autoplay    - plays automatically (often blocked by browsers) -->
+<!-- loop        - repeats when done -->
+<!-- muted       - starts muted -->
+<!-- preload     - "auto" | "metadata" | "none" -->
 
 <!-- Video player -->
 <video width="640" height="360" controls poster="thumbnail.jpg">
@@ -331,15 +331,15 @@ export const htmlReferencesLesson: HtmlLesson = {
     {
       type: 'code',
       language: 'html',
-            content: 'HTML forms send data to servers. method=GET appends data to the URL — good for searches and bookmarkable results. method=POST sends data in the request body — use for login, signup, and anything sensitive. The action attribute is the URL that receives the data.',
-      code: `<!-- GET: data in URL — good for search, bookmarkable -->
+            content: 'HTML forms send data to servers. method=GET appends data to the URL - good for searches and bookmarkable results. method=POST sends data in the request body - use for login, signup, and anything sensitive. The action attribute is the URL that receives the data.',
+      code: `<!-- GET: data in URL - good for search, bookmarkable -->
 <form action="/search" method="GET">
   <input type="text" name="q" placeholder="Search...">
   <button type="submit">Search</button>
 </form>
 <!-- URL becomes: /search?q=html+tutorial -->
 
-<!-- POST: data in body — good for forms with sensitive data -->
+<!-- POST: data in body - good for forms with sensitive data -->
 <form action="/login" method="POST">
   <input type="email"    name="email"    placeholder="Email">
   <input type="password" name="password" placeholder="Password">
@@ -374,7 +374,7 @@ fetch('/api/users/1', { method: 'DELETE' });
       title: 'HTTP Status Codes Reference',
       headers: ['Code', 'Name', 'Meaning'],
       rows: [
-        ['200', 'OK', 'Request succeeded — standard success response'],
+        ['200', 'OK', 'Request succeeded - standard success response'],
         ['201', 'Created', 'Resource created successfully (after POST)'],
         ['204', 'No Content', 'Success but no body to return (after DELETE)'],
         ['301', 'Moved Permanently', 'Resource moved to a new URL permanently'],
@@ -454,9 +454,9 @@ console.log(decoded);
       title: 'Common HTML Entities',
       headers: ['Character', 'Entity Name', 'Entity Number', 'Description'],
       rows: [
-        ['<', '&lt;', '&#60;', 'Less than — needed inside HTML content'],
+        ['<', '&lt;', '&#60;', 'Less than - needed inside HTML content'],
         ['>', '&gt;', '&#62;', 'Greater than'],
-        ['&', '&amp;', '&#38;', 'Ampersand — needed in HTML'],
+        ['&', '&amp;', '&#38;', 'Ampersand - needed in HTML'],
         ['"', '&quot;', '&#34;', 'Double quote'],
         ["'", '&apos;', '&#39;', 'Single quote / apostrophe'],
         ['©', '&copy;', '&#169;', 'Copyright symbol'],
@@ -479,7 +479,7 @@ console.log(decoded);
     {
       type: 'code',
       language: 'html',
-            content: 'HTML entities let you display characters that have special meaning in HTML. Use &lt; for < and &gt; for > — otherwise the browser interprets them as tag brackets. Use &amp; for & in URLs and text. Use &nbsp; for a non-breaking space that prevents line wrapping.',
+            content: 'HTML entities let you display characters that have special meaning in HTML. Use &lt; for < and &gt; for > - otherwise the browser interprets them as tag brackets. Use &amp; for & in URLs and text. Use &nbsp; for a non-breaking space that prevents line wrapping.',
       code: `<!-- Use entities for special characters in HTML -->
 <p>5 &lt; 10 is a true statement.</p>
 <p>Use &amp; to connect words &amp; ideas.</p>
@@ -497,7 +497,7 @@ console.log(decoded);
     },
     // ── PX TO EM ───────────────────────────────────────────────
     { type: 'heading', content: 'PX to EM / REM Conversion' },
-    { type: 'text', content: 'CSS has multiple units for sizing. px is absolute (pixels). em is relative to the parent element font-size. rem is relative to the root (html) font-size — the most predictable for responsive design.' },
+    { type: 'text', content: 'CSS has multiple units for sizing. px is absolute (pixels). em is relative to the parent element font-size. rem is relative to the root (html) font-size - the most predictable for responsive design.' },
     {
       type: 'table',
       title: 'CSS Units Comparison',
@@ -512,12 +512,12 @@ console.log(decoded);
         ['vmin', 'Relative', '1% of smaller viewport dimension', 'Responsive elements'],
         ['vmax', 'Relative', '1% of larger viewport dimension', 'Responsive elements'],
         ['ch', 'Relative', 'Width of the "0" character', 'Line length for readability'],
-        ['clamp()', 'Function', 'min, preferred, max', 'Fluid typography — recommended!'],
+        ['clamp()', 'Function', 'min, preferred, max', 'Fluid typography - recommended!'],
       ],
     },
     {
       type: 'code',
-            content: 'These CSS reference snippets show the most important CSS properties in one place. font-size: 16px is the browser default. 1rem always equals the root font size. border-box sizing includes padding in the width calculation — add * { box-sizing: border-box } to every project.',
+            content: 'These CSS reference snippets show the most important CSS properties in one place. font-size: 16px is the browser default. 1rem always equals the root font size. border-box sizing includes padding in the width calculation - add * { box-sizing: border-box } to every project.',
       code: `/* Base font-size is 16px by default */
 /* 1rem = 16px, 1.5rem = 24px, 2rem = 32px */
 
@@ -528,7 +528,7 @@ console.log(decoded);
 /* 48px = 3rem   */
 /* 64px = 4rem   */
 
-html { font-size: 16px; } /* default — change to adjust all rem sizes */
+html { font-size: 16px; } /* default - change to adjust all rem sizes */
 
 h1 { font-size: 2.5rem; }   /* 40px */
 h2 { font-size: 2rem; }     /* 32px */
@@ -627,11 +627,11 @@ code { background: #f4f4f4; padding: 2px 6px; border-radius: 4px; font-size: 13p
   ],
   exercises: [
     { id: 'ref1', question: 'Which HTML entity displays a copyright symbol ©?', type: 'multiple-choice', options: ['&copyright;', '&copy;', '(c)', '&#169;'], correct: 1, explanation: '&copy; displays ©. You can also use the numeric entity &#169;. Both work in all browsers.' },
-    { id: 'ref2', question: 'What HTTP status code means "Resource not found"?', type: 'multiple-choice', options: ['200', '401', '404', '500'], correct: 2, explanation: '404 Not Found — the server cannot find the requested resource. The URL might be wrong or the resource deleted.' },
+    { id: 'ref2', question: 'What HTTP status code means "Resource not found"?', type: 'multiple-choice', options: ['200', '401', '404', '500'], correct: 2, explanation: '404 Not Found - the server cannot find the requested resource. The URL might be wrong or the resource deleted.' },
     { id: 'ref3', question: 'Which HTTP method should you use to PARTIALLY update a resource?', type: 'multiple-choice', options: ['GET', 'POST', 'PUT', 'PATCH'], correct: 3, explanation: 'PATCH partially updates a resource (only the fields you send). PUT replaces the entire resource. POST creates. GET reads.' },
   ],
   quiz: [
-    { id: 'rq1', question: 'What does rem stand for in CSS?', options: ['Relative em', 'Root em — relative to the html element font-size', 'Responsive em', 'Rendered em'], correct: 1, explanation: 'rem = Root EM. It is always relative to the root <html> element\'s font-size (default 16px). This makes it more predictable than em, which inherits from parent elements.' },
+    { id: 'rq1', question: 'What does rem stand for in CSS?', options: ['Relative em', 'Root em - relative to the html element font-size', 'Responsive em', 'Rendered em'], correct: 1, explanation: 'rem = Root EM. It is always relative to the root <html> element\'s font-size (default 16px). This makes it more predictable than em, which inherits from parent elements.' },
     { id: 'rq2', question: 'Which character MUST be encoded as &amp; inside HTML?', options: ['The letter a', 'The & (ampersand)', 'The . (period)', 'The _ (underscore)'], correct: 1, explanation: '& has special meaning in HTML (it starts entity references). To display a literal & in HTML, you must write &amp;. Otherwise the browser may try to parse it as an entity.' },
   ],
 };
