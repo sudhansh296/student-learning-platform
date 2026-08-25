@@ -195,9 +195,9 @@ document.getElementById('output').innerHTML =
   '<div class="subtitle">Explore how MongoDB stores data in flexible JSON documents</div>' +
   '<div class="card">' +
   '<div class="label">Select a document type:</div>' +
-  '<button class="btn" onclick="showDoc(\\'user\\')">User Document</button>' +
-  '<button class="btn" onclick="showDoc(\\'product\\')">Product Document</button>' +
-  '<button class="btn" onclick="showDoc(\\'order\\')">Order Document</button>' +
+  '<button class="btn" onclick="showDoc(\&apos;user\&apos;)">User Document</button>' +
+  '<button class="btn" onclick="showDoc(\&apos;product\&apos;)">Product Document</button>' +
+  '<button class="btn" onclick="showDoc(\&apos;order\&apos;)">Order Document</button>' +
   '<button class="btn" onclick="showComparison()">SQL vs NoSQL</button>' +
   '</div>' +
   '<div class="card">' +

@@ -568,7 +568,7 @@ function runTests() {
     },
     {
       id: 'nodejs-testing-3',
-      question: 'What does jest.mock(\'../db\') do at the top of a test file?',
+      question: 'What does jest.mock(&apos;../db&apos;) do at the top of a test file?',
       type: 'multiple-choice',
       options: [
         'Imports the real db module for testing',

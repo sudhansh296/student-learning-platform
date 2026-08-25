@@ -247,7 +247,7 @@ document.getElementById('output').innerHTML =
   '<div class="panel-body">' +
   '<div class="form-group">' +
   '<label class="label">Name</label>' +
-  '<input id="name" class="input" onblur="validate(\\'name\\')" placeholder="Enter name">' +
+  '<input id="name" class="input" onblur="validate(\&apos;name\&apos;)" placeholder="Enter name">' +
   '<div id="nameError"></div>' +
   '</div>' +
   '<div class="form-group">' +
@@ -257,7 +257,7 @@ document.getElementById('output').innerHTML =
   '</div>' +
   '<div class="form-group">' +
   '<label class="label">Age</label>' +
-  '<input id="age" type="number" class="input" onblur="validate(\\'age\\')" placeholder="18">' +
+  '<input id="age" type="number" class="input" onblur="validate(\&apos;age\&apos;)" placeholder="18">' +
   '<div id="ageError"></div>' +
   '</div>' +
   '<div class="form-group">' +

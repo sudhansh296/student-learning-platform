@@ -288,10 +288,10 @@ document.getElementById('output').innerHTML =
   '</div>' +
   '<button class="btn" onclick="testConnection()">Test Connection</button>' +
   '<div class="example-links">' +
-  '<span class="example-link" onclick="loadExample(\\'local\\')">Local</span> | ' +
-  '<span class="example-link" onclick="loadExample(\\'localAuth\\')">Local + Auth</span> | ' +
-  '<span class="example-link" onclick="loadExample(\\'atlas\\')">Atlas</span> | ' +
-  '<span class="example-link" onclick="loadExample(\\'docker\\')">Docker</span>' +
+  '<span class="example-link" onclick="loadExample(\&apos;local\&apos;)">Local</span> | ' +
+  '<span class="example-link" onclick="loadExample(\&apos;localAuth\&apos;)">Local + Auth</span> | ' +
+  '<span class="example-link" onclick="loadExample(\&apos;atlas\&apos;)">Atlas</span> | ' +
+  '<span class="example-link" onclick="loadExample(\&apos;docker\&apos;)">Docker</span>' +
   '</div>' +
   '<div id="result" class="result"></div>' +
   '</div>' +

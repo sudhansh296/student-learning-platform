@@ -351,12 +351,12 @@ document.getElementById('output').innerHTML =
   '<div class="card">' +
   '<div class="label">Sample Collection: products (' + products.length + ' documents)</div>' +
   '<div class="btn-grid">' +
-  '<button class="btn" onclick="runQuery(\\'gt100\\')">$gt: price &gt; 100</button>' +
-  '<button class="btn" onclick="runQuery(\\'range\\')">$gte/$lte: 20-100</button>' +
-  '<button class="btn" onclick="runQuery(\\'in\\')">$in: Books/Toys</button>' +
-  '<button class="btn" onclick="runQuery(\\'or\\')">$or: cheap OR high rated</button>' +
-  '<button class="btn" onclick="runQuery(\\'exists\\')">$exists: inStock</button>' +
-  '<button class="btn" onclick="runQuery(\\'regex\\')">$regex: ^[LP]</button>' +
+  '<button class="btn" onclick="runQuery(\&apos;gt100\&apos;)">$gt: price &gt; 100</button>' +
+  '<button class="btn" onclick="runQuery(\&apos;range\&apos;)">$gte/$lte: 20-100</button>' +
+  '<button class="btn" onclick="runQuery(\&apos;in\&apos;)">$in: Books/Toys</button>' +
+  '<button class="btn" onclick="runQuery(\&apos;or\&apos;)">$or: cheap OR high rated</button>' +
+  '<button class="btn" onclick="runQuery(\&apos;exists\&apos;)">$exists: inStock</button>' +
+  '<button class="btn" onclick="runQuery(\&apos;regex\&apos;)">$regex: ^[LP]</button>' +
   '</div>' +
   '<div id="results">' +
   '<div style="color:#666;text-align:center;padding:20px;">Click a button to run a query</div>' +

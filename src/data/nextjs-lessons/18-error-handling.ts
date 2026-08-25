@@ -339,7 +339,7 @@ function render() {
   var buttonsHtml = Object.keys(flows).map(function(key) {
     var flow = flows[key];
     var active = triggered === key;
-    return '<button onclick="trigger(\'' + key + '\')" style="' +
+    return '<button onclick="trigger(&apos;' + key + '&apos;)" style="' +
       'background:' + (active ? flow.color : '#f1f5f9') + ';' +
       'color:' + (active ? '#fff' : '#374151') + ';' +
       'border:2px solid ' + (active ? flow.color : '#e2e8f0') + ';' +

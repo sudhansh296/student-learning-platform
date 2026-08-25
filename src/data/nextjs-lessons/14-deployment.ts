@@ -215,8 +215,8 @@ function render() {
       s.items.map(function(item, j) {
         const id = s.section.replace(/ /g,'_') + '_' + j;
         const isDone = checked[id];
-        return '<div class="item" onclick="toggle(\'' + id + '\')">' +
-          '<input type="checkbox"' + (isDone ? ' checked' : '') + ' onclick="event.stopPropagation();toggle(\'' + id + '\')">' +
+        return '<div class="item" onclick="toggle(&apos;' + id + '&apos;)">' +
+          '<input type="checkbox"' + (isDone ? ' checked' : '') + ' onclick="event.stopPropagation();toggle(&apos;' + id + '&apos;)">' +
           '<span class="item-text' + (isDone ? ' done' : '') + '">' + item + '</span></div>';
       }).join('') +
       '</div>';

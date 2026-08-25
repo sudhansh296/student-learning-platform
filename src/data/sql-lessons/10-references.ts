@@ -42,7 +42,7 @@ export const lesson10: SqlLesson = {
       title: 'DML Commands',
       headers: ['Command', 'Purpose', 'Example'],
       rows: [
-        ['INSERT INTO ... VALUES', 'Add rows', 'INSERT INTO users (email, name) VALUES (\'a@b.com\', \'Alice\')'],
+        ['INSERT INTO ... VALUES', 'Add rows', 'INSERT INTO users (email, name) VALUES (\'a@b.com\', &apos;Alice&apos;)'],
         ['INSERT ... RETURNING', 'Insert and return values', 'INSERT INTO users (email) VALUES (\'a@b.com\') RETURNING id'],
         ['SELECT ... FROM', 'Read rows', 'SELECT id, email FROM users WHERE is_active = true'],
         ['UPDATE ... SET', 'Modify rows', 'UPDATE users SET plan = \'pro\' WHERE id = 1'],

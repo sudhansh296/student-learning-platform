@@ -389,8 +389,8 @@ document.getElementById('output').innerHTML =
   '<div class="panel-header">Variable Visibility</div>' +
   '<div class="panel-body">' +
   '<div class="tabs">' +
-  '<button id="tab-server" class="tab active" onclick="setTab(\'server\')">Server Component</button>' +
-  '<button id="tab-client" class="tab" onclick="setTab(\'client\')">Client Component</button>' +
+  '<button id="tab-server" class="tab active" onclick="setTab(&apos;server&apos;)">Server Component</button>' +
+  '<button id="tab-client" class="tab" onclick="setTab(&apos;client&apos;)">Client Component</button>' +
   '</div>' +
   '<div id="var-list"></div>' +
   '</div>' +

@@ -493,7 +493,7 @@ document.getElementById('output').innerHTML =
     '</div>'+
     '<div class=\\"op-section\\">'+
       '<div class=\\"op-label\\">Read</div>'+
-      '<button id=\\"btnFind\\" class=\\"op-btn read\\" onclick=\\"setActive(\\'find\\')\\">find()</button>'+
+      '<button id=\\"btnFind\\" class=\\"op-btn read\\" onclick=\\"setActive(\&apos;find\&apos;)\\">find()</button>'+
     '</div>'+
     '<div class=\\"op-section\\">'+
       '<div class=\\"op-label\\">Update</div>'+

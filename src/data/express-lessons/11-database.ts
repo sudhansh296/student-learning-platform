@@ -262,11 +262,11 @@ document.getElementById('output').innerHTML =
   '<div class="panel-header"><span>Database Operations</span><div class="db-badge">MongoDB</div></div>' +
   '<div class="panel-body">' +
   '<div class="ops">' +
-  '<div class="op-btn" onclick="runOp(\\'findAll\\')">Find All</div>' +
-  '<div class="op-btn" onclick="runOp(\\'findOne\\')">Find One</div>' +
-  '<div class="op-btn" onclick="runOp(\\'insert\\')">Insert</div>' +
-  '<div class="op-btn" onclick="runOp(\\'update\\')">Update</div>' +
-  '<div class="op-btn" onclick="runOp(\\'delete\\')">Delete</div>' +
+  '<div class="op-btn" onclick="runOp(\&apos;findAll\&apos;)">Find All</div>' +
+  '<div class="op-btn" onclick="runOp(\&apos;findOne\&apos;)">Find One</div>' +
+  '<div class="op-btn" onclick="runOp(\&apos;insert\&apos;)">Insert</div>' +
+  '<div class="op-btn" onclick="runOp(\&apos;update\&apos;)">Update</div>' +
+  '<div class="op-btn" onclick="runOp(\&apos;delete\&apos;)">Delete</div>' +
   '</div>' +
   '<div class="query" id="query">Click an operation to see the query...</div>' +
   '<div class="result" id="result">Results will appear here...</div>' +

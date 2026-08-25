@@ -239,9 +239,9 @@ document.getElementById('output').innerHTML =
   '<button class="btn btn-noauth" id="auth-toggle" onclick="toggleAuth()"> Not Logged In - Click to login</button>' +
   '</div>' +
   '<div class="btn-row" style="font-size:11px;color:#666;margin-bottom:8px;gap:4px;flex-direction:column;display:block">Try routes: ' +
-  '<button class="btn" style="background:#000;color:#fff;margin:2px;" onclick="simulate(\'/dashboard\')">/dashboard</button>' +
-  '<button class="btn" style="background:#000;color:#fff;margin:2px;" onclick="simulate(\'/about\')">/about (public)</button>' +
-  '<button class="btn" style="background:#000;color:#fff;margin:2px;" onclick="simulate(\'/settings\')">/settings</button>' +
+  '<button class="btn" style="background:#000;color:#fff;margin:2px;" onclick="simulate(&apos;/dashboard&apos;)">/dashboard</button>' +
+  '<button class="btn" style="background:#000;color:#fff;margin:2px;" onclick="simulate(&apos;/about&apos;)">/about (public)</button>' +
+  '<button class="btn" style="background:#000;color:#fff;margin:2px;" onclick="simulate(&apos;/settings&apos;)">/settings</button>' +
   '</div>' +
   '<div id="steps"></div>' +
   '<div id="result"></div>' +

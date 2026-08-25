@@ -338,7 +338,7 @@ function render() {
   document.getElementById('tag-filters').innerHTML=TAGS.map(t=>{
     const count=t==='All'?contacts.length:contacts.filter(c=>c.tag===t).length;
     const active=t===activeTag?' active':'';
-    return '<button class="tag-btn'+active+'" style="color:'+tagColors[t]+';background:'+(t===activeTag?tagColors[t]+'22':'white')+';border-color:'+(t===activeTag?tagColors[t]:'#e2e8f0')+'" onclick="setTag(\''+t+'\')">'+t+' ('+count+')</button>';
+    return '<button class="tag-btn'+active+'" style="color:'+tagColors[t]+';background:'+(t===activeTag?tagColors[t]+'22':'white')+';border-color:'+(t===activeTag?tagColors[t]:'#e2e8f0')+'" onclick="setTag(&apos;'+t+'&apos;)">'+t+' ('+count+')</button>';
   }).join('');
 
   document.getElementById('contacts-grid').innerHTML = list.length ? list.map(c=>

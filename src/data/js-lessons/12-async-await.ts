@@ -285,7 +285,7 @@ async function loadCity(cityName) {
 
 function renderTabs() {
   document.getElementById('cityTabs').innerHTML = cities.map(c =>
-    '<button class="city-btn'+(c.name===activeCity?' active':'')+'" onclick="loadCity(\''+c.name+'\')">'+c.name+'</button>'
+    '<button class="city-btn'+(c.name===activeCity?' active':'')+'" onclick="loadCity(&apos;'+c.name+'&apos;)">'+c.name+'</button>'
   ).join('');
 }
 

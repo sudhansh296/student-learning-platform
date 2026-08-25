@@ -389,9 +389,9 @@ document.getElementById('output').innerHTML =
   '<div class="card">' +
   '<div class="label">Choose a pattern:</div>' +
   '<div class="btn-row">' +
-  '<button class="btn" onclick="showPattern(\\'embedded\\')">Embedded</button>' +
-  '<button class="btn" onclick="showPattern(\\'referenced\\')">Referenced</button>' +
-  '<button class="btn" onclick="showPattern(\\'manytomany\\')">Many-to-Many</button>' +
+  '<button class="btn" onclick="showPattern(\&apos;embedded\&apos;)">Embedded</button>' +
+  '<button class="btn" onclick="showPattern(\&apos;referenced\&apos;)">Referenced</button>' +
+  '<button class="btn" onclick="showPattern(\&apos;manytomany\&apos;)">Many-to-Many</button>' +
   '</div>' +
   '<pre id="output" class="output">Click a button to see relationship pattern examples...</pre>' +
   '</div>' +

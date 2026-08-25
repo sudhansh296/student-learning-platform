@@ -271,7 +271,7 @@ window.switchTab = function(key) {
 document.getElementById('output').innerHTML =
   '<div class="tab-row">' +
   Object.keys(approaches).map(k =>
-    '<button class="tab' + (k === 'modules' ? ' active' : '') + '" data-tab="' + k + '" onclick="switchTab(\'' + k + '\')">' + approaches[k].label + '</button>'
+    '<button class="tab' + (k === 'modules' ? ' active' : '') + '" data-tab="' + k + '" onclick="switchTab(&apos;' + k + '&apos;)">' + approaches[k].label + '</button>'
   ).join('') +
   '</div>' +
   '<div id="approach-content"></div>';

@@ -149,7 +149,7 @@ ORDER BY plan;`,
     {
       type: 'note',
       title: 'NULL in SELECT',
-      content: 'If any value in a concatenation expression is NULL, the entire result becomes NULL in PostgreSQL. Use COALESCE(value, \'\') to replace NULLs with empty strings before concatenating.'
+      content: 'If any value in a concatenation expression is NULL, the entire result becomes NULL in PostgreSQL. Use COALESCE(value, &apos;&apos;) to replace NULLs with empty strings before concatenating.'
     },
     {
       type: 'tryit',

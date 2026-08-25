@@ -422,9 +422,9 @@ document.getElementById('output').innerHTML =
   '<div class="card">' +
   '<div class="label">Sample Collection: orders (' + orders.length + ' documents)</div>' +
   '<div class="btn-grid">' +
-  '<button class="btn" onclick="runAgg(\\'match\\')">$match: completed</button>' +
-  '<button class="btn" onclick="runAgg(\\'group\\')">$group by category</button>' +
-  '<button class="btn" onclick="runAgg(\\'customer\\')">Customer totals</button>' +
+  '<button class="btn" onclick="runAgg(\&apos;match\&apos;)">$match: completed</button>' +
+  '<button class="btn" onclick="runAgg(\&apos;group\&apos;)">$group by category</button>' +
+  '<button class="btn" onclick="runAgg(\&apos;customer\&apos;)">Customer totals</button>' +
   '</div>' +
   '<div id="results" style="color:#666;text-align:center;padding:30px;">Click a button to run aggregation</div>' +
   '</div>' +

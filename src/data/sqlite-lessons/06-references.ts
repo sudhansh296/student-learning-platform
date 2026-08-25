@@ -204,7 +204,7 @@ const entries = [
   { item: '.headers on', cat: 'CLI', desc: 'Show column names in output' },
   { item: '.dump', cat: 'CLI', desc: 'Export entire database as SQL statements' },
   { item: 'INTEGER PRIMARY KEY', cat: 'SQL', desc: 'Auto-incrementing integer ID (rowid alias)' },
-  { item: 'datetime(\\'now\\')', cat: 'SQL', desc: 'Current UTC timestamp as text' },
+  { item: 'datetime(\&apos;now\&apos;)', cat: 'SQL', desc: 'Current UTC timestamp as text' },
   { item: 'ON CONFLICT DO UPDATE', cat: 'SQL', desc: 'UPSERT - insert or update on conflict (3.24+)' },
   { item: 'STRICT tables', cat: 'SQL', desc: 'Enable strict type checking per table (3.37+)' },
 ];
@@ -279,9 +279,9 @@ h3 { color: #0F3B70; margin: 0 0 8px 0; font-size: 15px; font-weight: 700; }
     {
       id: 'q-sqlite-6-2',
       question: 'Which SQLite date function returns the current UTC timestamp as a text string?',
-      options: ['NOW()', 'CURRENT_TIMESTAMP', 'datetime(\'now\')', 'GETDATE()'],
+      options: ['NOW()', 'CURRENT_TIMESTAMP', 'datetime(&apos;now&apos;)', 'GETDATE()'],
       correct: 2,
-      explanation: 'datetime(\'now\') returns the current UTC time as a text string in ISO 8601 format (YYYY-MM-DD HH:MM:SS). CURRENT_TIMESTAMP is also valid SQL in SQLite. NOW() is MySQL/PostgreSQL syntax and does not work in SQLite.'
+      explanation: 'datetime(&apos;now&apos;) returns the current UTC time as a text string in ISO 8601 format (YYYY-MM-DD HH:MM:SS). CURRENT_TIMESTAMP is also valid SQL in SQLite. NOW() is MySQL/PostgreSQL syntax and does not work in SQLite.'
     }
   ]
 };
