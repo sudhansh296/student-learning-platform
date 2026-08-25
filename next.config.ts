@@ -37,8 +37,8 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: blob: https://flagcdn.com https://*.flagcdn.com",
               // Fonts: self only (Next.js self-hosts Google Fonts at build time)
               "font-src 'self' data:",
-              // Frames: self (srcdoc iframes) + allow external live demo iframes
-              "frame-src 'self' https:",
+              // Frames: self + blob URLs (used by SQL/Redis/etc renderers) + external live demos
+              "frame-src 'self' blob: https:",
               // Connections: self + CDNs (for playground iframes fetching scripts) + our own API
               "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com",
               // Workers: none needed
