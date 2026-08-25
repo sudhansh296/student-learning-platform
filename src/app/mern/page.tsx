@@ -140,9 +140,9 @@ export default function MernPage() {
               <Zap className="w-4 h-4" style={{ color: '#10b981' }} />
               <span className="text-sm font-bold" style={{ color: '#10b981' }}>Full-Stack Development</span>
             </div>
-            <h1 className="text-4xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-              Master the{' '}
-              <span style={{ background: 'linear-gradient(90deg, #10b981, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            <h1 className="text-4xl lg:text-6xl font-extrabold mb-6 leading-tight" style={{ color: 'white' }}>
+              <span style={{ color: 'white' }}>Master the </span>
+              <span style={{ background: 'linear-gradient(90deg, #10b981, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
                 MERN Stack
               </span>
             </h1>
