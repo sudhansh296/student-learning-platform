@@ -219,13 +219,13 @@ export default nextConfig;
 
 document.getElementById('btn-static').addEventListener('click', function() {
   var out = document.getElementById('sim-output');
-  out.textContent = '> Static page request...\n> CDN: Cache HIT - serving pre-built HTML\n> Time to first byte: ~5ms\n> No server computation required\n> HTML delivered from edge node nearest to user';
+  out.textContent = '> Static page request... > CDN: Cache HIT - serving pre-built HTML > Time to first byte: ~5ms > No server computation required > HTML delivered from edge node nearest to user';
   console.log('Static: served from CDN, ~5ms TTFB');
 });
 
 document.getElementById('btn-dynamic').addEventListener('click', function() {
   var out = document.getElementById('sim-output');
-  out.textContent = '> Dynamic page request...\n> CDN: Cache MISS - forwarding to origin server\n> Server: running async component...\n> Server: fetching fresh data from database...\n> Server: rendering React tree to HTML...\n> Response sent: ~150ms TTFB\n> Data is always fresh and personalized';
+  out.textContent = '> Dynamic page request... > CDN: Cache MISS - forwarding to origin server > Server: running async component... > Server: fetching fresh data from database... > Server: rendering React tree to HTML... > Response sent: ~150ms TTFB > Data is always fresh and personalized';
   console.log('Dynamic: server rendered, ~150ms TTFB');
 });`,
     },

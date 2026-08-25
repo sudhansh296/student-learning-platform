@@ -63,7 +63,7 @@ console.log('Done'); // runs immediately, before file is read
 // Output order with async:
 // "Done"
 // (file contents)`,
-      output: 'Done\n(file contents printed after)',
+      output: 'Done (file contents printed after)',
     },
     {
       type: 'example',
@@ -83,7 +83,7 @@ console.log('__filename:', __filename); // full path of this file
 // process.argv - command line arguments
 // node app.js hello world
 console.log('Arguments:', process.argv.slice(2));`,
-      output: 'Hello from Node.js!\nNode version: v20.x.x\nPlatform: linux',
+      output: 'Hello from Node.js! Node version: v20.x.x Platform: linux',
     },
     {
       type: 'note',

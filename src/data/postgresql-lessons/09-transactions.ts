@@ -35,7 +35,7 @@ COMMIT;
 -- If something went wrong, roll back all changes
 -- ROLLBACK;`,
       language: 'sql',
-      output: 'BEGIN\nUPDATE 1\nUPDATE 1\nCOMMIT'
+      output: 'BEGIN UPDATE 1 UPDATE 1 COMMIT'
     },
     {
       type: 'note',
@@ -66,7 +66,7 @@ ALTER TABLE accounts ADD CONSTRAINT no_overdraft
 
 -- Durability: once COMMIT is called, data survives a server crash`,
       language: 'sql',
-      output: 'BEGIN\nUPDATE 1\nERROR: No rows found\nROLLBACK'
+      output: 'BEGIN UPDATE 1 ERROR: No rows found ROLLBACK'
     },
     {
       type: 'heading',
@@ -96,7 +96,7 @@ INSERT INTO order_items (order_id, product_id, quantity) VALUES (1, 5, 2);
 
 COMMIT; -- order + corrected items committed`,
       language: 'sql',
-      output: 'BEGIN\nINSERT 0 1\nSAVEPOINT\nINSERT 0 1\nROLLBACK\nINSERT 0 1\nCOMMIT'
+      output: 'BEGIN INSERT 0 1 SAVEPOINT INSERT 0 1 ROLLBACK INSERT 0 1 COMMIT'
     },
     {
       type: 'heading',
@@ -131,7 +131,7 @@ UPDATE inventory SET stock = stock - 1 WHERE product_id = 5 AND stock > 0;
 -- PostgreSQL may abort this if a serialization conflict is detected
 COMMIT;`,
       language: 'sql',
-      output: 'BEGIN\nUPDATE 1\nCOMMIT'
+      output: 'BEGIN UPDATE 1 COMMIT'
     },
     {
       type: 'heading',
@@ -158,7 +158,7 @@ WHERE status = 'pending'
 LIMIT 1
 FOR UPDATE SKIP LOCKED;`,
       language: 'sql',
-      output: ' balance  \n----------\n 1000.00\n(1 row)\nUPDATE 1\nCOMMIT'
+      output: ' balance   ----------  1000.00 (1 row) UPDATE 1 COMMIT'
     },
     {
       type: 'heading',
@@ -187,7 +187,7 @@ FOR UPDATE SKIP LOCKED;`,
 -- If you get a deadlock error, catch it and retry
 -- In application code: catch (error) { if (error.code === '40P01') retry(); }`,
       language: 'sql',
-      output: 'ERROR:  deadlock detected\nDETAIL:  Process 1234 waits for ShareLock on transaction 5678\nHINT:  See server log for query details.'
+      output: 'ERROR:  deadlock detected DETAIL:  Process 1234 waits for ShareLock on transaction 5678 HINT:  See server log for query details.'
     },
     {
       type: 'warning',

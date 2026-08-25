@@ -126,7 +126,7 @@ console.log('Networks:', Object.keys(nets));
 
 // OS uptime
 console.log('Uptime:', Math.round(os.uptime() / 3600), 'hours');`,
-      output: 'linux\n8 CPUs\nTotal RAM: 16384 MB\nFree RAM: 8192 MB',
+      output: 'linux 8 CPUs Total RAM: 16384 MB Free RAM: 8192 MB',
     },
     {
       type: 'table',

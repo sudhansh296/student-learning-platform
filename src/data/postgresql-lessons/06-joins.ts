@@ -42,7 +42,7 @@ CREATE TABLE orders (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );`,
       language: 'sql',
-      output: 'CREATE TABLE\nCREATE TABLE'
+      output: 'CREATE TABLE CREATE TABLE'
     },
     {
       type: 'heading',
@@ -110,7 +110,7 @@ FROM orders o
 JOIN users u ON o.user_id = u.id
 ORDER BY o.id;`,
       language: 'sql',
-      output: ' order_id | customer    | total  | status  \n----------+-------------+--------+---------\n        1 | Alice Smith | 149.97 | shipped\n        2 | Bob Jones   |  89.99 | pending\n        3 | Alice Smith |  29.99 | delivered'
+      output: ' order_id | customer    | total  | status   ----------+-------------+--------+---------         1 | Alice Smith | 149.97 | shipped         2 | Bob Jones   |  89.99 | pending         3 | Alice Smith |  29.99 | delivered'
     },
     {
       type: 'heading',
@@ -140,7 +140,7 @@ FROM users u
 LEFT JOIN orders o ON u.id = o.user_id
 WHERE o.id IS NULL;`,
       language: 'sql',
-      output: '   name     |         email          | order_count \n------------+------------------------+-------------\n Alice Smith | alice@example.com      |           2\n Bob Jones   | bob@example.com        |           1\n Carol Wang  | carol@example.com      |           0'
+      output: '   name     |         email          | order_count  ------------+------------------------+-------------  Alice Smith | alice@example.com      |           2  Bob Jones   | bob@example.com        |           1  Carol Wang  | carol@example.com      |           0'
     },
     {
       type: 'heading',
@@ -162,7 +162,7 @@ FROM users u
 FULL OUTER JOIN orders o ON u.id = o.user_id;
 -- (users with no orders + orders with no user)`,
       language: 'sql',
-      output: '   name     | order_id | total  \n------------+----------+--------\n Alice Smith |        1 | 149.97\n Bob Jones   |        2 |  89.99\n Alice Smith |        3 |  29.99\n NULL        |        4 |  59.99'
+      output: '   name     | order_id | total   ------------+----------+--------  Alice Smith |        1 | 149.97  Bob Jones   |        2 |  89.99  Alice Smith |        3 |  29.99  NULL        |        4 |  59.99'
     },
     {
       type: 'note',
@@ -191,7 +191,7 @@ JOIN order_items oi ON oi.order_id = o.id
 JOIN products p    ON oi.product_id = p.id
 ORDER BY o.id, p.name;`,
       language: 'sql',
-      output: ' customer    | order_id | product         | quantity | unit_price | line_total \n-------------+----------+-----------------+----------+------------+------------\n Alice Smith |        1 | Wireless Mouse  |        2 |      29.99 |      59.98\n Alice Smith |        1 | USB-C Hub       |        3 |      39.99 |     119.97'
+      output: ' customer    | order_id | product         | quantity | unit_price | line_total  -------------+----------+-----------------+----------+------------+------------  Alice Smith |        1 | Wireless Mouse  |        2 |      29.99 |      59.98  Alice Smith |        1 | USB-C Hub       |        3 |      39.99 |     119.97'
     },
     {
       type: 'heading',
@@ -216,7 +216,7 @@ FROM employees e
 LEFT JOIN employees m ON e.manager_id = m.id
 ORDER BY m.name NULLS LAST, e.name;`,
       language: 'sql',
-      output: '    employee    |   manager    \n----------------+--------------\n Alice (CEO)    | NULL\n Bob            | Alice (CEO)\n Carol          | Alice (CEO)\n Dave           | Bob'
+      output: '    employee    |   manager     ----------------+--------------  Alice (CEO)    | NULL  Bob            | Alice (CEO)  Carol          | Alice (CEO)  Dave           | Bob'
     },
     {
       type: 'tip',

@@ -216,7 +216,7 @@ export default function ErrorPage({ error, reset }: { error: Error; reset: () =>
     desc: 'Built once, served from CDN',
     badge: 'SSG',
     badgeColor: '#16a34a',
-    code: 'const data = await fetch(url);\n// equivalent to:\nconst data = await fetch(url, {\n  cache: "force-cache"\n});',
+    code: 'const data = await fetch(url); // equivalent to: const data = await fetch(url, {   cache: "force-cache" });',
     result: 'Cached at build time. Every visitor gets the same pre-built page served from CDN. Fastest possible load.',
     simSteps: ['Request hits CDN...', 'Cache HIT - pre-built page found!', 'Served in ~5ms. No server needed.']
   },
@@ -226,7 +226,7 @@ export default function ErrorPage({ error, reset }: { error: Error; reset: () =>
     desc: 'Static + background refresh',
     badge: 'ISR',
     badgeColor: '#2563eb',
-    code: 'const data = await fetch(url, {\n  next: { revalidate: 60 }\n});\n\n// Also at route segment level:\nexport const revalidate = 60;',
+    code: 'const data = await fetch(url, {   next: { revalidate: 60 } });  // Also at route segment level: export const revalidate = 60;',
     result: 'Served statically, refreshed every 60s in background. Best of both - CDN speed with fresh data.',
     simSteps: ['Request hits CDN...', 'Cache HIT - serving cached page', 'Background: checking if 60s elapsed...', 'Revalidating... new data fetched!', 'Next request serves fresh page.']
   },
@@ -236,7 +236,7 @@ export default function ErrorPage({ error, reset }: { error: Error; reset: () =>
     desc: 'Fresh on every request',
     badge: 'SSR',
     badgeColor: '#dc2626',
-    code: 'const data = await fetch(url, {\n  cache: "no-store"\n});\n\n// Or force the whole route:\nexport const dynamic = "force-dynamic";',
+    code: 'const data = await fetch(url, {   cache: "no-store" });  // Or force the whole route: export const dynamic = "force-dynamic";',
     result: 'Fetches fresh data on EVERY request. Always up to date - no caching. Slower than static.',
     simSteps: ['Request arrives at origin server...', 'No cache - fetching fresh data...', 'Data fetched, rendering page...', 'Response sent in ~150ms.']
   }

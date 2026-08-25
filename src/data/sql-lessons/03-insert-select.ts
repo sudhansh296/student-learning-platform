@@ -186,13 +186,13 @@ var DB = {
 
 var QUERIES = [
   { label: 'SELECT *',           sql: 'SELECT * FROM users;',                                    table:'users', cols:null,   where:null,    distinct:false },
-  { label: 'Column list',        sql: 'SELECT id, first_name, email, plan\\nFROM users;',         table:'users', cols:['id','first_name','email','plan'], where:null, distinct:false },
-  { label: 'WHERE active=true',  sql: 'SELECT *\\nFROM users\\nWHERE active = true;',              table:'users', cols:null,   where:function(r){return r[5]===true;},  distinct:false },
-  { label: 'WHERE plan=pro',     sql: 'SELECT id, first_name, plan\\nFROM users\\nWHERE plan = \\'pro\\';', table:'users', cols:['id','first_name','plan'], where:function(r){return r[4]==='pro';}, distinct:false },
-  { label: 'DISTINCT plans',     sql: 'SELECT DISTINCT plan\\nFROM users;',                       table:'users', cols:['plan'], where:null,   distinct:true },
-  { label: 'Alias: full_name',   sql: 'SELECT id,\\n  first_name || \\' \\' || last_name AS full_name,\\n  email\\nFROM users;', table:'users', cols:null, where:null, distinct:false, computed:true },
-  { label: 'All orders',         sql: 'SELECT *\\nFROM orders;',                                  table:'orders', cols:null,  where:null,    distinct:false },
-  { label: 'Completed orders',   sql: 'SELECT id, user_id, product, amount\\nFROM orders\\nWHERE status = \\'completed\\';', table:'orders', cols:['id','user_id','product','amount'], where:function(r){return r[4]==='completed';}, distinct:false },
+  { label: 'Column list',        sql: 'SELECT id, first_name, email, plan\ FROM users;',         table:'users', cols:['id','first_name','email','plan'], where:null, distinct:false },
+  { label: 'WHERE active=true',  sql: 'SELECT *\ FROM users\ WHERE active = true;',              table:'users', cols:null,   where:function(r){return r[5]===true;},  distinct:false },
+  { label: 'WHERE plan=pro',     sql: 'SELECT id, first_name, plan\ FROM users\ WHERE plan = \\'pro\\';', table:'users', cols:['id','first_name','plan'], where:function(r){return r[4]==='pro';}, distinct:false },
+  { label: 'DISTINCT plans',     sql: 'SELECT DISTINCT plan\ FROM users;',                       table:'users', cols:['plan'], where:null,   distinct:true },
+  { label: 'Alias: full_name',   sql: 'SELECT id,\   first_name || \\' \\' || last_name AS full_name,\   email\ FROM users;', table:'users', cols:null, where:null, distinct:false, computed:true },
+  { label: 'All orders',         sql: 'SELECT *\ FROM orders;',                                  table:'orders', cols:null,  where:null,    distinct:false },
+  { label: 'Completed orders',   sql: 'SELECT id, user_id, product, amount\ FROM orders\ WHERE status = \\'completed\\';', table:'orders', cols:['id','user_id','product','amount'], where:function(r){return r[4]==='completed';}, distinct:false },
 ];
 
 var activeIdx = 0;

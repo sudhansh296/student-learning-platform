@@ -184,7 +184,7 @@ DATABASE_URL=postgres://user:pass@localhost/mydb npx node-pg-migrate up
 # Roll back one migration
 DATABASE_URL=postgres://user:pass@localhost/mydb npx node-pg-migrate down`,
       language: 'bash',
-      output: 'Creating migration file: 1234567890_add-users-table.js\n> Migrating file: 1234567890_add-users-table.js\n> Done'
+      output: 'Creating migration file: 1234567890_add-users-table.js > Migrating file: 1234567890_add-users-table.js > Done'
     },
     {
       type: 'heading',
@@ -237,7 +237,7 @@ FROM orders o
 JOIN users u ON o.user_id = u.id;
 -- 100 orders = 1 query`,
       language: 'sql',
-      output: '-- N+1: 101 round trips to database\n-- JOIN: 1 round trip -- 100x faster'
+      output: '-- N+1: 101 round trips to database -- JOIN: 1 round trip -- 100x faster'
     },
     {
       type: 'tryit',

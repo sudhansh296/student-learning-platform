@@ -349,17 +349,17 @@ console.log('=== @log Decorator Simulation ===');
 svc.findById(1);
 svc.findById(99);
 
-console.log('\\n=== @readonly Decorator ===');
+console.log('\ === @readonly Decorator ===');
 console.log('Prevents property reassignment at compile time:');
 console.log('  config.apiUrl = "evil.com" -> TS Error: readonly property');
 
-console.log('\\n=== Decorator Factories (with args) ===');
+console.log('\ === Decorator Factories (with args) ===');
 console.log('@MinLength(3) applied to username');
 console.log('@MinLength(8) applied to password');
 console.log('@Column({ type: "varchar", length: 100 }) applied to name');
 console.log('@Column({ type: "varchar", length: 255 }) applied to email');
 
-console.log('\\n=== Framework Decorators ===');
+console.log('\ === Framework Decorators ===');
 var frameworkDecorators = [
   'NestJS:   @Controller("/users") -- marks class as route controller',
   'NestJS:   @Get(":id") / @Post() -- maps HTTP methods to handlers',

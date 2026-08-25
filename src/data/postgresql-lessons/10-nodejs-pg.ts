@@ -364,7 +364,7 @@ function fmtResult(rows, rowCount) {
   const header = cols.map((c,i) => c.padEnd(colW[i])).join(' | ');
   const sep = colW.map(w => '-'.repeat(w)).join('-+-');
   const body = rows.map(r => cols.map((c,i) => String(r[c]).padEnd(colW[i])).join(' | ')).join('\ ');
-  return header + '\ ' + sep + '\ ' + body + '\\n(' + rows.length + ' row' + (rows.length===1?'':'s') + ')';
+  return header + '\ ' + sep + '\ ' + body + '\ (' + rows.length + ' row' + (rows.length===1?'':'s') + ')';
 }
 
 function execQuery(q) {

@@ -316,10 +316,10 @@ function selectFile() {
     ? '<span class=\\"badge badge-pass\\">PASS</span>'
     : '<span class=\\"badge badge-fail\\">FAIL - exceeds 5 MB</span>';
 
-  var reqFile = '// req.file object in your Express route\\nreq.file = {\\n  fieldname: \\"upload\\",\\n  originalname: \\"'+file.name+'\\",\\n  mimetype: \\"'+file.mime+'\\",\\n  size: '+file.size+',\\n  buffer: &lt;Buffer ... &gt; // memoryStorage\\n};';
+  var reqFile = '// req.file object in your Express route\ req.file = {\   fieldname: \\"upload\\",\   originalname: \\"'+file.name+'\\",\   mimetype: \\"'+file.mime+'\\",\   size: '+file.size+',\   buffer: &lt;Buffer ... &gt; // memoryStorage\ };';
 
   if (!typeOk || !sizeOk) {
-    reqFile = '// Upload rejected - file did not pass validation\\n// Route handler would return 400 Bad Request';
+    reqFile = '// Upload rejected - file did not pass validation\ // Route handler would return 400 Bad Request';
   }
 
   document.getElementById('reqFile').textContent = reqFile;

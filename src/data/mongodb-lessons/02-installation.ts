@@ -242,11 +242,11 @@ Compass features:
   
   // Simulate connection check
   setTimeout(function() {
-    var msg = 'Connection successful!\\n\ ';
+    var msg = 'Connection successful!\ \ ';
     msg += 'Protocol: ' + (isAtlas ? 'MongoDB Atlas (Cloud)' : 'Local MongoDB') + '\ ';
     msg += 'Host: ' + (isLocal ? 'localhost:27017' : 'Remote Server') + '\ ';
     msg += 'Database: ' + dbName + '\ ';
-    msg += 'Authentication: ' + (hasAuth ? 'Enabled' : 'Disabled') + '\\n\ ';
+    msg += 'Authentication: ' + (hasAuth ? 'Enabled' : 'Disabled') + '\ \ ';
     msg += 'Ready to execute commands!';
     showResult('success', msg);
   }, 800);
@@ -263,7 +263,7 @@ function showResult(type, message) {
     info: '\\u2139'
   };
   
-  resultDiv.innerHTML = '<span class="icon">' + icons[type] + '</span>' + message.replace(/\\n/g, '<br>');
+  resultDiv.innerHTML = '<span class="icon">' + icons[type] + '</span>' + message.replace(/\ /g, '<br>');
 }
 
 function loadExample(type) {

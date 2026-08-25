@@ -40,7 +40,7 @@ WHERE (category = 'electronics' OR category = 'furniture')
   AND price > 20
   AND NOT is_active = false;`,
       language: 'sql',
-      output: ' id | name               | price | category    \n----+--------------------+-------+-------------\n  1 | Wireless Mouse     | 29.99 | electronics\n  3 | USB-C Hub          | 39.99 | electronics'
+      output: ' id | name               | price | category     ----+--------------------+-------+-------------   1 | Wireless Mouse     | 29.99 | electronics   3 | USB-C Hub          | 39.99 | electronics'
     },
     {
       type: 'heading',
@@ -81,7 +81,7 @@ SELECT * FROM products WHERE sku LIKE 'USB-___';
 -- NOT LIKE to exclude patterns
 SELECT * FROM products WHERE name NOT ILIKE '%cable%';`,
       language: 'sql',
-      output: ' id | name           | price \n----+----------------+-------\n  1 | Wireless Mouse | 29.99\n(1 row)'
+      output: ' id | name           | price  ----+----------------+-------   1 | Wireless Mouse | 29.99 (1 row)'
     },
     {
       type: 'heading',
@@ -113,7 +113,7 @@ SELECT * FROM products WHERE description IS NULL;
 -- IS NOT NULL: rows where value is present
 SELECT * FROM products WHERE description IS NOT NULL;`,
       language: 'sql',
-      output: ' id | name                | price | category    \n----+---------------------+-------+-------------\n  1 | Wireless Mouse      | 29.99 | electronics\n  3 | Desk Lamp           | 24.99 | furniture\n  4 | USB-C Hub           | 39.99 | electronics'
+      output: ' id | name                | price | category     ----+---------------------+-------+-------------   1 | Wireless Mouse      | 29.99 | electronics   3 | Desk Lamp           | 24.99 | furniture   4 | USB-C Hub           | 39.99 | electronics'
     },
     {
       type: 'warning',
@@ -139,7 +139,7 @@ ORDER BY category;
 SELECT COUNT(DISTINCT category) AS unique_categories
 FROM products;`,
       language: 'sql',
-      output: '  category   \n-------------\n accessories\n electronics\n furniture\n stationery\n(4 rows)'
+      output: '  category    -------------  accessories  electronics  furniture  stationery (4 rows)'
     },
     {
       type: 'heading',
@@ -181,7 +181,7 @@ GROUP BY category;
 SELECT MIN(price) AS cheapest, MAX(price) AS most_expensive
 FROM products;`,
       language: 'sql',
-      output: ' category    | avg_price \n-------------+-----------\n electronics | 57.49     \n furniture   | 24.99     \n stationery  | 9.99      \n(3 rows)'
+      output: ' category    | avg_price  -------------+-----------  electronics | 57.49       furniture   | 24.99       stationery  | 9.99       (3 rows)'
     },
     {
       type: 'heading',
@@ -214,7 +214,7 @@ FROM products
 GROUP BY category
 HAVING COUNT(*) > 2;`,
       language: 'sql',
-      output: ' category    | product_count \n-------------+---------------\n electronics |             4 \n furniture   |             2 \n stationery  |             1 \n(3 rows)'
+      output: ' category    | product_count  -------------+---------------  electronics |             4   furniture   |             2   stationery  |             1  (3 rows)'
     },
     {
       type: 'note',
@@ -248,7 +248,7 @@ SELECT name, price, category,
 FROM products p1
 ORDER BY category, price;`,
       language: 'sql',
-      output: ' name                | price | category    | category_avg \n---------------------+-------+-------------+--------------\n Wireless Mouse      | 29.99 | electronics | 57.49\n USB-C Hub           | 39.99 | electronics | 57.49\n Gaming Headset      | 59.99 | electronics | 57.49'
+      output: ' name                | price | category    | category_avg  ---------------------+-------+-------------+--------------  Wireless Mouse      | 29.99 | electronics | 57.49  USB-C Hub           | 39.99 | electronics | 57.49  Gaming Headset      | 59.99 | electronics | 57.49'
     },
     {
       type: 'tip',

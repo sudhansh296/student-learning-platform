@@ -218,7 +218,7 @@ function submit() {
   var result = '';
   if (valid) {
     result = 'POST /users\ ';
-    result += 'HTTP/201 Created\\n\ ';
+    result += 'HTTP/201 Created\ \ ';
     result += '{\ ';
     result += '  "success": true,\ ';
     result += '  "message": "User created successfully",\ ';
@@ -230,7 +230,7 @@ function submit() {
     result += '}';
   } else {
     result = 'POST /users\ ';
-    result += 'HTTP/400 Bad Request\\n\ ';
+    result += 'HTTP/400 Bad Request\ \ ';
     result += '{\ ';
     result += '  "success": false,\ ';
     result += '  "errors": [...]\ ';

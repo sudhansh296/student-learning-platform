@@ -223,16 +223,16 @@ input{flex:1;border:1px solid #e5e7eb;border-radius:8px;padding:9px 14px;font-si
 .tag{display:inline-block;font-size:10px;background:#f3f4f6;border-radius:4px;padding:2px 6px;margin-right:4px;color:#555;}
 .no-result{color:#666;font-size:13px;padding:10px;}`,
       js: `const patterns = [
-  { title: 'Dynamic page route', tags: ['routing','dynamic'], code: '// app/blog/[slug]/page.tsx\nexport default async function Page({ params }) {\n  const { slug } = await params;\n  return <h1>{slug}</h1>;\n}' },
-  { title: 'Fetch with revalidation (ISR)', tags: ['data','cache','isr'], code: "const data = await fetch(url, {\n  next: { revalidate: 60 }\n});" },
-  { title: 'Static metadata export', tags: ['seo','metadata'], code: "export const metadata = {\n  title: 'Page Title',\n  description: 'Page description'\n};" },
-  { title: 'API Route Handler', tags: ['api','route'], code: "// app/api/users/route.ts\nexport async function GET() {\n  return Response.json({ users: [] });\n}\nexport async function POST(req) {\n  const body = await req.json();\n  return Response.json(body, { status: 201 });\n}" },
-  { title: 'Client Component with state', tags: ['client','interactive','state'], code: "'use client';\nimport { useState } from 'react';\nexport function Counter() {\n  const [n, setN] = useState(0);\n  return <button onClick={() => setN(n+1)}>{n}</button>;\n}" },
-  { title: 'Dynamic generateMetadata', tags: ['seo','metadata','dynamic'], code: "export async function generateMetadata({ params }) {\n  const post = await getPost(params.slug);\n  return { title: post.title, description: post.excerpt };\n}" },
-  { title: 'Auth redirect in middleware', tags: ['middleware','auth'], code: "// middleware.ts\nexport function middleware(req) {\n  const token = req.cookies.get('token');\n  if (!token) return NextResponse.redirect(new URL('/login', req.url));\n  return NextResponse.next();\n}" },
-  { title: 'Image with fill', tags: ['image','layout'], code: "<div style={{ position: 'relative', height: '400px' }}>\n  <Image src='/photo.jpg' alt='' fill\n    style={{ objectFit: 'cover' }} />\n</div>" },
-  { title: 'generateStaticParams', tags: ['ssg','static','routing'], code: "export async function generateStaticParams() {\n  const posts = await getPosts();\n  return posts.map(p => ({ slug: p.slug }));\n}" },
-  { title: 'Parallel fetch with Promise.all', tags: ['data','performance'], code: "const [user, posts] = await Promise.all([\n  fetch('/api/user').then(r => r.json()),\n  fetch('/api/posts').then(r => r.json()),\n]);" },
+  { title: 'Dynamic page route', tags: ['routing','dynamic'], code: '// app/blog/[slug]/page.tsx export default async function Page({ params }) {   const { slug } = await params;   return <h1>{slug}</h1>; }' },
+  { title: 'Fetch with revalidation (ISR)', tags: ['data','cache','isr'], code: "const data = await fetch(url, {   next: { revalidate: 60 } });" },
+  { title: 'Static metadata export', tags: ['seo','metadata'], code: "export const metadata = {   title: 'Page Title',   description: 'Page description' };" },
+  { title: 'API Route Handler', tags: ['api','route'], code: "// app/api/users/route.ts export async function GET() {   return Response.json({ users: [] }); } export async function POST(req) {   const body = await req.json();   return Response.json(body, { status: 201 }); }" },
+  { title: 'Client Component with state', tags: ['client','interactive','state'], code: "'use client'; import { useState } from 'react'; export function Counter() {   const [n, setN] = useState(0);   return <button onClick={() => setN(n+1)}>{n}</button>; }" },
+  { title: 'Dynamic generateMetadata', tags: ['seo','metadata','dynamic'], code: "export async function generateMetadata({ params }) {   const post = await getPost(params.slug);   return { title: post.title, description: post.excerpt }; }" },
+  { title: 'Auth redirect in middleware', tags: ['middleware','auth'], code: "// middleware.ts export function middleware(req) {   const token = req.cookies.get('token');   if (!token) return NextResponse.redirect(new URL('/login', req.url));   return NextResponse.next(); }" },
+  { title: 'Image with fill', tags: ['image','layout'], code: "<div style={{ position: 'relative', height: '400px' }}>   <Image src='/photo.jpg' alt='' fill     style={{ objectFit: 'cover' }} /> </div>" },
+  { title: 'generateStaticParams', tags: ['ssg','static','routing'], code: "export async function generateStaticParams() {   const posts = await getPosts();   return posts.map(p => ({ slug: p.slug })); }" },
+  { title: 'Parallel fetch with Promise.all', tags: ['data','performance'], code: "const [user, posts] = await Promise.all([   fetch('/api/user').then(r => r.json()),   fetch('/api/posts').then(r => r.json()), ]);" },
 ];
 
 function search(query) {

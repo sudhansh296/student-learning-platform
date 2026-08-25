@@ -308,7 +308,7 @@ generateArray();`,
   ],
   exercises: [
     { id: 'loop-1', question: 'Which loop is best for iterating over array VALUES without needing the index?', type: 'multiple-choice', options: ['for loop', 'while loop', 'for...of loop', 'for...in loop'], correct: 2, explanation: 'for...of gives you the values directly: for (const item of array). It is clean, readable, and works with any iterable. Use for...of when you just need each value. Use for...of with .entries() if you also need the index.' },
-    { id: 'loop-2', question: 'What is the output of: for (let i=0; i<5; i++) { if(i===3) break; console.log(i); }', type: 'code-output', correct: '0\n1\n2', explanation: 'The loop starts at 0 and increments. When i reaches 3, break exits the loop immediately. So it logs 0, 1, 2 - never reaching 3, 4.' },
+    { id: 'loop-2', question: 'What is the output of: for (let i=0; i<5; i++) { if(i===3) break; console.log(i); }', type: 'code-output', correct: '0 1 2', explanation: 'The loop starts at 0 and increments. When i reaches 3, break exits the loop immediately. So it logs 0, 1, 2 - never reaching 3, 4.' },
   ],
   quiz: [
     { id: 'ql1', question: 'What does the continue keyword do in a loop?', options: ['Stops the loop', 'Skips the rest of the current iteration and moves to the next', 'Restarts the loop from the beginning', 'Pauses execution'], correct: 1, explanation: 'continue skips the remaining code in the current iteration and jumps to the next iteration. break stops the loop entirely.' },

@@ -76,7 +76,7 @@ console.log(add(2, 2)); // 4
 const fs = require('fs');
 const path = require('path');
 const os = require('os');`,
-      output: '8\n6\n21\n4',
+      output: '8 6 21 4',
     },
     {
       type: 'heading',
@@ -123,7 +123,7 @@ console.log('Extension:', path.extname(filePath));  // .txt
 // Join paths safely (handles slashes across OS)
 const fullPath = path.join(__dirname, 'data', 'config.json');
 console.log('Full path:', fullPath);`,
-      output: 'Platform: linux\nCPUs: 8\nFree memory (MB): 4096',
+      output: 'Platform: linux CPUs: 8 Free memory (MB): 4096',
     },
     {
       type: 'note',

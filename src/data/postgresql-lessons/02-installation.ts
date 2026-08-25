@@ -82,7 +82,7 @@ sudo systemctl start postgresql
 # Enable auto-start on boot
 sudo systemctl enable postgresql`,
       language: 'bash',
-      output: 'postgresql.service - PostgreSQL RDBMS\\n   Active: active (running)'
+      output: 'postgresql.service - PostgreSQL RDBMS\    Active: active (running)'
     },
     {
       type: 'heading',
@@ -154,7 +154,7 @@ CREATE TABLE users (
 -- Verify table creation
 \\dt`,
       language: 'sql',
-      output: 'CREATE DATABASE\\nYou are now connected to database "myapp"\\nCREATE TABLE'
+      output: 'CREATE DATABASE\ You are now connected to database "myapp"\ CREATE TABLE'
     },
     {
       type: 'heading',
@@ -230,7 +230,7 @@ SELECT 'Hello, PostgreSQL!' AS message;
 -- Check server uptime
 SELECT NOW() - pg_postmaster_start_time() AS uptime;`,
       language: 'sql',
-      output: 'PostgreSQL 16.1 on x86_64-pc-linux-gnu\\nmyapp\\npostgres\\nHello, PostgreSQL!'
+      output: 'PostgreSQL 16.1 on x86_64-pc-linux-gnu\ myapp\ postgres\ Hello, PostgreSQL!'
     },
     {
       type: 'tryit',

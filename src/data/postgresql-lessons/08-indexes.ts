@@ -180,7 +180,7 @@ SELECT
 FROM pg_stat_user_tables
 ORDER BY n_dead_tup DESC;`,
       language: 'sql',
-      output: ' relname | n_live_tup | n_dead_tup | dead_pct \n---------+------------+------------+----------\n orders  |     125000 |       8200 |      6.2\n users   |      45000 |        350 |      0.8'
+      output: ' relname | n_live_tup | n_dead_tup | dead_pct  ---------+------------+------------+----------  orders  |     125000 |       8200 |      6.2  users   |      45000 |        350 |      0.8'
     },
     {
       type: 'note',

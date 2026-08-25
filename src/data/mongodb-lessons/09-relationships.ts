@@ -330,7 +330,7 @@ const posts = await Post.find()
   var result = '';
   
   if (type === 'embedded') {
-    result = '// EMBEDDED PATTERN\\n\ ' +
+    result = '// EMBEDDED PATTERN\ \ ' +
       '// User document with embedded addresses\ ' +
       '{\ ' +
       '  _id: ObjectId("user1"),\ ' +
@@ -340,39 +340,39 @@ const posts = await Post.find()
       '    { type: "home", city: "Boston", zip: "02101" },\ ' +
       '    { type: "work", city: "Cambridge", zip: "02139" }\ ' +
       '  ]\ ' +
-      '}\\n\ ' +
+      '}\ \ ' +
       '// Query (1 operation):\ ' +
-      'db.users.findOne({ _id: ObjectId("user1") })\\n\ ' +
+      'db.users.findOne({ _id: ObjectId("user1") })\ \ ' +
       'Metrics:\ ' +
       '- Queries needed: 1\ ' +
       '- Data duplication: None\ ' +
       '- Best for: One-to-few, data accessed together';
   } else if (type === 'referenced') {
-    result = '// REFERENCED PATTERN\\n\ ' +
+    result = '// REFERENCED PATTERN\ \ ' +
       '// Users collection\ ' +
-      '{ _id: ObjectId("user1"), name: "Alice" }\\n\ ' +
+      '{ _id: ObjectId("user1"), name: "Alice" }\ \ ' +
       '// Orders collection\ ' +
       '{ _id: ObjectId("ord1"), userId: ObjectId("user1"), total: 299 }\ ' +
-      '{ _id: ObjectId("ord2"), userId: ObjectId("user1"), total: 149 }\\n\ ' +
+      '{ _id: ObjectId("ord2"), userId: ObjectId("user1"), total: 149 }\ \ ' +
       '// Query (2 operations):\ ' +
       'const user = db.users.findOne({ _id: ObjectId("user1") })\ ' +
-      'const orders = db.orders.find({ userId: ObjectId("user1") })\\n\ ' +
+      'const orders = db.orders.find({ userId: ObjectId("user1") })\ \ ' +
       'Metrics:\ ' +
       '- Queries needed: 2\ ' +
       '- Data duplication: None\ ' +
       '- Best for: One-to-many, large collections';
   } else if (type === 'manytomany') {
-    result = '// MANY-TO-MANY PATTERN\\n\ ' +
+    result = '// MANY-TO-MANY PATTERN\ \ ' +
       '// Students collection\ ' +
-      '{ _id: ObjectId("s1"), name: "Alice" }\\n\ ' +
+      '{ _id: ObjectId("s1"), name: "Alice" }\ \ ' +
       '// Courses collection\ ' +
-      '{ _id: ObjectId("c1"), title: "MongoDB 101" }\\n\ ' +
+      '{ _id: ObjectId("c1"), title: "MongoDB 101" }\ \ ' +
       '// Enrollments (junction)\ ' +
-      '{ studentId: ObjectId("s1"), courseId: ObjectId("c1"), grade: "A" }\\n\ ' +
+      '{ studentId: ObjectId("s1"), courseId: ObjectId("c1"), grade: "A" }\ \ ' +
       '// Find student courses:\ ' +
       'const enrollments = db.enrollments.find({ studentId: ObjectId("s1") })\ ' +
       'const courseIds = enrollments.map(e => e.courseId)\ ' +
-      'const courses = db.courses.find({ _id: { $in: courseIds } })\\n\ ' +
+      'const courses = db.courses.find({ _id: { $in: courseIds } })\ \ ' +
       'Metrics:\ ' +
       '- Queries needed: 3\ ' +
       '- Data duplication: None\ ' +

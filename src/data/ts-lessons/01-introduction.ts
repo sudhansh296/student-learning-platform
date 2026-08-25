@@ -117,7 +117,7 @@ const user: { name: string; age: number } = {
   name: "Bob",
   age: 30,
 };`,
-      output: 'Hello, Alex!\n8',
+      output: 'Hello, Alex! 8',
     },
     {
       type: 'tryit',

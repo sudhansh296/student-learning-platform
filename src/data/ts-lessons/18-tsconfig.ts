@@ -469,7 +469,7 @@ const options = [
     default: 'ES3',
     recommended: 'ES2020 or ESNext',
     impact: 'medium',
-    example: '// tsconfig.json\\n{\\n  "compilerOptions": {\\n    "target": "ES2020"  // emits arrow functions, async/await, etc.\\n  }\\n}'
+    example: '// tsconfig.json\ {\   "compilerOptions": {\     "target": "ES2020"  // emits arrow functions, async/await, etc.\   }\ }'
   },
   {
     name: 'module',
@@ -478,7 +478,7 @@ const options = [
     default: 'CommonJS (when target is ES5/ES3)',
     recommended: '"commonjs" for Node.js, "ESNext" for bundlers',
     impact: 'high',
-    example: '// For Node.js:\\n{\\n  "compilerOptions": {\\n    "module": "commonjs"\\n  }\\n}\\n\\n// For Vite/webpack:\\n{\\n  "compilerOptions": {\\n    "module": "ESNext"\\n  }\\n}'
+    example: '// For Node.js:\ {\   "compilerOptions": {\     "module": "commonjs"\   }\ }\ \ // For Vite/webpack:\ {\   "compilerOptions": {\     "module": "ESNext"\   }\ }'
   },
   {
     name: 'strict',
@@ -487,7 +487,7 @@ const options = [
     default: 'false',
     recommended: 'true - always enable for new projects',
     impact: 'high',
-    example: '{\\n  "compilerOptions": {\\n    "strict": true\\n    // Equivalent to setting all strict flags individually:\\n    // "strictNullChecks": true,\\n    // "noImplicitAny": true,\\n    // "strictFunctionTypes": true,\\n    // "strictPropertyInitialization": true\\n  }\\n}'
+    example: '{\   "compilerOptions": {\     "strict": true\     // Equivalent to setting all strict flags individually:\     // "strictNullChecks": true,\     // "noImplicitAny": true,\     // "strictFunctionTypes": true,\     // "strictPropertyInitialization": true\   }\ }'
   },
   {
     name: 'strictNullChecks',
@@ -496,7 +496,7 @@ const options = [
     default: 'false (true when strict is true)',
     recommended: 'true',
     impact: 'high',
-    example: '// With strictNullChecks: true\\nconst el = document.getElementById("btn");\\nel.click();  // ERROR: el is HTMLElement | null\\n\\n// Fix with narrowing:\\nif (el) { el.click(); }\\n// Or non-null assertion (use carefully):\\nel!.click();'
+    example: '// With strictNullChecks: true\ const el = document.getElementById("btn");\ el.click();  // ERROR: el is HTMLElement | null\ \ // Fix with narrowing:\ if (el) { el.click(); }\ // Or non-null assertion (use carefully):\ el!.click();'
   },
   {
     name: 'noImplicitAny',
@@ -505,7 +505,7 @@ const options = [
     default: 'false (true when strict is true)',
     recommended: 'true',
     impact: 'high',
-    example: '// ERROR with noImplicitAny: true\\nfunction processData(data) {  // data is implicitly any\\n  return data.value;\\n}\\n\\n// FIXED:\\nfunction processData(data: { value: string }): string {\\n  return data.value;\\n}'
+    example: '// ERROR with noImplicitAny: true\ function processData(data) {  // data is implicitly any\   return data.value;\ }\ \ // FIXED:\ function processData(data: { value: string }): string {\   return data.value;\ }'
   },
   {
     name: 'outDir',
@@ -514,7 +514,7 @@ const options = [
     default: 'Same directory as source files',
     recommended: '"./dist" or "./build"',
     impact: 'low',
-    example: '{\\n  "compilerOptions": {\\n    "rootDir": "./src",\\n    "outDir": "./dist"\\n  }\\n}\\n// src/index.ts   -> dist/index.js\\n// src/utils/fn.ts -> dist/utils/fn.js'
+    example: '{\   "compilerOptions": {\     "rootDir": "./src",\     "outDir": "./dist"\   }\ }\ // src/index.ts   -> dist/index.js\ // src/utils/fn.ts -> dist/utils/fn.js'
   },
   {
     name: 'paths',
@@ -523,7 +523,7 @@ const options = [
     default: 'No aliases (all imports must be relative)',
     recommended: 'Configure @/* -> ./src/* for large projects',
     impact: 'medium',
-    example: '{\\n  "compilerOptions": {\\n    "baseUrl": ".",\\n    "paths": {\\n      "@/*": ["./src/*"],\\n      "@components/*": ["./src/components/*"],\\n      "@utils/*": ["./src/utils/*"]\\n    }\\n  }\\n}\\n// import { Button } from "@components/Button";'
+    example: '{\   "compilerOptions": {\     "baseUrl": ".",\     "paths": {\       "@/*": ["./src/*"],\       "@components/*": ["./src/components/*"],\       "@utils/*": ["./src/utils/*"]\     }\   }\ }\ // import { Button } from "@components/Button";'
   },
   {
     name: 'sourceMap',
@@ -532,7 +532,7 @@ const options = [
     default: 'false',
     recommended: 'true in development and production',
     impact: 'low',
-    example: '{\\n  "compilerOptions": {\\n    "sourceMap": true\\n  }\\n}\\n// Produces:\\n// dist/index.js\\n// dist/index.js.map  <- links back to src/index.ts'
+    example: '{\   "compilerOptions": {\     "sourceMap": true\   }\ }\ // Produces:\ // dist/index.js\ // dist/index.js.map  <- links back to src/index.ts'
   },
   {
     name: 'declaration',
@@ -541,7 +541,7 @@ const options = [
     default: 'false',
     recommended: 'true when publishing a library',
     impact: 'low',
-    example: '{\\n  "compilerOptions": {\\n    "declaration": true,\\n    "declarationMap": true  // also emit .d.ts.map files\\n  }\\n}\\n// Produces:\\n// dist/index.js\\n// dist/index.d.ts  <- type definitions for consumers'
+    example: '{\   "compilerOptions": {\     "declaration": true,\     "declarationMap": true  // also emit .d.ts.map files\   }\ }\ // Produces:\ // dist/index.js\ // dist/index.d.ts  <- type definitions for consumers'
   },
   {
     name: 'esModuleInterop',
@@ -550,7 +550,7 @@ const options = [
     default: 'false',
     recommended: 'true',
     impact: 'medium',
-    example: '// Without esModuleInterop:\\nimport * as express from "express";  // required\\n\\n// With esModuleInterop: true:\\nimport express from "express";  // works\\nimport React from "react";      // works'
+    example: '// Without esModuleInterop:\ import * as express from "express";  // required\ \ // With esModuleInterop: true:\ import express from "express";  // works\ import React from "react";      // works'
   },
   {
     name: 'skipLibCheck',
@@ -559,7 +559,7 @@ const options = [
     default: 'false',
     recommended: 'true for application code',
     impact: 'low',
-    example: '{\\n  "compilerOptions": {\\n    "skipLibCheck": true\\n    // Dramatically reduces compile time in monorepos\\n    // and projects with many @types/* dependencies\\n  }\\n}'
+    example: '{\   "compilerOptions": {\     "skipLibCheck": true\     // Dramatically reduces compile time in monorepos\     // and projects with many @types/* dependencies\   }\ }'
   },
   {
     name: 'composite',
@@ -568,7 +568,7 @@ const options = [
     default: 'false',
     recommended: 'true for monorepo packages',
     impact: 'medium',
-    example: '// packages/shared/tsconfig.json\\n{\\n  "compilerOptions": {\\n    "composite": true,   // required for references\\n    "declaration": true, // required when composite is true\\n    "outDir": "./dist",\\n    "rootDir": "./src"\\n  }\\n}'
+    example: '// packages/shared/tsconfig.json\ {\   "compilerOptions": {\     "composite": true,   // required for references\     "declaration": true, // required when composite is true\     "outDir": "./dist",\     "rootDir": "./src"\   }\ }'
   }
 ];
 
@@ -580,7 +580,7 @@ function impactClass(impact) {
 
 function highlight(code) {
   return code
-    .replace(/(\\/\\/[^\\n]*)/g, '<span class="cm">$1</span>')
+    .replace(/(\\/\\/[^\ ]*)/g, '<span class="cm">$1</span>')
     .replace(/"(target|module|strict|outDir|rootDir|paths|baseUrl|declaration|sourceMap|esModuleInterop|skipLibCheck|composite|compilerOptions|strictNullChecks|noImplicitAny|declarationMap)"/g, '<span class="kw">"$1"</span>')
     .replace(/: (true|false)/g, ': <span class="bool">$1</span>')
     .replace(/("(?!compilerOptions|target|module|strict|outDir|rootDir|paths|baseUrl|declaration|sourceMap|esModuleInterop|skipLibCheck|composite|strictNullChecks|noImplicitAny|declarationMap)[^"]*")/g, '<span class="str">$1</span>');

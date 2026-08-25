@@ -173,9 +173,9 @@ loadConfig().then(config => {
 .btn-delete{background:#dc2626;}
 .output-box{background:#0f172a;border-radius:8px;padding:10px;margin-top:8px;font-family:monospace;font-size:12px;color:#4ade80;min-height:50px;}`,
       js: `var fs = {
-  'config.json': '{\\n  \\"port\\": 3000,\\n  \\"debug\\": true,\\n  \\"db\\": \\"mongodb://localhost/mydb\\"\\n}',
-  'README.md': '# My Node.js App\\n\\nA simple server application.\\n\\n## Usage\\n\\nnpm start',
-  'app.log': '2024-01-15T10:00:00Z - App started\\n2024-01-15T10:01:00Z - Request GET /'
+  'config.json': '{\   \\"port\\": 3000,\   \\"debug\\": true,\   \\"db\\": \\"mongodb://localhost/mydb\\"\ }',
+  'README.md': '# My Node.js App\ \ A simple server application.\ \ ## Usage\ \ npm start',
+  'app.log': '2024-01-15T10:00:00Z - App started\ 2024-01-15T10:01:00Z - Request GET /'
 };
 
 var activeFile = 'config.json';
@@ -249,7 +249,7 @@ function render() {
         var ts = new Date().toISOString();
         var newContent = activeFile.endsWith('.log')
           ? (fs[activeFile] || '') + ts + ' - Updated\ '
-          : (fs[activeFile] || '') + '\\n// updated at ' + ts;
+          : (fs[activeFile] || '') + '\ // updated at ' + ts;
         writeFile(activeFile, newContent);
       } else if (action === 'delete') deleteFile(activeFile);
     });

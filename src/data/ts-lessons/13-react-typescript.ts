@@ -263,7 +263,7 @@ console.log('}');
 console.log('TypeScript checks: <Button /> -> Error: missing required "label" prop');
 
 // 2. useState generic types
-console.log('\\n=== useState<T> Generic Types ===');
+console.log('\ === useState<T> Generic Types ===');
 var stateExamples = [
   'useState("Alice")             -> inferred: string',
   'useState<User | null>(null)   -> explicit: User | null',
@@ -274,7 +274,7 @@ var stateExamples = [
 stateExamples.forEach(function(ex) { console.log('  ' + ex); });
 
 // 3. React event handler types
-console.log('\\n=== React Event Handler Types ===');
+console.log('\ === React Event Handler Types ===');
 var eventTypes = [
   'onChange  -> React.ChangeEvent<HTMLInputElement>  -> e.target.value: string',
   'onSubmit  -> React.FormEvent<HTMLFormElement>     -> e.preventDefault()',
@@ -284,7 +284,7 @@ var eventTypes = [
 eventTypes.forEach(function(t) { console.log('  ' + t); });
 
 // 4. useRef types
-console.log('\\n=== useRef<T> Types ===');
+console.log('\ === useRef<T> Types ===');
 console.log('  DOM ref:     useRef<HTMLInputElement>(null) -> current: HTMLInputElement | null');
 console.log('  Mutable ref: useRef<number>(0)             -> current: number (no re-render)');
 console.log('  Usage: inputRef.current?.focus() -- optional chain for safety');`,

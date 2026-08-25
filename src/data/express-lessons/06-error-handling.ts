@@ -238,37 +238,37 @@ app.post('/users', function(req, res, next) {
     title: 'Valid Request',
     desc: 'Successful user creation',
     type: 'success',
-    output: 'POST /users\\nHTTP/200 OK\\n{\\n  "success": true,\\n  "data": { "id": 1, "name": "Alice" }\\n}'
+    output: 'POST /users\ HTTP/200 OK\ {\   "success": true,\   "data": { "id": 1, "name": "Alice" }\ }'
   },
   {
     title: 'Validation Error',
     desc: 'Missing required fields',
     type: 'error',
-    output: 'POST /users\\nHTTP/400 Bad Request\\n{\\n  "success": false,\\n  "error": "Name and email are required"\\n}'
+    output: 'POST /users\ HTTP/400 Bad Request\ {\   "success": false,\   "error": "Name and email are required"\ }'
   },
   {
     title: 'Not Found',
     desc: 'Resource does not exist',
     type: 'error',
-    output: 'GET /users/999\\nHTTP/404 Not Found\\n{\\n  "success": false,\\n  "error": "User not found"\\n}'
+    output: 'GET /users/999\ HTTP/404 Not Found\ {\   "success": false,\   "error": "User not found"\ }'
   },
   {
     title: 'Server Error',
     desc: 'Database connection failed',
     type: 'error',
-    output: 'GET /users\\nHTTP/500 Internal Server Error\\n{\\n  "success": false,\\n  "error": "Database connection failed"\\n}\\n\\nStack trace (dev only):\\n  at db.connect (/app/db.js:45:10)\\n  at getUsersHandler (/app/routes.js:12:5)'
+    output: 'GET /users\ HTTP/500 Internal Server Error\ {\   "success": false,\   "error": "Database connection failed"\ }\ \ Stack trace (dev only):\   at db.connect (/app/db.js:45:10)\   at getUsersHandler (/app/routes.js:12:5)'
   },
   {
     title: 'Invalid ID',
     desc: 'Bad parameter format',
     type: 'error',
-    output: 'GET /users/abc\\nHTTP/400 Bad Request\\n{\\n  "success": false,\\n  "error": "Invalid ID format"\\n}'
+    output: 'GET /users/abc\ HTTP/400 Bad Request\ {\   "success": false,\   "error": "Invalid ID format"\ }'
   },
   {
     title: 'Unauthorized',
     desc: 'Missing auth token',
     type: 'error',
-    output: 'GET /admin\\nHTTP/401 Unauthorized\\n{\\n  "success": false,\\n  "error": "Authentication required"\\n}'
+    output: 'GET /admin\ HTTP/401 Unauthorized\ {\   "success": false,\   "error": "Authentication required"\ }'
   }
 ];
 

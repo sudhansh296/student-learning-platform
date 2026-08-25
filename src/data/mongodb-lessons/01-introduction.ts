@@ -177,7 +177,7 @@ db.users
 
 var sqlVsNoSQL = {
   sql: "-- Multiple tables needed\\nUSERS:\\n  id | name  | email\\n  1  | Alice | alice@example.com\\n\\nADDRESSES:\\n  id | user_id | city\\n  1  | 1       | Boston\\n\\nSKILLS:\\n  id | user_id | skill\\n  1  | 1       | JavaScript\\n  2  | 1       | Python\\n\\n-- Need JOINs to get full data",
-  nosql: "// One document, all data\\n{\\n  \\"_id\\": ObjectId('...'),\\n  \\"name\\": \\"Alice\\",\\n  \\"email\\": \\"alice@example.com\\",\\n  \\"address\\": {\\n    \\"city\\": \\"Boston\\"\\n  },\\n  \\"skills\\": [\\n    \\"JavaScript\\",\\n    \\"Python\\"\\n  ]\\n}\\n\\n// No JOINs needed!"
+  nosql: "// One document, all data\ {\   \\"_id\\": ObjectId('...'),\   \\"name\\": \\"Alice\\",\   \\"email\\": \\"alice@example.com\\",\   \\"address\\": {\     \\"city\\": \\"Boston\\"\   },\   \\"skills\\": [\     \\"JavaScript\\",\     \\"Python\\"\   ]\ }\ \ // No JOINs needed!"
 };
 
 function showDoc(type) {

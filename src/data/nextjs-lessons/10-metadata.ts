@@ -228,11 +228,11 @@ function render(key) {
   document.getElementById('og-url').textContent = p.url;
   document.getElementById('meta-html').textContent =
     '<title>' + p.title + '</title> ' +
-    '<meta name="description"\n  content="' + p.desc + '" /> ' +
-    '<meta property="og:title"\n  content="' + p.og + '" /> ' +
-    '<meta property="og:description"\n  content="' + p.desc + '" /> ' +
-    '<meta property="og:url"\n  content="https://' + p.url + '" /> ' +
-    '<meta name="twitter:card"\n  content="summary_large_image" />';
+    '<meta name="description"   content="' + p.desc + '" /> ' +
+    '<meta property="og:title"   content="' + p.og + '" /> ' +
+    '<meta property="og:description"   content="' + p.desc + '" /> ' +
+    '<meta property="og:url"   content="https://' + p.url + '" /> ' +
+    '<meta name="twitter:card"   content="summary_large_image" />';
   console.log('Page:', key, '| Title:', p.title);
 }
 

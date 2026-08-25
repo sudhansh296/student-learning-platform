@@ -387,11 +387,11 @@ document.getElementById('output').innerHTML =
   '<div class="side-by-side">' +
   '<div class="code-panel">' +
   '<div class="panel-title">Sequential<span class="badge">SLOW</span></div>' +
-  '<div class="code">async function sequential() {\\n  const user = await fetch();\\n  const posts = await fetch();\\n  const comments = await fetch();\\n  // Total: 1500ms\\n}</div>' +
+  '<div class="code">async function sequential() {\   const user = await fetch();\   const posts = await fetch();\   const comments = await fetch();\   // Total: 1500ms\ }</div>' +
   '</div>' +
   '<div class="code-panel">' +
   '<div class="panel-title">Parallel<span class="badge">FAST</span></div>' +
-  '<div class="code">async function parallel() {\\n  const [user, posts, comments] =\\n    await Promise.all([\\n      fetch(), fetch(), fetch()\\n    ]);\\n  // Total: 500ms\\n}</div>' +
+  '<div class="code">async function parallel() {\   const [user, posts, comments] =\     await Promise.all([\       fetch(), fetch(), fetch()\     ]);\   // Total: 500ms\ }</div>' +
   '</div>' +
   '</div>' +
   '<div class="timeline" id="timeline"></div>' +

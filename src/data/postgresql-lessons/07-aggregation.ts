@@ -46,7 +46,7 @@ FROM users
 GROUP BY DATE_TRUNC('month', created_at)
 ORDER BY month;`,
       language: 'sql',
-      output: ' department  | headcount \n-------------+-----------\n Engineering |        12\n Marketing   |         6\n Sales       |         8\n(3 rows)'
+      output: ' department  | headcount  -------------+-----------  Engineering |        12  Marketing   |         6  Sales       |         8 (3 rows)'
     },
     {
       type: 'heading',
@@ -69,7 +69,7 @@ GROUP BY department
 HAVING AVG(salary) > 60000       -- only departments with high avg salary (after group)
 ORDER BY avg_salary DESC;`,
       language: 'sql',
-      output: ' department  | headcount | avg_salary \n-------------+-----------+------------\n Engineering |        10 |   95000.00\n Sales       |         6 |   72000.00\n(2 rows)'
+      output: ' department  | headcount | avg_salary  -------------+-----------+------------  Engineering |        10 |   95000.00  Sales       |         6 |   72000.00 (2 rows)'
     },
     {
       type: 'heading',
@@ -102,7 +102,7 @@ SELECT
 FROM employees
 GROUP BY department;`,
       language: 'sql',
-      output: ' dept        | avg_sal | active_count \n-------------+---------+--------------\n Engineering |   95000 |           10\n Marketing   |   55000 |            5\n Unknown     |   48000 |            3'
+      output: ' dept        | avg_sal | active_count  -------------+---------+--------------  Engineering |   95000 |           10  Marketing   |   55000 |            5  Unknown     |   48000 |            3'
     },
     {
       type: 'note',
@@ -140,7 +140,7 @@ SELECT
   DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank
 FROM employees;`,
       language: 'sql',
-      output: '    name    | department  | salary  | rank_in_dept \n------------+-------------+---------+--------------\n Emma       | Engineering | 120000  |            1\n Liam       | Engineering | 115000  |            2\n Noah       | Engineering | 110000  |            3'
+      output: '    name    | department  | salary  | rank_in_dept  ------------+-------------+---------+--------------  Emma       | Engineering | 120000  |            1  Liam       | Engineering | 115000  |            2  Noah       | Engineering | 110000  |            3'
     },
     {
       type: 'example',
@@ -163,7 +163,7 @@ SELECT
   ) AS moving_avg_7d
 FROM daily_sales;`,
       language: 'sql',
-      output: ' sale_date  | amount | running_total \n------------+--------+---------------\n 2024-01-01 |   1000 |          1000\n 2024-01-02 |   1500 |          2500\n 2024-01-03 |   1200 |          3700'
+      output: ' sale_date  | amount | running_total  ------------+--------+---------------  2024-01-01 |   1000 |          1000  2024-01-02 |   1500 |          2500  2024-01-03 |   1200 |          3700'
     },
     {
       type: 'heading',
@@ -209,7 +209,7 @@ SELECT
 FROM with_growth
 ORDER BY month;`,
       language: 'sql',
-      output: '     month      | revenue  | growth_pct \n-----------------+----------+------------\n 2024-01-01 00:00|  12500.00|       NULL\n 2024-02-01 00:00|  15300.00|       22.4\n 2024-03-01 00:00|  14100.00|       -7.8'
+      output: '     month      | revenue  | growth_pct  -----------------+----------+------------  2024-01-01 00:00|  12500.00|       NULL  2024-02-01 00:00|  15300.00|       22.4  2024-03-01 00:00|  14100.00|       -7.8'
     },
     {
       type: 'tip',

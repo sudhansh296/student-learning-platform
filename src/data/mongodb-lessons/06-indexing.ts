@@ -300,7 +300,7 @@ function toggleIndex() {
   document.getElementById('indexBtn').innerHTML = hasIndex ? 'Drop Index' : 'Create Index';
   document.getElementById('indexBtn').className = hasIndex ? 'btn indexed' : 'btn';
   var msg = hasIndex ? 
-    'Index created: { email: 1 }\\nQueries on email will now use index scan.' :
+    'Index created: { email: 1 }\ Queries on email will now use index scan.' :
     'Index dropped. Queries will perform collection scan.';
   alert(msg);
 }

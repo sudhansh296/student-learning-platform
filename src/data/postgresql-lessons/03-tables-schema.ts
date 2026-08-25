@@ -154,7 +154,7 @@ CREATE TABLE accounts (
   CONSTRAINT balance_non_negative CHECK (balance >= 0)
 );`,
       language: 'sql',
-      output: 'CREATE TABLE\nCREATE TABLE'
+      output: 'CREATE TABLE CREATE TABLE'
     },
     {
       type: 'heading',

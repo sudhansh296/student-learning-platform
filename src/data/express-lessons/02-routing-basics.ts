@@ -222,21 +222,21 @@ function sendRequest() {
   var output = '';
   if (matched) {
     output += '> Request: ' + currentMethod + ' ' + path + '\ ';
-    output += '> Matched Route: ' + matched.path + '\\n\ ';
+    output += '> Matched Route: ' + matched.path + '\ \ ';
     
     if (Object.keys(matched.params).length > 0) {
-      output += 'req.params: ' + JSON.stringify(matched.params, null, 2) + '\\n\ ';
+      output += 'req.params: ' + JSON.stringify(matched.params, null, 2) + '\ \ ';
     }
     
     if (Object.keys(matched.query).length > 0) {
-      output += 'req.query: ' + JSON.stringify(matched.query, null, 2) + '\\n\ ';
+      output += 'req.query: ' + JSON.stringify(matched.query, null, 2) + '\ \ ';
     }
     
     output += 'HTTP/200 OK\ ';
     output += '{ "message": "Route matched successfully" }';
   } else {
     output += '> Request: ' + currentMethod + ' ' + path + '\ ';
-    output += '> No matching route\\n\ ';
+    output += '> No matching route\ \ ';
     output += 'HTTP/404 Not Found\ ';
     output += '{ "error": "Route not found" }';
   }

@@ -300,7 +300,7 @@ function showHeaders() {
 
   var lines = '<span class=\\"h-status\\">HTTP/1.1 200 OK</span>\\\ ';
   lines += '<span style=\\"color:#e2e8f0\\">Content-Type: application/json</span>\\\ ';
-  lines += '<span style=\\"color:#e2e8f0\\">Date: '+new Date().toUTCString()+'</span>\\\\n\\\ ';
+  lines += '<span style=\\"color:#e2e8f0\\">Date: '+new Date().toUTCString()+'</span>\\\ \\\ ';
   lines += '<span style=\\"color:#94a3b8\\">// Security Headers (via Helmet)</span>\\\ ';
 
   headers.forEach(function(h){

@@ -170,7 +170,7 @@ function* idGen(prefix='id') { let n=1; while(true) yield prefix+'-'+n++; }
 
 function demoRange() {
   const lines = ['=== Range(1,20,2) ===', [...rangeGen(1,20,2)].join(', ')];
-  lines.push('\\n=== Range(0,1,0.1) ===');
+  lines.push('\ === Range(0,1,0.1) ===');
   lines.push([...rangeGen(0,10,1)].map(n=>n/10).join(', '));
   log(lines);
 }

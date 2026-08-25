@@ -217,7 +217,7 @@ function login() {
   
   var status = '[POST /login]\ ';
   status += 'Email: ' + email + '\ ';
-  status += 'Password: ' + password + '\\n\ ';
+  status += 'Password: ' + password + '\ \ ';
   
   if (email === 'alice@example.com' && password === 'password123') {
     token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWxpY2UifQ.demo';
@@ -240,7 +240,7 @@ function login() {
 
 function testProtected() {
   var status = '[GET /profile]\ ';
-  status += 'Authorization: Bearer ' + (token ? token.substring(0, 30) + '...' : '(none)') + '\\n\ ';
+  status += 'Authorization: Bearer ' + (token ? token.substring(0, 30) + '...' : '(none)') + '\ \ ';
   
   if (token) {
     status += 'HTTP/200 OK\ ';

@@ -360,7 +360,7 @@ function getCmd() {
   var cmds = {
     insertOne: function(){
       var n=v('iName'), e=v('iEmail'), a=v('iAge'), c=v('iCity'), sk=v('iSkills');
-      return 'db.users.insertOne({\\n  name: "'+n+'",\\n  email: "'+e+'",\\n  age: '+a+',\\n  city: "'+c+'",\\n  skills: ['+sk.split(',').map(function(s){return '"'+s.trim()+'"';}).join(', ')+']\\n});';
+      return 'db.users.insertOne({\   name: "'+n+'",\   email: "'+e+'",\   age: '+a+',\   city: "'+c+'",\   skills: ['+sk.split(',').map(function(s){return '"'+s.trim()+'"';}).join(', ')+']\ });';
     },
     find: function(){
       var f = v('fFilter');
@@ -368,11 +368,11 @@ function getCmd() {
       try { if(f&&f!=='{}') parsed=JSON.parse(f); } catch(e){}
       var keys = Object.keys(parsed);
       if(!keys.length) return 'db.users.find();';
-      return 'db.users.find({\\n  '+keys.map(function(k){return k+': '+JSON.stringify(parsed[k]);}).join(',\\n  ')+'\\n});';
+      return 'db.users.find({\   '+keys.map(function(k){return k+': '+JSON.stringify(parsed[k]);}).join(',\   ')+'\ });';
     },
     updateOne: function(){
       var f=v('uFilter'), op=v('uOperator'), field=v('uField'), val=v('uValue');
-      return 'db.users.updateOne(\\n  { '+f+' },\\n  { '+op+': { '+field+': '+JSON.stringify(isNaN(val)?val:Number(val))+' } }\\n);';
+      return 'db.users.updateOne(\   { '+f+' },\   { '+op+': { '+field+': '+JSON.stringify(isNaN(val)?val:Number(val))+' } }\ );';
     },
     deleteOne: function(){
       var f=v('dFilter');
@@ -399,7 +399,7 @@ function runOp() {
     var newDoc={ _id:++idCounter, name:n||'New User', email:e||'user@example.com', age:a, city:c||'Unknown', skills:sk.split(',').map(function(s){return s.trim();}).filter(Boolean), _state:'new' };
     db.push(newDoc);
     highlightId = newDoc._id;
-    if(resultEl) resultEl.textContent = '{\\n  acknowledged: true,\\n  insertedId: '+newDoc._id+'\\n}';
+    if(resultEl) resultEl.textContent = '{\   acknowledged: true,\   insertedId: '+newDoc._id+'\ }';
   }
   else if(activeOp==='find'){
     var filterStr = v('fFilter');

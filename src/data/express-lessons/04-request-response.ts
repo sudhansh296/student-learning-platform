@@ -254,18 +254,18 @@ app.get('/login', function(req, res) {
   
   var reqOutput = '';
   reqOutput += 'req.method: ' + reqObj.method + '\ ';
-  reqOutput += 'req.url: ' + reqObj.url + '\\n\ ';
+  reqOutput += 'req.url: ' + reqObj.url + '\ \ ';
   
   if (Object.keys(reqObj.params).length > 0) {
-    reqOutput += 'req.params: ' + JSON.stringify(reqObj.params, null, 2) + '\\n\ ';
+    reqOutput += 'req.params: ' + JSON.stringify(reqObj.params, null, 2) + '\ \ ';
   }
   
   if (Object.keys(reqObj.query).length > 0) {
-    reqOutput += 'req.query: ' + JSON.stringify(reqObj.query, null, 2) + '\\n\ ';
+    reqOutput += 'req.query: ' + JSON.stringify(reqObj.query, null, 2) + '\ \ ';
   }
   
   if (reqObj.body) {
-    reqOutput += 'req.body: ' + JSON.stringify(reqObj.body, null, 2) + '\\n\ ';
+    reqOutput += 'req.body: ' + JSON.stringify(reqObj.body, null, 2) + '\ \ ';
   }
   
   if (Object.keys(reqObj.headers).length > 0) {
@@ -275,7 +275,7 @@ app.get('/login', function(req, res) {
   document.getElementById('reqOutput').textContent = reqOutput;
   
   var resOutput = 'HTTP/200 OK\ ';
-  resOutput += 'Content-Type: application/json\\n\ ';
+  resOutput += 'Content-Type: application/json\ \ ';
   resOutput += JSON.stringify({
     message: 'Request processed',
     received: reqObj

@@ -197,12 +197,12 @@ function showResult() {
   reqHtml += '</div>';
 
   var resBody = method === 'GET'
-    ? '[\\\\n  { \\"id\\": 1, \\"name\\": \\"Alice\\" },\\\\n  { \\"id\\": 2, \\"name\\": \\"Bob\\" }\\\\n]'
+    ? '[\\\   { \\"id\\": 1, \\"name\\": \\"Alice\\" },\\\   { \\"id\\": 2, \\"name\\": \\"Bob\\" }\\\ ]'
     : method === 'POST'
-    ? '{\\\\n  \\"id\\": 42,\\\\n  \\"name\\": \\"Alice\\",\\\\n  \\"email\\": \\"alice@example.com\\"\\\\n}'
+    ? '{\\\   \\"id\\": 42,\\\   \\"name\\": \\"Alice\\",\\\   \\"email\\": \\"alice@example.com\\"\\\ }'
     : method === 'DELETE'
     ? '(no body)'
-    : '{\\\\n  \\"id\\": 1,\\\\n  \\"updated\\": true\\\\n}';
+    : '{\\\   \\"id\\": 1,\\\   \\"updated\\": true\\\ }';
 
   var resHtml = '<div class=\\"panel\\"><div class=\\"panel-title\\" style=\\"background:#334155\\">RESPONSE</div>';
   resHtml += '<div class=\\"code-line\\">HTTP/1.1 <span class=\\"status-badge\\" style=\\"background:' + statusColor + '\\">' + status + '</span></div>';

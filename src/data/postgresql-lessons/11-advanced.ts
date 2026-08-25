@@ -55,7 +55,7 @@ WHERE id = 1;
 -- GIN index for fast JSONB queries
 CREATE INDEX idx_products_meta ON products USING GIN(metadata);`,
       language: 'sql',
-      output: ' name   | brand \n--------+-------\n Laptop | Dell\n Phone  | Apple\n(2 rows)'
+      output: ' name   | brand  --------+-------  Laptop | Dell  Phone  | Apple (2 rows)'
     },
     {
       type: 'table',
@@ -103,7 +103,7 @@ SELECT * FROM articles WHERE tags && ARRAY['nodejs','react'];
 -- Unnest array into rows
 SELECT title, UNNEST(tags) AS tag FROM articles;`,
       language: 'sql',
-      output: ' title            | tags                          \n------------------+-------------------------------\n PostgreSQL Guide | {database,sql,postgresql}\n(1 row)'
+      output: ' title            | tags                           ------------------+-------------------------------  PostgreSQL Guide | {database,sql,postgresql} (1 row)'
     },
     {
       type: 'heading',
@@ -139,7 +139,7 @@ FROM articles, to_tsquery('english', 'database') query
 WHERE search_vector @@ query
 ORDER BY rank DESC;`,
       language: 'sql',
-      output: '     title         \n-------------------\n PostgreSQL Guide\n(1 row)'
+      output: '     title          -------------------  PostgreSQL Guide (1 row)'
     },
     {
       type: 'heading',
@@ -175,7 +175,7 @@ REFRESH MATERIALIZED VIEW monthly_revenue;
 -- Refresh without locking reads
 REFRESH MATERIALIZED VIEW CONCURRENTLY monthly_revenue;`,
       language: 'sql',
-      output: 'CREATE VIEW\nCREATE MATERIALIZED VIEW\nREFRESH MATERIALIZED VIEW'
+      output: 'CREATE VIEW CREATE MATERIALIZED VIEW REFRESH MATERIALIZED VIEW'
     },
     {
       type: 'note',
@@ -220,7 +220,7 @@ $$ LANGUAGE plpgsql;
 -- Call the table-returning function
 SELECT * FROM get_user_stats(1);`,
       language: 'sql',
-      output: ' order_count | total_spent |         last_order         \n-------------+-------------+----------------------------\n           5 |      479.95 | 2024-08-15 10:30:00+00'
+      output: ' order_count | total_spent |         last_order          -------------+-------------+----------------------------            5 |      479.95 | 2024-08-15 10:30:00+00'
     },
     {
       type: 'heading',
@@ -249,7 +249,7 @@ CREATE TRIGGER products_set_updated_at
 UPDATE products SET price = 39.99 WHERE id = 1;
 -- updated_at is automatically set to NOW()`,
       language: 'sql',
-      output: 'CREATE FUNCTION\nCREATE TRIGGER\nUPDATE 1'
+      output: 'CREATE FUNCTION CREATE TRIGGER UPDATE 1'
     },
     {
       type: 'heading',
@@ -278,7 +278,7 @@ SELECT * FROM documents;
 SET ROLE admin_role; -- bypasses RLS
 SELECT * FROM documents; -- sees all rows`,
       language: 'sql',
-      output: 'ALTER TABLE\nCREATE POLICY\n id | user_id | title            \n----+---------+------------------\n  3 |      42 | My Document\n  7 |      42 | Another Doc'
+      output: 'ALTER TABLE CREATE POLICY  id | user_id | title             ----+---------+------------------   3 |      42 | My Document   7 |      42 | Another Doc'
     },
     {
       type: 'tip',

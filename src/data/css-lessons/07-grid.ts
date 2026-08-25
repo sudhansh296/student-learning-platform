@@ -243,8 +243,8 @@ function update() {
 
   document.getElementById('info').textContent = cols+'×'+rows+' grid';
   document.getElementById('cssOut').textContent =
-    '.grid {\n  display: grid;\n  grid-template-columns: '+colSizes+'; ' +
-    '  grid-template-rows: repeat('+rows+', 1fr);\n  gap: '+gap+'px;\n}';
+    '.grid {   display: grid;   grid-template-columns: '+colSizes+'; ' +
+    '  grid-template-rows: repeat('+rows+', 1fr);   gap: '+gap+'px; }';
 }
 
 function applyTemplate() {

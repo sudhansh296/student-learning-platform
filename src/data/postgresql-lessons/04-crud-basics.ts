@@ -72,7 +72,7 @@ INSERT INTO products (name, price, stock, category)
 VALUES ('Gaming Headset', 59.99, 80, 'electronics')
 RETURNING *;`,
       language: 'sql',
-      output: ' id |          created_at          \n----+------------------------------\n  1 | 2024-08-19 14:30:00.123456+00\n(1 row)'
+      output: ' id |          created_at           ----+------------------------------   1 | 2024-08-19 14:30:00.123456+00 (1 row)'
     },
     {
       type: 'heading',
@@ -100,7 +100,7 @@ SELECT
   stock AS units_available
 FROM products;`,
       language: 'sql',
-      output: ' id |    product_name    | unit_price | units_available \n----+--------------------+------------+-----------------\n  1 | Wireless Mouse     |      29.99 |             150\n  2 | Mechanical Keyboard|      89.99 |              75'
+      output: ' id |    product_name    | unit_price | units_available  ----+--------------------+------------+-----------------   1 | Wireless Mouse     |      29.99 |             150   2 | Mechanical Keyboard|      89.99 |              75'
     },
     {
       type: 'heading',
@@ -124,7 +124,7 @@ WHERE category = 'electronics' AND price < 100;
 SELECT * FROM products
 WHERE category = 'furniture' OR price < 15;`,
       language: 'sql',
-      output: ' id | name               | price | category    \n----+--------------------+-------+-------------\n  1 | Wireless Mouse     | 29.99 | electronics\n  3 | USB-C Hub          | 39.99 | electronics'
+      output: ' id | name               | price | category     ----+--------------------+-------+-------------   1 | Wireless Mouse     | 29.99 | electronics   3 | USB-C Hub          | 39.99 | electronics'
     },
     {
       type: 'heading',
@@ -151,7 +151,7 @@ SELECT * FROM products
 ORDER BY id
 LIMIT 10 OFFSET 10;`,
       language: 'sql',
-      output: ' id | name                | price | category    \n----+---------------------+-------+-------------\n  2 | Mechanical Keyboard | 89.99 | electronics\n  2 | Gaming Headset      | 59.99 | electronics'
+      output: ' id | name                | price | category     ----+---------------------+-------+-------------   2 | Mechanical Keyboard | 89.99 | electronics   2 | Gaming Headset      | 59.99 | electronics'
     },
     {
       type: 'note',
@@ -182,7 +182,7 @@ SET price = price * 0.9
 WHERE category = 'electronics'
 RETURNING id, name, price;`,
       language: 'sql',
-      output: 'UPDATE 1\n\n id | name                | price \n----+---------------------+-------\n  1 | Wireless Mouse      | 26.99\n  2 | Mechanical Keyboard | 80.99\n  3 | USB-C Hub           | 35.99'
+      output: 'UPDATE 1   id | name                | price  ----+---------------------+-------   1 | Wireless Mouse      | 26.99   2 | Mechanical Keyboard | 80.99   3 | USB-C Hub           | 35.99'
     },
     {
       type: 'warning',
@@ -214,7 +214,7 @@ DELETE FROM products;
 -- TRUNCATE is faster for deleting all rows
 TRUNCATE TABLE products;`,
       language: 'sql',
-      output: 'DELETE 1\n\n id | name          | price | category   \n----+---------------+-------+------------\n  4 | Notebook Pack | 9.99  | stationery'
+      output: 'DELETE 1   id | name          | price | category    ----+---------------+-------+------------   4 | Notebook Pack | 9.99  | stationery'
     },
     {
       type: 'warning',

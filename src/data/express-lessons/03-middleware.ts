@@ -60,7 +60,7 @@ app.get('/about', function(req, res) {
 });
 
 app.listen(3000);`,
-      output: 'GET /\\nGET /about',
+      output: 'GET /\ GET /about',
     },
     {
       type: 'heading',

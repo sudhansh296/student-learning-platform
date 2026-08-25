@@ -283,7 +283,7 @@ console.log('Declaration files contain ONLY type information -- no runtime code'
 console.log('They tell TypeScript the shape of existing JavaScript libraries');
 console.log('TypeScript uses them for autocomplete and compile-time type checking');
 
-console.log('\\n=== Example: @types/express declares ===');
+console.log('\ === Example: @types/express declares ===');
 var expressDecls = [
   'declare function express(): Express',
   'interface Express { get(path: string, handler: RequestHandler): this }',
@@ -292,7 +292,7 @@ var expressDecls = [
 ];
 expressDecls.forEach(function(d) { console.log('  ' + d); });
 
-console.log('\\n=== Writing Your Own .d.ts ===');
+console.log('\ === Writing Your Own .d.ts ===');
 var ownDecls = [
   '// my-utils.d.ts',
   'export declare function formatDate(date: Date, locale?: string): string;',
@@ -302,7 +302,7 @@ var ownDecls = [
 ];
 ownDecls.forEach(function(line) { console.log('  ' + line); });
 
-console.log('\\n=== Module Augmentation ===');
+console.log('\ === Module Augmentation ===');
 var augmentation = [
   '// Extend Express Request with custom user property',
   'declare module "express-serve-static-core" {',
@@ -314,13 +314,13 @@ var augmentation = [
 ];
 augmentation.forEach(function(line) { console.log('  ' + line); });
 
-console.log('\\n=== @types/* Packages ===');
+console.log('\ === @types/* Packages ===');
 var packages = ['node', 'react', 'express', 'jest', 'lodash'];
 packages.forEach(function(pkg) {
   console.log('  npm i -D @types/' + pkg + '  ->  adds types for ' + pkg);
 });
 
-console.log('\\n=== typeRoots & types in tsconfig ===');
+console.log('\ === typeRoots & types in tsconfig ===');
 console.log('  "typeRoots": ["./node_modules/@types", "./src/types"]');
 console.log('  "types": ["node", "jest"]  // allowlist -- only these @types included');
 `,

@@ -112,7 +112,7 @@ function addParagraph() {
 }
 
 function showAlert() {
-  alert('This is a JavaScript alert!\nYou clicked the button at ' + new Date().toLocaleTimeString());
+  alert('This is a JavaScript alert! You clicked the button at ' + new Date().toLocaleTimeString());
 }`,
       mode: 'full',
     },

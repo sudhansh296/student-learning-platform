@@ -294,8 +294,8 @@ function generateDockerfile() {
 }
 
 function generateCompose() {
-  return 'services:\\n  api:\\n    build: .\\n    ports:\\n      - \\"' + config.port + ':' + config.port + '\\"\\n    environment:\ ' +
-    config.envVars.map(function(e) { return '      - ' + e; }).join('\ ') + '\\n    restart: unless-stopped';
+  return 'services:\   api:\     build: .\     ports:\       - \\"' + config.port + ':' + config.port + '\\"\     environment:\ ' +
+    config.envVars.map(function(e) { return '      - ' + e; }).join('\ ') + '\     restart: unless-stopped';
 }
 
 function render() {

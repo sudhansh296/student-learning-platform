@@ -159,8 +159,8 @@ Content-Type: application/json; charset=utf-8`
   '</div>' +
   '<div class=\\"box server\\"><div class=\\"box-icon\\">🖥️</div><div class=\\"box-label\\">SERVER</div></div>' +
   '</div>' +
-  '<div class=\\"data-panel\\" id=\\"req-data\\"><strong>Request Data</strong><pre>GET /api/users HTTP/1.1\\\\nHost: api.example.com\\\\nAuthorization: Bearer token123</pre></div>' +
-  '<div class=\\"data-panel\\" id=\\"res-data\\"><strong>Response Data</strong><pre>HTTP/1.1 200 OK\\\\nContent-Type: application/json\\\\n\\\\n{ \\"users\\": [...] }</pre></div>' +
+  '<div class=\\"data-panel\\" id=\\"req-data\\"><strong>Request Data</strong><pre>GET /api/users HTTP/1.1\\\ Host: api.example.com\\\ Authorization: Bearer token123</pre></div>' +
+  '<div class=\\"data-panel\\" id=\\"res-data\\"><strong>Response Data</strong><pre>HTTP/1.1 200 OK\\\ Content-Type: application/json\\\ \\\ { \\"users\\": [...] }</pre></div>' +
   '<div id=\\"status-msg\\" style=\\"color:#64748b;\\">Ready to send request</div>' +
   '</div>';
 

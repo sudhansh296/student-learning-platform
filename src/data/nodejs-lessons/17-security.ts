@@ -450,7 +450,7 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "headers", catLabel: "Headers",
     risk: "Without security headers, browsers allow XSS payloads to run, pages to be framed (clickjacking), and content to be sniffed.",
     fix: "Add helmet as the first middleware in your Express app.",
-    code: "const helmet = require('helmet');\\napp.use(helmet());"
+    code: "const helmet = require('helmet');\ app.use(helmet());"
   },
   {
     title: "Configure CORS allowlist",
@@ -464,7 +464,7 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "auth", catLabel: "Auth",
     risk: "Without rate limiting, attackers can attempt millions of password combinations against your login endpoint.",
     fix: "Apply a strict rate limiter (e.g., 10 requests per 15 minutes) on /login, /register, and /password-reset.",
-    code: "const loginLimiter = rateLimit({ windowMs: 15*60*1000, max: 10 });\\napp.post('/login', loginLimiter, loginHandler);"
+    code: "const loginLimiter = rateLimit({ windowMs: 15*60*1000, max: 10 });\ app.post('/login', loginLimiter, loginHandler);"
   },
   {
     title: "Hash passwords with bcrypt",
@@ -485,14 +485,14 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "input", catLabel: "Input",
     risk: "String-concatenated SQL queries allow attackers to inject arbitrary SQL, bypassing authentication or deleting data.",
     fix: "Always use parameterized queries or an ORM. Never build queries by string concatenation with user input.",
-    code: "// Safe:\\ndb.query('SELECT * FROM users WHERE id = $1', [userId]);\\n// Unsafe:\\ndb.query('SELECT * FROM users WHERE id = ' + userId);"
+    code: "// Safe:\ db.query('SELECT * FROM users WHERE id = $1', [userId]);\ // Unsafe:\ db.query('SELECT * FROM users WHERE id = ' + userId);"
   },
   {
     title: "Avoid exec() with user input",
     category: "input", catLabel: "Input",
     risk: "child_process.exec() passes arguments through a shell, allowing attackers to chain commands with ; | && characters.",
     fix: "Use execFile() or spawn() which do not use a shell, or validate input against a strict allowlist.",
-    code: "// Safe:\\nconst { execFile } = require('child_process');\\nexecFile('convert', [userFile, output], callback);"
+    code: "// Safe:\ const { execFile } = require('child_process');\ execFile('convert', [userFile, output], callback);"
   },
   {
     title: "Store secrets in environment variables",
@@ -520,7 +520,7 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "auth", catLabel: "Auth",
     risk: "Tokens stored in localStorage are accessible to JavaScript, making them easy to steal via XSS.",
     fix: "Use httpOnly, secure, sameSite cookies to store tokens so they are invisible to JavaScript.",
-    code: "res.cookie('token', jwt, {\\n  httpOnly: true,\\n  secure: true,\\n  sameSite: 'strict'\\n});"
+    code: "res.cookie('token', jwt, {\   httpOnly: true,\   secure: true,\   sameSite: 'strict'\ });"
   },
   {
     title: "Run npm audit regularly",
@@ -541,7 +541,7 @@ h1{font-size:17px;font-weight:700;color:#fff;margin-bottom:4px;}
     category: "auth", catLabel: "Auth",
     risk: "Returning 'User not found' vs 'Wrong password' lets attackers enumerate valid email addresses.",
     fix: "Return the same error message and response time for both cases to prevent user enumeration.",
-    code: "// Always return the same message:\\nreturn res.status(401).json({ error: 'Invalid credentials' });"
+    code: "// Always return the same message:\ return res.status(401).json({ error: 'Invalid credentials' });"
   }
 ];
 

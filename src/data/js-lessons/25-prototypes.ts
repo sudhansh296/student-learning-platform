@@ -141,7 +141,7 @@ pre{background:#0d1117;color:#e6edf3;padding:16px;border-radius:10px;font-size:1
   log('Prototype of dog === animal:', Object.getPrototypeOf(dog) === animal);
 
   // this keyword
-  log('\\n=== this Keyword ===');
+  log('\ === this Keyword ===');
   const user = {
     name: 'Alice',
     greet() { return 'Hi, I am ' + this.name; },
@@ -154,7 +154,7 @@ pre{background:#0d1117;color:#e6edf3;padding:16px;border-radius:10px;font-size:1
   log('user.greetArrow():', user.greetArrow());
 
   // call / apply / bind
-  log('\\n=== call / apply / bind ===');
+  log('\ === call / apply / bind ===');
   function intro(greeting) { return greeting + ', I am ' + this.name; }
   const bob = { name: 'Bob' };
   log('call:', intro.call(bob, 'Hello'));

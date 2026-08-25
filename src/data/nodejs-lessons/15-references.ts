@@ -328,7 +328,7 @@ npx nodemon app.js`,
     items: [
       { name: 'fs.readFile(path, encoding, callback)', desc: 'Read entire file into memory', code: 'fs.readFile(\\"file.txt\\", \\"utf8\\", (err, data) => {})' },
       { name: 'fs.writeFile(path, data, callback)', desc: 'Write data to file (overwrites)', code: 'fs.writeFile(\\"file.txt\\", \\"content\\", (err) => {})' },
-      { name: 'fs.appendFile(path, data, callback)', desc: 'Append data to file', code: 'fs.appendFile(\\"log.txt\\", \\"line\\\\n\\", (err) => {})' },
+      { name: 'fs.appendFile(path, data, callback)', desc: 'Append data to file', code: 'fs.appendFile(\\"log.txt\\", \\"line\\\ \\", (err) => {})' },
       { name: 'fs.unlink(path, callback)', desc: 'Delete a file', code: 'fs.unlink(\\"file.txt\\", (err) => {})' },
       { name: 'fs.readdir(path, callback)', desc: 'List directory contents', code: 'fs.readdir(\\"./folder\\", (err, files) => {})' }
     ]
@@ -336,7 +336,7 @@ npx nodemon app.js`,
   http: {
     title: 'HTTP Module',
     items: [
-      { name: 'http.createServer(callback)', desc: 'Create HTTP server', code: 'const server = http.createServer((req, res) => {\\\\n  res.end(\\"Hello\\");\\\\n});' },
+      { name: 'http.createServer(callback)', desc: 'Create HTTP server', code: 'const server = http.createServer((req, res) => {\\\   res.end(\\"Hello\\");\\\ });' },
       { name: 'server.listen(port)', desc: 'Start listening on port', code: 'server.listen(3000, () => console.log(\\"Running\\"));' },
       { name: 'res.writeHead(status, headers)', desc: 'Write response headers', code: 'res.writeHead(200, { \\"Content-Type\\": \\"application/json\\" });' },
       { name: 'res.end(data)', desc: 'Send response and close connection', code: 'res.end(JSON.stringify({ message: \\"OK\\" }));' }
