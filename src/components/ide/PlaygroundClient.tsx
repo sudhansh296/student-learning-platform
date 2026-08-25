@@ -1576,18 +1576,19 @@ export function PlaygroundClient() {
             <button onClick={runCurrent} className="text-gray-400 hover:text-gray-700 transition-colors"><RotateCcw className="w-3.5 h-3.5" /></button>
           </div>
           <iframe ref={iframeRef} className="flex-1 bg-white border-0 w-full"
-            style={{ minHeight: 220 }}
+            style={{ minHeight: 220, overflowY: 'auto' }}
+            scrolling="yes"
             sandbox="allow-scripts allow-forms allow-popups allow-modals" title="Live Preview" />
-          <div className="border-t border-[#30363d] bg-[#0d1117] shrink-0" style={{ minHeight: 28, maxHeight: 60 }}>
+          <div className="border-t border-[#30363d] bg-[#0d1117] shrink-0" style={{ minHeight: 24, maxHeight: 40 }}>
             <div className="flex items-center justify-between px-3 py-0.5 border-b border-[#21262d]">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#6b7280]">
                 Console {logs.length > 0 && <span className="ml-1 text-[#484f58]">({logs.length})</span>}
               </span>
               <button onClick={() => setLogs([])} className="text-[10px] text-[#484f58] hover:text-[#8b949e]">Clear</button>
             </div>
-            <div className="overflow-y-auto p-1 space-y-0.5" style={{ maxHeight: 32 }}>
+            <div className="overflow-y-auto p-1 space-y-0.5" style={{ maxHeight: 20 }}>
               {logs.length === 0
-                ? <p className="text-[10px] text-[#484f58] font-mono px-1">console.log() output appears here...</p>
+                ? <p className="text-[9px] text-[#484f58] font-mono px-1">console.log() output here...</p>
                 : logs.map((l, i) => <p key={i} className={logCls(l.type)}>{l.msg}</p>)}
             </div>
           </div>
