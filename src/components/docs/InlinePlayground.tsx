@@ -182,9 +182,9 @@ ${noOutputObserver}
       </div>
 
       {/* Body */}
-      <div className={`flex ${fullscreen ? 'flex-1 min-h-0' : ''}`} style={fullscreen ? {} : { height: height - 40 }}>
+      <div className={`flex flex-col md:flex-row ${fullscreen ? 'flex-1 min-h-0' : ''}`} style={fullscreen ? {} : {}}>
         {/* Editor */}
-        <div className="flex flex-col w-1/2 border-r border-[#30363d]">
+        <div className="flex flex-col md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 180 }}>
           <textarea
             value={cur}
             onChange={e => setCur(e.target.value)}
@@ -205,7 +205,7 @@ ${noOutputObserver}
         </div>
 
         {/* Preview */}
-        <div className="flex flex-col w-1/2" style={{ background: !html.trim() && js.trim() ? '#0d1117' : 'white' }}>
+        <div className="flex flex-col md:w-1/2" style={{ background: !html.trim() && js.trim() ? '#0d1117' : 'white', minHeight: 160 }}>
           <div className="flex items-center justify-between px-3 py-1.5 border-b" style={{ background: !html.trim() && js.trim() ? '#161b22' : '#f0f2f4', borderColor: !html.trim() && js.trim() ? '#30363d' : '#d0d7de' }}>
             <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: !html.trim() && js.trim() ? '#8b949e' : '#6b7280' }}>
               {!html.trim() && js.trim() ? 'Output' : 'Preview'}

@@ -180,9 +180,9 @@ try {
         </div>
       </div>
 
-      <div className={`flex ${isFullscreen ? 'flex-1 min-h-0' : ''}`} style={isFullscreen ? {} : { height: height - 36 }}>
+      <div className={`flex flex-col md:flex-row ${isFullscreen ? 'flex-1 min-h-0' : ''}`} style={isFullscreen ? {} : {}}>
         {/* Code editor */}
-        <div className="flex-1 flex flex-col min-w-0 border-r border-[#30363d]">
+        <div className="flex-1 flex flex-col min-w-0 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 180 }}>
           <textarea
             value={currentCode}
             onChange={e => !readOnly && setCurrentCode(e.target.value)}
@@ -215,7 +215,7 @@ try {
         </div>
 
         {/* Preview */}
-        <div className="flex-1 flex flex-col min-w-0 bg-white">
+        <div className="flex-1 flex flex-col min-w-0 bg-white" style={{ minHeight: 160 }}>
           <div className="flex items-center justify-between px-3 py-1.5 bg-[#f0f2f5] border-b border-[#d0d7de]">
             <span className="text-[11px] font-medium text-gray-500">Preview</span>
             <button

@@ -68,22 +68,22 @@ if(__logs.length){const p=document.createElement('pre');p.style.cssText='backgro
           </button>
         </div>
       </div>
-      <div className={`flex ${fullscreen ? 'flex-1 min-h-0' : ''}`} style={fullscreen ? {} : { height: 360 }}>
-        <div className="flex flex-col w-1/2 border-r border-[#30363d]">
+      <div className={`flex flex-col md:flex-row ${fullscreen ? 'flex-1 min-h-0' : ''}`} style={fullscreen ? {} : { height: undefined }}>
+        <div className="flex flex-col md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ height: fullscreen ? undefined : 200 }}>
           <textarea value={code} onChange={e => setCode(e.target.value)}
             onKeyDown={e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') run(); }}
             className="flex-1 w-full p-4 font-mono text-[13px] leading-relaxed resize-none outline-none bg-[#0d1117] text-[#e6edf3] caret-white"
-            spellCheck={false} style={{ tabSize: 2 }} />
+            spellCheck={false} style={{ tabSize: 2, minHeight: 180 }} />
         </div>
-        <div className="flex flex-col w-1/2 bg-white">
+        <div className="flex flex-col md:w-1/2 bg-white" style={{ minHeight: 160 }}>
           <div className="flex items-center justify-between px-3 py-1.5 bg-[#f0f2f4] border-b border-[#d0d7de]">
             <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">🔷 Output</span>
             <button onClick={run} className="flex items-center gap-1.5 px-3 py-1 bg-[#3178c6] hover:bg-[#2563eb] text-white text-[11px] font-semibold rounded transition-colors">
               <Play className="w-3 h-3" /> Run ▶
             </button>
           </div>
-          <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white"
-            sandbox="allow-scripts allow-same-origin" title="TypeScript Output" />
+          <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white" style={{ minHeight: 140 }}
+            sandbox="allow-scripts" title="TypeScript Output" />
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-1.5 bg-[#161b22] border-t border-[#30363d]">
