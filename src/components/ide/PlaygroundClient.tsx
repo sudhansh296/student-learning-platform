@@ -1578,7 +1578,7 @@ export function PlaygroundClient() {
           <iframe ref={iframeRef} className="flex-1 bg-white border-0 w-full"
             style={{ minHeight: 220, overflowY: 'auto' }}
             scrolling="yes"
-            sandbox="allow-scripts allow-forms allow-popups allow-modals" title="Live Preview" />
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" title="Live Preview" />
           <div className="border-t border-[#30363d] bg-[#0d1117] shrink-0" style={{ minHeight: 24, maxHeight: 40 }}>
             <div className="flex items-center justify-between px-3 py-0.5 border-b border-[#21262d]">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#6b7280]">
