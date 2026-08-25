@@ -67,13 +67,13 @@ window.__APP_ORIGIN__ = ${JSON.stringify(typeof window !== 'undefined' ? window.
   const orig = console.log;
   console.log = function(...args){
     orig.apply(console, args);
-    window.parent.postMessage({ type: 'console', data: args.map(String).join(' ') }, '*');
+    window.parent.postMessage({ type: 'console', data: args.map(String).join(' ') }, window.__APP_ORIGIN__ || '*');
   };
 })();
 try {
   ${j}
 } catch(e) {
-  window.parent.postMessage({ type: 'error', data: e.message }, '*');
+  window.parent.postMessage({ type: 'error', data: e.message }, window.__APP_ORIGIN__ || '*');
 }
 </script>
 </body>
@@ -92,9 +92,12 @@ try {
   // Auto-run on mount
   useEffect(() => { run(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Listen for console messages from iframe
+  // Listen for console messages from iframe — validate origin before processing
   useEffect(() => {
     function handler(e: MessageEvent) {
+      // Only accept messages from our own origin (same-origin iframes use srcdoc,
+      // so their origin is null — we allow null explicitly for srcdoc iframes)
+      if (e.origin !== window.location.origin && e.origin !== 'null' && e.origin !== '') return;
       if (e.data?.type === 'console') {
         setOutput(prev => prev ? prev + '\n' + e.data.data : e.data.data);
       } else if (e.data?.type === 'error') {
@@ -109,7 +112,11 @@ try {
     setHtml(defaultHTML);
     setCss(defaultCSS);
     setJs(defaultJS);
-    setTimeout(run, 50);
+    // Pass defaults directly to avoid stale closure — run() captures current state
+    if (iframeRef.current) {
+      iframeRef.current.srcdoc = buildSrcDoc(defaultHTML, defaultCSS, defaultJS);
+    }
+    setOutput('');
   };
 
   const copyCode = async () => {
@@ -222,7 +229,7 @@ try {
           <iframe
             ref={iframeRef}
             className="flex-1 w-full border-0"
-            sandbox="allow-scripts allow-same-origin"
+            sandbox="allow-scripts allow-forms"
             title="Live preview"
           />
           {output && (

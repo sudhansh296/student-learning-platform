@@ -9,6 +9,15 @@ import { restApiProject } from './rest-api';
 import { blogPlatformProject } from './blog-platform';
 import { ecommerceProject } from './ecommerce';
 import { chatAppProject } from './chat-app';
+import { typingTestProject } from './typing-test';
+import { bmiCalculatorProject } from './bmi-calculator';
+import { memoryGameProject } from './memory-game';
+import { pomodoroTimerProject } from './pomodoro-timer';
+import { markdownEditorProject } from './markdown-editor';
+import { urlShortenerProject } from './url-shortener';
+import { musicPlayerProject } from './music-player';
+import { fileSharingProject } from './file-sharing';
+import { kanbanBoardProject } from './kanban-board';
 import type { Project } from './types';
 
 export const allProjects: Project[] = [
@@ -23,6 +32,15 @@ export const allProjects: Project[] = [
   blogPlatformProject,
   ecommerceProject,
   chatAppProject,
+  typingTestProject,
+  bmiCalculatorProject,
+  memoryGameProject,
+  pomodoroTimerProject,
+  markdownEditorProject,
+  urlShortenerProject,
+  musicPlayerProject,
+  fileSharingProject,
+  kanbanBoardProject,
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {

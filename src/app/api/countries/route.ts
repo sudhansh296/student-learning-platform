@@ -1,6 +1,11 @@
 ﻿import { NextResponse } from 'next/server';
 
-const HEADERS = { 'Cache-Control': 'public, s-maxage=3600' };
+const HEADERS = {
+  'Cache-Control': 'public, s-maxage=3600',
+  // Allow srcdoc iframes (origin: null) and same-origin to call this API
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET',
+};
 
 type Country = {
   name: { common: string; official: string };
@@ -71,7 +76,7 @@ const COUNTRIES: Country[] = [
   { name:{common:'Ivory Coast',official:'Republic of Cote dIvoire'}, capital:['Yamoussoukro'], population:27053629, region:'Africa', subregion:'Western Africa', flags:flag('ci'), languages:lang('French'), currencies:cur('West African CFA franc','XOF'), borders:['BFA','GHA','GIN','LBR','MLI'], area:322463 },
   { name:{common:'Japan',official:'Japan'}, capital:['Tokyo'], population:123294513, region:'Asia', subregion:'Eastern Asia', flags:flag('jp'), languages:lang('Japanese'), currencies:cur('Japanese yen','JPY'), borders:[], area:377930 },
   { name:{common:'Jordan',official:'Hashemite Kingdom of Jordan'}, capital:['Amman'], population:10203140, region:'Asia', subregion:'Western Asia', flags:flag('jo'), languages:lang('Arabic'), currencies:cur('Jordanian dinar','JOD'), borders:['IRQ','ISR','PSE','SAU','SYR'], area:89342 },
-  { name:{common:'Kazakhstan',official:'Republic of Kazakhstan'}, capital:['Nur-Sultan'], population:19000000, region:'Asia', subregion:'Central Asia', flags:flag('kz'), languages:lang('Kazakh, Russian'), currencies:cur('Kazakhstani tenge','KZT'), borders:['CHN','KGZ','RUS','TKM','UZB'], area:2724900 },
+  { name:{common:'Kazakhstan',official:'Republic of Kazakhstan'}, capital:['Astana'], population:19000000, region:'Asia', subregion:'Central Asia', flags:flag('kz'), languages:lang('Kazakh, Russian'), currencies:cur('Kazakhstani tenge','KZT'), borders:['CHN','KGZ','RUS','TKM','UZB'], area:2724900 },
   { name:{common:'Kenya',official:'Republic of Kenya'}, capital:['Nairobi'], population:55100586, region:'Africa', subregion:'Eastern Africa', flags:flag('ke'), languages:lang('English, Swahili'), currencies:cur('Kenyan shilling','KES'), borders:['ETH','SOM','SSD','TZA','UGA'], area:580367 },
   { name:{common:'Malaysia',official:'Malaysia'}, capital:['Kuala Lumpur'], population:33397521, region:'Asia', subregion:'Southeast Asia', flags:flag('my'), languages:lang('Malay'), currencies:cur('Malaysian ringgit','MYR'), borders:['BRN','IDN','THA'], area:329613 },
   { name:{common:'Mexico',official:'United Mexican States'}, capital:['Mexico City'], population:128455567, region:'Americas', subregion:'Central America', flags:flag('mx'), languages:lang('Spanish'), currencies:cur('Mexican peso','MXN'), borders:['BLZ','GTM','USA'], area:1964375 },
@@ -226,9 +231,20 @@ const COUNTRIES: Country[] = [
 const rateLimitMap = new Map<string, { count: number; reset: number }>();
 const RATE_LIMIT = 60;
 const RATE_WINDOW_MS = 60_000;
+// Max entries to keep in memory — prevent unbounded growth from IP spoofing
+const MAX_ENTRIES = 10_000;
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
+
+  // Periodically clean up expired entries to prevent memory leak
+  if (rateLimitMap.size > MAX_ENTRIES) {
+    for (const [key, val] of rateLimitMap.entries()) {
+      if (now > val.reset) rateLimitMap.delete(key);
+      if (rateLimitMap.size <= MAX_ENTRIES / 2) break;
+    }
+  }
+
   const entry = rateLimitMap.get(ip);
   if (!entry || now > entry.reset) {
     rateLimitMap.set(ip, { count: 1, reset: now + RATE_WINDOW_MS });
@@ -244,11 +260,19 @@ const UNIQUE_COUNTRIES = Array.from(
   new Map(COUNTRIES.map(c => [c.name.common, c])).values()
 );
 
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: HEADERS });
+}
+
 export async function GET(request: Request) {
-  const ip =
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
-    request.headers.get('x-real-ip') ??
-    '127.0.0.1';
+  // Extract IP — validate format to prevent header injection/spoofing
+  // Only trust the first IP in x-forwarded-for if it looks like a valid IP
+  const rawForwarded = request.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? '';
+  const rawRealIp = request.headers.get('x-real-ip') ?? '';
+  const ipCandidate = rawForwarded || rawRealIp;
+  // Basic IP validation — accept IPv4 and IPv6 patterns only
+  const ipRegex = /^(\d{1,3}\.){3}\d{1,3}$|^[a-fA-F0-9:]{2,39}$/;
+  const ip = ipRegex.test(ipCandidate) ? ipCandidate : '127.0.0.1';
 
   if (!checkRateLimit(ip)) {
     return NextResponse.json(

@@ -47,7 +47,8 @@ function safeUrl(url: string): string {
 }
 
 function renderMd(md: string): string {
-  return md
+  // Build the rendered HTML from escaped tokens
+  let out = md
     .replace(/^### (.+)/gm, (_, t) => `<h3 style="font-size:16px;font-weight:700;margin:16px 0 8px;color:#1e1e1e">${escHtml(t)}</h3>`)
     .replace(/^## (.+)/gm, (_, t) => `<h2 style="font-size:20px;font-weight:700;margin:20px 0 8px;color:#1e1e1e;border-bottom:2px solid #e5e7eb;padding-bottom:6px">${escHtml(t)}</h2>`)
     .replace(/^# (.+)/gm, (_, t) => `<h1 style="font-size:28px;font-weight:800;margin:0 0 16px;color:#1e1e1e">${escHtml(t)}</h1>`)
@@ -61,6 +62,15 @@ function renderMd(md: string): string {
     .replace(/---/g, '<hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0">')
     .replace(/\n\n/g, '</p><p style="margin:0 0 12px;color:#374151;line-height:1.6">')
     .replace(/\n/g, '<br>');
+
+  // Final safety pass: strip any remaining script tags, event handlers, or javascript: hrefs
+  // that could have snuck through edge cases in the regex pipeline above
+  out = out
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/\s+on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]*)/gi, '')
+    .replace(/href\s*=\s*["']\s*javascript:[^"']*/gi, 'href="#"');
+
+  return out;
 }
 
 export function MarkdownPreviewer() {

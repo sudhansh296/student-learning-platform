@@ -7,7 +7,7 @@ const LEARN_TOPICS: Record<string, string[]> = {
   typescript: ['introduction','basic-types','arrays-tuples','objects-interfaces','functions','type-aliases','enums','generics','type-guards','utility-types','classes','modules','react-typescript','node-typescript','references','decorators','declaration-files','tsconfig'],
   react: ['introduction','jsx','components','props','state','events','conditional-rendering','lists-keys','useeffect','forms','context','useref','custom-hooks','performance','router','fetch-data','context-advanced','typescript-react','patterns','best-practices'],
   nextjs: ['introduction','file-routing','layouts','navigation','server-components','client-components','data-fetching','static-generation','api-routes','metadata','image-optimization','styling','middleware','deployment','references','authentication','env-config','error-handling'],
-  nodejs: ['introduction','modules','npm-packages','file-system','http-server','express-basics','routing','middleware','rest-api','async-callbacks','promises','async-await','streams-buffers','references','testing','security'],
+  nodejs: ['introduction','modules','npm-packages','file-system','http-server','express-basics','routing','middleware','rest-api','working-with-json','environment-variables','error-handling','async-patterns','streams','references','testing','security'],
   express: ['introduction','routing-basics','middleware','request-response','rest-api','error-handling','static-files','templating','authentication','validation','database','references','file-uploads','security','testing'],
   mongodb: ['introduction','installation','crud-basics','queries','arrays-embedded','indexing','aggregation','mongoose','relationships','transactions','performance','references'],
   postgresql: ['01-introduction','02-installation','03-tables-schema','04-crud-basics','05-queries','06-joins','07-aggregation','08-indexes','09-transactions','10-nodejs-pg','11-advanced','12-references'],
@@ -24,7 +24,7 @@ const CSS_LESSONS  = ['introduction','selectors','box-model','colors-backgrounds
 const JS_LESSONS   = ['introduction','variables','data-types','operators','conditions','loops','functions','arrays','objects','dom','strings','async-await','classes','error-handling','es6-features','scope-closures','fetch-api','localstorage','regex','modules','numbers','dates','events','forms','prototypes','generators','event-loop','weakmap-weakset','design-patterns','js-references'];
 
 const ROADMAP_SLUGS  = ['frontend','javascript','backend','fullstack'];
-const PROJECT_SLUGS  = ['blog-platform','calculator','chat-app','country-explorer','ecommerce','expense-tracker','portfolio','quiz-app','rest-api','todo-app','weather-app'];
+const PROJECT_SLUGS  = ['blog-platform','calculator','chat-app','country-explorer','ecommerce','expense-tracker','portfolio','quiz-app','rest-api','todo-app','weather-app','typing-test','bmi-calculator','memory-game','pomodoro-timer','markdown-editor','url-shortener','music-player','file-sharing','kanban-board'];
 const TOOL_IDS       = ['json-formatter','base64','url-encoder','jwt-decoder','hash-generator','color-converter','css-gradient','timestamp','uuid-generator','lorem-ipsum','markdown-previewer','regex-tester'];
 const INTERVIEW_CATS = ['javascript','react','nodejs','html-css','backend','database','rest-api','security','coding','project','hr'];
 

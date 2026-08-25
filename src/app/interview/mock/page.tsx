@@ -175,7 +175,7 @@ export default function MockInterviewPage() {
 
     return (
       <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
-        <div className="max-w-3xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-4 py-12">
           <Link href="/interview" className="inline-flex items-center gap-2 mb-6 text-sm font-medium hover:gap-3 transition-all" style={{ color: 'var(--text-2)' }}>
             <ArrowLeft className="w-4 h-4" />Back to Interview Prep
           </Link>
@@ -308,7 +308,7 @@ export default function MockInterviewPage() {
           <div className="h-1.5 bg-orange-500 transition-all duration-500" style={{ width: `${progress}%` }} />
         </div>
 
-        <div className="max-w-2xl mx-auto px-4 py-8 w-full flex flex-col flex-1">
+        <div className="max-w-4xl mx-auto px-4 py-8 w-full flex flex-col flex-1">
           {/* Top bar */}
           <div className="flex items-center justify-between mb-6">
             <button
@@ -493,7 +493,7 @@ export default function MockInterviewPage() {
 
     return (
       <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
-        <div className="max-w-2xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-4 py-12">
           {/* Score */}
           <div className="text-center mb-8">
             <div

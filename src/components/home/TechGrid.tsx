@@ -1,73 +1,103 @@
 ﻿import Link from 'next/link';
 import { technologies } from '@/data/technologies';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, Sparkles, TrendingUp } from 'lucide-react';
 
-const diffStyle: Record<string, { bg: string; color: string; label: string }> = {
-  beginner:     { bg: '#f0fdf4', color: '#15803d', label: 'Beginner' },
-  intermediate: { bg: '#eff6ff', color: '#1d4ed8', label: 'Intermediate' },
-  advanced:     { bg: '#fff7ed', color: '#c2410c', label: 'Advanced' },
+const diffStyle: Record<string, { gradient: string; label: string }> = {
+  beginner:     { gradient: 'from-green-500 to-emerald-600', label: 'Beginner' },
+  intermediate: { gradient: 'from-blue-500 to-indigo-600', label: 'Intermediate' },
+  advanced:     { gradient: 'from-orange-500 to-red-600', label: 'Advanced' },
 };
 
 export function TechGrid() {
   return (
-    <section className="py-12" style={{ background: 'var(--bg)', borderBottom: '1px solid var(--line)' }}>
-      <div className="max-w-screen-xl mx-auto px-4 lg:px-6">
-        <div className="flex items-end justify-between mb-6">
-          <div>
-            <h2 className="text-xl font-extrabold" style={{ color: 'var(--text)' }}>Popular Technologies</h2>
-            <p className="text-[13px] mt-0.5" style={{ color: 'var(--text-3)' }}>The most in-demand skills for web developers</p>
+    <section className="relative py-20 overflow-hidden" style={{ background: 'linear-gradient(180deg, var(--bg) 0%, var(--bg-section) 100%)' }}>
+      {/* Animated background blobs */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 dark:opacity-10">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-blue-400 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-10 right-20 w-80 h-80 bg-purple-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-400 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
+      </div>
+
+      <div className="relative max-w-screen-xl mx-auto px-4 lg:px-6">
+        {/* Header with gradient badge */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-4 shadow-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+            <TrendingUp className="w-4 h-4" />
+            Most In-Demand Skills
           </div>
-          <Link href="/technologies" className="flex items-center gap-1.5 text-[13px] font-bold hover:underline underline-offset-2" style={{ color: '#2563eb' }}>
-            View all <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+          <h2 className="text-3xl lg:text-5xl font-black mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Popular Technologies
+          </h2>
+          <p className="text-base max-w-2xl mx-auto" style={{ color: 'var(--text-2)' }}>
+            Master the tools that power modern web development — from frontend frameworks to backend systems
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {technologies.map((t) => {
-            // HTML has its own dedicated tutorial at /html
             const href = t.id === 'html' ? '/html' : t.id === 'css' ? '/css' : t.id === 'javascript' ? '/js' : t.id === 'typescript' ? '/learn/typescript' : t.id === 'react' ? '/learn/react' : t.id === 'nextjs' ? '/learn/nextjs' : t.id === 'nodejs' ? '/learn/nodejs' : `/learn/${t.slug}`;
+            const diffGradient = diffStyle[t.difficulty].gradient;
+            
             return (
             <Link key={t.id} href={href}
-              className="group relative flex flex-col p-5 rounded-2xl transition-all duration-200 hover:-translate-y-0.5"
-              style={{ background: 'var(--card)', border: '1px solid var(--line)' }}>
+              className="group relative flex flex-col p-6 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden"
+              style={{ 
+                background: 'var(--card)', 
+                border: '2px solid var(--line)',
+              }}>
 
-              {t.isPopular && (
-                <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full"
-                  style={{ background: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe' }}>
-                  Popular
-                </span>
-              )}
+              {/* Gradient overlay on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0"
+              {/* Logo and title */}
+              <div className="relative z-10 flex items-center gap-3 mb-4">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300"
                   style={{ background: t.bgColor }}>
                   {t.logo}
                 </div>
                 <div>
-                  <h3 className="font-bold text-[13px] group-hover:text-blue-600 transition-colors"
-                    style={{ color: 'var(--text)' }}>{t.name}</h3>
-                  <p className="text-[11px] capitalize" style={{ color: 'var(--text-3)' }}>
+                  <h3 className="font-black text-base group-hover:text-blue-600 transition-colors duration-200"
+                    style={{ color: 'var(--text)' }}>
+                    {t.name}
+                  </h3>
+                  <p className="text-xs capitalize font-semibold" style={{ color: 'var(--text-3)' }}>
                     {t.subcategory || t.category}
                   </p>
                 </div>
               </div>
 
-              <p className="text-[12px] leading-relaxed mb-4 flex-1 line-clamp-2" style={{ color: 'var(--text-2)' }}>
+              {/* Description */}
+              <p className="relative z-10 text-sm leading-relaxed mb-4 flex-1 line-clamp-2" style={{ color: 'var(--text-2)' }}>
                 {t.description}
               </p>
 
-              <div className="flex items-center justify-between pt-3" style={{ borderTop: '1px solid var(--line)' }}>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                  style={{ background: diffStyle[t.difficulty].bg, color: diffStyle[t.difficulty].color }}>
+              {/* Footer with gradient badge */}
+              <div className="relative z-10 flex items-center justify-between pt-4 pr-10" style={{ borderTop: '2px solid var(--line)' }}>
+                <span className={`text-xs font-bold px-3 py-1.5 rounded-lg shadow-md bg-gradient-to-r ${diffGradient} text-white`}>
                   {diffStyle[t.difficulty].label}
                 </span>
-                <span className="flex items-center gap-1 text-[11px]" style={{ color: 'var(--text-3)' }}>
-                  <BookOpen className="w-3 h-3" /> {t.topics.length} topics
+                <span className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: 'var(--text-3)' }}>
+                  <BookOpen className="w-3.5 h-3.5" /> 
+                  {t.topics.length}
                 </span>
+              </div>
+
+              {/* Hover arrow indicator */}
+              <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300 z-20">
+                <ArrowRight className="w-4 h-4 text-white" />
               </div>
             </Link>
             );
           })}
+        </div>
+
+        {/* CTA button */}
+        <div className="text-center mt-12">
+          <Link href="/technologies"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl font-bold text-base shadow-2xl transition-all hover:scale-105 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+            Explore All Technologies
+            <ArrowRight className="w-5 h-5" />
+          </Link>
         </div>
       </div>
     </section>

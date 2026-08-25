@@ -257,10 +257,16 @@ function setSort(key) {
   applyFilters();
 }
 
-// Load countries from REST API
+// Load countries from API
 async function loadCountries() {
   try {
-    var apiUrl = (window.__APP_ORIGIN__ || '') + '/api/countries';
+    // Try window.__APP_ORIGIN__ first (set by LiveEditor), fall back to relative URL
+    var base = (window.__APP_ORIGIN__ && window.__APP_ORIGIN__ !== 'null') ? window.__APP_ORIGIN__ : '';
+    // If base is empty (sandboxed iframe), try to detect from document.referrer
+    if (!base && document.referrer) {
+      try { base = new URL(document.referrer).origin; } catch(e) {}
+    }
+    var apiUrl = base + '/api/countries';
     console.log('Fetching countries from:', apiUrl);
     var res = await fetch(apiUrl);
     console.log('Response status:', res.status, res.statusText);

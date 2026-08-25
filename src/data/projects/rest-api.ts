@@ -1,1168 +1,686 @@
-import type { Project } from './types';
+﻿import type { Project } from './types';
 
 const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>REST API Explorer</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REST API Explorer</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
 
-    <!-- Top Bar -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <div class="brand">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <rect width="22" height="22" rx="5" fill="#00d4aa"/>
-            <path d="M5 11h12M11 5v12" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <span class="brand-name">REST API Explorer</span>
+<div id="app">
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="brand-icon">{}</div>
+      <span class="brand-name">REST API Explorer</span>
+      <span class="brand-sub">Simulated Blog API</span>
+    </div>
+    <div class="topbar-right">
+      <span class="label">Token:</span>
+      <span id="tokenVal" class="token-val">not logged in</span>
+      <button id="btnClearToken" class="btn-sm">clear</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="group-title">AUTH</div>
+      <button class="ep" data-key="register"><span class="m post">POST</span>/auth/register</button>
+      <button class="ep" data-key="login"><span class="m post">POST</span>/auth/login</button>
+      <button class="ep" data-key="me"><span class="m get">GET</span>/users/me</button>
+
+      <div class="group-title">POSTS</div>
+      <button class="ep" data-key="listPosts"><span class="m get">GET</span>/posts</button>
+      <button class="ep" data-key="getPost"><span class="m get">GET</span>/posts/:id</button>
+      <button class="ep" data-key="createPost"><span class="m post">POST</span>/posts</button>
+      <button class="ep" data-key="updatePost"><span class="m put">PUT</span>/posts/:id</button>
+      <button class="ep" data-key="deletePost"><span class="m del">DELETE</span>/posts/:id</button>
+
+      <div class="group-title">HISTORY</div>
+      <div id="histList"></div>
+    </aside>
+
+    <div class="main">
+
+      <div class="req-box">
+        <div class="url-bar">
+          <span id="mLabel" class="mlabel">GET</span>
+          <input id="urlInput" class="url-in" type="text" value="/api/posts" />
+          <button id="btnSend" class="btn-send">Send</button>
         </div>
-        <span class="brand-sub">Blog API Simulator</span>
+        <div class="tabs">
+          <button class="tab active" data-t="params">Params</button>
+          <button class="tab" data-t="headers">Headers</button>
+          <button class="tab" data-t="body">Body</button>
+        </div>
+        <div id="pane-params" class="pane">
+          <div class="pane-hint">Query params for GET /api/posts</div>
+          <div class="prow"><label>page</label><input class="pin" id="qPage" placeholder="1"/></div>
+          <div class="prow"><label>limit</label><input class="pin" id="qLimit" placeholder="10"/></div>
+          <div class="prow"><label>tag</label><input class="pin" id="qTag" placeholder="javascript"/></div>
+        </div>
+        <div id="pane-headers" class="pane" style="display:none">
+          <div class="pane-hint">Authorization (auto-filled after login)</div>
+          <div class="prow"><label>Authorization</label><input class="pin wide" id="authIn" placeholder="Bearer ..."/></div>
+        </div>
+        <div id="pane-body" class="pane" style="display:none">
+          <div class="prow-top">
+            <span class="pane-hint">Request body (JSON)</span>
+            <button id="btnPretty" class="btn-sm">Prettify</button>
+          </div>
+          <textarea id="bodyIn" class="body-ed" rows="6"></textarea>
+        </div>
       </div>
-      <div class="topbar-right">
-        <div class="token-display" id="tokenDisplay">
-          <span class="token-label">Token:</span>
-          <span class="token-val" id="tokenVal">not logged in</span>
-          <button class="clear-token-btn" id="clearTokenBtn" title="Clear token">x</button>
+
+      <div class="resp-box">
+        <div class="resp-top">
+          <span class="resp-label">RESPONSE</span>
+          <span id="statusBadge" class="status-badge"></span>
+          <span id="timeLabel" class="time-label"></span>
+          <button id="btnCopy" class="btn-sm" style="margin-left:auto">Copy</button>
         </div>
+        <pre id="respOut" class="resp-pre">// Select an endpoint and click Send</pre>
       </div>
-    </header>
 
-    <div class="main-layout">
+    </div>
 
-      <!-- Sidebar: Endpoint List -->
-      <aside class="sidebar">
-        <div class="sidebar-title">ENDPOINTS</div>
+    <aside class="docs">
+      <div class="group-title">DOCS</div>
+      <div id="docsBox" class="docs-body">Select an endpoint.</div>
+    </aside>
 
-        <div class="endpoint-group">
-          <div class="group-label">Auth</div>
-          <button class="endpoint-btn" data-endpoint="register">
-            <span class="method-badge post">POST</span>
-            <span class="ep-path">/api/auth/register</span>
-          </button>
-          <button class="endpoint-btn" data-endpoint="login">
-            <span class="method-badge post">POST</span>
-            <span class="ep-path">/api/auth/login</span>
-          </button>
-        </div>
-
-        <div class="endpoint-group">
-          <div class="group-label">Users</div>
-          <button class="endpoint-btn" data-endpoint="getMe">
-            <span class="method-badge get">GET</span>
-            <span class="ep-path">/api/users/me</span>
-          </button>
-        </div>
-
-        <div class="endpoint-group">
-          <div class="group-label">Posts</div>
-          <button class="endpoint-btn" data-endpoint="listPosts">
-            <span class="method-badge get">GET</span>
-            <span class="ep-path">/api/posts</span>
-          </button>
-          <button class="endpoint-btn" data-endpoint="getPost">
-            <span class="method-badge get">GET</span>
-            <span class="ep-path">/api/posts/:id</span>
-          </button>
-          <button class="endpoint-btn" data-endpoint="createPost">
-            <span class="method-badge post">POST</span>
-            <span class="ep-path">/api/posts</span>
-          </button>
-          <button class="endpoint-btn" data-endpoint="updatePost">
-            <span class="method-badge put">PUT</span>
-            <span class="ep-path">/api/posts/:id</span>
-          </button>
-          <button class="endpoint-btn" data-endpoint="deletePost">
-            <span class="method-badge delete">DELETE</span>
-            <span class="ep-path">/api/posts/:id</span>
-          </button>
-        </div>
-
-        <div class="sidebar-divider"></div>
-
-        <div class="sidebar-title" style="margin-top:0">HISTORY</div>
-        <div class="history-list" id="historyList">
-          <div class="history-empty">No requests yet</div>
-        </div>
-      </aside>
-
-      <!-- Main Panel -->
-      <div class="panel">
-
-        <!-- Request Builder -->
-        <div class="request-section">
-          <div class="section-header">
-            <span class="section-title">Request</span>
-            <div class="request-line" id="requestLine">
-              <span class="rl-method" id="rlMethod">GET</span>
-              <span class="rl-url" id="rlUrl">http://localhost:3001/api/posts</span>
-            </div>
-          </div>
-
-          <!-- URL Params (path params like :id) -->
-          <div class="param-row" id="paramRow" style="display:none">
-            <label class="param-label">Path Param</label>
-            <div class="param-inputs" id="paramInputs"></div>
-          </div>
-
-          <!-- Query Params -->
-          <div class="param-row" id="queryRow" style="display:none">
-            <label class="param-label">Query Params</label>
-            <div class="param-inputs" id="queryInputs"></div>
-          </div>
-
-          <!-- Auth Header -->
-          <div class="param-row" id="authRow">
-            <label class="param-label">Authorization</label>
-            <div class="auth-field">
-              <span class="auth-prefix">Bearer</span>
-              <input type="text" class="auth-input" id="authInput" placeholder="paste token here, or use login first" spellcheck="false" />
-            </div>
-          </div>
-
-          <!-- Request Body -->
-          <div class="body-section" id="bodySection" style="display:none">
-            <div class="body-header">
-              <span class="param-label">Body (JSON)</span>
-              <button class="btn-sm" id="prettyBtn">Prettify</button>
-            </div>
-            <textarea class="body-editor" id="bodyEditor" rows="8" spellcheck="false" placeholder="{}"></textarea>
-            <div class="body-error" id="bodyError"></div>
-          </div>
-
-          <div class="request-actions">
-            <button class="btn-send" id="sendBtn">Send Request</button>
-            <div class="sending-indicator" id="sendingIndicator">
-              <span class="dot-anim"></span> Sending...
-            </div>
-          </div>
-        </div>
-
-        <!-- Response Panel -->
-        <div class="response-section" id="responseSection">
-          <div class="section-header">
-            <span class="section-title">Response</span>
-            <div class="response-meta" id="responseMeta" style="display:none">
-              <span class="status-badge" id="statusBadge">200</span>
-              <span class="resp-time" id="respTime">0ms</span>
-            </div>
-          </div>
-          <div class="resp-headers-block" id="respHeadersBlock" style="display:none">
-            <div class="resp-headers-title">Headers</div>
-            <pre class="resp-headers-pre" id="respHeaders"></pre>
-          </div>
-          <div class="resp-body-block">
-            <div class="resp-empty" id="respEmpty">Send a request to see the response</div>
-            <pre class="resp-body" id="respBody" style="display:none"></pre>
-          </div>
-        </div>
-
-      </div><!-- end .panel -->
-    </div><!-- end .main-layout -->
-  </div><!-- end .app -->
-
-  <!-- Endpoint Description Tooltip -->
-  <div class="ep-info" id="epInfo" style="display:none">
-    <div class="ep-info-title" id="epInfoTitle"></div>
-    <div class="ep-info-desc" id="epInfoDesc"></div>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>`;
 
-const styleCss = `/* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; }
-body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: #0d1117;
-  color: #c9d1d9;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+const styleCss = `*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#e6edf3;font-size:13px;line-height:1.5;overflow:hidden}
+button{cursor:pointer;font-family:inherit}
+input,textarea{font-family:inherit}
 
-/* ===== APP ===== */
-.app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-}
+#app{display:flex;flex-direction:column;height:100vh}
 
-/* ===== TOPBAR ===== */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #161b22;
-  border-bottom: 1px solid #30363d;
-  padding: 0 16px;
-  height: 48px;
-  flex-shrink: 0;
-}
-.topbar-left { display: flex; align-items: center; gap: 14px; }
-.brand { display: flex; align-items: center; gap: 8px; }
-.brand-name { font-weight: 700; font-size: 15px; color: #e6edf3; letter-spacing: -0.3px; }
-.brand-sub { font-size: 11px; color: #6e7681; border-left: 1px solid #30363d; padding-left: 14px; }
-.topbar-right { display: flex; align-items: center; gap: 10px; }
-.token-display {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #1c2128;
-  border: 1px solid #30363d;
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 11px;
-}
-.token-label { color: #6e7681; }
-.token-val { color: #00d4aa; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.clear-token-btn {
-  background: none;
-  border: none;
-  color: #6e7681;
-  cursor: pointer;
-  font-size: 12px;
-  line-height: 1;
-  padding: 0 2px;
-}
-.clear-token-btn:hover { color: #f85149; }
+/* TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:48px;background:#161b22;border-bottom:1px solid #30363d;flex-shrink:0}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.brand-icon{width:30px;height:30px;background:linear-gradient(135deg,#238636,#2ea043);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;font-family:monospace}
+.brand-name{font-weight:800;font-size:14px}
+.brand-sub{font-size:10px;color:#484f58;background:#21262d;padding:2px 7px;border-radius:99px;border:1px solid #30363d}
+.topbar-right{display:flex;align-items:center;gap:8px;font-size:12px}
+.label{color:#484f58}
+.token-val{color:#3fb950;font-family:monospace;font-size:11px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-sm{padding:3px 10px;background:none;border:1px solid #30363d;border-radius:4px;color:#8b949e;font-size:11px;transition:all .12s}
+.btn-sm:hover{color:#e6edf3;border-color:#8b949e}
 
-/* ===== MAIN LAYOUT ===== */
-.main-layout {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:200px 1fr 240px;flex:1;overflow:hidden}
 
-/* ===== SIDEBAR ===== */
-.sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  background: #161b22;
-  border-right: 1px solid #30363d;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 12px 0;
-}
-.sidebar-title {
-  font-size: 10px;
-  font-weight: 700;
-  color: #6e7681;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 0 12px 8px;
-  margin-top: 4px;
-}
-.sidebar-divider { height: 1px; background: #30363d; margin: 10px 0; }
-.endpoint-group { margin-bottom: 6px; }
-.group-label {
-  font-size: 10px;
-  font-weight: 600;
-  color: #6e7681;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 4px 12px;
-}
-.endpoint-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  padding: 7px 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.12s;
-}
-.endpoint-btn:hover { background: #1c2128; }
-.endpoint-btn.active { background: #1c2128; border-right: 2px solid #00d4aa; }
-.ep-path { font-family: 'Consolas', 'Courier New', monospace; font-size: 12px; color: #c9d1d9; }
+/* SIDEBAR */
+.sidebar{background:#161b22;border-right:1px solid #30363d;overflow-y:auto;padding:8px 0}
+.group-title{font-size:10px;font-weight:700;letter-spacing:1.2px;color:#484f58;padding:10px 12px 4px;text-transform:uppercase}
+.ep{display:flex;align-items:center;gap:7px;width:100%;padding:6px 12px;background:none;border:none;border-left:2px solid transparent;color:#8b949e;text-align:left;font-size:11px;font-family:monospace;transition:all .12s}
+.ep:hover{background:#21262d;color:#e6edf3}
+.ep.active{background:#161b22;border-left-color:#58a6ff;color:#e6edf3}
+.m{font-size:9px;font-weight:800;padding:2px 4px;border-radius:3px;min-width:42px;text-align:center;flex-shrink:0}
+.get{background:#0d4429;color:#3fb950}
+.post{background:#0c2d6b;color:#58a6ff}
+.put{background:#3b2300;color:#d29922}
+.del{background:#3d0c0c;color:#f85149}
 
-/* ===== METHOD BADGES ===== */
-.method-badge {
-  font-size: 9px;
-  font-weight: 800;
-  padding: 2px 5px;
-  border-radius: 3px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  flex-shrink: 0;
-  min-width: 44px;
-  text-align: center;
-  letter-spacing: 0.4px;
-}
-.method-badge.get    { background: #0d2c1a; color: #3fb950; border: 1px solid #1e4a2e; }
-.method-badge.post   { background: #1a2a0d; color: #7ee787; border: 1px solid #2e4a1e; }
-.method-badge.put    { background: #2a1a0d; color: #e3b341; border: 1px solid #4a3a1e; }
-.method-badge.delete { background: #2a0d0d; color: #f85149; border: 1px solid #4a1e1e; }
+/* HISTORY */
+#histList{padding:0 4px}
+.hist{display:flex;align-items:center;gap:6px;padding:4px 8px;cursor:pointer;font-family:monospace;font-size:11px;color:#484f58;transition:background .1s}
+.hist:hover{background:#21262d;color:#8b949e}
+.hist-s{font-weight:800;min-width:26px}
+.hist-p{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 
-/* ===== HISTORY LIST ===== */
-.history-list { flex: 1; overflow-y: auto; }
-.history-empty { font-size: 11px; color: #6e7681; padding: 8px 12px; font-style: italic; }
-.history-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  cursor: pointer;
-  border-bottom: 1px solid #21262d;
-  transition: background 0.12s;
-}
-.history-item:hover { background: #1c2128; }
-.history-item .method-badge { font-size: 8px; padding: 1px 4px; min-width: 36px; }
-.history-path { font-family: 'Consolas', 'Courier New', monospace; font-size: 10px; color: #8b949e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-.history-status { font-size: 10px; font-weight: 700; min-width: 28px; text-align: right; }
-.history-status.ok  { color: #3fb950; }
-.history-status.err { color: #f85149; }
+/* MAIN */
+.main{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid #30363d}
 
-/* ===== PANEL ===== */
-.panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+/* REQUEST */
+.req-box{padding:12px 14px;border-bottom:1px solid #30363d;flex-shrink:0}
+.url-bar{display:flex;gap:8px;margin-bottom:10px}
+.mlabel{padding:6px 10px;background:#21262d;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;min-width:58px;text-align:center;color:#3fb950}
+.url-in{flex:1;padding:6px 10px;background:#21262d;border:1px solid #30363d;border-radius:5px;color:#e6edf3;font-size:13px;font-family:monospace;outline:none;transition:border-color .15s}
+.url-in:focus{border-color:#58a6ff}
+.btn-send{padding:6px 16px;background:#238636;color:#fff;border:none;border-radius:5px;font-size:13px;font-weight:700;transition:background .15s}
+.btn-send:hover{background:#2ea043}
 
-/* ===== SECTION HEADER ===== */
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 10px 16px;
-  background: #161b22;
-  border-bottom: 1px solid #30363d;
-  flex-shrink: 0;
-}
-.section-title {
-  font-size: 11px;
-  font-weight: 700;
-  color: #6e7681;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-.request-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  border-radius: 5px;
-  padding: 4px 10px;
-  flex: 1;
-}
-.rl-method { color: #e3b341; font-weight: 700; }
-.rl-url { color: #79c0ff; }
+.tabs{display:flex;gap:2px;border-bottom:1px solid #21262d;margin-bottom:8px}
+.tab{padding:5px 12px;background:none;border:none;border-bottom:2px solid transparent;color:#8b949e;font-size:12px;font-weight:600;margin-bottom:-1px;transition:color .12s}
+.tab:hover{color:#e6edf3}
+.tab.active{color:#58a6ff;border-bottom-color:#58a6ff}
 
-/* ===== REQUEST SECTION ===== */
-.request-section {
-  flex: 0 0 auto;
-  overflow-y: auto;
-  max-height: 55%;
-  border-bottom: 1px solid #30363d;
-}
-.param-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 10px 16px;
-  border-bottom: 1px solid #21262d;
-}
-.param-label { font-size: 11px; font-weight: 600; color: #6e7681; min-width: 110px; padding-top: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
-.param-inputs { display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.param-group { display: flex; align-items: center; gap: 8px; }
-.param-key {
-  width: 120px;
-  padding: 6px 8px;
-  background: #1c2128;
-  border: 1px solid #30363d;
-  border-radius: 5px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  color: #e3b341;
-  outline: none;
-}
-.param-value {
-  flex: 1;
-  padding: 6px 8px;
-  background: #1c2128;
-  border: 1px solid #30363d;
-  border-radius: 5px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  color: #c9d1d9;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.param-value:focus { border-color: #00d4aa; }
-.auth-field { display: flex; align-items: center; gap: 8px; flex: 1; }
-.auth-prefix { font-size: 11px; color: #6e7681; font-family: 'Consolas', 'Courier New', monospace; }
-.auth-input {
-  flex: 1;
-  padding: 6px 8px;
-  background: #1c2128;
-  border: 1px solid #30363d;
-  border-radius: 5px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  color: #00d4aa;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.auth-input:focus { border-color: #00d4aa; }
-.body-section { padding: 10px 16px 0; }
-.body-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.body-editor {
-  width: 100%;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  border-radius: 6px;
-  color: #c9d1d9;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  line-height: 1.6;
-  padding: 10px 12px;
-  resize: vertical;
-  outline: none;
-  transition: border-color 0.15s;
-}
-.body-editor:focus { border-color: #00d4aa; }
-.body-error { font-size: 11px; color: #f85149; min-height: 18px; padding: 4px 0; }
-.btn-sm {
-  padding: 3px 10px;
-  background: #1c2128;
-  border: 1px solid #30363d;
-  border-radius: 4px;
-  color: #8b949e;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.btn-sm:hover { background: #30363d; color: #c9d1d9; }
-.request-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-}
-.btn-send {
-  padding: 8px 24px;
-  background: #00d4aa;
-  border: none;
-  border-radius: 6px;
-  color: #0d1117;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
-}
-.btn-send:hover { background: #00b894; }
-.btn-send:active { transform: scale(0.97); }
-.btn-send:disabled { background: #1c4a3e; color: #00d4aa66; cursor: not-allowed; transform: none; }
-.sending-indicator {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: #6e7681;
-}
-.sending-indicator.visible { display: flex; }
-@keyframes dotPulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-.dot-anim {
-  width: 8px; height: 8px;
-  background: #00d4aa;
-  border-radius: 50%;
-  display: inline-block;
-  animation: dotPulse 0.9s infinite;
-}
+.pane{display:block}
+.pane-hint{font-size:11px;color:#484f58;margin-bottom:6px}
+.prow{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.prow label{font-size:11px;color:#8b949e;font-family:monospace;min-width:90px;text-align:right}
+.pin{flex:1;padding:4px 8px;background:#21262d;border:1px solid #30363d;border-radius:4px;color:#e6edf3;font-size:12px;font-family:monospace;outline:none}
+.pin:focus{border-color:#58a6ff}
+.pin::placeholder{color:#30363d}
+.pin.wide{min-width:0}
+.prow-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.body-ed{width:100%;padding:8px 10px;background:#21262d;border:1px solid #30363d;border-radius:5px;color:#e6edf3;font-size:12px;font-family:monospace;resize:vertical;outline:none;line-height:1.6}
+.body-ed:focus{border-color:#58a6ff}
 
-/* ===== RESPONSE SECTION ===== */
-.response-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.response-meta { display: flex; align-items: center; gap: 10px; }
-.status-badge {
-  font-size: 12px;
-  font-weight: 800;
-  padding: 2px 9px;
-  border-radius: 4px;
-  font-family: 'Consolas', 'Courier New', monospace;
-}
-.status-badge.s2xx { background: #0d2c1a; color: #3fb950; border: 1px solid #1e4a2e; }
-.status-badge.s4xx { background: #2a0d0d; color: #f85149; border: 1px solid #4a1e1e; }
-.status-badge.s5xx { background: #2a1a0d; color: #e3b341; border: 1px solid #4a3a1e; }
-.resp-time { font-size: 11px; color: #6e7681; font-family: 'Consolas', 'Courier New', monospace; }
-.resp-headers-block { padding: 8px 16px; border-bottom: 1px solid #21262d; }
-.resp-headers-title { font-size: 10px; font-weight: 700; color: #6e7681; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
-.resp-headers-pre {
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 11px;
-  color: #8b949e;
-  line-height: 1.6;
-  background: #161b22;
-  border-radius: 5px;
-  padding: 8px 10px;
-}
-.resp-body-block { flex: 1; overflow: auto; padding: 12px 16px; }
-.resp-empty { color: #6e7681; font-size: 13px; padding: 30px 0; text-align: center; font-style: italic; }
-.resp-body {
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 12px;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  word-break: break-all;
-  background: #0d1117;
-  border: 1px solid #30363d;
-  border-radius: 6px;
-  padding: 12px 14px;
-  color: #c9d1d9;
-}
-/* JSON syntax highlighting */
-.resp-body .json-key    { color: #79c0ff; }
-.resp-body .json-str    { color: #a5d6ff; }
-.resp-body .json-num    { color: #79c0ff; }
-.resp-body .json-bool   { color: #56d364; }
-.resp-body .json-null   { color: #6e7681; }
+/* RESPONSE */
+.resp-box{flex:1;display:flex;flex-direction:column;padding:12px 14px;overflow:hidden;min-height:0}
+.resp-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-shrink:0}
+.resp-label{font-size:10px;font-weight:700;letter-spacing:1px;color:#484f58}
+.status-badge{font-size:11px;font-weight:800;padding:2px 7px;border-radius:4px;font-family:monospace}
+.s2{background:#0d4429;color:#3fb950}
+.s4{background:#3d0c0c;color:#f85149}
+.s5{background:#3b2300;color:#d29922}
+.time-label{font-size:11px;color:#484f58;font-family:monospace}
+.resp-pre{flex:1;background:#161b22;border:1px solid #30363d;border-radius:5px;padding:10px 12px;overflow:auto;font-family:monospace;font-size:12px;line-height:1.7;color:#8b949e;white-space:pre;min-height:0}
+.jk{color:#79c0ff}.js{color:#a5d6ff}.jn{color:#f2cc60}.jb{color:#ff7b72}.jl{color:#8b949e}
 
-/* ===== EP INFO ===== */
-.ep-info {
-  position: fixed;
-  top: 56px;
-  right: 12px;
-  background: #1c2128;
-  border: 1px solid #30363d;
-  border-radius: 8px;
-  padding: 10px 14px;
-  max-width: 280px;
-  z-index: 100;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-}
-.ep-info-title { font-size: 12px; font-weight: 700; color: #e6edf3; margin-bottom: 5px; }
-.ep-info-desc { font-size: 11px; color: #8b949e; line-height: 1.5; }
+/* DOCS */
+.docs{background:#161b22;overflow-y:auto;padding:8px 0}
+.docs-body{padding:4px 12px 12px;font-size:12px;color:#8b949e;line-height:1.7}
+.docs-body h4{color:#e6edf3;font-size:12px;font-weight:700;margin:10px 0 4px}
+.docs-body p{margin-bottom:6px}
+.docs-body pre{background:#0d1117;border:1px solid #30363d;border-radius:5px;padding:8px 10px;margin:5px 0;font-family:monospace;font-size:11px;color:#e6edf3;white-space:pre-wrap;line-height:1.5}
+.docs-body .note{background:#1c2128;border-left:3px solid #58a6ff;padding:6px 10px;border-radius:0 4px 4px 0;margin:6px 0;font-size:11px}
+.docs-body .warn{border-left-color:#d29922}
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #484f58; }
+@media(max-width:800px){.layout{grid-template-columns:180px 1fr}.docs{display:none}}`;
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 700px) {
-  .sidebar { width: 180px; }
-  .ep-path { font-size: 10px; }
-  .brand-sub { display: none; }
-}
-@media (max-width: 500px) {
-  .sidebar { display: none; }
-  .panel { flex: 1; }
-}`;
+const scriptJs = `'use strict';
 
-const scriptJs = `// =======================================================
-// REST API Explorer - in-browser blog API simulator
-// Simulates: auth, posts CRUD, JWT tokens, HTTP codes
-// =======================================================
-
-// -------------------------------------------------------
-// IN-MEMORY DATABASE
-// -------------------------------------------------------
-var db = {
+// ================================================================
+// DATABASE
+// ================================================================
+var DB = {
   users: [
-    { id: 'u1', name: 'Alice Smith', email: 'alice@example.com', password: 'pass123', createdAt: '2024-01-10T09:00:00Z' },
-    { id: 'u2', name: 'Bob Jones',  email: 'bob@example.com',   password: 'pass456', createdAt: '2024-01-11T10:00:00Z' }
+    {id:'u1', name:'Alex Morgan',  email:'alex@demo.com',   password:'pass123', createdAt:'2024-01-01'},
+    {id:'u2', name:'Sarah Chen',   email:'sarah@demo.com',  password:'pass123', createdAt:'2024-01-02'},
+    {id:'u3', name:'Marcus Lee',   email:'marcus@demo.com', password:'pass123', createdAt:'2024-01-03'}
   ],
   posts: [
-    { id: 'p1', title: 'Getting Started with REST APIs', body: 'REST stands for Representational State Transfer. It is an architectural style for building web services that communicate over HTTP.', tags: ['api', 'beginner'], authorId: 'u1', createdAt: '2024-01-12T08:00:00Z', updatedAt: '2024-01-12T08:00:00Z' },
-    { id: 'p2', title: 'JWT Authentication Explained',   body: 'JSON Web Tokens are a compact way to transmit information between parties as a JSON object. They consist of three parts: header, payload, and signature.', tags: ['auth', 'jwt'],    authorId: 'u1', createdAt: '2024-01-13T09:00:00Z', updatedAt: '2024-01-13T09:00:00Z' },
-    { id: 'p3', title: 'MongoDB vs PostgreSQL',          body: 'Choosing between MongoDB and PostgreSQL depends on your data shape. MongoDB is flexible with documents, PostgreSQL excels at relational data with complex queries.', tags: ['database'],    authorId: 'u2', createdAt: '2024-01-14T10:00:00Z', updatedAt: '2024-01-14T10:00:00Z' },
-    { id: 'p4', title: 'Express.js Middleware Deep Dive', body: 'Middleware in Express is a function that has access to the request and response objects. It can execute code, modify req/res, end the cycle, or call next().', tags: ['express', 'nodejs'], authorId: 'u2', createdAt: '2024-01-15T11:00:00Z', updatedAt: '2024-01-15T11:00:00Z' }
+    {id:'p1', title:'Getting Started with REST APIs',  body:'REST APIs use HTTP methods for CRUD operations. The four main methods are GET, POST, PUT, and DELETE.',           authorId:'u1', tags:['api','beginner'],       createdAt:'2024-01-10', updatedAt:'2024-01-10'},
+    {id:'p2', title:'JavaScript Closures Deep Dive',   body:'A closure is a function that retains access to variables from its outer scope even after the outer function returns.', authorId:'u2', tags:['javascript','advanced'], createdAt:'2024-01-11', updatedAt:'2024-01-11'},
+    {id:'p3', title:'CSS Grid Layout Guide',           body:'CSS Grid is a two-dimensional layout system. Use grid-template-columns and grid-template-rows to define structure.', authorId:'u1', tags:['css','layout'],          createdAt:'2024-01-12', updatedAt:'2024-01-12'},
+    {id:'p4', title:'Node.js Async/Await Patterns',   body:'Async/await is syntactic sugar over Promises. Use try/catch for error handling and Promise.all for parallel ops.',   authorId:'u3', tags:['nodejs','async'],        createdAt:'2024-01-13', updatedAt:'2024-01-13'},
+    {id:'p5', title:'SQL vs NoSQL: When to Use Each', body:'Relational databases use structured tables. NoSQL databases like MongoDB use flexible documents.',                     authorId:'u2', tags:['database','sql'],        createdAt:'2024-01-14', updatedAt:'2024-01-14'}
   ],
-  tokens: {}  // token string -> userId
+  tokens: {}
 };
 
-var idCounter = 100;
-function genId(prefix) { return prefix + (++idCounter); }
-function fakeToken(userId) {
-  var token = 'eyJ.fake.' + btoa(userId + ':' + Date.now()).replace(/=/g, '').slice(0, 24);
-  db.tokens[token] = userId;
-  return token;
-}
-function getUserFromToken(token) {
-  if (!token) return null;
-  var userId = db.tokens[token];
-  if (!userId) return null;
-  return db.users.find(function(u) { return u.id === userId; }) || null;
-}
-function findUserByEmail(email) { return db.users.find(function(u) { return u.email === email; }) || null; }
-function findPost(id) { return db.posts.find(function(p) { return p.id === id; }) || null; }
-function populateAuthor(post) {
-  var author = db.users.find(function(u) { return u.id === post.authorId; });
-  var out = Object.assign({}, post);
-  delete out.authorId;
-  out.author = author ? { id: author.id, name: author.name, email: author.email } : null;
-  return out;
+// ================================================================
+// ENDPOINT DEFAULT BODIES  (no embedded newlines or quotes)
+// ================================================================
+var BODIES = {
+  register:   '{ "name": "John Doe", "email": "john@example.com", "password": "secret123" }',
+  login:      '{ "email": "alex@demo.com", "password": "pass123" }',
+  me:         '',
+  listPosts:  '',
+  getPost:    '',
+  createPost: '{ "title": "My Article", "body": "Content goes here.", "tags": ["javascript"] }',
+  updatePost: '{ "title": "Updated Title", "body": "Updated content." }',
+  deletePost: ''
+};
+
+var METHODS = {
+  register:'POST', login:'POST', me:'GET',
+  listPosts:'GET', getPost:'GET', createPost:'POST',
+  updatePost:'PUT', deletePost:'DELETE'
+};
+
+var URLS = {
+  register:'/api/auth/register', login:'/api/auth/login', me:'/api/users/me',
+  listPosts:'/api/posts', getPost:'/api/posts/p1', createPost:'/api/posts',
+  updatePost:'/api/posts/p1', deletePost:'/api/posts/p1'
+};
+
+var DEFAULT_TAB = {
+  register:'body', login:'body', me:'headers',
+  listPosts:'params', getPost:'params', createPost:'body',
+  updatePost:'body', deletePost:'headers'
+};
+
+// ================================================================
+// DOCS (plain text only - no quotes, no special chars)
+// ================================================================
+var DOCS = {
+  register: {
+    title: 'POST /api/auth/register',
+    desc: 'Create a new user account. Returns the user object (password excluded).',
+    auth: false,
+    body: 'name     - string, required | email    - string, required | password - string, min 6 chars',
+    resp: '201 Created      user object | 400 Bad Request  missing fields or short password | 409 Conflict     email already registered'
+  },
+  login: {
+    title: 'POST /api/auth/login',
+    desc: 'Login and receive a JWT token. The token is auto-saved for protected endpoints.',
+    auth: false,
+    body: 'email    - string, required | password - string, required',
+    resp: '200 OK           { token, user } | 401 Unauthorized  wrong password | 404 Not Found    user not found'
+  },
+  me: {
+    title: 'GET /api/users/me',
+    desc: 'Get the authenticated user profile. Requires a valid Bearer token.',
+    auth: true,
+    body: 'No body needed.',
+    resp: '200 OK           user profile | 401 Unauthorized  no or invalid token'
+  },
+  listPosts: {
+    title: 'GET /api/posts',
+    desc: 'List all posts with pagination. Public endpoint, no auth needed.',
+    auth: false,
+    body: 'Query params (all optional): | page  - page number, default 1 | limit - per page, default 10, max 50 | tag   - filter by tag name',
+    resp: '200 OK  { posts[], total, page, totalPages }'
+  },
+  getPost: {
+    title: 'GET /api/posts/:id',
+    desc: 'Get a single post by ID including author details. Public endpoint.',
+    auth: false,
+    body: 'No body. Replace :id in URL. | Example: /api/posts/p1',
+    resp: '200 OK       post with author | 404 Not Found  post not found'
+  },
+  createPost: {
+    title: 'POST /api/posts',
+    desc: 'Create a new post. Authentication required.',
+    auth: true,
+    body: 'title - string, required | body  - string, required | tags  - array of strings, optional',
+    resp: '201 Created     new post object | 400 Bad Request  missing title or body | 401 Unauthorized  not logged in'
+  },
+  updatePost: {
+    title: 'PUT /api/posts/:id',
+    desc: 'Update a post. Only the original author can update their own posts.',
+    auth: true,
+    body: 'title - string, optional | body  - string, optional | tags  - array, optional',
+    resp: '200 OK           updated post | 401 Unauthorized  no token | 403 Forbidden    not the author | 404 Not Found    post not found'
+  },
+  deletePost: {
+    title: 'DELETE /api/posts/:id',
+    desc: 'Delete a post. Only the original author can delete their own posts.',
+    auth: true,
+    body: 'No body. Replace :id in URL. | Example: /api/posts/p1',
+    resp: '200 OK           { message, id } | 401 Unauthorized  no token | 403 Forbidden    not the author | 404 Not Found    post not found'
+  }
+};
+
+// ================================================================
+// STATE
+// ================================================================
+var currentToken = localStorage.getItem('rest_token') || '';
+var reqHistory = [];
+
+// ================================================================
+// INIT
+// ================================================================
+(function init() {
+  // Sidebar clicks
+  document.querySelectorAll('.ep').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      selectEndpoint(this.dataset.key);
+    });
+  });
+
+  // Tab clicks
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.addEventListener('click', function() { switchTab(this.dataset.t); });
+  });
+
+  document.getElementById('btnSend').addEventListener('click', sendRequest);
+  document.getElementById('btnPretty').addEventListener('click', prettify);
+  document.getElementById('btnCopy').addEventListener('click', copyResp);
+  document.getElementById('btnClearToken').addEventListener('click', clearToken);
+
+  if (currentToken) {
+    document.getElementById('authIn').value = 'Bearer ' + currentToken;
+    setTokenDisplay(currentToken);
+  }
+
+  selectEndpoint('listPosts');
+}());
+
+// ================================================================
+// SELECT ENDPOINT
+// ================================================================
+function selectEndpoint(key) {
+  document.querySelectorAll('.ep').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.key === key);
+  });
+
+  var method = METHODS[key];
+  var url    = URLS[key];
+  var body   = BODIES[key];
+  var tab    = DEFAULT_TAB[key];
+
+  var ml = document.getElementById('mLabel');
+  ml.textContent = method;
+  var colors = {GET:'#3fb950', POST:'#58a6ff', PUT:'#d29922', DELETE:'#f85149'};
+  ml.style.color = colors[method] || '#e6edf3';
+
+  document.getElementById('urlInput').value = url;
+  document.getElementById('bodyIn').value   = body || '';
+
+  switchTab(tab);
+  renderDocs(key);
 }
 
-// -------------------------------------------------------
-// SIMULATED API HANDLER
-// -------------------------------------------------------
-function simulateRequest(method, path, headers, body) {
-  var authHeader = headers['Authorization'] || '';
-  var token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
+// ================================================================
+// TABS
+// ================================================================
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.classList.toggle('active', t.dataset.t === name);
+  });
+  ['params','headers','body'].forEach(function(t) {
+    var el = document.getElementById('pane-' + t);
+    if (el) el.style.display = t === name ? 'block' : 'none';
+  });
+}
+
+// ================================================================
+// SEND REQUEST
+// ================================================================
+function sendRequest() {
+  var method = document.getElementById('mLabel').textContent.trim();
+  var url    = document.getElementById('urlInput').value.trim();
+  var auth   = document.getElementById('authIn').value.trim();
+  var body   = document.getElementById('bodyIn').value.trim();
+
+  if (method === 'GET' && url === '/api/posts') {
+    var page  = document.getElementById('qPage').value.trim();
+    var limit = document.getElementById('qLimit').value.trim();
+    var tag   = document.getElementById('qTag').value.trim();
+    var qs = [];
+    if (page)  qs.push('page='  + encodeURIComponent(page));
+    if (limit) qs.push('limit=' + encodeURIComponent(limit));
+    if (tag)   qs.push('tag='   + encodeURIComponent(tag));
+    if (qs.length) url += '?' + qs.join('&');
+  }
+
+  var t0  = Date.now();
+  var res = router(method, url, auth, body);
+  var ms  = Date.now() - t0;
+
+  if (res.status === 200 && res.data && res.data.token) {
+    currentToken = res.data.token;
+    localStorage.setItem('rest_token', currentToken);
+    document.getElementById('authIn').value = 'Bearer ' + currentToken;
+    setTokenDisplay(currentToken);
+  }
+
+  renderResponse(res.status, res.data, ms);
+  addHistory(method, url, res.status);
+}
+
+// ================================================================
+// ROUTER
+// ================================================================
+function router(method, rawUrl, authHeader, rawBody) {
+  var parts  = rawUrl.split('?');
+  var path   = parts[0];
+  var query  = parseQS(parts[1] || '');
+  var body   = {};
+
+  if (rawBody && rawBody.trim()) {
+    try { body = JSON.parse(rawBody); }
+    catch(e) { return resp(400, {error: 'Invalid JSON body: ' + e.message}); }
+  }
+
+  var userId = null;
+  if (authHeader && authHeader.indexOf('Bearer ') === 0) {
+    var tok = authHeader.slice(7).trim();
+    userId  = DB.tokens[tok] || null;
+  }
 
   // POST /api/auth/register
   if (method === 'POST' && path === '/api/auth/register') {
-    var name = body && body.name ? body.name.trim() : '';
-    var email = body && body.email ? body.email.trim().toLowerCase() : '';
-    var password = body && body.password ? body.password : '';
-    if (!name || !email || !password) {
-      return { status: 400, body: { error: 'All fields are required', fields: ['name', 'email', 'password'] } };
-    }
-    if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
-      return { status: 400, body: { error: 'Invalid email address' } };
-    }
-    if (password.length < 6) {
-      return { status: 400, body: { error: 'Password must be at least 6 characters' } };
-    }
-    if (findUserByEmail(email)) {
-      return { status: 409, body: { error: 'Email is already registered' } };
-    }
-    var newUser = { id: genId('u'), name: name, email: email, password: password, createdAt: new Date().toISOString() };
-    db.users.push(newUser);
-    var tok = fakeToken(newUser.id);
-    return { status: 201, body: { token: tok, user: { id: newUser.id, name: newUser.name, email: newUser.email } } };
+    if (!body.name || !body.email || !body.password)
+      return resp(400, {error: 'name, email and password are required'});
+    if (body.password.length < 6)
+      return resp(400, {error: 'password must be at least 6 characters'});
+    if (DB.users.find(function(u){return u.email===body.email;}))
+      return resp(409, {error: 'Email already registered'});
+    var nu = {id:'u'+Date.now(), name:body.name, email:body.email, password:body.password, createdAt:today()};
+    DB.users.push(nu);
+    return resp(201, {id:nu.id, name:nu.name, email:nu.email, createdAt:nu.createdAt});
   }
 
   // POST /api/auth/login
   if (method === 'POST' && path === '/api/auth/login') {
-    var loginEmail = body && body.email ? body.email.trim().toLowerCase() : '';
-    var loginPass  = body && body.password ? body.password : '';
-    if (!loginEmail || !loginPass) {
-      return { status: 400, body: { error: 'Email and password are required' } };
-    }
-    var loginUser = findUserByEmail(loginEmail);
-    if (!loginUser || loginUser.password !== loginPass) {
-      return { status: 401, body: { error: 'Invalid email or password' } };
-    }
-    var loginTok = fakeToken(loginUser.id);
-    return { status: 200, body: { token: loginTok, user: { id: loginUser.id, name: loginUser.name, email: loginUser.email } } };
+    if (!body.email || !body.password)
+      return resp(400, {error: 'email and password are required'});
+    var u = DB.users.find(function(u){return u.email===body.email;});
+    if (!u)               return resp(404, {error: 'User not found'});
+    if (u.password !== body.password) return resp(401, {error: 'Invalid password'});
+    var token = 'eyJ.' + btoa(u.id+':'+Date.now()).replace(/=/g,'') + '.sig';
+    DB.tokens[token] = u.id;
+    return resp(200, {token:token, user:{id:u.id, name:u.name, email:u.email}});
   }
 
   // GET /api/users/me
   if (method === 'GET' && path === '/api/users/me') {
-    var meUser = getUserFromToken(token);
-    if (!meUser) return { status: 401, body: { error: 'No valid token provided' } };
-    return { status: 200, body: { id: meUser.id, name: meUser.name, email: meUser.email, createdAt: meUser.createdAt } };
+    if (!userId) return resp(401, {error: 'Authorization required'});
+    var me = DB.users.find(function(u){return u.id===userId;});
+    if (!me) return resp(404, {error: 'User not found'});
+    return resp(200, {id:me.id, name:me.name, email:me.email, createdAt:me.createdAt});
   }
 
   // GET /api/posts
   if (method === 'GET' && path === '/api/posts') {
-    var page  = (headers['_page']  && parseInt(headers['_page'],  10)) || 1;
-    var limit = (headers['_limit'] && parseInt(headers['_limit'], 10)) || 10;
-    var tag   = headers['_tag'] || '';
-    var filtered = db.posts.slice();
-    if (tag) { filtered = filtered.filter(function(p) { return p.tags.indexOf(tag) !== -1; }); }
-    var total = filtered.length;
-    var pages = Math.ceil(total / limit);
-    var start = (page - 1) * limit;
-    var slice = filtered.slice(start, start + limit).map(populateAuthor);
-    return { status: 200, body: { posts: slice, total: total, page: page, pages: pages } };
+    var page  = Math.max(1, parseInt(query.page  || '1')  || 1);
+    var lim   = Math.min(50, Math.max(1, parseInt(query.limit || '10') || 10));
+    var tag   = (query.tag || '').toLowerCase();
+    var list  = DB.posts.slice();
+    if (tag) list = list.filter(function(p){return p.tags.indexOf(tag) !== -1;});
+    var total  = list.length;
+    var paged  = list.slice((page-1)*lim, page*lim).map(function(p) {
+      var au = DB.users.find(function(u){return u.id===p.authorId;});
+      return {id:p.id, title:p.title, excerpt:p.body.slice(0,80)+'...', tags:p.tags,
+              author: au ? {id:au.id,name:au.name} : null, createdAt:p.createdAt};
+    });
+    return resp(200, {posts:paged, total:total, page:page, totalPages:Math.ceil(total/lim)});
   }
 
   // GET /api/posts/:id
-  var getPostMatch = path.match(/^\/api\/posts\/([^/]+)$/);
-  if (method === 'GET' && getPostMatch) {
-    var gpPost = findPost(getPostMatch[1]);
-    if (!gpPost) return { status: 404, body: { error: 'Post not found' } };
-    return { status: 200, body: populateAuthor(gpPost) };
+  var gpId = getId(path, '/api/posts/');
+  if (method === 'GET' && gpId) {
+    var post = DB.posts.find(function(p){return p.id===gpId;});
+    if (!post) return resp(404, {error: 'Post not found: ' + gpId});
+    var au   = DB.users.find(function(u){return u.id===post.authorId;});
+    return resp(200, {id:post.id, title:post.title, body:post.body, tags:post.tags,
+                      author: au ? {id:au.id,name:au.name} : null,
+                      createdAt:post.createdAt, updatedAt:post.updatedAt});
   }
 
   // POST /api/posts
   if (method === 'POST' && path === '/api/posts') {
-    var cpUser = getUserFromToken(token);
-    if (!cpUser) return { status: 401, body: { error: 'Authentication required. Include a Bearer token.' } };
-    var cpTitle = body && body.title ? body.title.trim() : '';
-    var cpBody  = body && body.body  ? body.body.trim()  : '';
-    if (!cpTitle || !cpBody) return { status: 400, body: { error: 'title and body are required' } };
-    var cpTags = (body && Array.isArray(body.tags)) ? body.tags : [];
-    var newPost = { id: genId('p'), title: cpTitle, body: cpBody, tags: cpTags, authorId: cpUser.id, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
-    db.posts.unshift(newPost);
-    return { status: 201, body: populateAuthor(newPost) };
+    if (!userId) return resp(401, {error: 'Authorization required'});
+    if (!body.title) return resp(400, {error: 'title is required'});
+    if (!body.body)  return resp(400, {error: 'body is required'});
+    var np = {id:'p'+Date.now(), title:body.title, body:body.body, authorId:userId,
+              tags: Array.isArray(body.tags) ? body.tags : [],
+              createdAt:today(), updatedAt:today()};
+    DB.posts.unshift(np);
+    return resp(201, np);
   }
 
   // PUT /api/posts/:id
-  var putMatch = path.match(/^\/api\/posts\/([^/]+)$/);
-  if (method === 'PUT' && putMatch) {
-    var upUser = getUserFromToken(token);
-    if (!upUser) return { status: 401, body: { error: 'Authentication required. Include a Bearer token.' } };
-    var upPost = findPost(putMatch[1]);
-    if (!upPost) return { status: 404, body: { error: 'Post not found' } };
-    if (upPost.authorId !== upUser.id) return { status: 403, body: { error: 'Forbidden: you are not the author of this post' } };
-    if (body && body.title) upPost.title = body.title.trim();
-    if (body && body.body)  upPost.body  = body.body.trim();
-    if (body && Array.isArray(body.tags)) upPost.tags = body.tags;
-    upPost.updatedAt = new Date().toISOString();
-    return { status: 200, body: populateAuthor(upPost) };
+  var putId = getId(path, '/api/posts/');
+  if (method === 'PUT' && putId) {
+    if (!userId) return resp(401, {error: 'Authorization required'});
+    var i = DB.posts.findIndex(function(p){return p.id===putId;});
+    if (i === -1) return resp(404, {error: 'Post not found: ' + putId});
+    if (DB.posts[i].authorId !== userId) return resp(403, {error: 'Forbidden - not the author'});
+    if (body.title) DB.posts[i].title = body.title;
+    if (body.body)  DB.posts[i].body  = body.body;
+    if (Array.isArray(body.tags)) DB.posts[i].tags = body.tags;
+    DB.posts[i].updatedAt = today();
+    return resp(200, DB.posts[i]);
   }
 
   // DELETE /api/posts/:id
-  var delMatch = path.match(/^\/api\/posts\/([^/]+)$/);
-  if (method === 'DELETE' && delMatch) {
-    var delUser = getUserFromToken(token);
-    if (!delUser) return { status: 401, body: { error: 'Authentication required. Include a Bearer token.' } };
-    var delPost = findPost(delMatch[1]);
-    if (!delPost) return { status: 404, body: { error: 'Post not found' } };
-    if (delPost.authorId !== delUser.id) return { status: 403, body: { error: 'Forbidden: you are not the author of this post' } };
-    db.posts = db.posts.filter(function(p) { return p.id !== delPost.id; });
-    return { status: 200, body: { message: 'Post deleted successfully', id: delPost.id } };
+  var delId = getId(path, '/api/posts/');
+  if (method === 'DELETE' && delId) {
+    if (!userId) return resp(401, {error: 'Authorization required'});
+    var di = DB.posts.findIndex(function(p){return p.id===delId;});
+    if (di === -1) return resp(404, {error: 'Post not found: ' + delId});
+    if (DB.posts[di].authorId !== userId) return resp(403, {error: 'Forbidden - not the author'});
+    DB.posts.splice(di, 1);
+    return resp(200, {message:'Post deleted', id:delId});
   }
 
-  return { status: 404, body: { error: 'Endpoint not found' } };
+  return resp(404, {error: 'Not found: ' + method + ' ' + path});
 }
 
-// -------------------------------------------------------
-// ENDPOINT DEFINITIONS
-// -------------------------------------------------------
-var ENDPOINTS = {
-  register: {
-    method: 'POST', path: '/api/auth/register',
-    title: 'Register a new user',
-    desc: 'Creates a new account. Returns a JWT token. Requires name, email, and password.',
-    auth: false, hasBody: true, pathParams: [], queryParams: [],
-    defaultBody: { name: 'Jane Dev', email: 'jane@example.com', password: 'secret123' }
-  },
-  login: {
-    method: 'POST', path: '/api/auth/login',
-    title: 'Login',
-    desc: 'Authenticates a user and returns a JWT token. Try: alice@example.com / pass123',
-    auth: false, hasBody: true, pathParams: [], queryParams: [],
-    defaultBody: { email: 'alice@example.com', password: 'pass123' }
-  },
-  getMe: {
-    method: 'GET', path: '/api/users/me',
-    title: 'Get current user',
-    desc: 'Returns the authenticated user profile. Requires a valid Bearer token.',
-    auth: true, hasBody: false, pathParams: [], queryParams: []
-  },
-  listPosts: {
-    method: 'GET', path: '/api/posts',
-    title: 'List all posts',
-    desc: 'Returns a paginated list of posts. Optional query params: page, limit, tag.',
-    auth: false, hasBody: false, pathParams: [],
-    queryParams: [
-      { key: 'page',  placeholder: '1' },
-      { key: 'limit', placeholder: '10' },
-      { key: 'tag',   placeholder: 'api' }
-    ]
-  },
-  getPost: {
-    method: 'GET', path: '/api/posts/:id',
-    title: 'Get a single post',
-    desc: 'Returns a single post by its ID. Try: p1, p2, p3, or p4.',
-    auth: false, hasBody: false,
-    pathParams: [{ key: 'id', placeholder: 'p1' }], queryParams: []
-  },
-  createPost: {
-    method: 'POST', path: '/api/posts',
-    title: 'Create a post',
-    desc: 'Creates a new post. Requires a valid Bearer token (login first).',
-    auth: true, hasBody: true, pathParams: [], queryParams: [],
-    defaultBody: { title: 'My New Post', body: 'This is the content of my new post.', tags: ['tutorial'] }
-  },
-  updatePost: {
-    method: 'PUT', path: '/api/posts/:id',
-    title: 'Update a post',
-    desc: 'Updates a post. You must be the author. Login as alice@example.com to edit p1 or p2.',
-    auth: true, hasBody: true,
-    pathParams: [{ key: 'id', placeholder: 'p1' }], queryParams: [],
-    defaultBody: { title: 'Updated Title', body: 'Updated content here.', tags: ['updated'] }
-  },
-  deletePost: {
-    method: 'DELETE', path: '/api/posts/:id',
-    title: 'Delete a post',
-    desc: 'Deletes a post. You must be the author. Login as alice@example.com to delete p1 or p2.',
-    auth: true, hasBody: false,
-    pathParams: [{ key: 'id', placeholder: 'p1' }], queryParams: []
-  }
-};
-
-// -------------------------------------------------------
-// STATE
-// -------------------------------------------------------
-var currentEndpoint = 'listPosts';
-var currentToken = '';
-var history = [];
-
-// -------------------------------------------------------
-// DOM HELPERS
-// -------------------------------------------------------
-function $(id) { return document.getElementById(id); }
-
-function jsonHighlight(json) {
-  var str = typeof json === 'string' ? json : JSON.stringify(json, null, 2);
-  return str
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function(match) {
-      var cls = 'json-num';
-      if (/^"/.test(match)) {
-        cls = /:$/.test(match) ? 'json-key' : 'json-str';
-      } else if (/true|false/.test(match)) {
-        cls = 'json-bool';
-      } else if (/null/.test(match)) {
-        cls = 'json-null';
-      }
-      return '<span class="' + cls + '">' + match + '</span>';
-    });
+// ================================================================
+// HELPERS
+// ================================================================
+function getId(path, prefix) {
+  if (path.indexOf(prefix) !== 0) return null;
+  var rest = path.slice(prefix.length);
+  return (rest && rest.indexOf('/') === -1) ? rest : null;
 }
 
-function updateTokenDisplay() {
-  var val = $('tokenVal');
-  var clearBtn = $('clearTokenBtn');
-  if (currentToken) {
-    val.textContent = currentToken.slice(0, 32) + (currentToken.length > 32 ? '...' : '');
-    clearBtn.style.display = 'inline';
-  } else {
-    val.textContent = 'not logged in';
-    clearBtn.style.display = 'none';
-  }
-  $('authInput').value = currentToken;
-}
-
-function buildResolvedPath(ep) {
-  var path = ep.path;
-  ep.pathParams.forEach(function(param) {
-    var input = document.querySelector('.param-value[data-param="' + param.key + '"]');
-    var val = input ? input.value.trim() : param.placeholder;
-    path = path.replace(':' + param.key, val || param.placeholder);
+function parseQS(qs) {
+  var out = {};
+  if (!qs) return out;
+  qs.split('&').forEach(function(p) {
+    var kv = p.split('=');
+    if (kv[0]) out[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '');
   });
-  return path;
+  return out;
 }
 
-function buildQueryString(ep) {
-  var parts = [];
-  ep.queryParams.forEach(function(param) {
-    var input = document.querySelector('.query-value[data-query="' + param.key + '"]');
-    var val = input ? input.value.trim() : '';
-    if (val) parts.push(param.key + '=' + encodeURIComponent(val));
+function today() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function resp(status, data) {
+  return {status:status, data:data};
+}
+
+// ================================================================
+// RENDER RESPONSE
+// ================================================================
+var STATUS_TEXT = {200:'OK',201:'Created',204:'No Content',400:'Bad Request',
+                  401:'Unauthorized',403:'Forbidden',404:'Not Found',
+                  409:'Conflict',429:'Too Many Requests',500:'Server Error'};
+
+function renderResponse(status, data, ms) {
+  var badge = document.getElementById('statusBadge');
+  var time  = document.getElementById('timeLabel');
+  var out   = document.getElementById('respOut');
+
+  badge.textContent = status + ' ' + (STATUS_TEXT[status] || '');
+  badge.className   = 'status-badge ' + (status < 300 ? 's2' : status < 500 ? 's4' : 's5');
+  time.textContent  = ms + 'ms';
+  out.innerHTML     = highlight(JSON.stringify(data, null, 2));
+  out.style.color   = '#e6edf3';
+}
+
+function highlight(json) {
+  var s = json.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return s.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(m) {
+    var c = 'jn';
+    if (m.charAt(0)==='"') c = m.slice(-1)===':' ? 'jk' : 'js';
+    else if (m==='true'||m==='false') c='jb';
+    else if (m==='null') c='jl';
+    return '<span class="' + c + '">' + m + '</span>';
   });
-  return parts.length ? '?' + parts.join('&') : '';
 }
 
-function updateRequestLine() {
-  var ep = ENDPOINTS[currentEndpoint];
-  var path = buildResolvedPath(ep);
-  var qs   = buildQueryString(ep);
-  $('rlMethod').textContent = ep.method;
-  $('rlMethod').className = 'rl-method method-' + ep.method.toLowerCase();
-  $('rlUrl').textContent = 'http://localhost:3001' + path + qs;
-}
-
-// -------------------------------------------------------
-// LOAD ENDPOINT INTO BUILDER
-// -------------------------------------------------------
-function loadEndpoint(key) {
-  currentEndpoint = key;
-  var ep = ENDPOINTS[key];
-
-  // Highlight active sidebar button
-  document.querySelectorAll('.endpoint-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.getAttribute('data-endpoint') === key);
-  });
-
-  // Show ep info
-  $('epInfoTitle').textContent = ep.method + ' ' + ep.path;
-  $('epInfoDesc').textContent = ep.desc;
-  $('epInfo').style.display = 'block';
-  setTimeout(function() { $('epInfo').style.display = 'none'; }, 4000);
-
-  // Path params
-  var paramRow = $('paramRow');
-  var paramInputs = $('paramInputs');
-  if (ep.pathParams && ep.pathParams.length > 0) {
-    paramInputs.innerHTML = '';
-    ep.pathParams.forEach(function(param) {
-      var g = document.createElement('div');
-      g.className = 'param-group';
-      var k = document.createElement('input');
-      k.className = 'param-key';
-      k.value = ':' + param.key;
-      k.readOnly = true;
-      var v = document.createElement('input');
-      v.className = 'param-value';
-      v.setAttribute('data-param', param.key);
-      v.placeholder = param.placeholder || '';
-      v.value = param.placeholder || '';
-      v.addEventListener('input', updateRequestLine);
-      g.appendChild(k);
-      g.appendChild(v);
-      paramInputs.appendChild(g);
-    });
-    paramRow.style.display = 'flex';
-  } else {
-    paramRow.style.display = 'none';
-  }
-
-  // Query params
-  var queryRow = $('queryRow');
-  var queryInputs = $('queryInputs');
-  if (ep.queryParams && ep.queryParams.length > 0) {
-    queryInputs.innerHTML = '';
-    ep.queryParams.forEach(function(param) {
-      var g = document.createElement('div');
-      g.className = 'param-group';
-      var k = document.createElement('input');
-      k.className = 'param-key';
-      k.value = param.key;
-      k.readOnly = true;
-      var v = document.createElement('input');
-      v.className = 'param-value query-value';
-      v.setAttribute('data-query', param.key);
-      v.placeholder = param.placeholder || '';
-      v.addEventListener('input', updateRequestLine);
-      g.appendChild(k);
-      g.appendChild(v);
-      queryInputs.appendChild(g);
-    });
-    queryRow.style.display = 'flex';
-  } else {
-    queryRow.style.display = 'none';
-  }
-
-  // Body
-  var bodySection = $('bodySection');
-  if (ep.hasBody) {
-    var defaultBody = ep.defaultBody || {};
-    $('bodyEditor').value = JSON.stringify(defaultBody, null, 2);
-    $('bodyError').textContent = '';
-    bodySection.style.display = 'block';
-  } else {
-    bodySection.style.display = 'none';
-  }
-
-  // Auth row - show current token
-  $('authInput').value = currentToken;
-
-  // Reset response
-  $('respEmpty').style.display = 'block';
-  $('respBody').style.display = 'none';
-  $('respHeadersBlock').style.display = 'none';
-  $('responseMeta').style.display = 'none';
-
-  updateRequestLine();
-}
-
-// -------------------------------------------------------
-// SEND REQUEST
-// -------------------------------------------------------
-function sendRequest() {
-  var ep = ENDPOINTS[currentEndpoint];
-  var sendBtn = $('sendBtn');
-  var indicator = $('sendingIndicator');
-
-  // Parse body
-  var bodyObj = null;
-  if (ep.hasBody) {
-    var rawBody = $('bodyEditor').value.trim();
-    try {
-      bodyObj = rawBody ? JSON.parse(rawBody) : {};
-      $('bodyError').textContent = '';
-    } catch (e) {
-      $('bodyError').textContent = 'Invalid JSON: ' + e.message;
-      return;
-    }
-  }
-
-  // Build token from input (user may have typed manually)
-  var inputToken = $('authInput').value.trim();
-  if (inputToken) currentToken = inputToken;
-
-  // Build headers object
-  var resolvedPath = buildResolvedPath(ep);
-  var qs = buildQueryString(ep);
-  var headers = {};
-  if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
-
-  // Pass query params as special headers for routing convenience
-  if (ep.queryParams) {
-    ep.queryParams.forEach(function(param) {
-      var input = document.querySelector('.query-value[data-query="' + param.key + '"]');
-      if (input && input.value.trim()) {
-        headers['_' + param.key] = input.value.trim();
-      }
-    });
-  }
-
-  // Disable button, show indicator
-  sendBtn.disabled = true;
-  indicator.classList.add('visible');
-
-  var startTime = Date.now();
-
-  setTimeout(function() {
-    var result = simulateRequest(ep.method, resolvedPath, headers, bodyObj);
-    var elapsed = Date.now() - startTime;
-
-    // Auto-capture token from login/register
-    if (result.status === 200 || result.status === 201) {
-      if (result.body && result.body.token) {
-        currentToken = result.body.token;
-        updateTokenDisplay();
-      }
-    }
-
-    // Show response
-    showResponse(result.status, elapsed, result.body, resolvedPath + qs);
-
-    // Add to history
-    addHistory(ep.method, resolvedPath + qs, result.status);
-
-    sendBtn.disabled = false;
-    indicator.classList.remove('visible');
-  }, 180 + Math.random() * 120);
-}
-
-// -------------------------------------------------------
-// DISPLAY RESPONSE
-// -------------------------------------------------------
-function showResponse(status, elapsed, body, path) {
-  // Status badge
-  var badge = $('statusBadge');
-  var statusText = getStatusText(status);
-  badge.textContent = status + ' ' + statusText;
-  badge.className = 'status-badge';
-  if (status >= 200 && status < 300) badge.classList.add('s2xx');
-  else if (status >= 400 && status < 500) badge.classList.add('s4xx');
-  else badge.classList.add('s5xx');
-
-  $('respTime').textContent = elapsed + 'ms';
-  $('responseMeta').style.display = 'flex';
-
-  // Response headers
-  var hdrs = [
-    'Content-Type: application/json',
-    'X-Powered-By: Express',
-    'X-Request-Id: ' + Math.random().toString(36).slice(2, 10),
-    'Cache-Control: no-cache',
-    'Date: ' + new Date().toUTCString()
-  ];
-  $('respHeaders').textContent = hdrs.join('\n');
-  $('respHeadersBlock').style.display = 'block';
-
-  // Body
-  $('respEmpty').style.display = 'none';
-  var pre = $('respBody');
-  pre.innerHTML = jsonHighlight(body);
-  pre.style.display = 'block';
-}
-
-function getStatusText(code) {
-  var map = { 200: 'OK', 201: 'Created', 204: 'No Content', 400: 'Bad Request', 401: 'Unauthorized', 403: 'Forbidden', 404: 'Not Found', 409: 'Conflict', 500: 'Internal Server Error' };
-  return map[code] || '';
-}
-
-// -------------------------------------------------------
+// ================================================================
 // HISTORY
-// -------------------------------------------------------
-function addHistory(method, path, status) {
-  history.unshift({ method: method, path: path, status: status });
-  if (history.length > 10) history.pop();
-  renderHistory();
-}
-
-function renderHistory() {
-  var list = $('historyList');
-  if (!history.length) {
-    list.innerHTML = '<div class="history-empty">No requests yet</div>';
-    return;
-  }
-  list.innerHTML = history.map(function(item, idx) {
-    var isOk = item.status >= 200 && item.status < 300;
-    var methodClass = item.method.toLowerCase();
-    return '<div class="history-item" onclick="replayHistory(' + idx + ')">' +
-      '<span class="method-badge ' + methodClass + '">' + item.method + '</span>' +
-      '<span class="history-path">' + item.path + '</span>' +
-      '<span class="history-status ' + (isOk ? 'ok' : 'err') + '">' + item.status + '</span>' +
-    '</div>';
-  }).join('');
-}
-
-function replayHistory(idx) {
-  var item = history[idx];
-  // find matching endpoint
-  var foundKey = null;
-  Object.keys(ENDPOINTS).forEach(function(key) {
-    var ep = ENDPOINTS[key];
-    if (ep.method === item.method) {
-      var epPathBase = ep.path.split('/').slice(0, -1).join('/') || ep.path;
-      var itemPathBase = item.path.split('/').slice(0, -1).join('/') || item.path;
-      if (ep.path === item.path.split('?')[0] || epPathBase === itemPathBase) {
-        foundKey = key;
-      }
-    }
-  });
-  if (foundKey) loadEndpoint(foundKey);
-}
-
-// -------------------------------------------------------
-// EVENT LISTENERS
-// -------------------------------------------------------
-document.addEventListener('DOMContentLoaded', function() {
-  // Sidebar endpoint buttons
-  document.querySelectorAll('.endpoint-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      loadEndpoint(btn.getAttribute('data-endpoint'));
+// ================================================================
+function addHistory(method, url, status) {
+  reqHistory.unshift({method:method, url:url, status:status});
+  if (reqHistory.length > 8) reqHistory.pop();
+  var list = document.getElementById('histList');
+  list.innerHTML = '';
+  reqHistory.forEach(function(item) {
+    var d  = document.createElement('div');
+    d.className = 'hist';
+    var sc = item.status < 300 ? '#3fb950' : '#f85149';
+    var ss = document.createElement('span');
+    ss.className = 'hist-s';
+    ss.style.color = sc;
+    ss.textContent = item.status;
+    var sm = document.createElement('span');
+    sm.style.color = '#484f58';
+    sm.textContent = item.method.slice(0,3);
+    var sp = document.createElement('span');
+    sp.className = 'hist-p';
+    sp.textContent = item.url.replace('/api','').split('?')[0];
+    d.appendChild(ss); d.appendChild(sm); d.appendChild(sp);
+    d.addEventListener('click', function() {
+      document.getElementById('urlInput').value = item.url;
+      var ml = document.getElementById('mLabel');
+      ml.textContent = item.method;
+      var colors = {GET:'#3fb950', POST:'#58a6ff', PUT:'#d29922', DELETE:'#f85149'};
+      ml.style.color = colors[item.method] || '#e6edf3';
     });
+    list.appendChild(d);
   });
+}
 
-  // Send button
-  $('sendBtn').addEventListener('click', sendRequest);
+// ================================================================
+// DOCS
+// ================================================================
+function renderDocs(key) {
+  var d  = DOCS[key];
+  if (!d) return;
+  var el = document.getElementById('docsBox');
+  var authNote = d.auth
+    ? '<div class="note warn">Requires Authorization: Bearer TOKEN</div>'
+    : '<div class="note">Public - no auth needed</div>';
+  el.innerHTML =
+    '<h4>' + d.title + '</h4>' +
+    '<p>' + d.desc + '</p>' +
+    authNote +
+    '<h4>Request</h4><pre>' + d.body + '</pre>' +
+    '<h4>Responses</h4><pre>' + d.resp + '</pre>';
+}
 
-  // Enter in body editor
-  $('bodyEditor').addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.key === 'Enter') sendRequest();
-  });
+// ================================================================
+// TOKEN / PRETTIFY / COPY
+// ================================================================
+function setTokenDisplay(t) {
+  var el = document.getElementById('tokenVal');
+  if (el) {
+    el.textContent = t ? t.slice(0,22)+'...' : 'not logged in';
+    el.style.color = t ? '#3fb950' : '#484f58';
+  }
+}
 
-  // Prettify
-  $('prettyBtn').addEventListener('click', function() {
-    try {
-      var parsed = JSON.parse($('bodyEditor').value);
-      $('bodyEditor').value = JSON.stringify(parsed, null, 2);
-      $('bodyError').textContent = '';
-    } catch (e) {
-      $('bodyError').textContent = 'Cannot prettify: ' + e.message;
-    }
-  });
+function clearToken() {
+  currentToken = '';
+  localStorage.removeItem('rest_token');
+  document.getElementById('authIn').value = '';
+  setTokenDisplay('');
+}
 
-  // Auth input changes
-  $('authInput').addEventListener('input', function() {
-    currentToken = $('authInput').value.trim();
-    updateTokenDisplay();
-  });
+function prettify() {
+  var ta = document.getElementById('bodyIn');
+  if (!ta.value.trim()) return;
+  try { ta.value = JSON.stringify(JSON.parse(ta.value), null, 2); }
+  catch(e) { renderResponse(400, {error: 'Invalid JSON: ' + e.message}, 0); }
+}
 
-  // Clear token
-  $('clearTokenBtn').addEventListener('click', function() {
-    currentToken = '';
-    updateTokenDisplay();
-  });
-
-  // Load default endpoint
-  loadEndpoint('listPosts');
-  renderHistory();
-});`;
+function copyResp() {
+  var text = document.getElementById('respOut').textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      var b = document.getElementById('btnCopy');
+      b.textContent = 'Copied!';
+      setTimeout(function(){b.textContent='Copy';}, 1500);
+    });
+  }
+}`;
 
 export const restApiProject: Project = {
   id: 'rest-api',
@@ -1171,37 +689,36 @@ export const restApiProject: Project = {
   difficulty: 'intermediate',
   type: 'frontend',
   estimatedTime: '8-12 hours',
-  description: 'Build an interactive REST API Explorer that simulates a real blog API in the browser. Learn how HTTP methods, status codes, JWT authentication, and CRUD operations work together by making live requests against an in-memory database.',
-  overview: 'REST APIs power every modern web and mobile application. Understanding how they work is essential for full-stack development. This project gives you a hands-on sandbox to experiment with authentication, CRUD operations, error handling, and HTTP status codes without needing a real server. The in-browser simulator mirrors exactly how a production Express + MongoDB API behaves, so everything you learn here transfers directly to building real APIs.',
-  objective: 'Understand REST API conventions by interacting with a simulated blog API that handles user registration, JWT auth, and full post management with realistic HTTP responses.',
+  playgroundKey: 'rest-api',
+  description: 'Build an interactive REST API Explorer that simulates a full blog API in the browser. Learn HTTP methods, status codes, JWT authentication, and CRUD operations hands-on.',
+  overview: 'REST APIs power every modern web and mobile application. This project gives you a hands-on sandbox to experiment with authentication, CRUD operations, error handling, and HTTP status codes — no real server needed. The in-browser simulator mirrors exactly how a production Express + MongoDB API behaves.',
+  objective: 'Build and interact with a simulated REST API that handles user authentication with JWT tokens and full CRUD operations on blog posts.',
   technologies: ['Node.js', 'Express.js', 'MongoDB', 'JWT'],
-  prerequisites: ['JavaScript fundamentals', 'Basic understanding of HTTP', 'JSON data format'],
+  prerequisites: ['JavaScript fundamentals', 'Basic HTTP knowledge', 'JSON format'],
   learnings: [
     'HTTP methods: GET, POST, PUT, DELETE',
-    'HTTP status codes and when to use them',
-    'JWT token authentication flow',
-    'RESTful URL conventions',
-    'Request headers and JSON body format',
+    'HTTP status codes: 200, 201, 400, 401, 403, 404, 409',
+    'JWT authentication flow: login to get token, use token in headers',
+    'RESTful URL naming conventions',
+    'Request body, headers, and query parameters',
     'Auth middleware pattern',
     'Pagination with page and limit params',
-    'Owner-only resource protection',
+    'Owner-only protection: 401 vs 403',
   ],
   features: [
-    'Interactive endpoint explorer with sidebar navigation',
-    'Simulated in-memory database with sample users and posts',
-    'User registration and login with fake JWT tokens',
-    'POST, GET, PUT, DELETE for blog posts',
-    'Auth token auto-captured from login and stored',
-    'Realistic HTTP status codes (200, 201, 401, 403, 404, 409)',
-    'Response headers panel',
-    'JSON syntax highlighting',
-    'Request history (last 10 requests)',
-    'Query param builder (page, limit, tag filter)',
-    'Path param inputs (:id)',
-    'Prettify JSON body button',
-    'Dark terminal theme inspired by Postman/Insomnia',
+    '8 real API endpoints with full CRUD',
+    'In-memory database with 3 users and 5 posts',
+    'User registration and login with simulated JWT',
+    'Auth token auto-saved from login and reused',
+    'Query param builder (page, limit, tag)',
+    'JSON body editor with Prettify button',
+    'JSON syntax highlighting in response',
+    'HTTP status badge with color coding',
+    'Request history with click to replay',
+    'Per-endpoint documentation panel',
+    'Dark terminal theme',
   ],
-  fileStructure: 'rest-api-explorer/\n  index.html\n  style.css\n  script.js',
+  fileStructure: 'rest-api-explorer/ |   index.html |   style.css |   script.js',
   files: [
     { path: 'rest-api-explorer/index.html', language: 'html',       content: indexHtml },
     { path: 'rest-api-explorer/style.css',  language: 'css',        content: styleCss  },
@@ -1209,237 +726,179 @@ export const restApiProject: Project = {
   ],
   lessons: [
     {
-      id: 'lesson-1',
-      title: 'What is a REST API?',
-      explanation: 'REST (Representational State Transfer) is a set of conventions for building web APIs over HTTP. Every REST API works the same way: the client sends an HTTP request with a method (GET, POST, PUT, DELETE), a URL that identifies a resource (/api/posts/p1), optional headers (like Authorization), and an optional body (JSON data). The server responds with a status code (200 OK, 404 Not Found, etc.) and usually a JSON body. The key rule is that resources are nouns in the URL and the HTTP method describes the action.',
-      js: `// REST is just HTTP with conventions
-// URL = resource identifier
-// Method = action
+      id: 'http-methods',
+      title: 'HTTP Methods: The Verbs of REST',
+      explanation: 'REST APIs use HTTP methods to express intent. The same URL behaves differently based on the method — GET reads, POST creates, PUT updates, DELETE removes. This predictable pattern makes REST APIs easy to learn and use across any language.',
+      js: `// Same URL, four different operations:
+GET    /api/posts      // list all posts
+POST   /api/posts      // create a new post
+GET    /api/posts/p1   // get one post
+PUT    /api/posts/p1   // update post p1
+DELETE /api/posts/p1   // delete post p1
 
-GET    /api/posts        -> list all posts
-GET    /api/posts/p1     -> get post with id "p1"
-POST   /api/posts        -> create a new post
-PUT    /api/posts/p1     -> update post "p1"
-DELETE /api/posts/p1     -> delete post "p1"
-
-// Every request gets a status code back:
-200 OK          - success, returning data
-201 Created     - success, new resource created
-400 Bad Request - the client sent bad data
-401 Unauthorized- no valid token
-403 Forbidden   - token valid, but no permission
-404 Not Found   - resource doesn't exist
-409 Conflict    - e.g. email already registered`,
+// In Express.js:
+app.get('/api/posts',        listPosts);
+app.post('/api/posts',       createPost);
+app.put('/api/posts/:id',    updatePost);
+app.delete('/api/posts/:id', deletePost);`,
     },
     {
-      id: 'lesson-2',
-      title: 'User Registration and Login',
-      explanation: 'Authentication in REST APIs uses tokens. The registration flow is: client POSTs credentials, server validates them, creates the user (hashing the password with bcrypt), then returns a JWT token. The login flow is the same but finds the existing user and compares the password hash. The client stores the token and includes it in future requests via the Authorization header.',
-      js: `// POST /api/auth/register
-// Request body:
-{
-  "name": "Jane Dev",
-  "email": "jane@example.com",
-  "password": "secret123"
-}
+      id: 'status-codes',
+      title: 'HTTP Status Codes',
+      explanation: '2xx means success, 4xx means the client made an error, 5xx means the server failed. The key distinction: 401 means not authenticated (no valid token), 403 means authenticated but not allowed (wrong user). Getting these right makes your API self-documenting.',
+      js: `// Common codes you will use every day:
+200 OK           // request succeeded
+201 Created      // new resource was created (use after POST)
+400 Bad Request  // client sent missing or invalid data
+401 Unauthorized // not logged in, or invalid token
+403 Forbidden    // logged in, but not allowed to do this
+404 Not Found    // resource does not exist
+409 Conflict     // duplicate (e.g. email already taken)
 
-// 201 Created response:
-{
-  "token": "eyJ.fake.abc123",
-  "user": {
-    "id": "u101",
-    "name": "Jane Dev",
-    "email": "jane@example.com"
-  }
-}
-
-// POST /api/auth/login
-// Request body:
-{
-  "email": "jane@example.com",
-  "password": "secret123"
-}
-// Same response shape: { token, user }
-
-// On the server (Express + bcrypt + jwt):
-app.post('/api/auth/login', async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
-  const match = await bcrypt.compare(req.body.password, user.password);
-  if (!match) return res.status(401).json({ error: 'Invalid credentials' });
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  res.json({ token, user: { id: user._id, name: user.name } });
+// Example:
+app.post('/api/posts', (req, res) => {
+  if (!req.body.title)
+    return res.status(400).json({ error: 'title required' });
+  const post = db.create(req.body);
+  res.status(201).json(post); // 201 not 200 for creation
 });`,
     },
     {
-      id: 'lesson-3',
-      title: 'JWT Tokens and the Auth Header',
-      explanation: 'A JWT (JSON Web Token) is a compact, URL-safe string with three base64-encoded parts separated by dots: header (algorithm), payload (data like userId), and signature (proves the token was not tampered with). Once the client has a token from login, it includes it in every protected request as an Authorization header. The server\'s auth middleware verifies the token\'s signature before allowing access to the route.',
-      js: `// What a JWT looks like:
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUxIiwiaWF0IjoxNzAwMDAwMDAwfQ.SIGNATURE
-// [  header (base64)  ].[   payload (base64)   ].[  signature  ]
+      id: 'jwt',
+      title: 'JWT Authentication Flow',
+      explanation: 'JWT (JSON Web Token) authentication is stateless. The server issues a signed token at login. The client sends it in the Authorization header for every protected request. The server verifies the signature without a database lookup — fast and scalable.',
+      js: `// Step 1: Login to get a token
+POST /api/auth/login
+Body: { email: "alex@demo.com", password: "pass123" }
+Response: { token: "eyJ.abc.sig", user: {...} }
 
-// Decoded payload:
-{ "id": "u1", "iat": 1700000000 }
+// Step 2: Use token for protected routes
+GET /api/users/me
+Headers: Authorization: Bearer eyJ.abc.sig
 
-// Client sends it in the Authorization header:
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ...
-
-// Server auth middleware in Express:
-function auth(req, res, next) {
-  const header = req.headers.authorization;
-  if (!header || !header.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'No token provided' });
-  }
-  const token = header.split(' ')[1];
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // { id: "u1" }
-    next();             // proceed to route handler
-  } catch (err) {
-    return res.status(401).json({ error: 'Invalid or expired token' });
-  }
-}
-
-// Apply to a route:
-app.post('/api/posts', auth, createPostHandler);`,
+// Step 3: Server verifies the token (Express middleware):
+function requireAuth(req, res, next) {
+  const auth = req.headers.authorization;
+  if (!auth) return res.status(401).json({ error: 'No token' });
+  const token = auth.replace('Bearer ', '');
+  const userId = jwt.verify(token, process.env.JWT_SECRET);
+  req.userId = userId; // attach to request
+  next();
+}`,
     },
     {
-      id: 'lesson-4',
-      title: 'CRUD for Posts',
-      explanation: 'CRUD stands for Create, Read, Update, Delete - the four fundamental operations on any resource. In REST: POST creates, GET reads, PUT updates, DELETE removes. The POST and PUT endpoints for posts require a Bearer token. PUT and DELETE also check that the authenticated user is the author of the post - if not, they return 403 Forbidden. This "owner-only" pattern is essential for data security.',
-      js: `// CREATE - requires auth
-// POST /api/posts
-// Authorization: Bearer eyJ.fake.abc123
-// Body:
-{ "title": "My Post", "body": "Content here.", "tags": ["tutorial"] }
-// 201 Created -> returns the new post object
+      id: 'rest-urls',
+      title: 'RESTful URL Design',
+      explanation: 'REST URLs are nouns (resources), not verbs (actions). The HTTP method is the verb. Collections are plural, items include their ID. This convention makes your API instantly familiar to any developer.',
+      js: `// GOOD - nouns as resources:
+GET    /api/posts          // collection
+POST   /api/posts          // create in collection
+GET    /api/posts/p1       // single item
+PUT    /api/posts/p1       // update item
+DELETE /api/posts/p1       // delete item
 
-// READ ALL - public
-// GET /api/posts?page=1&limit=10&tag=api
-// 200 OK -> { posts: [...], total: 4, page: 1, pages: 1 }
+// Nested resources:
+GET  /api/posts/p1/comments  // comments on a post
+POST /api/posts/p1/comments  // add a comment
 
-// READ ONE - public
-// GET /api/posts/p1
-// 200 OK -> single post object with author populated
-// 404 if id not found
+// Query params for search/filter:
+GET /api/posts?page=2&limit=5&tag=javascript
 
-// UPDATE - auth + must be author
-// PUT /api/posts/p1
-// Authorization: Bearer eyJ.fake.abc123
-// Body: { "title": "Updated Title" }
-// 200 OK -> updated post
-// 403 Forbidden if not the author
-
-// DELETE - auth + must be author
-// DELETE /api/posts/p1
-// Authorization: Bearer eyJ.fake.abc123
-// 200 OK -> { message: "Post deleted successfully", id: "p1" }
-// 403 Forbidden if not the author`,
+// BAD - never use verbs in URLs:
+GET  /api/getPost/p1   // wrong
+POST /api/deletePost   // wrong`,
     },
     {
-      id: 'lesson-5',
-      title: 'Status Codes and Error Handling',
-      explanation: 'HTTP status codes communicate the result of every API request. Using the right code is part of a well-designed API. A good rule of thumb: 2xx means success, 4xx means the client did something wrong (fix the request), 5xx means the server failed (not the client\'s fault). Always return errors as JSON with a descriptive message so the client knows what to fix.',
-      js: `// The most important status codes for REST APIs:
+      id: 'ownership',
+      title: 'Authentication vs Authorization',
+      explanation: 'Authentication asks "who are you?" — a valid token answers this. Authorization asks "are you allowed?" — owning the resource answers this. These are two separate checks. Return 401 if unauthenticated, 403 if authenticated but not the owner.',
+      js: `async function updatePost(req, res) {
+  // Check 1: authenticated?
+  if (!req.userId)
+    return res.status(401).json({ error: 'Login required' });
+  // 401 = who are you?
 
-200 OK           // GET, PUT, DELETE succeeded
-201 Created      // POST succeeded and created a resource
-204 No Content   // success but nothing to return (rare in JSON APIs)
+  // Check 2: resource exists?
+  const post = await Post.findById(req.params.id);
+  if (!post)
+    return res.status(404).json({ error: 'Not found' });
 
-400 Bad Request  // missing fields, wrong types, validation failed
-401 Unauthorized // no token, or token invalid/expired
-403 Forbidden    // token is valid but user lacks permission
-404 Not Found    // the resource (post/user) does not exist
-409 Conflict     // resource already exists (e.g., email taken)
+  // Check 3: user owns it?
+  if (post.authorId !== req.userId)
+    return res.status(403).json({ error: 'Forbidden' });
+  // 403 = I know you, but NO
+  // Never return 401 here — that would be wrong
 
-500 Internal Server Error // uncaught server-side exception
-
-// Always return errors as JSON:
-res.status(404).json({ error: 'Post not found' });
-res.status(400).json({ error: 'All fields are required', fields: ['name', 'email'] });
-
-// Wrap every route handler in try/catch:
-app.get('/api/posts/:id', async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-    res.json(post);
-  } catch (err) {
-    res.status(500).json({ error: 'Server error' });
-  }
-});`,
-    },
-    {
-      id: 'lesson-6',
-      title: 'Pagination and Query Params',
-      explanation: 'When a collection has many items, returning all of them at once wastes bandwidth and is slow. Pagination lets the client request a specific "page" of results. The standard pattern is to accept page and limit as query params, then use skip() and limit() in the database query. The response includes the total count and total number of pages so the client can build pagination controls. Optional filtering (like ?tag=api) is also done via query params.',
-      js: `// Request:
-// GET /api/posts?page=2&limit=5&tag=tutorial
-
-// Express route handler:
-app.get('/api/posts', async (req, res) => {
-  const { page = 1, limit = 10, tag } = req.query;
-  const pageNum  = Math.max(1, parseInt(page,  10));
-  const limitNum = Math.min(50, parseInt(limit, 10)); // cap at 50
-
-  const filter = tag ? { tags: tag } : {};
-
-  const [posts, total] = await Promise.all([
-    Post.find(filter)
-      .populate('author', 'name email')
-      .sort({ createdAt: -1 })
-      .skip((pageNum - 1) * limitNum)   // skip previous pages
-      .limit(limitNum),                  // take only this page
-    Post.countDocuments(filter)
-  ]);
-
-  res.json({
-    posts,
-    total,
-    page: pageNum,
-    pages: Math.ceil(total / limitNum)
-  });
-});
-
-// Client gets:
-{
-  "posts": [...],  // array of post objects
-  "total": 42,     // total items matching filter
-  "page": 2,       // current page
-  "pages": 9       // total pages
+  // All checks passed — do the update
+  Object.assign(post, req.body, { updatedAt: new Date() });
+  await post.save();
+  res.json(post);
 }`,
     },
   ],
   challenges: [
     {
-      id: 'c1',
-      title: 'Add Comment Endpoints',
+      id: 'comments',
+      title: 'Add Comments to Posts',
       difficulty: 'medium',
-      description: 'Extend the simulator to support comments on posts. Add GET /api/posts/:id/comments (public, returns all comments for a post) and POST /api/posts/:id/comments (auth required, adds a comment). Store comments in db.comments array. Each comment should have an id, body, authorId, postId, and createdAt.',
-      hint: 'Add a db.comments array with a few sample comments. Handle the routes in simulateRequest() by matching the path with a regex like /^\\/api\\/posts\\/([^/]+)\\/comments$/. For GET return comments filtered by postId. For POST check auth and push a new comment object.',
+      description: 'Implement GET /api/posts/:id/comments (public) and POST /api/posts/:id/comments (auth required). Each comment needs id, postId, authorId, body, and createdAt.',
+      hint: 'Add DB.comments = []. Detect the route by checking path.endsWith("/comments"). Extract postId with path.split("/")[3]. For POST, validate auth and body.body exists.',
+      solutionJs: `// Add to DB: DB.comments = [];
+
+// In router(), before the 404 fallback:
+if (path.endsWith('/comments')) {
+  var postId = path.split('/')[3];
+  var post = DB.posts.find(function(p){return p.id===postId;});
+  if (!post) return resp(404, {error: 'Post not found'});
+
+  if (method === 'GET') {
+    var comments = DB.comments.filter(function(c){return c.postId===postId;});
+    return resp(200, {comments:comments, total:comments.length});
+  }
+
+  if (method === 'POST') {
+    if (!userId) return resp(401, {error: 'Auth required'});
+    if (!body.body) return resp(400, {error: 'body is required'});
+    var comment = {id:'c'+Date.now(), postId:postId,
+                   authorId:userId, body:body.body, createdAt:today()};
+    DB.comments.push(comment);
+    return resp(201, comment);
+  }
+}`,
     },
     {
-      id: 'c2',
-      title: 'Add a Like Count',
+      id: 'search',
+      title: 'Full-Text Search',
       difficulty: 'easy',
-      description: 'Add a POST /api/posts/:id/like endpoint that increments a like counter on the post. Each user can only like a post once - track this in a likes array on the post or a separate db.likes set. Return 409 Conflict if the user already liked the post.',
-      hint: 'Add a likes array (of userIds) to each post in the sample data. In the handler, check if req.user.id is already in post.likes. If yes, return 409. Otherwise push the userId and return the updated like count.',
+      description: 'Add ?search=term to GET /api/posts so it filters posts where the title or body contains the search term (case-insensitive).',
+      hint: 'In the GET /api/posts handler, read query.search. Use toLowerCase() and indexOf() to filter after the tag filter.',
+      solutionJs: `// In the GET /api/posts handler, after the tag filter:
+var search = (query.search || '').toLowerCase().trim();
+if (search) {
+  list = list.filter(function(p) {
+    return p.title.toLowerCase().indexOf(search) !== -1 ||
+           p.body.toLowerCase().indexOf(search) !== -1;
+  });
+}
+// Then continue with pagination`,
     },
     {
-      id: 'c3',
-      title: 'Add Field Validation with Feedback',
-      description: 'Improve the register and create-post endpoints to return detailed field-level validation errors. Instead of a single error string, return an errors array where each item has a field name and message. Update the UI to display these validation errors inline next to the relevant fields in the request builder.',
-      difficulty: 'medium',
-      hint: 'Change the register handler to collect all validation failures into an array: [{ field: "email", message: "Invalid format" }]. Return { errors: [...] } instead of { error: "..." }. In the UI, after receiving a 400 response, parse the errors array and render them below the body editor.',
-    },
-    {
-      id: 'c4',
-      title: 'Add a cURL Preview',
-      description: 'Add a "cURL" button next to the Send button that generates the equivalent curl command for the current request configuration. This helps students understand how the same API calls would be made from a terminal or script.',
+      id: 'rate-limit',
+      title: 'Rate Limiting',
       difficulty: 'hard',
-      hint: 'Read the current endpoint config, path params, query params, auth token, and body. Build a string like: curl -X POST http://localhost:3001/api/auth/login -H "Content-Type: application/json" -d \'{"email":"...","password":"..."}\'. Display it in a modal or expandable section below the request builder with a copy-to-clipboard button.',
+      description: 'Allow max 10 requests per minute per user. Return 429 Too Many Requests when exceeded.',
+      hint: 'Keep a rateLimits object keyed by userId or "anon". Store timestamps array. On each request, remove entries older than 60s, then check if count >= 10.',
+      solutionJs: `// Add at top of router():
+var RATE = RATE || {};
+var rk   = userId || 'anon';
+var now  = Date.now();
+if (!RATE[rk]) RATE[rk] = [];
+RATE[rk] = RATE[rk].filter(function(t){return now-t < 60000;});
+if (RATE[rk].length >= 10) {
+  var wait = Math.ceil((60000-(now-RATE[rk][0]))/1000);
+  return resp(429, {error:'Too Many Requests', retryAfter: wait+'s'});
+}
+RATE[rk].push(now);`,
     },
   ],
-  nextProject: 'blog-platform',
 };

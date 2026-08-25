@@ -1,74 +1,19 @@
 import Link from 'next/link';
 import { ArrowRight, Clock, Play, Code2, Globe } from 'lucide-react';
+import { allProjects } from '@/data/projects';
 
-const projects = [
-  {
-    slug: 'todo-app',
-    title: 'Task Manager App',
-    diff: 'beginner',
-    time: '4-6 hrs',
-    techs: ['HTML', 'CSS', 'JS'],
-    desc: 'Full task manager with priorities, categories, due dates, filters, dark mode and localStorage.',
-    accent: '#10B981',
-    type: 'frontend',
-    features: ['Live preview', 'Dark mode', 'localStorage'],
-  },
-  {
-    slug: 'quiz-app',
-    title: 'Web Dev Quiz App',
-    diff: 'beginner',
-    time: '4-6 hrs',
-    techs: ['HTML', 'CSS', 'JS'],
-    desc: '30 questions with timer, difficulty levels, animated score ring and answer review mode.',
-    accent: '#7C3AED',
-    type: 'frontend',
-    features: ['30 questions', 'Timer ring', 'Review mode'],
-  },
-  {
-    slug: 'weather-app',
-    title: 'Weather Dashboard',
-    diff: 'beginner',
-    time: '3-5 hrs',
-    techs: ['HTML', 'CSS', 'JS'],
-    desc: 'Live weather with 5-day forecast, hourly chart, AQI bar, unit toggle and dark mode.',
-    accent: '#0EA5E9',
-    type: 'frontend',
-    features: ['Live preview', 'AQI chart', 'Unit toggle'],
-  },
-  {
-    slug: 'expense-tracker',
-    title: 'Expense Tracker',
-    diff: 'intermediate',
-    time: '6-8 hrs',
-    techs: ['HTML', 'CSS', 'JS'],
-    desc: 'Track income and expenses with category charts, filters, inline edit and savings rate.',
-    accent: '#F59E0B',
-    type: 'frontend',
-    features: ['Live preview', 'Bar charts', 'Savings rate'],
-  },
-  {
-    slug: 'blog-platform',
-    title: 'Blog Platform',
-    diff: 'intermediate',
-    time: '8-12 hrs',
-    techs: ['HTML', 'CSS', 'JS'],
-    desc: 'Full blog with read/write posts, category filter, search, view counts and dark mode.',
-    accent: '#6366F1',
-    type: 'frontend',
-    features: ['Live preview', 'Write posts', 'View counts'],
-  },
-  {
-    slug: 'ecommerce',
-    title: 'E-commerce Store',
-    diff: 'advanced',
-    time: '30-50 hrs',
-    techs: ['HTML', 'CSS', 'JS'],
-    desc: 'Amazon-style store with 20 products, cart, wishlist, 3-step checkout, auth and dark mode.',
-    accent: '#EF4444',
-    type: 'frontend',
-    features: ['Live preview', '20 products', 'Checkout flow'],
-  },
-];
+// Get first 6 projects for preview, map to simplified format
+const projects = allProjects.slice(0, 6).map(p => ({
+  slug: p.slug,
+  title: p.title,
+  diff: p.difficulty,
+  time: p.estimatedTime,
+  techs: p.technologies.slice(0, 3),
+  desc: p.description,
+  accent: p.difficulty === 'beginner' ? '#10B981' : p.difficulty === 'intermediate' ? '#2563eb' : '#F59E0B',
+  type: p.type,
+  features: p.features.slice(0, 3),
+}));
 
 const diffConfig: Record<string, { label: string; bg: string; color: string }> = {
   beginner:     { label: 'Beginner',     bg: '#f0fdf4', color: '#15803d' },
@@ -105,7 +50,7 @@ export function ProjectsPreview() {
             className="hidden sm:flex items-center gap-1.5 text-[13px] font-bold px-4 py-2 rounded-lg transition-colors"
             style={{ color: '#2563eb', border: '1px solid #2563eb20', background: '#2563eb08' }}
           >
-            View all 11 projects <ArrowRight className="w-3.5 h-3.5" />
+            View all {allProjects.length} projects <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
@@ -199,7 +144,7 @@ export function ProjectsPreview() {
             className="flex items-center gap-1.5 text-[13px] font-bold px-5 py-2.5 rounded-lg"
             style={{ color: '#2563eb', border: '1px solid #2563eb40', background: '#2563eb08' }}
           >
-            View all 11 projects <ArrowRight className="w-3.5 h-3.5" />
+            View all {allProjects.length} projects <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 

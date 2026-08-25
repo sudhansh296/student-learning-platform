@@ -17,7 +17,7 @@ const tools = [
   { id: 'timestamp', name: 'Timestamp Converter', desc: 'Convert Unix timestamps to readable dates', icon: '🕐', category: 'Utilities' },
   { id: 'uuid-generator', name: 'UUID Generator', desc: 'Generate random UUID v4 values', icon: '🆔', category: 'Utilities' },
   { id: 'hash-generator', name: 'Hash Generator', desc: 'Generate SHA-1, SHA-256, SHA-384, SHA-512 hashes', icon: '#️⃣', category: 'Security' },
-  { id: 'markdown-preview', name: 'Markdown Previewer', desc: 'Preview Markdown as formatted HTML', icon: '📝', category: 'Content' },
+  { id: 'markdown-previewer', name: 'Markdown Previewer', desc: 'Preview Markdown as formatted HTML', icon: '📝', category: 'Content' },
   { id: 'lorem-ipsum', name: 'Lorem Ipsum Generator', desc: 'Generate placeholder text', icon: '📄', category: 'Content' },
 ];
 

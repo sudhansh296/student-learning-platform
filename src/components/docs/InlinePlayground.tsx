@@ -127,6 +127,8 @@ ${noOutputObserver}
   useEffect(() => {
     const iid = instanceId.current;
     const h = (e: MessageEvent) => {
+      // Only accept messages from same origin or null (srcdoc iframes)
+      if (e.origin !== window.location.origin && e.origin !== 'null' && e.origin !== '') return;
       if (e.data?._ip !== iid) return;
       const pre = e.data.t === 'e' ? '❌ ' : e.data.t === 'w' ? '⚠ ' : '▶ ';
       setLogs(p => [...p.slice(-29), pre + e.data.d]);
@@ -135,7 +137,7 @@ ${noOutputObserver}
     return () => window.removeEventListener('message', h);
   }, []);
 
-  const reset = () => { setHtml(defaultHtml); setCss(defaultCss); setJs(defaultJs); setTimeout(run, 30); };
+  const reset = () => { setHtml(defaultHtml); setCss(defaultCss); setJs(defaultJs); if (iframeRef.current) { iframeRef.current.srcdoc = buildDoc(defaultHtml, defaultCss, defaultJs); } setLogs([]); };
 
   const copyCode = async () => {
     const code = tab === 'html' ? html : tab === 'css' ? css : js;
@@ -213,7 +215,7 @@ ${noOutputObserver}
               <Play className="w-3 h-3" /> Run ▶
             </button>
           </div>
-          <iframe ref={iframeRef} className="flex-1 border-0 w-full" sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" title="preview" />
+          <iframe ref={iframeRef} className="flex-1 border-0 w-full" sandbox="allow-scripts allow-forms allow-popups allow-modals" title="preview" />
           {logs.length > 0 && !(!html.trim() && js.trim()) && (
             <div className="border-t border-[#d0d7de] bg-[#f6f8fa] max-h-24 overflow-y-auto p-2">
               {logs.map((l, i) => (

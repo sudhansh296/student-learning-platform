@@ -31,7 +31,7 @@ export default async function TechOverviewPage({ params }: Props) {
 
   if (!technology) notFound();
 
-  const d = difficultyInfo[technology.difficulty];
+  const d = difficultyInfo[technology.difficulty] ?? difficultyInfo.beginner;
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 lg:px-6 py-10">

@@ -26,7 +26,19 @@ type Tab = 'overview' | 'files' | 'challenges';
 function cleanHtml(html: string): string {
   return html
     .replace(/<link[^>]*rel=["']stylesheet["'][^>]*\/?>/gi, '')
-    .replace(/<script[^>]+src=["'][^"']*["'][^>]*><\/script>/gi, '');
+    // Strip ALL script tags (both external src= and inline)
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    // Strip style tags
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/<!DOCTYPE[^>]*>/gi, '')
+    .replace(/<html[^>]*>/gi, '')
+    .replace(/<\/html>/gi, '')
+    .replace(/<head[^>]*>[\s\S]*?<\/head>/gi, '')
+    .replace(/<body[^>]*>/gi, '')
+    .replace(/<\/body>/gi, '')
+    // Strip all event handler attributes (onclick, onload, onerror, etc.)
+    .replace(/\s+on\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]*)/gi, '')
+    .trim();
 }
 
 function getLangLabel(lang: 'html' | 'css' | 'javascript' | 'typescript' | 'json' | 'markdown' | 'bash' | 'text'): string {
@@ -187,9 +199,13 @@ export function ProjectDetailClient({ project }: Props) {
 
   function handleDownload() {
     if (isFrontend && fullHtml) {
-      const standalone = cleanHtml(fullHtml)
-        .replace('</head>', `<style>\n${fullCss}\n</style>\n</head>`)
-        + `<script>\n${fullJs}\n</script>`;
+      // Build a proper standalone HTML file — do NOT cleanHtml here as that strips <head>/<body>
+      // Inject CSS before </head> and JS before </body> in the original structure
+      const withCss = fullHtml.replace('</head>', `<style>\n${fullCss}\n</style>\n</head>`);
+      const standalone = withCss
+        .replace(/<link[^>]*rel=["']stylesheet["'][^>]*\/?>/gi, '')
+        .replace(/<script[^>]+src=["'][^"']*["'][^>]*><\/script>/gi, '')
+        .replace('</body>', `<script>\n${fullJs}\n</script>\n</body>`);
       triggerDownload(standalone, project.slug + '.html', 'text/html');
     } else {
       const content = project.files
@@ -362,6 +378,8 @@ export function ProjectDetailClient({ project }: Props) {
               style={{ height: 600 }}
               title={project.title + ' live preview'}
               loading="lazy"
+              sandbox="allow-scripts allow-forms allow-same-origin"
+              referrerPolicy="no-referrer"
             />
           </div>
         </div>
