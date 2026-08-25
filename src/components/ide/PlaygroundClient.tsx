@@ -1578,16 +1578,16 @@ export function PlaygroundClient() {
           <iframe ref={iframeRef} className="flex-1 bg-white border-0 w-full"
             style={{ minHeight: 220 }}
             sandbox="allow-scripts allow-forms allow-popups allow-modals" title="Live Preview" />
-          <div className="border-t border-[#30363d] bg-[#0d1117] shrink-0" style={{ minHeight: 32, maxHeight: 80 }}>
-            <div className="flex items-center justify-between px-3 py-1 border-b border-[#21262d]">
+          <div className="border-t border-[#30363d] bg-[#0d1117] shrink-0" style={{ minHeight: 28, maxHeight: 60 }}>
+            <div className="flex items-center justify-between px-3 py-0.5 border-b border-[#21262d]">
               <span className="text-[10px] font-bold uppercase tracking-widest text-[#6b7280]">
                 Console {logs.length > 0 && <span className="ml-1 text-[#484f58]">({logs.length})</span>}
               </span>
               <button onClick={() => setLogs([])} className="text-[10px] text-[#484f58] hover:text-[#8b949e]">Clear</button>
             </div>
-            <div className="overflow-y-auto p-2 space-y-0.5" style={{ maxHeight: 48 }}>
+            <div className="overflow-y-auto p-1 space-y-0.5" style={{ maxHeight: 32 }}>
               {logs.length === 0
-                ? <p className="text-[11px] text-[#484f58] font-mono px-1">console.log() output appears here...</p>
+                ? <p className="text-[10px] text-[#484f58] font-mono px-1">console.log() output appears here...</p>
                 : logs.map((l, i) => <p key={i} className={logCls(l.type)}>{l.msg}</p>)}
             </div>
           </div>
