@@ -83,7 +83,7 @@ if(__logs.length){const p=document.createElement('pre');p.style.cssText='backgro
             </button>
           </div>
           <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white" style={{ minHeight: 140 }}
-            sandbox="allow-scripts" title="TypeScript Output" />
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals" title="TypeScript Output" />
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-1.5 bg-[#161b22] border-t border-[#30363d]">

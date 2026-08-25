@@ -229,7 +229,7 @@ try {
           <iframe
             ref={iframeRef}
             className="flex-1 w-full border-0"
-            sandbox="allow-scripts allow-forms allow-same-origin"
+            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals"
             title="Live preview"
           />
           {output && (

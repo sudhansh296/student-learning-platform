@@ -215,7 +215,7 @@ ${noOutputObserver}
               <Play className="w-3 h-3" /> Run ▶
             </button>
           </div>
-          <iframe ref={iframeRef} className="flex-1 border-0 w-full" sandbox="allow-scripts allow-forms allow-popups allow-modals" title="preview" />
+          <iframe ref={iframeRef} className="flex-1 border-0 w-full" sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" title="preview" />
           {logs.length > 0 && !(!html.trim() && js.trim()) && (
             <div className="border-t border-[#d0d7de] bg-[#f6f8fa] max-h-24 overflow-y-auto p-2">
               {logs.map((l, i) => (
