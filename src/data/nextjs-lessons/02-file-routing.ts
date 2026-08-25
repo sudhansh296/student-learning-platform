@@ -1,4 +1,4 @@
-﻿import type { NextjsLesson } from '../nextjs-curriculum';
+import type { NextjsLesson } from '../nextjs-curriculum';
 
 export const nextjsFileRoutingLesson: NextjsLesson = {
   id: 'nextjs-file-routing',
@@ -198,17 +198,17 @@ document.getElementById('output').innerHTML =
   '<div class="container">' +
   '<h3>File-Based Routing Explorer</h3>' +
   '<div class="file-tree">' +
-  '<span class="folder">app/</span>\n' +
-  '  <span class="file">+-- page.tsx</span>  <span class="route-tag">-&gt; "/"</span>\n' +
-  '  <span class="folder">+-- about/</span>\n' +
-  '  <span class="file">|   +-- page.tsx</span>  <span class="route-tag">-&gt; "/about"</span>\n' +
-  '  <span class="folder">+-- blog/</span>\n' +
-  '  <span class="file">|   +-- page.tsx</span>  <span class="route-tag">-&gt; "/blog"</span>\n' +
-  '  <span class="folder">|   +-- [slug]/</span>\n' +
-  '  <span class="file">|       +-- page.tsx</span>  <span class="route-tag">-&gt; "/blog/*"</span>\n' +
-  '  <span class="folder">+-- docs/[...slug]/</span>\n' +
-  '  <span class="file">|   +-- page.tsx</span>  <span class="route-tag">-&gt; "/docs/**"</span>\n' +
-  '  <span class="folder">+-- users/[id]/</span>\n' +
+  '<span class="folder">app/</span> ' +
+  '  <span class="file">+-- page.tsx</span>  <span class="route-tag">-&gt; "/"</span> ' +
+  '  <span class="folder">+-- about/</span> ' +
+  '  <span class="file">|   +-- page.tsx</span>  <span class="route-tag">-&gt; "/about"</span> ' +
+  '  <span class="folder">+-- blog/</span> ' +
+  '  <span class="file">|   +-- page.tsx</span>  <span class="route-tag">-&gt; "/blog"</span> ' +
+  '  <span class="folder">|   +-- [slug]/</span> ' +
+  '  <span class="file">|       +-- page.tsx</span>  <span class="route-tag">-&gt; "/blog/*"</span> ' +
+  '  <span class="folder">+-- docs/[...slug]/</span> ' +
+  '  <span class="file">|   +-- page.tsx</span>  <span class="route-tag">-&gt; "/docs/**"</span> ' +
+  '  <span class="folder">+-- users/[id]/</span> ' +
   '      <span class="file">+-- page.tsx</span>  <span class="route-tag">-&gt; "/users/:id"</span>' +
   '</div>' +
   '<div class="url-bar"><span class="url-label">URL:</span><span class="url-val" id="url-val">/</span></div>' +

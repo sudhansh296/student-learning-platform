@@ -8,7 +8,7 @@ export const tsTsconfigLesson: TsLesson = {
   order: 18,
   difficulty: 'intermediate',
   readingTime: 12,
-  description: 'Master tsconfig.json to control how TypeScript compiles your code — from strict mode to path aliases to project references.',
+  description: 'Master tsconfig.json to control how TypeScript compiles your code - from strict mode to path aliases to project references.',
   sections: [
     {
       type: 'text',
@@ -47,19 +47,19 @@ export const tsTsconfigLesson: TsLesson = {
     },
     {
       type: 'text',
-      content: 'Enabling "strict": true is a shorthand that turns on all strict mode flags simultaneously. Each flag catches a specific class of error. Understanding them individually helps when you need to migrate an existing codebase gradually — you can enable them one at a time rather than all at once.',
+      content: 'Enabling "strict": true is a shorthand that turns on all strict mode flags simultaneously. Each flag catches a specific class of error. Understanding them individually helps when you need to migrate an existing codebase gradually - you can enable them one at a time rather than all at once.',
     },
     {
       type: 'table',
       title: 'Individual Strict Mode Flags',
       headers: ['Flag', 'What It Catches', 'Example Error'],
       rows: [
-        ['strictNullChecks', 'Treating null/undefined as other types', 'const len = user.name.length — error if name could be null'],
-        ['noImplicitAny', 'Parameters or variables inferred as any', 'function greet(name) {} — error because name is implicitly any'],
+        ['strictNullChecks', 'Treating null/undefined as other types', 'const len = user.name.length - error if name could be null'],
+        ['noImplicitAny', 'Parameters or variables inferred as any', 'function greet(name) {} - error because name is implicitly any'],
         ['strictFunctionTypes', 'Unsafe function parameter type assignments', 'Assigning (x: Dog) => void where (x: Animal) => void is expected'],
-        ['strictPropertyInitialization', 'Class properties not set in constructor', 'class User { name: string } — error if name not initialized'],
-        ['strictBindCallApply', 'Wrong arguments to bind, call, apply', 'fn.call(null, 1, "wrong") — error if "wrong" does not match param type'],
-        ['noImplicitThis', 'Using this in a context where its type is any', 'function getX() { return this.x } — error without a typed this param'],
+        ['strictPropertyInitialization', 'Class properties not set in constructor', 'class User { name: string } - error if name not initialized'],
+        ['strictBindCallApply', 'Wrong arguments to bind, call, apply', 'fn.call(null, 1, "wrong") - error if "wrong" does not match param type'],
+        ['noImplicitThis', 'Using this in a context where its type is any', 'function getX() { return this.x } - error without a typed this param'],
         ['alwaysStrict', 'Missing "use strict" pragma', 'Adds "use strict" to every emitted file automatically'],
       ],
     },
@@ -120,7 +120,7 @@ export const tsTsconfigLesson: TsLesson = {
     "lib": ["ES2017", "DOM", "DOM.Iterable"],
 
     // --- JSX ---
-    "jsx": "react-jsx",          // React 17+ transform — no import React needed
+    "jsx": "react-jsx",          // React 17+ transform - no import React needed
     // "jsx": "preserve"        // Use this for Next.js (Next handles JSX itself)
 
     // --- Module Resolution ---
@@ -157,7 +157,7 @@ export const tsTsconfigLesson: TsLesson = {
     },
     {
       type: 'text',
-      content: 'Path aliases let you replace long relative import paths with short, absolute-looking ones. They are configured via the paths option in compilerOptions and require baseUrl to be set. The TypeScript compiler uses them for type checking only — your bundler (Vite, webpack, Next.js) also needs to know about them to resolve modules at runtime.',
+      content: 'Path aliases let you replace long relative import paths with short, absolute-looking ones. They are configured via the paths option in compilerOptions and require baseUrl to be set. The TypeScript compiler uses them for type checking only - your bundler (Vite, webpack, Next.js) also needs to know about them to resolve modules at runtime.',
     },
     {
       type: 'example',
@@ -222,7 +222,7 @@ import type { User }   from '@types/User';
     {
       type: 'example',
       title: 'Controlling which files TypeScript compiles',
-      content: 'The exclude option does not prevent a file from being compiled if another included file imports it — it only removes the file from the initial scan. If you want to truly exclude a file from type-checking, use @ts-ignore inside the file or filter it with separate tsconfig extends chains.',
+      content: 'The exclude option does not prevent a file from being compiled if another included file imports it - it only removes the file from the initial scan. If you want to truly exclude a file from type-checking, use @ts-ignore inside the file or filter it with separate tsconfig extends chains.',
       language: 'json',
       code: `{
   "compilerOptions": { "strict": true },
@@ -245,7 +245,7 @@ import type { User }   from '@types/User';
     "src/generated/**"   // Skip auto-generated code
   ],
 
-  // files: explicit file list (rarely used — prefer include)
+  // files: explicit file list (rarely used - prefer include)
   // Useful for a tiny project or to force-include a specific ambient file
   "files": [
     "src/global.d.ts",
@@ -259,7 +259,7 @@ import type { User }   from '@types/User';
     },
     {
       type: 'text',
-      content: 'Project references let you split a large codebase into independently compilable pieces that TypeScript understands as a dependency graph. Each sub-project has its own tsconfig.json and sets "composite": true. A root tsconfig.json lists all the projects in its references array. This enables incremental builds — TypeScript only recompiles the projects that changed — and enforces clean dependency boundaries between packages.',
+      content: 'Project references let you split a large codebase into independently compilable pieces that TypeScript understands as a dependency graph. Each sub-project has its own tsconfig.json and sets "composite": true. A root tsconfig.json lists all the projects in its references array. This enables incremental builds - TypeScript only recompiles the projects that changed - and enforces clean dependency boundaries between packages.',
     },
     {
       type: 'example',
@@ -280,7 +280,7 @@ import type { User }   from '@types/User';
 {
   "compilerOptions": {
     "composite": true,        // REQUIRED for project references
-    "declaration": true,      // REQUIRED — consumers need the .d.ts files
+    "declaration": true,      // REQUIRED - consumers need the .d.ts files
     "declarationMap": true,
     "outDir": "./dist",
     "rootDir": "./src"
@@ -302,9 +302,9 @@ import type { User }   from '@types/User';
 }
 
 // Build commands:
-// tsc --build              — build all changed projects
-// tsc --build --clean      — delete all build outputs
-// tsc --build --watch      — watch mode for all projects`,
+// tsc --build              - build all changed projects
+// tsc --build --clean      - delete all build outputs
+// tsc --build --watch      - watch mode for all projects`,
     },
     {
       type: 'heading',
@@ -315,7 +315,7 @@ import type { User }   from '@types/User';
       title: 'tsconfig Base Packages from @tsconfig',
       headers: ['Package', 'Install', 'Best For'],
       rows: [
-        ['@tsconfig/node18', 'npm i -D @tsconfig/node18', 'Node.js 18 projects — sets target, module, and lib correctly'],
+        ['@tsconfig/node18', 'npm i -D @tsconfig/node18', 'Node.js 18 projects - sets target, module, and lib correctly'],
         ['@tsconfig/node20', 'npm i -D @tsconfig/node20', 'Node.js 20 projects with NodeNext module resolution'],
         ['@tsconfig/strictest', 'npm i -D @tsconfig/strictest', 'All strict checks enabled including newer noUncheckedIndexedAccess'],
         ['@tsconfig/create-react-app', 'npm i -D @tsconfig/create-react-app', 'Create React App compatible settings'],
@@ -361,7 +361,7 @@ import type { User }   from '@types/User';
     {
       type: 'example',
       title: 'Common strict mode errors and how to fix them',
-      content: 'Enabling strict mode for the first time on an existing project typically surfaces three classes of errors: implicit any on function parameters, null/undefined not handled, and class properties without initializers. Each error has a clear fix pattern — the compiler messages tell you exactly what is wrong and where.',
+      content: 'Enabling strict mode for the first time on an existing project typically surfaces three classes of errors: implicit any on function parameters, null/undefined not handled, and class properties without initializers. Each error has a clear fix pattern - the compiler messages tell you exactly what is wrong and where.',
       language: 'typescript',
       code: `// ---- noImplicitAny ----
 
@@ -465,7 +465,7 @@ const options = [
   {
     name: 'target',
     category: 'Output',
-    description: 'Sets the JavaScript language version for the emitted output. TypeScript downcompiles syntax features to the target — for example, optional chaining (?.) becomes a nested if/null check when targeting ES5. Choosing a modern target produces cleaner, smaller output.',
+    description: 'Sets the JavaScript language version for the emitted output. TypeScript downcompiles syntax features to the target - for example, optional chaining (?.) becomes a nested if/null check when targeting ES5. Choosing a modern target produces cleaner, smaller output.',
     default: 'ES3',
     recommended: 'ES2020 or ESNext',
     impact: 'medium',
@@ -485,7 +485,7 @@ const options = [
     category: 'Type Safety',
     description: 'Enables all strict type-checking options with a single flag: strictNullChecks, noImplicitAny, strictFunctionTypes, strictPropertyInitialization, strictBindCallApply, noImplicitThis, and alwaysStrict. The single most impactful option for code safety.',
     default: 'false',
-    recommended: 'true — always enable for new projects',
+    recommended: 'true - always enable for new projects',
     impact: 'high',
     example: '{\\n  "compilerOptions": {\\n    "strict": true\\n    // Equivalent to setting all strict flags individually:\\n    // "strictNullChecks": true,\\n    // "noImplicitAny": true,\\n    // "strictFunctionTypes": true,\\n    // "strictPropertyInitialization": true\\n  }\\n}'
   },
@@ -537,7 +537,7 @@ const options = [
   {
     name: 'declaration',
     category: 'Output',
-    description: 'Emits .d.ts type declaration files alongside the compiled .js output. Required when publishing a package to npm so that TypeScript consumers of your package get full type information. Declaration files contain only type signatures — no runtime code.',
+    description: 'Emits .d.ts type declaration files alongside the compiled .js output. Required when publishing a package to npm so that TypeScript consumers of your package get full type information. Declaration files contain only type signatures - no runtime code.',
     default: 'false',
     recommended: 'true when publishing a library',
     impact: 'low',
@@ -642,7 +642,7 @@ grid.firstChild.click();
         '"module": "system" and "target": "ES2015"',
       ],
       correct: 1,
-      explanation: '"module": "commonjs" makes TypeScript emit require() and module.exports, which is what Node.js expects by default. "target": "ES2022" tells TypeScript to emit modern JavaScript that Node.js 18+ natively understands — no need to downcompile async/await, optional chaining, or nullish coalescing. Using ESNext module with Node.js requires additional configuration (.mjs extensions or "type": "module" in package.json).',
+      explanation: '"module": "commonjs" makes TypeScript emit require() and module.exports, which is what Node.js expects by default. "target": "ES2022" tells TypeScript to emit modern JavaScript that Node.js 18+ natively understands - no need to downcompile async/await, optional chaining, or nullish coalescing. Using ESNext module with Node.js requires additional configuration (.mjs extensions or "type": "module" in package.json).',
     },
     {
       id: 'ts-tsconfig-ex2',
@@ -655,7 +655,7 @@ grid.firstChild.click();
         'You must run "tsc --resolveAlias" after adding paths',
       ],
       correct: 2,
-      explanation: 'tsconfig.json paths are used by the TypeScript compiler for type checking only — they do not affect the runtime module resolution. Your bundler (Vite, webpack, Next.js) has its own module resolver and needs to know about the alias separately. In Vite you configure resolve.alias in vite.config.ts; in webpack you use resolve.alias in webpack.config.js. Next.js is the exception — it reads paths from tsconfig.json automatically.',
+      explanation: 'tsconfig.json paths are used by the TypeScript compiler for type checking only - they do not affect the runtime module resolution. Your bundler (Vite, webpack, Next.js) has its own module resolver and needs to know about the alias separately. In Vite you configure resolve.alias in vite.config.ts; in webpack you use resolve.alias in webpack.config.js. Next.js is the exception - it reads paths from tsconfig.json automatically.',
     },
     {
       id: 'ts-tsconfig-ex3',
@@ -668,7 +668,7 @@ grid.firstChild.click();
         '"isolatedModules": true',
       ],
       correct: 1,
-      explanation: '"composite": true is required on every sub-project that is referenced by another. It tells TypeScript to store build metadata in a .tsbuildinfo file so that "tsc --build" knows whether a project needs to be recompiled. As a side effect, composite also forces "declaration": true so that consuming projects can see the compiled types. Setting only "declaration": true is not sufficient — TypeScript will reject the reference without composite.',
+      explanation: '"composite": true is required on every sub-project that is referenced by another. It tells TypeScript to store build metadata in a .tsbuildinfo file so that "tsc --build" knows whether a project needs to be recompiled. As a side effect, composite also forces "declaration": true so that consuming projects can see the compiled types. Setting only "declaration": true is not sufficient - TypeScript will reject the reference without composite.',
     },
   ],
   quiz: [
@@ -682,7 +682,7 @@ grid.firstChild.click();
         'It enables linting rules in addition to type checking',
       ],
       correct: 1,
-      explanation: '"strict": true is a shorthand that enables all strict-mode flags simultaneously: strictNullChecks, noImplicitAny, strictFunctionTypes, strictPropertyInitialization, strictBindCallApply, noImplicitThis, and alwaysStrict. You can still override any individual flag after setting strict — for example "strict": true, "strictPropertyInitialization": false lets you disable just one flag while keeping the rest active.',
+      explanation: '"strict": true is a shorthand that enables all strict-mode flags simultaneously: strictNullChecks, noImplicitAny, strictFunctionTypes, strictPropertyInitialization, strictBindCallApply, noImplicitThis, and alwaysStrict. You can still override any individual flag after setting strict - for example "strict": true, "strictPropertyInitialization": false lets you disable just one flag while keeping the rest active.',
     },
     {
       id: 'ts-tsconfig-q2',
@@ -694,7 +694,7 @@ grid.firstChild.click();
         '"lib" is used in production builds and "types" is used in development builds',
       ],
       correct: 1,
-      explanation: '"lib" selects which of TypeScript\'s bundled type declaration files are active — for example ["ES2022", "DOM"] includes all standard ES2022 globals plus browser APIs. "types" is an allowlist that controls which packages from node_modules/@types/ are automatically included — when set, only the named packages contribute ambient globals. Without "types", all installed @types/* packages are included automatically.',
+      explanation: '"lib" selects which of TypeScript\'s bundled type declaration files are active - for example ["ES2022", "DOM"] includes all standard ES2022 globals plus browser APIs. "types" is an allowlist that controls which packages from node_modules/@types/ are automatically included - when set, only the named packages contribute ambient globals. Without "types", all installed @types/* packages are included automatically.',
     },
     {
       id: 'ts-tsconfig-q3',
@@ -706,7 +706,7 @@ grid.firstChild.click();
         '"esModuleInterop": true and "allowSyntheticDefaultImports": true',
       ],
       correct: 2,
-      explanation: '"declaration": true makes the compiler emit .d.ts type definition files alongside the .js output — these are what TypeScript reads when consumers import your package. "declarationMap": true emits .d.ts.map files that map type declarations back to the original .ts source, enabling "Go to Definition" in editors to jump to your actual source code rather than the generated .d.ts file. Together they give consumers the best possible type-checking and editor experience.',
+      explanation: '"declaration": true makes the compiler emit .d.ts type definition files alongside the .js output - these are what TypeScript reads when consumers import your package. "declarationMap": true emits .d.ts.map files that map type declarations back to the original .ts source, enabling "Go to Definition" in editors to jump to your actual source code rather than the generated .d.ts file. Together they give consumers the best possible type-checking and editor experience.',
     },
   ],
 };

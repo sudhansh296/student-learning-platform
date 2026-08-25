@@ -8,7 +8,7 @@ export const reactEventsLesson: ReactLesson = {
   order: 6,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Learn how to handle user interactions in React — onClick, onChange, onSubmit, synthetic events, preventDefault, and how to pass event handlers as props.',
+  description: 'Learn how to handle user interactions in React - onClick, onChange, onSubmit, synthetic events, preventDefault, and how to pass event handlers as props.',
   sections: [
     {
       type: 'text',
@@ -16,12 +16,12 @@ export const reactEventsLesson: ReactLesson = {
     },
     {
       type: 'heading',
-      content: '1. onClick — Handling Button Clicks',
+      content: '1. onClick - Handling Button Clicks',
     },
     {
       type: 'example',
       title: 'Click handlers defined inline and as separate functions',
-      content: 'onClick expects a function — not a function call. Writing onClick={handleClick} passes the function itself (correct). Writing onClick={handleClick()} calls the function immediately on render (wrong). For inline handlers with arguments, wrap in an arrow function: onClick={() => handleClick(id)}.',
+      content: 'onClick expects a function - not a function call. Writing onClick={handleClick} passes the function itself (correct). Writing onClick={handleClick()} calls the function immediately on render (wrong). For inline handlers with arguments, wrap in an arrow function: onClick={() => handleClick(id)}.',
       language: 'jsx',
       code: `function ClickDemo() {
   // ✅ Named handler function
@@ -29,24 +29,24 @@ export const reactEventsLesson: ReactLesson = {
     alert('Button clicked!');
   }
 
-  // ✅ Inline arrow function — useful for one-liners
-  // ✅ Arrow function wrapper — required when passing arguments
+  // ✅ Inline arrow function - useful for one-liners
+  // ✅ Arrow function wrapper - required when passing arguments
   function greet(name) {
     alert('Hello, ' + name + '!');
   }
 
   return (
     <div>
-      {/* Pass the function — do NOT call it */}
+      {/* Pass the function - do NOT call it */}
       <button onClick={handleClick}>Click me</button>
 
       {/* Inline arrow function */}
       <button onClick={() => alert('Inline clicked!')}>Inline</button>
 
-      {/* Passing argument — must wrap in arrow function */}
+      {/* Passing argument - must wrap in arrow function */}
       <button onClick={() => greet('Alice')}>Greet Alice</button>
 
-      {/* ❌ WRONG — this runs greet immediately on render */}
+      {/* ❌ WRONG - this runs greet immediately on render */}
       {/* <button onClick={greet('Alice')}>Wrong</button> */}
     </div>
   );
@@ -54,12 +54,12 @@ export const reactEventsLesson: ReactLesson = {
     },
     {
       type: 'heading',
-      content: '2. onChange — Handling Input Changes',
+      content: '2. onChange - Handling Input Changes',
     },
     {
       type: 'example',
       title: 'Reading input values via the event object',
-      content: 'The onChange event fires every time an input value changes. The handler receives a synthetic event object (e). The current value of the input is at e.target.value. This is how you build controlled inputs — where the React state is always in sync with what the user types.',
+      content: 'The onChange event fires every time an input value changes. The handler receives a synthetic event object (e). The current value of the input is at e.target.value. This is how you build controlled inputs - where the React state is always in sync with what the user types.',
       language: 'jsx',
       code: `function InputDemo() {
   const [text, setText] = React.useState('');
@@ -154,7 +154,7 @@ export const reactEventsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Properties available on the event object',
-      content: 'Every React event handler receives a synthetic event object that wraps the native browser event. It has the same properties and methods as the native event — target, currentTarget, type, key, preventDefault(), stopPropagation(), etc. — but React normalizes them across browsers.',
+      content: 'Every React event handler receives a synthetic event object that wraps the native browser event. It has the same properties and methods as the native event - target, currentTarget, type, key, preventDefault(), stopPropagation(), etc. - but React normalizes them across browsers.',
       language: 'jsx',
       code: `function EventInfoDemo() {
   const [info, setInfo] = React.useState('Click a button to see event info');
@@ -204,9 +204,9 @@ export const reactEventsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Handlers defined in parent, passed to child components',
-      content: 'A common pattern is to define the event handler in a parent component (where the state lives) and pass it as a prop to the child. The child just calls the function when the event happens. By convention, handler props are named with the "on" prefix — like onDelete, onSave, onSelect.',
+      content: 'A common pattern is to define the event handler in a parent component (where the state lives) and pass it as a prop to the child. The child just calls the function when the event happens. By convention, handler props are named with the "on" prefix - like onDelete, onSave, onSelect.',
       language: 'jsx',
-      code: `// Child component — knows nothing about state
+      code: `// Child component - knows nothing about state
 // It just calls the handler prop when clicked
 function DeleteButton({ itemId, onDelete }) {
   return (
@@ -292,7 +292,7 @@ function KeyDetector() {
 
   return (
     <div className="section">
-      <h3>onKeyDown — Detect Key Presses</h3>
+      <h3>onKeyDown - Detect Key Presses</h3>
       <input
         onKeyDown={e => {
           e.preventDefault();
@@ -314,7 +314,7 @@ function ColorPicker() {
 
   return (
     <div className="section">
-      <h3>onChange — Live Preview</h3>
+      <h3>onChange - Live Preview</h3>
       <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
         <input type="color" value={color} onChange={e => setColor(e.target.value)} style={{ width: 44, padding: 0, border: 'none' }} />
         <input value={text} onChange={e => setText(e.target.value)} placeholder="Enter text..." style={{ flex: 1 }} />
@@ -345,7 +345,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       question: 'What is wrong with: <button onClick={handleClick()}>Click</button>?',
       type: 'multiple-choice',
       options: [
-        'Nothing — it works correctly',
+        'Nothing - it works correctly',
         'handleClick() calls the function immediately on render instead of on click',
         'You must use curly braces around the whole expression',
         'onClick does not accept function calls',
@@ -372,10 +372,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       id: 'req1',
       question: 'How do you pass an argument to an event handler?',
       options: [
-        'onClick={handleClick(id)} — call it with the argument',
-        'onClick={() => handleClick(id)} — wrap in arrow function',
-        'onClick={handleClick, id} — comma-separate',
-        'onClick={[handleClick, id]} — use an array',
+        'onClick={handleClick(id)} - call it with the argument',
+        'onClick={() => handleClick(id)} - wrap in arrow function',
+        'onClick={handleClick, id} - comma-separate',
+        'onClick={[handleClick, id]} - use an array',
       ],
       correct: 1,
       explanation: 'When you need to pass an argument to a handler, wrap it in an arrow function: onClick={() => handleClick(id)}. This creates a new function that calls handleClick(id) only when the user clicks.',

@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactCustomHooksLesson: ReactLesson = {
   id: 'react-custom-hooks',
@@ -21,7 +21,7 @@ export const reactCustomHooksLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Extracting logic into a reusable custom hook',
-      content: 'Any time you find yourself writing the same useState + useEffect pattern in multiple components, extract it into a custom hook. The hook is just a function — it can accept arguments, return values, and call any built-in hooks.',
+      content: 'Any time you find yourself writing the same useState + useEffect pattern in multiple components, extract it into a custom hook. The hook is just a function - it can accept arguments, return values, and call any built-in hooks.',
       language: 'jsx',
       code: `// BEFORE: logic duplicated in every component that needs window size
 function Header() {
@@ -34,7 +34,7 @@ function Header() {
   return <nav>{width > 768 ? 'Desktop Nav' : 'Mobile Nav'}</nav>;
 }
 
-// AFTER: extract into a custom hook — reuse anywhere
+// AFTER: extract into a custom hook - reuse anywhere
 function useWindowWidth() {
   const [width, setWidth] = useState(window.innerWidth);
   
@@ -66,7 +66,7 @@ function Sidebar() {
     {
       type: 'example',
       title: 'A simple useToggle hook for boolean state',
-      content: 'The useToggle hook is a great first custom hook — it wraps a boolean useState with a toggle function. Simple but eliminates a tiny repeated pattern across your app.',
+      content: 'The useToggle hook is a great first custom hook - it wraps a boolean useState with a toggle function. Simple but eliminates a tiny repeated pattern across your app.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -117,7 +117,7 @@ function DropdownMenu() {
 
 function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
-    // Lazy initializer — reads from localStorage on first render only
+    // Lazy initializer - reads from localStorage on first render only
     try {
       const item = window.localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
@@ -140,7 +140,7 @@ function useLocalStorage(key, initialValue) {
   return [storedValue, setValue];
 }
 
-// Usage — works exactly like useState but persists across page refreshes
+// Usage - works exactly like useState but persists across page refreshes
 function Settings() {
   const [theme, setTheme] = useLocalStorage('app-theme', 'light');
   const [fontSize, setFontSize] = useLocalStorage('font-size', 16);
@@ -204,7 +204,7 @@ function useFetch(url) {
   return { data, loading, error };
 }
 
-// Clean usage — no loading/error boilerplate in the component
+// Clean usage - no loading/error boilerplate in the component
 function UserList() {
   const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/users');
 
@@ -256,7 +256,7 @@ function DropdownDemo() {
   const [open, toggleOpen] = useToggle(false);
   return (
     <div className="card">
-      <h3>useToggle — Dropdown</h3>
+      <h3>useToggle - Dropdown</h3>
       <button className="btn-blue" onClick={toggleOpen}>
         Menu {open ? '▲' : '▼'}
       </button>
@@ -275,7 +275,7 @@ function CounterDemo() {
   const { count, increment, decrement, reset } = useCounter(0, 5);
   return (
     <div className="card">
-      <h3>useCounter — Custom Hook</h3>
+      <h3>useCounter - Custom Hook</h3>
       <div className="count">{count}</div>
       <button className="btn-green" onClick={increment}>+5</button>
       <button className="btn-red" onClick={decrement}>-5</button>
@@ -305,10 +305,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'They must end with "Hook" (e.g., ToggleHook)',
         'They must start with "use" (e.g., useToggle)',
         'They must start with "custom" (e.g., customToggle)',
-        'No naming rules — any function name works',
+        'No naming rules - any function name works',
       ],
       correct: 1,
-      explanation: 'Custom hooks must start with "use" (e.g., useToggle, useFetch, useLocalStorage). This is not just a convention — React linters use this rule to detect hooks and enforce the Rules of Hooks (no hooks in conditions or loops).',
+      explanation: 'Custom hooks must start with "use" (e.g., useToggle, useFetch, useLocalStorage). This is not just a convention - React linters use this rule to detect hooks and enforce the Rules of Hooks (no hooks in conditions or loops).',
     },
     {
       id: 'hook-2',
@@ -329,13 +329,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       id: 'rchkq1',
       question: 'Can a custom hook call other hooks like useState and useEffect?',
       options: [
-        'No — hooks can only be called inside component functions',
-        'Yes — custom hooks can call any built-in hooks',
+        'No - hooks can only be called inside component functions',
+        'Yes - custom hooks can call any built-in hooks',
         'Only if the custom hook is exported as default',
-        'Only useEffect — not useState',
+        'Only useEffect - not useState',
       ],
       correct: 1,
-      explanation: 'Custom hooks can call any other hooks (useState, useEffect, useRef, useContext, etc.) as well as other custom hooks. This is what makes them powerful — they compose behavior from smaller pieces, just like components compose UI.',
+      explanation: 'Custom hooks can call any other hooks (useState, useEffect, useRef, useContext, etc.) as well as other custom hooks. This is what makes them powerful - they compose behavior from smaller pieces, just like components compose UI.',
     },
   ],
 };

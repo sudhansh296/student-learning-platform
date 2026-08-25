@@ -12,7 +12,7 @@ export const tsTypeGuardsLesson: TsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Type narrowing is how TypeScript figures out the specific type inside a union. When you have "string | number", you cannot call .toUpperCase() directly because it might be a number. TypeScript watches your if-statements and narrows the type automatically — once you check typeof === "string", it knows everything in that block is a string.',
+      content: 'Type narrowing is how TypeScript figures out the specific type inside a union. When you have "string | number", you cannot call .toUpperCase() directly because it might be a number. TypeScript watches your if-statements and narrows the type automatically - once you check typeof === "string", it knows everything in that block is a string.',
     },
     {
       type: 'heading',
@@ -43,7 +43,7 @@ console.log(formatValue(true));    // "Yes"
 // typeof also narrows out null/undefined
 function getLength(value: string | null | undefined): number {
   if (typeof value === "string") {
-    return value.length; // Safe — definitely a string
+    return value.length; // Safe - definitely a string
   }
   return 0;
 }
@@ -87,7 +87,7 @@ function makeSound(pet: Pet): string {
   return pet.meow();
 }
 
-// instanceof with Error subclasses — very common pattern
+// instanceof with Error subclasses - very common pattern
 function handleError(err: unknown): string {
   if (err instanceof TypeError) {
     return "Type error: " + err.message;
@@ -130,7 +130,7 @@ function describeVehicle(v: Vehicle): string {
     return v.make + " " + v.model + " (" + v.horsepower + "hp)";
   }
   // TypeScript knows: v is Bicycle
-  return v.brand + " bicycle — " + v.gears + " gears";
+  return v.brand + " bicycle - " + v.gears + " gears";
 }
 
 // "in" is also good for optional properties
@@ -148,7 +148,7 @@ function greet(user: Admin | RegularUser): string {
   if ("adminLevel" in user) {
     return "Admin " + user.name + " (level " + user.adminLevel + ")";
   }
-  return "User " + user.name + " — " + user.email;
+  return "User " + user.name + " - " + user.email;
 }`,
     },
     {
@@ -170,7 +170,7 @@ interface Bird {
   name: string;
 }
 
-// Type predicate — "pet is Fish" narrows the caller
+// Type predicate - "pet is Fish" narrows the caller
 function isFish(pet: Fish | Bird): pet is Fish {
   return "swim" in pet;
 }
@@ -274,10 +274,10 @@ document.getElementById('output').innerHTML = results.map(r =>
       id: 'ts-guard-q1',
       question: 'Which type guard is best for distinguishing between two plain object types in a union?',
       options: [
-        'typeof — it checks the primitive type',
-        'instanceof — it checks class instances',
-        'in — it checks if a property exists on the object',
-        'as — it asserts the type',
+        'typeof - it checks the primitive type',
+        'instanceof - it checks class instances',
+        'in - it checks if a property exists on the object',
+        'as - it asserts the type',
       ],
       correct: 2,
       explanation: 'The "in" operator is best for distinguishing between plain object types in a union. If two types have different properties, "someProperty in obj" lets TypeScript narrow which type you have. "typeof" works for primitives, "instanceof" for class instances, but "in" is the tool for plain object unions.',

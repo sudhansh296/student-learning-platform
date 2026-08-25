@@ -8,11 +8,11 @@ export const reactConditionalLesson: ReactLesson = {
   order: 7,
   difficulty: 'beginner',
   readingTime: 11,
-  description: 'Master all patterns for showing or hiding UI based on conditions — if/else, ternary, short-circuit &&, switch statements, loading states, and toggling component visibility.',
+  description: 'Master all patterns for showing or hiding UI based on conditions - if/else, ternary, short-circuit &&, switch statements, loading states, and toggling component visibility.',
   sections: [
     {
       type: 'text',
-      content: 'React does not have special template directives like v-if or ng-if. Instead you use plain JavaScript — if/else, ternary, and logical && — inside your component functions. Because components are just functions that return JSX, you have the full power of JavaScript for conditional logic.',
+      content: 'React does not have special template directives like v-if or ng-if. Instead you use plain JavaScript - if/else, ternary, and logical && - inside your component functions. Because components are just functions that return JSX, you have the full power of JavaScript for conditional logic.',
     },
     {
       type: 'heading',
@@ -21,15 +21,15 @@ export const reactConditionalLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Returning different JSX based on a condition',
-      content: 'The simplest way to conditionally render is with an if statement before the return. If the condition is true, you return one JSX block; otherwise you return another. You can also use early returns — return early if a condition is met, and fall through to the main return at the end.',
+      content: 'The simplest way to conditionally render is with an if statement before the return. If the condition is true, you return one JSX block; otherwise you return another. You can also use early returns - return early if a condition is met, and fall through to the main return at the end.',
       language: 'jsx',
       code: `function UserGreeting({ isLoggedIn, username }) {
-  // Early return pattern — handle edge cases first
+  // Early return pattern - handle edge cases first
   if (!username) {
     return <p>Loading user data...</p>;
   }
 
-  // Regular if/else — return completely different JSX
+  // Regular if/else - return completely different JSX
   if (isLoggedIn) {
     return (
       <div>
@@ -58,12 +58,12 @@ function App() {
     },
     {
       type: 'heading',
-      content: '2. Ternary Operator — Inline Conditional',
+      content: '2. Ternary Operator - Inline Conditional',
     },
     {
       type: 'example',
       title: 'Choosing between two values inline with ternary',
-      content: 'The ternary operator (condition ? a : b) is the go-to tool for inline conditional rendering inside JSX. It works anywhere inside {}, including in attributes and content. Keep ternaries simple — if they start getting nested, extract the logic into a separate variable or function.',
+      content: 'The ternary operator (condition ? a : b) is the go-to tool for inline conditional rendering inside JSX. It works anywhere inside {}, including in attributes and content. Keep ternaries simple - if they start getting nested, extract the logic into a separate variable or function.',
       language: 'jsx',
       code: `function StatusBadge({ status }) {
   return (
@@ -90,7 +90,7 @@ function SubscriptionCard({ plan, daysLeft }) {
       <h3>{plan} Plan</h3>
       {daysLeft > 7
         ? <p style={{ color: 'green' }}>✅ {daysLeft} days remaining</p>
-        : <p style={{ color: 'red' }}>⚠️ Expires in {daysLeft} days — renew soon!</p>
+        : <p style={{ color: 'red' }}>⚠️ Expires in {daysLeft} days - renew soon!</p>
       }
     </div>
   );
@@ -98,12 +98,12 @@ function SubscriptionCard({ plan, daysLeft }) {
     },
     {
       type: 'heading',
-      content: '3. Short-Circuit && — Render or Nothing',
+      content: '3. Short-Circuit && - Render or Nothing',
     },
     {
       type: 'example',
       title: 'Using && to optionally show an element',
-      content: 'The && operator is perfect when you want to show something or nothing at all. In JavaScript, false && anything evaluates to false, and React renders nothing for false. This is shorter than ternary when you have no "else" case. One pitfall: if the left side is 0 (a number), React renders 0 instead of nothing — always coerce to boolean with !! or > 0.',
+      content: 'The && operator is perfect when you want to show something or nothing at all. In JavaScript, false && anything evaluates to false, and React renders nothing for false. This is shorter than ternary when you have no "else" case. One pitfall: if the left side is 0 (a number), React renders 0 instead of nothing - always coerce to boolean with !! or > 0.',
       language: 'jsx',
       code: `function Notifications({ count, messages }) {
   return (
@@ -115,10 +115,10 @@ function SubscriptionCard({ plan, daysLeft }) {
         </div>
       )}
 
-      {/* ⚠️ Pitfall — 0 is falsy but renders as "0" */}
+      {/* ⚠️ Pitfall - 0 is falsy but renders as "0" */}
       {/* {count && <Badge count={count} />}  // renders "0" when count = 0! */}
 
-      {/* ✅ Fix — use count > 0 */}
+      {/* ✅ Fix - use count > 0 */}
       {count > 0 && <span className="badge">{count}</span>}
 
       {/* Showing an empty state */}
@@ -141,7 +141,7 @@ function SubscriptionCard({ plan, daysLeft }) {
     {
       type: 'example',
       title: 'Rendering a spinner while data is loading',
-      content: 'A very common pattern in React apps is showing different UI depending on loading, error, and success states. You check each state from top to bottom — if loading, show a spinner; if error, show an error message; otherwise, show the data. This pattern is used constantly when fetching data from APIs.',
+      content: 'A very common pattern in React apps is showing different UI depending on loading, error, and success states. You check each state from top to bottom - if loading, show a spinner; if error, show an error message; otherwise, show the data. This pattern is used constantly when fetching data from APIs.',
       language: 'jsx',
       code: `function DataView({ isLoading, error, data }) {
   // 1. Loading state
@@ -169,7 +169,7 @@ function SubscriptionCard({ plan, daysLeft }) {
     return <p className="empty">No data found.</p>;
   }
 
-  // 4. Success state — render the actual content
+  // 4. Success state - render the actual content
   return (
     <ul>
       {data.map((item, i) => (
@@ -341,7 +341,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'It causes a React error',
         'The component renders twice',
         'React renders the number 0 in the UI instead of nothing',
-        'There is no risk — it works correctly',
+        'There is no risk - it works correctly',
       ],
       correct: 2,
       explanation: '0 is a falsy number, but React renders 0 as text. The expression 0 && <Badge /> evaluates to 0 (not false), and React puts "0" in the DOM. Fix with count > 0 && <Badge /> to get a boolean.',
@@ -357,7 +357,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'React pauses it',
       ],
       correct: 1,
-      explanation: 'When a component goes from truthy to falsy in JSX, React unmounts it — removes it completely from the DOM and destroys its state. To hide without losing state, use a CSS class or style to set display:none instead.',
+      explanation: 'When a component goes from truthy to falsy in JSX, React unmounts it - removes it completely from the DOM and destroys its state. To hide without losing state, use a CSS class or style to set display:none instead.',
     },
   ],
   quiz: [

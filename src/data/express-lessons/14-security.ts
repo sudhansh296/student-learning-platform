@@ -33,14 +33,14 @@ export const expressSecurityLesson: ExpressLesson = {
       type: 'table',
       headers: ['Header set by Helmet', 'Attack it prevents'],
       rows: [
-        ['Content-Security-Policy', 'XSS — restricts which scripts and resources can load'],
-        ['X-Frame-Options', 'Clickjacking — blocks your page from being embedded in iframes'],
-        ['X-Content-Type-Options', 'MIME sniffing — forces browser to respect declared content type'],
-        ['Strict-Transport-Security', 'Protocol downgrade — forces HTTPS for a defined duration'],
-        ['Referrer-Policy', 'Information leakage — controls how much referrer info is sent'],
-        ['X-DNS-Prefetch-Control', 'DNS prefetch privacy — disables automatic DNS lookups'],
-        ['X-Download-Options', 'Drive-by downloads in IE — prevents auto-opening downloads'],
-        ['Cross-Origin-Opener-Policy', 'Cross-origin attacks — isolates browsing context'],
+        ['Content-Security-Policy', 'XSS - restricts which scripts and resources can load'],
+        ['X-Frame-Options', 'Clickjacking - blocks your page from being embedded in iframes'],
+        ['X-Content-Type-Options', 'MIME sniffing - forces browser to respect declared content type'],
+        ['Strict-Transport-Security', 'Protocol downgrade - forces HTTPS for a defined duration'],
+        ['Referrer-Policy', 'Information leakage - controls how much referrer info is sent'],
+        ['X-DNS-Prefetch-Control', 'DNS prefetch privacy - disables automatic DNS lookups'],
+        ['X-Download-Options', 'Drive-by downloads in IE - prevents auto-opening downloads'],
+        ['Cross-Origin-Opener-Policy', 'Cross-origin attacks - isolates browsing context'],
       ],
     },
     {
@@ -49,7 +49,7 @@ export const expressSecurityLesson: ExpressLesson = {
     },
     {
       type: 'text',
-      content: 'CORS (Cross-Origin Resource Sharing) is a browser mechanism that blocks JavaScript from reading responses from a different origin unless the server explicitly allows it. Without CORS configuration, only same-origin requests work. You need to configure which origins, methods, and headers are permitted — and handle the preflight OPTIONS request.',
+      content: 'CORS (Cross-Origin Resource Sharing) is a browser mechanism that blocks JavaScript from reading responses from a different origin unless the server explicitly allows it. Without CORS configuration, only same-origin requests work. You need to configure which origins, methods, and headers are permitted - and handle the preflight OPTIONS request.',
     },
     {
       type: 'example',
@@ -298,23 +298,23 @@ function showHeaders() {
   scoreEl.textContent = 'Score: '+score+'/8';
   scoreEl.className = 'score-badge '+getScoreClass(score);
 
-  var lines = '<span class=\\"h-status\\">HTTP/1.1 200 OK</span>\\\\n';
-  lines += '<span style=\\"color:#e2e8f0\\">Content-Type: application/json</span>\\\\n';
-  lines += '<span style=\\"color:#e2e8f0\\">Date: '+new Date().toUTCString()+'</span>\\\\n\\\\n';
-  lines += '<span style=\\"color:#94a3b8\\">// Security Headers (via Helmet)</span>\\\\n';
+  var lines = '<span class=\\"h-status\\">HTTP/1.1 200 OK</span>\\\ ';
+  lines += '<span style=\\"color:#e2e8f0\\">Content-Type: application/json</span>\\\ ';
+  lines += '<span style=\\"color:#e2e8f0\\">Date: '+new Date().toUTCString()+'</span>\\\\n\\\ ';
+  lines += '<span style=\\"color:#94a3b8\\">// Security Headers (via Helmet)</span>\\\ ';
 
   headers.forEach(function(h){
     if (h.key === 'X-Powered-By') {
       if (!h.enabled) {
-        lines += '<span class=\\"h-present\\">// X-Powered-By: [REMOVED] - good</span>\\\\n';
+        lines += '<span class=\\"h-present\\">// X-Powered-By: [REMOVED] - good</span>\\\ ';
       } else {
-        lines += '<span class=\\"h-absent\\">X-Powered-By: Express  // exposes stack</span>\\\\n';
+        lines += '<span class=\\"h-absent\\">X-Powered-By: Express  // exposes stack</span>\\\ ';
       }
     } else {
       if (h.enabled) {
-        lines += '<span class=\\"h-present\\">'+h.key+': [enabled]</span>\\\\n';
+        lines += '<span class=\\"h-present\\">'+h.key+': [enabled]</span>\\\ ';
       } else {
-        lines += '<span class=\\"h-absent\\">// '+h.key+': [missing]</span>\\\\n';
+        lines += '<span class=\\"h-absent\\">// '+h.key+': [missing]</span>\\\ ';
       }
     }
   });

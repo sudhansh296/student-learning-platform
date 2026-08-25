@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactUseRefLesson: ReactLesson = {
   id: 'react-useref',
@@ -81,7 +81,7 @@ function RenderCounter() {
   const [count, setCount] = useState(0);
   const renderCount = useRef(0);
 
-  // This runs after every render — increment without causing another render
+  // This runs after every render - increment without causing another render
   useEffect(() => {
     renderCount.current += 1;
   });
@@ -120,7 +120,7 @@ function PreviousValue() {
     {
       type: 'example',
       title: 'Store interval IDs in refs for proper cleanup',
-      content: 'setTimeout and setInterval return IDs that you need to cancel later. Storing them in a ref (not state) is perfect — you do not need to re-render when the ID changes, but you do need to access it in the cleanup function.',
+      content: 'setTimeout and setInterval return IDs that you need to cancel later. Storing them in a ref (not state) is perfect - you do not need to re-render when the ID changes, but you do need to access it in the cleanup function.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -169,7 +169,7 @@ function Stopwatch() {
     },
     {
       type: 'tip',
-      title: 'useRef vs useState — key difference',
+      title: 'useRef vs useState - key difference',
       content: 'useState triggers a re-render when updated. useRef does NOT. Use state for values that should update the UI. Use refs for values you need to track internally (timers, DOM nodes, previous values) where changing them should not cause a new render.',
     },
     {
@@ -205,7 +205,7 @@ button:disabled { opacity: .4; cursor: default; }
 
   return (
     <div className="card">
-      <h3>DOM Ref — Focus Control</h3>
+      <h3>DOM Ref - Focus Control</h3>
       <div className="row" style={{ marginBottom: 8 }}>
         <input ref={inputRef} type="text" placeholder="Type something..." />
         <button className="btn-blue" onClick={handleFocus}>Focus</button>
@@ -277,7 +277,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'useRef can only store DOM nodes; useState can store any value',
         'Changing ref.current does NOT trigger a re-render; changing state does',
         'useRef is asynchronous; useState is synchronous',
-        'There is no difference — they are interchangeable',
+        'There is no difference - they are interchangeable',
       ],
       correct: 1,
       explanation: 'The key difference is re-rendering. Calling setState triggers React to re-render the component. Mutating ref.current does NOT cause a re-render. This makes refs ideal for storing values you need internally but that should not affect the displayed UI.',
@@ -301,10 +301,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       id: 'rrefq1',
       question: 'You need to store a setInterval ID so you can cancel it later. Which hook should you use?',
       options: [
-        'useState — because you need to persist it across renders',
-        'useRef — because you dont need a re-render when the ID changes',
-        'useEffect — because its a side effect',
-        'useCallback — because its a function ID',
+        'useState - because you need to persist it across renders',
+        'useRef - because you dont need a re-render when the ID changes',
+        'useEffect - because its a side effect',
+        'useCallback - because its a function ID',
       ],
       correct: 1,
       explanation: 'useRef is perfect for storing timer IDs. You need the ID to persist across renders (so you can call clearInterval) but changing the ID should not cause a re-render. If you used useState, setting the interval ID would trigger an unnecessary re-render.',

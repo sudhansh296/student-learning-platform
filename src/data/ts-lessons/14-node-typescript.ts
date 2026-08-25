@@ -23,10 +23,10 @@ export const tsNodeLesson: TsLesson = {
       title: 'Essential tsconfig.json options for a Node.js project',
       content: 'tsconfig.json controls how the TypeScript compiler behaves. For Node.js projects, the most important options are "target" (which JS version to output), "module" (module system), "strict" (all strict checks), and "outDir" (where to put compiled files). Start with strict mode always enabled.',
       language: 'typescript',
-      code: `// tsconfig.json — recommended for Node.js 20+ projects
+      code: `// tsconfig.json - recommended for Node.js 20+ projects
 {
   "compilerOptions": {
-    // Target modern JS — Node 20 supports ES2022
+    // Target modern JS - Node 20 supports ES2022
     "target": "ES2022",
 
     // Use Node.js module resolution
@@ -124,9 +124,9 @@ app.listen(3000);`,
     {
       type: 'example',
       title: 'Type-safe access to process.env',
-      content: 'process.env values are all "string | undefined" in TypeScript. Accessing them without checking for undefined is a common source of runtime errors. The standard pattern is to validate all required env vars at startup and cast them to a typed config object — then the rest of your code uses the typed config, never raw process.env.',
+      content: 'process.env values are all "string | undefined" in TypeScript. Accessing them without checking for undefined is a common source of runtime errors. The standard pattern is to validate all required env vars at startup and cast them to a typed config object - then the rest of your code uses the typed config, never raw process.env.',
       language: 'typescript',
-      code: `// env.ts — validate and type environment variables at startup
+      code: `// env.ts - validate and type environment variables at startup
 
 interface AppConfig {
   port: number;
@@ -146,19 +146,19 @@ function loadConfig(): AppConfig {
 
   return {
     port: parseInt(process.env.PORT ?? "3000", 10),
-    dbUrl: process.env.DATABASE_URL!,  // safe — checked above
+    dbUrl: process.env.DATABASE_URL!,  // safe - checked above
     jwtSecret: process.env.JWT_SECRET!,
     nodeEnv: (process.env.NODE_ENV ?? "development") as AppConfig["nodeEnv"],
   };
 }
 
-// Export typed config — use this everywhere
+// Export typed config - use this everywhere
 export const config = loadConfig();
 
 // Usage in other files:
 // import { config } from "./env";
-// console.log(config.port);    // number — not string | undefined
-// console.log(config.dbUrl);   // string — not string | undefined`,
+// console.log(config.port);    // number - not string | undefined
+// console.log(config.dbUrl);   // string - not string | undefined`,
     },
     {
       type: 'example',
@@ -186,19 +186,19 @@ async function getAllPosts(): Promise<Post[]> {
   return [];
 }
 
-// Promise<void> — no return value
+// Promise<void> - no return value
 async function sendEmail(to: string, subject: string): Promise<void> {
   console.log("Sending to", to + ":", subject);
   // no return needed
 }
 
-// Error handling — catch(err: unknown)
+// Error handling - catch(err: unknown)
 async function safeOperation(): Promise<string> {
   try {
     const result = await getPostById(1);
     return result?.title ?? "Not found";
   } catch (err: unknown) {
-    // err is unknown — must check type before using
+    // err is unknown - must check type before using
     if (err instanceof Error) {
       console.error("Error:", err.message);
     }
@@ -271,7 +271,7 @@ document.getElementById('output').innerHTML =
       type: 'multiple-choice',
       options: [
         'process.env is slower to access than a local variable',
-        'process.env values are "string | undefined" — validating at startup creates a typed config object that removes undefined from all later accesses',
+        'process.env values are "string | undefined" - validating at startup creates a typed config object that removes undefined from all later accesses',
         'Node.js does not allow accessing process.env more than once',
         'TypeScript cannot read process.env values',
       ],
@@ -289,7 +289,7 @@ document.getElementById('output').innerHTML =
         'It disables backward compatibility with JavaScript',
       ],
       correct: 1,
-      explanation: '"strict": true enables a group of strict type-checking flags including strictNullChecks (no implicit null/undefined), noImplicitAny (no implicit any), strictFunctionTypes, and others. Always use it. Without strict mode, TypeScript is much weaker — many common bugs will not be caught.',
+      explanation: '"strict": true enables a group of strict type-checking flags including strictNullChecks (no implicit null/undefined), noImplicitAny (no implicit any), strictFunctionTypes, and others. Always use it. Without strict mode, TypeScript is much weaker - many common bugs will not be caught.',
     },
   ],
   quiz: [
@@ -297,9 +297,9 @@ document.getElementById('output').innerHTML =
       id: 'ts-node-q1',
       question: 'After installing @types/express, how do you type the request body in an Express POST handler?',
       options: [
-        'Use "req.body as MyType" — type assertion',
-        'Use "req: Request<{}, {}, MyBodyType>" — generic parameter for the body',
-        'Declare "const body: MyType = req.body" — local type assertion',
+        'Use "req.body as MyType" - type assertion',
+        'Use "req: Request<{}, {}, MyBodyType>" - generic parameter for the body',
+        'Declare "const body: MyType = req.body" - local type assertion',
         'TypeScript automatically infers the body type from the route definition',
       ],
       correct: 1,

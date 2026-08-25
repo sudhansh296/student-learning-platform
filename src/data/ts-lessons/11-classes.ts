@@ -12,7 +12,7 @@ export const tsClassesLesson: TsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'TypeScript extends JavaScript classes with a full type system — property types, access modifiers, abstract methods, and interface implementation. These features make object-oriented patterns significantly safer and more expressive than in plain JavaScript.',
+      content: 'TypeScript extends JavaScript classes with a full type system - property types, access modifiers, abstract methods, and interface implementation. These features make object-oriented patterns significantly safer and more expressive than in plain JavaScript.',
     },
     {
       type: 'heading',
@@ -56,8 +56,8 @@ console.log(alice.greet());
     },
     {
       type: 'example',
-      title: 'public, private, and protected — controlling access',
-      content: 'TypeScript adds access modifiers to control visibility. "public" (default) is accessible from anywhere. "private" is only accessible inside the class itself. "protected" is accessible in the class and its subclasses, but not from outside. These are compile-time checks — they do not exist in the JavaScript output.',
+      title: 'public, private, and protected - controlling access',
+      content: 'TypeScript adds access modifiers to control visibility. "public" (default) is accessible from anywhere. "private" is only accessible inside the class itself. "protected" is accessible in the class and its subclasses, but not from outside. These are compile-time checks - they do not exist in the JavaScript output.',
       language: 'typescript',
       code: `class BankAccount {
   public owner: string;         // accessible from anywhere
@@ -113,7 +113,7 @@ class ProductLong {
   }
 }
 
-// Short form using parameter properties — identical result:
+// Short form using parameter properties - identical result:
 class Product {
   constructor(
     public readonly id: number,   // creates this.id (readonly)
@@ -137,15 +137,15 @@ console.log(p.id);   // 1
     },
     {
       type: 'example',
-      title: 'Abstract classes — templates that must be subclassed',
-      content: 'An abstract class cannot be instantiated directly — it serves as a base template for subclasses. Abstract methods declare a signature but no implementation; each subclass must provide its own implementation. This enforces a contract across all subclasses.',
+      title: 'Abstract classes - templates that must be subclassed',
+      content: 'An abstract class cannot be instantiated directly - it serves as a base template for subclasses. Abstract methods declare a signature but no implementation; each subclass must provide its own implementation. This enforces a contract across all subclasses.',
       language: 'typescript',
       code: `abstract class Shape {
   abstract readonly name: string;
   abstract getArea(): number;
   abstract getPerimeter(): number;
 
-  // Concrete method — shared by all shapes
+  // Concrete method - shared by all shapes
   describe(): string {
     return this.name + ": area=" + this.getArea().toFixed(2) +
       ", perimeter=" + this.getPerimeter().toFixed(2);
@@ -177,7 +177,7 @@ shapes.forEach(s => console.log(s.describe()));`,
     },
     {
       type: 'example',
-      title: 'implements — class must satisfy an interface contract',
+      title: 'implements - class must satisfy an interface contract',
       content: 'The "implements" keyword tells TypeScript that a class must fulfill an interface contract. If the class is missing any property or method from the interface, TypeScript reports an error. A class can implement multiple interfaces.',
       language: 'typescript',
       code: `interface Serializable {
@@ -283,10 +283,10 @@ document.getElementById('output').innerHTML =
         '"private" is JavaScript native; "protected" is TypeScript only',
         '"private" is only accessible inside the class; "protected" is accessible in the class and its subclasses',
         '"private" makes the property immutable; "protected" makes it mutable',
-        'They are identical — both restrict access from outside the class',
+        'They are identical - both restrict access from outside the class',
       ],
       correct: 1,
-      explanation: '"private" restricts access to inside the class definition only — not even subclasses can access it. "protected" allows access inside the class AND in any class that extends it. Both are TypeScript compile-time checks only and do not appear in the JavaScript output.',
+      explanation: '"private" restricts access to inside the class definition only - not even subclasses can access it. "protected" allows access inside the class AND in any class that extends it. Both are TypeScript compile-time checks only and do not appear in the JavaScript output.',
     },
     {
       id: 'ts-class-2',

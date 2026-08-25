@@ -1,14 +1,14 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactStateLesson: ReactLesson = {
   id: 'react-state',
-  title: 'State — useState Hook',
+  title: 'State - useState Hook',
   slug: 'state',
   chapter: 'hooks',
   order: 5,
   difficulty: 'beginner',
   readingTime: 13,
-  description: 'Master useState — Reacts primary hook for managing changing data. Learn to update primitives, objects, and arrays, understand asynchronous state updates, and lift state to share it between components.',
+  description: 'Master useState - Reacts primary hook for managing changing data. Learn to update primitives, objects, and arrays, understand asynchronous state updates, and lift state to share it between components.',
   sections: [
     {
       type: 'text',
@@ -21,7 +21,7 @@ export const reactStateLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Declaring and using a state variable',
-      content: 'useState is called with an initial value and returns an array with exactly two items: the current value, and a setter function. By convention we destructure them as [value, setValue]. Calling the setter function with a new value triggers a re-render — React calls the component function again and the UI updates to reflect the new state.',
+      content: 'useState is called with an initial value and returns an array with exactly two items: the current value, and a setter function. By convention we destructure them as [value, setValue]. Calling the setter function with a new value triggers a re-render - React calls the component function again and the UI updates to reflect the new state.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -55,19 +55,19 @@ const [user,    setUser]    = useState(null);         // null`,
     {
       type: 'example',
       title: 'Why you should use the functional updater form',
-      content: 'Calling setState does not immediately change the value — it schedules a re-render. If you call setState multiple times in one event handler using the current value, you might read a stale value. The safe solution is the functional updater form: pass a function to setState that receives the previous state and returns the new state.',
+      content: 'Calling setState does not immediately change the value - it schedules a re-render. If you call setState multiple times in one event handler using the current value, you might read a stale value. The safe solution is the functional updater form: pass a function to setState that receives the previous state and returns the new state.',
       language: 'jsx',
       code: `function Counter() {
   const [count, setCount] = useState(0);
 
-  // ⚠️ Problematic — both reads the same stale "count"
+  // ⚠️ Problematic - both reads the same stale "count"
   function addThreeBuggy() {
     setCount(count + 1); // count is still 0
     setCount(count + 1); // count is still 0  
-    setCount(count + 1); // count is still 0 — result: 1, not 3!
+    setCount(count + 1); // count is still 0 - result: 1, not 3!
   }
 
-  // ✅ Correct — functional form always uses the latest value
+  // ✅ Correct - functional form always uses the latest value
   function addThreeCorrect() {
     setCount(prev => prev + 1); // prev is 0 → 1
     setCount(prev => prev + 1); // prev is 1 → 2
@@ -93,7 +93,7 @@ const [user,    setUser]    = useState(null);         // null`,
     {
       type: 'example',
       title: 'Using useState multiple times in one component',
-      content: 'You can call useState as many times as you need in one component — each call creates a completely separate piece of state. React tracks them by their call order, which is why hooks must always be called at the top level (never inside if statements or loops).',
+      content: 'You can call useState as many times as you need in one component - each call creates a completely separate piece of state. React tracks them by their call order, which is why hooks must always be called at the top level (never inside if statements or loops).',
       language: 'jsx',
       code: `function UserForm() {
   const [firstName, setFirstName] = useState('');
@@ -141,7 +141,7 @@ const [user,    setUser]    = useState(null);         // null`,
     {
       type: 'example',
       title: 'Always spread the old object when updating object state',
-      content: 'When state is an object, you must replace the entire object — React does not merge individual properties automatically. Use the spread operator to copy all existing properties first, then override the ones that changed. If you forget to spread, you lose all the properties you did not mention.',
+      content: 'When state is an object, you must replace the entire object - React does not merge individual properties automatically. Use the spread operator to copy all existing properties first, then override the ones that changed. If you forget to spread, you lose all the properties you did not mention.',
       language: 'jsx',
       code: `function ProfileEditor() {
   const [user, setUser] = useState({
@@ -150,13 +150,13 @@ const [user,    setUser]    = useState(null);         // null`,
     bio: 'Frontend developer',
   });
 
-  // ❌ Wrong — replaces the whole object, losing name and email!
+  // ❌ Wrong - replaces the whole object, losing name and email!
   function badUpdate() {
     setUser({ bio: 'Fullstack developer' });
-    // user is now { bio: 'Fullstack developer' } — name and email gone!
+    // user is now { bio: 'Fullstack developer' } - name and email gone!
   }
 
-  // ✅ Correct — spread existing state, then override
+  // ✅ Correct - spread existing state, then override
   function updateBio(newBio) {
     setUser(prev => ({ ...prev, bio: newBio }));
     // user is now { name: 'Alice', email: '...', bio: newBio }
@@ -182,25 +182,25 @@ const [user,    setUser]    = useState(null);         // null`,
     {
       type: 'example',
       title: 'Adding, removing, and updating array items in state',
-      content: 'Arrays in state follow the same rule as objects: never mutate the array directly. Instead, create a new array using spread, filter, or map. Avoid push, pop, splice, or sort on the state array directly — these mutate in place and React wont detect the change.',
+      content: 'Arrays in state follow the same rule as objects: never mutate the array directly. Instead, create a new array using spread, filter, or map. Avoid push, pop, splice, or sort on the state array directly - these mutate in place and React wont detect the change.',
       language: 'jsx',
       code: `function TodoList() {
   const [todos, setTodos] = useState(['Buy milk', 'Walk the dog']);
   const [input, setInput] = useState('');
 
-  // ✅ Add — spread old array + new item
+  // ✅ Add - spread old array + new item
   function addTodo() {
     if (!input.trim()) return;
     setTodos(prev => [...prev, input.trim()]);
     setInput('');
   }
 
-  // ✅ Remove — filter creates a new array without the item
+  // ✅ Remove - filter creates a new array without the item
   function removeTodo(index) {
     setTodos(prev => prev.filter((_, i) => i !== index));
   }
 
-  // ✅ Update — map creates a new array with one item changed
+  // ✅ Update - map creates a new array with one item changed
   function updateTodo(index, newText) {
     setTodos(prev => prev.map((todo, i) => i === index ? newText : todo));
   }
@@ -382,8 +382,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(<KanbanBoard />);`,
       id: 'rsq1',
       question: 'When should you use the functional updater form setCount(prev => prev + 1)?',
       options: [
-        'Always — its the only correct way',
-        'Never — it is slower',
+        'Always - its the only correct way',
+        'Never - it is slower',
         'When the new state depends on the previous state',
         'Only when using TypeScript',
       ],

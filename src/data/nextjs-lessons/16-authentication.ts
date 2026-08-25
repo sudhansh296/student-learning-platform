@@ -8,11 +8,11 @@ export const nextjsAuthenticationLesson: NextjsLesson = {
   order: 16,
   difficulty: 'intermediate',
   readingTime: 15,
-  description: 'Add authentication to your Next.js app using NextAuth.js (Auth.js) — the standard solution for Next.js auth with OAuth, credentials, and session management.',
+  description: 'Add authentication to your Next.js app using NextAuth.js (Auth.js) - the standard solution for Next.js auth with OAuth, credentials, and session management.',
   sections: [
     {
       type: 'text',
-      content: 'Authentication in web apps requires managing sessions, tokens, cookies, and third-party OAuth providers — a notoriously complex problem. NextAuth.js (now called Auth.js) is the de facto standard library for Next.js authentication, handling all of this complexity with a simple configuration API.',
+      content: 'Authentication in web apps requires managing sessions, tokens, cookies, and third-party OAuth providers - a notoriously complex problem. NextAuth.js (now called Auth.js) is the de facto standard library for Next.js authentication, handling all of this complexity with a simple configuration API.',
     },
     {
       type: 'heading',
@@ -29,8 +29,8 @@ export const nextjsAuthenticationLesson: NextjsLesson = {
         'Sessions: Server-side storage of user login state, identified by a session ID in a cookie',
         'JWT (JSON Web Tokens): Self-contained tokens with encoded user data, verified with a secret key',
         'OAuth: A protocol that lets users log in with a third-party account (Google, GitHub) without sharing their password with your app',
-        'Cookies: Small browser-stored values — the standard way to persist sessions across HTTP requests',
-        'NEXTAUTH_SECRET: A random string used to sign/encrypt JWTs and session cookies — critical for security',
+        'Cookies: Small browser-stored values - the standard way to persist sessions across HTTP requests',
+        'NEXTAUTH_SECRET: A random string used to sign/encrypt JWTs and session cookies - critical for security',
       ],
     },
     {
@@ -52,7 +52,7 @@ export const nextjsAuthenticationLesson: NextjsLesson = {
     {
       type: 'example',
       title: 'auth.ts configuration with GitHub provider',
-      content: 'This file is the central configuration for NextAuth.js, defining which providers are enabled and how sessions are handled. The NEXTAUTH_SECRET environment variable is critical — it signs the session cookies, and if it is missing or weak, your sessions can be forged by attackers.',
+      content: 'This file is the central configuration for NextAuth.js, defining which providers are enabled and how sessions are handled. The NEXTAUTH_SECRET environment variable is critical - it signs the session cookies, and if it is missing or weak, your sessions can be forged by attackers.',
       language: 'typescript',
       code: `// src/auth.ts (at project root or src/)
 import NextAuth from 'next-auth';
@@ -76,7 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return token;
     },
-    // Called whenever a session is checked — shape returned to useSession/auth()
+    // Called whenever a session is checked - shape returned to useSession/auth()
     async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id as string;
@@ -84,7 +84,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-  // Custom sign-in page (optional — NextAuth provides a default)
+  // Custom sign-in page (optional - NextAuth provides a default)
   pages: {
     signIn: '/login',
   },
@@ -107,7 +107,7 @@ import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 
 export default async function DashboardPage() {
-  // auth() reads the session from the request cookie — server-side only
+  // auth() reads the session from the request cookie - server-side only
   const session = await auth();
 
   // If no session exists, redirect immediately before rendering any content
@@ -209,7 +209,7 @@ export function UserMenu() {
     {
       type: 'example',
       title: 'Sign in and sign out buttons',
-      content: 'The signIn() function from next-auth/react redirects the user to the OAuth provider (or your custom login page), while signOut() destroys the session cookie and redirects. Both accept a callbackUrl option to control where the user ends up after the action completes — critical for a smooth user experience.',
+      content: 'The signIn() function from next-auth/react redirects the user to the OAuth provider (or your custom login page), while signOut() destroys the session cookie and redirects. Both accept a callbackUrl option to control where the user ends up after the action completes - critical for a smooth user experience.',
       language: 'typescript',
       code: `'use client';
 import { signIn, signOut } from 'next-auth/react';
@@ -246,7 +246,7 @@ export function SignOutButton() {
     },
     {
       type: 'note',
-      content: 'Required environment variables: NEXTAUTH_SECRET (a long random string — generate with: openssl rand -base64 32), NEXTAUTH_URL (your app URL, e.g. http://localhost:3000 in development), GITHUB_ID and GITHUB_SECRET (from your GitHub OAuth App settings at github.com/settings/developers). Never commit these to version control.',
+      content: 'Required environment variables: NEXTAUTH_SECRET (a long random string - generate with: openssl rand -base64 32), NEXTAUTH_URL (your app URL, e.g. http://localhost:3000 in development), GITHUB_ID and GITHUB_SECRET (from your GitHub OAuth App settings at github.com/settings/developers). Never commit these to version control.',
     },
     {
       type: 'heading',
@@ -355,7 +355,7 @@ function doSignOut() {
   setTimeout(() => {
     authState = 'unauthenticated';
     render();
-    console.log('Session destroyed — user signed out');
+    console.log('Session destroyed - user signed out');
   }, 800);
 }
 
@@ -442,7 +442,7 @@ render();`,
         'It is the only approach that works with OAuth providers',
       ],
       correct: 1,
-      explanation: 'Adding auth checks to individual pages is error-prone — a developer can easily add a new protected page and forget the check. Middleware with a matcher pattern enforces protection at the routing layer for all matching paths, making it impossible to accidentally create an unprotected route within the protected area.',
+      explanation: 'Adding auth checks to individual pages is error-prone - a developer can easily add a new protected page and forget the check. Middleware with a matcher pattern enforces protection at the routing layer for all matching paths, making it impossible to accidentally create an unprotected route within the protected area.',
     },
     {
       id: 'nextjs-auth-q3',
@@ -454,7 +454,7 @@ render();`,
         'JWT sessions require a database adapter to function',
       ],
       correct: 2,
-      explanation: 'With JWT strategy, the entire session payload is encoded and signed into a cookie — no database query needed on each request. With database strategy, a session record is stored in your database and only the session ID is in the cookie, requiring a database lookup per request. Database sessions allow instant revocation but add a query overhead.',
+      explanation: 'With JWT strategy, the entire session payload is encoded and signed into a cookie - no database query needed on each request. With database strategy, a session record is stored in your database and only the session ID is in the cookie, requiring a database lookup per request. Database sessions allow instant revocation but add a query overhead.',
     },
   ],
 };

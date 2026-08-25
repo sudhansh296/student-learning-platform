@@ -8,7 +8,7 @@ export const nextjsEnvConfigLesson: NextjsLesson = {
   order: 17,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Manage environment variables in Next.js — from local development secrets to production configuration — and understand public vs private variable exposure.',
+  description: 'Manage environment variables in Next.js - from local development secrets to production configuration - and understand public vs private variable exposure.',
   sections: [
     {
       type: 'text',
@@ -20,17 +20,17 @@ export const nextjsEnvConfigLesson: NextjsLesson = {
     },
     {
       type: 'text',
-      content: 'Hard-coding a database URL or API key directly in source code means anyone with read access to the repository has your credentials. Environment variables decouple secrets from code — the code references a name like process.env.DATABASE_URL, and the actual value is provided by the host environment or a local .env file that is never committed.',
+      content: 'Hard-coding a database URL or API key directly in source code means anyone with read access to the repository has your credentials. Environment variables decouple secrets from code - the code references a name like process.env.DATABASE_URL, and the actual value is provided by the host environment or a local .env file that is never committed.',
     },
     {
       type: 'list',
       title: 'Common environment variable use cases',
       items: [
-        'Database connection strings (DATABASE_URL) — contain hostname, username, and password',
-        'Third-party API keys (STRIPE_SECRET_KEY, SENDGRID_API_KEY) — billable credentials',
-        'Feature flags (NEXT_PUBLIC_ENABLE_BETA) — toggle features without redeploying',
-        'App URLs (NEXTAUTH_URL, NEXT_PUBLIC_APP_URL) — differ between local and production',
-        'Service endpoints (REDIS_URL, ELASTICSEARCH_URL) — infrastructure addresses',
+        'Database connection strings (DATABASE_URL) - contain hostname, username, and password',
+        'Third-party API keys (STRIPE_SECRET_KEY, SENDGRID_API_KEY) - billable credentials',
+        'Feature flags (NEXT_PUBLIC_ENABLE_BETA) - toggle features without redeploying',
+        'App URLs (NEXTAUTH_URL, NEXT_PUBLIC_APP_URL) - differ between local and production',
+        'Service endpoints (REDIS_URL, ELASTICSEARCH_URL) - infrastructure addresses',
       ],
     },
     {
@@ -39,17 +39,17 @@ export const nextjsEnvConfigLesson: NextjsLesson = {
     },
     {
       type: 'text',
-      content: 'Next.js automatically loads variables from several .env files, each serving a different purpose. When multiple files define the same variable, a strict priority order determines which value wins — files later in the list override earlier ones.',
+      content: 'Next.js automatically loads variables from several .env files, each serving a different purpose. When multiple files define the same variable, a strict priority order determines which value wins - files later in the list override earlier ones.',
     },
     {
       type: 'list',
       title: '.env file types and their purposes',
       items: [
-        '.env — baseline defaults committed to the repository; safe only for non-secret defaults',
-        '.env.local — machine-specific secrets; NEVER committed to version control (add to .gitignore)',
-        '.env.development — values loaded only when NODE_ENV=development (npm run dev)',
-        '.env.production — values loaded only when NODE_ENV=production (npm run build + start)',
-        '.env.test — values loaded during test runs (NODE_ENV=test)',
+        '.env - baseline defaults committed to the repository; safe only for non-secret defaults',
+        '.env.local - machine-specific secrets; NEVER committed to version control (add to .gitignore)',
+        '.env.development - values loaded only when NODE_ENV=development (npm run dev)',
+        '.env.production - values loaded only when NODE_ENV=production (npm run build + start)',
+        '.env.test - values loaded during test runs (NODE_ENV=test)',
         'Priority order (highest to lowest): .env.local > .env.development/.env.production > .env',
         '.env.local is NOT loaded during tests to ensure consistent test environments',
       ],
@@ -60,7 +60,7 @@ export const nextjsEnvConfigLesson: NextjsLesson = {
     },
     {
       type: 'text',
-      content: 'By default, all environment variables are only available in the Node.js server runtime. Adding the NEXT_PUBLIC_ prefix inlines the variable value into the JavaScript bundle at build time, making it accessible in both Server and Client Components. Any variable without this prefix is undefined in the browser — a critical security boundary that prevents accidental exposure of secrets.',
+      content: 'By default, all environment variables are only available in the Node.js server runtime. Adding the NEXT_PUBLIC_ prefix inlines the variable value into the JavaScript bundle at build time, making it accessible in both Server and Client Components. Any variable without this prefix is undefined in the browser - a critical security boundary that prevents accidental exposure of secrets.',
     },
     {
       type: 'note',
@@ -83,17 +83,17 @@ export const nextjsEnvConfigLesson: NextjsLesson = {
     {
       type: 'example',
       title: 'Accessing env vars in Server Component vs Client Component',
-      content: 'Server Components can access any environment variable through process.env, including secrets that should never reach the browser. Client Components can only access variables prefixed with NEXT_PUBLIC_, which Next.js inlines into the client bundle at build time — attempting to read a non-prefixed variable in a Client Component returns undefined.',
+      content: 'Server Components can access any environment variable through process.env, including secrets that should never reach the browser. Client Components can only access variables prefixed with NEXT_PUBLIC_, which Next.js inlines into the client bundle at build time - attempting to read a non-prefixed variable in a Client Component returns undefined.',
       language: 'typescript',
-      code: `// app/dashboard/page.tsx — Server Component (default, no 'use client')
+      code: `// app/dashboard/page.tsx - Server Component (default, no 'use client')
 // Can access ALL environment variables including secrets
 export default async function DashboardPage() {
-  // Safe — this runs only on the server, never sent to the browser
+  // Safe - this runs only on the server, never sent to the browser
   const dbUrl = process.env.DATABASE_URL;
   const apiKey = process.env.STRIPE_SECRET_KEY;
   const publicUrl = process.env.NEXT_PUBLIC_APP_URL;
 
-  // Fetch data using secret key — key is never exposed to client
+  // Fetch data using secret key - key is never exposed to client
   const data = await fetch('https://api.example.com/data', {
     headers: { Authorization: \`Bearer \${apiKey}\` },
   }).then(r => r.json());
@@ -101,14 +101,14 @@ export default async function DashboardPage() {
   return <div>Data loaded from {publicUrl}</div>;
 }
 
-// components/AnalyticsBanner.tsx — Client Component
+// components/AnalyticsBanner.tsx - Client Component
 'use client';
 
 export function AnalyticsBanner() {
   // SAFE: NEXT_PUBLIC_ variables are inlined into the bundle at build time
   const analyticsId = process.env.NEXT_PUBLIC_ANALYTICS_ID;
 
-  // WRONG: This will be 'undefined' in the browser — secrets are server-only
+  // WRONG: This will be 'undefined' in the browser - secrets are server-only
   // const secretKey = process.env.STRIPE_SECRET_KEY; // undefined!
 
   return (
@@ -127,7 +127,7 @@ export function AnalyticsBanner() {
       title: '.env.local file with typical variables',
       content: 'This example shows a realistic .env.local file for a Next.js application using a database, an external API, authentication, and a public feature flag. The naming convention makes it immediately clear which variables are safe to expose to the browser (NEXT_PUBLIC_) and which must stay server-side only.',
       language: 'bash',
-      code: `# .env.local — local development secrets, never committed to git
+      code: `# .env.local - local development secrets, never committed to git
 # Add ".env.local" to your .gitignore file
 
 # --- Database ---
@@ -139,7 +139,7 @@ NEXTAUTH_URL="http://localhost:3000"
 GITHUB_ID="your-github-oauth-app-client-id"
 GITHUB_SECRET="your-github-oauth-app-client-secret"
 
-# --- External APIs (server-side only — no NEXT_PUBLIC_ prefix) ---
+# --- External APIs (server-side only - no NEXT_PUBLIC_ prefix) ---
 STRIPE_SECRET_KEY="sk_test_..."
 SENDGRID_API_KEY="SG...."
 
@@ -151,7 +151,7 @@ NEXT_PUBLIC_ANALYTICS_ID="UA-XXXXXXXXX"
 # --- Feature flags ---
 NEXT_PUBLIC_ENABLE_BETA_FEATURES="true"
 
-# .env.local.example (committed to git — shows required vars without values)
+# .env.local.example (committed to git - shows required vars without values)
 # DATABASE_URL=
 # NEXTAUTH_SECRET=
 # GITHUB_ID=
@@ -166,7 +166,7 @@ NEXT_PUBLIC_ENABLE_BETA_FEATURES="true"
       title: 'TypeScript augmentation for process.env',
       content: 'By default, TypeScript types all process.env values as string | undefined, which means you must add null checks everywhere. Augmenting the NodeJS.ProcessEnv interface in a type declaration file adds autocomplete for your specific variables and makes the types reflect whether each variable is guaranteed to exist.',
       language: 'typescript',
-      code: `// src/types/env.d.ts — TypeScript declaration file, no imports needed
+      code: `// src/types/env.d.ts - TypeScript declaration file, no imports needed
 declare namespace NodeJS {
   interface ProcessEnv {
     // Server-side secrets
@@ -189,9 +189,9 @@ declare namespace NodeJS {
 }
 
 // Now TypeScript knows about your variables:
-// process.env.DATABASE_URL   — string (no undefined check needed)
-// process.env.NODE_ENV       — 'development' | 'production' | 'test'
-// process.env.MISSING_VAR    — TypeScript error: property does not exist`,
+// process.env.DATABASE_URL   - string (no undefined check needed)
+// process.env.NODE_ENV       - 'development' | 'production' | 'test'
+// process.env.MISSING_VAR    - TypeScript error: property does not exist`,
     },
     {
       type: 'heading',
@@ -199,18 +199,18 @@ declare namespace NodeJS {
     },
     {
       type: 'text',
-      content: 'TypeScript types for process.env are only checked at compile time — they cannot guarantee a variable actually has a value at runtime. A Zod schema validates environment variables when your application starts, throwing a descriptive error immediately if something is missing or malformed rather than failing silently in production.',
+      content: 'TypeScript types for process.env are only checked at compile time - they cannot guarantee a variable actually has a value at runtime. A Zod schema validates environment variables when your application starts, throwing a descriptive error immediately if something is missing or malformed rather than failing silently in production.',
     },
     {
       type: 'example',
       title: 'Zod schema validation for environment variables',
       content: 'This pattern creates a validated env object that your application imports instead of using process.env directly. Zod checks every required variable at startup and throws a clear error listing exactly which variables are missing, saving significant debugging time compared to cryptic runtime failures deep inside application code.',
       language: 'typescript',
-      code: `// src/lib/env.ts — validated environment module
+      code: `// src/lib/env.ts - validated environment module
 import { z } from 'zod';
 
 const envSchema = z.object({
-  // Server-side — required strings
+  // Server-side - required strings
   DATABASE_URL: z.string().url('DATABASE_URL must be a valid URL'),
   NEXTAUTH_SECRET: z.string().min(32, 'NEXTAUTH_SECRET must be at least 32 characters'),
   NEXTAUTH_URL: z.string().url(),
@@ -232,13 +232,13 @@ const parsed = envSchema.safeParse(process.env);
 if (!parsed.success) {
   console.error('Invalid environment variables:');
   console.error(parsed.error.flatten().fieldErrors);
-  throw new Error('Invalid environment variables — see errors above');
+  throw new Error('Invalid environment variables - see errors above');
 }
 
 export const env = parsed.data;
 
 // Usage: import { env } from '@/lib/env';
-// env.DATABASE_URL — typed as string, guaranteed to exist`,
+// env.DATABASE_URL - typed as string, guaranteed to exist`,
     },
     {
       type: 'heading',
@@ -246,7 +246,7 @@ export const env = parsed.data;
     },
     {
       type: 'text',
-      content: 'The next.config.ts env option lets you hardcode configuration values or expose server-side environment variables to the browser without the NEXT_PUBLIC_ prefix. However, NEXT_PUBLIC_ variables are the preferred approach for public values — the env option in next.config.ts is mainly useful for computed values or when you need to transform a variable before exposing it.',
+      content: 'The next.config.ts env option lets you hardcode configuration values or expose server-side environment variables to the browser without the NEXT_PUBLIC_ prefix. However, NEXT_PUBLIC_ variables are the preferred approach for public values - the env option in next.config.ts is mainly useful for computed values or when you need to transform a variable before exposing it.',
     },
     {
       type: 'example',
@@ -257,7 +257,7 @@ export const env = parsed.data;
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Inlined at build time — accessible in both server and client code
+  // Inlined at build time - accessible in both server and client code
   env: {
     APP_VERSION: process.env.npm_package_version ?? '0.0.0',
     BUILD_TIME: new Date().toISOString(),
@@ -269,9 +269,9 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 
 // Access anywhere in your app:
-// process.env.APP_VERSION   — e.g. "1.2.3"
-// process.env.BUILD_TIME    — ISO timestamp from build
-// process.env.API_BASE_URL  — from server env or default`,
+// process.env.APP_VERSION   - e.g. "1.2.3"
+// process.env.BUILD_TIME    - ISO timestamp from build
+// process.env.API_BASE_URL  - from server env or default`,
     },
     {
       type: 'heading',
@@ -312,7 +312,7 @@ textarea:focus{outline:none;border-color:#6366f1;background:#fff;}
 
 function parseEnv(text) {
   const vars = [];
-  text.split('\\n').forEach(line => {
+  text.split('\ ').forEach(line => {
     const trimmed = line.trim();
     if (!trimmed || trimmed.startsWith('#')) return;
     const eqIdx = trimmed.indexOf('=');
@@ -364,14 +364,14 @@ function setTab(tab) {
 }
 
 const defaultEnv =
-  '# Server-side secrets (not visible to browser)\\n' +
-  'DATABASE_URL=postgresql://localhost:5432/myapp\\n' +
-  'NEXTAUTH_SECRET=super-secret-key-32-chars-long\\n' +
-  'STRIPE_SECRET_KEY=sk_test_abc123\\n' +
-  '\\n' +
-  '# Public variables (visible everywhere)\\n' +
-  'NEXT_PUBLIC_APP_URL=http://localhost:3000\\n' +
-  'NEXT_PUBLIC_STRIPE_KEY=pk_test_xyz789\\n' +
+  '# Server-side secrets (not visible to browser)\ ' +
+  'DATABASE_URL=postgresql://localhost:5432/myapp\ ' +
+  'NEXTAUTH_SECRET=super-secret-key-32-chars-long\ ' +
+  'STRIPE_SECRET_KEY=sk_test_abc123\ ' +
+  '\ ' +
+  '# Public variables (visible everywhere)\ ' +
+  'NEXT_PUBLIC_APP_URL=http://localhost:3000\ ' +
+  'NEXT_PUBLIC_STRIPE_KEY=pk_test_xyz789\ ' +
   'NEXT_PUBLIC_ENABLE_BETA=true';
 
 document.getElementById('output').innerHTML =
@@ -419,13 +419,13 @@ update();`,
       question: 'You have an API key called STRIPE_SECRET_KEY. A Client Component tries to read process.env.STRIPE_SECRET_KEY. What happens?',
       type: 'multiple-choice',
       options: [
-        'The value is available — Next.js exposes all variables to the client',
+        'The value is available - Next.js exposes all variables to the client',
         'A build error is thrown because secrets cannot be accessed in Client Components',
-        'The value is undefined — variables without NEXT_PUBLIC_ are server-only',
+        'The value is undefined - variables without NEXT_PUBLIC_ are server-only',
         'The value is available but encrypted for security',
       ],
       correct: 2,
-      explanation: 'Environment variables without the NEXT_PUBLIC_ prefix are only available in the Node.js server runtime. When a Client Component (or any browser-side code) accesses process.env.STRIPE_SECRET_KEY, it receives undefined — Next.js intentionally strips non-prefixed variables from the client bundle to prevent accidental secret exposure.',
+      explanation: 'Environment variables without the NEXT_PUBLIC_ prefix are only available in the Node.js server runtime. When a Client Component (or any browser-side code) accesses process.env.STRIPE_SECRET_KEY, it receives undefined - Next.js intentionally strips non-prefixed variables from the client bundle to prevent accidental secret exposure.',
     },
     {
       id: 'nextjs-env-ex-3',
@@ -438,7 +438,7 @@ update();`,
         'Zod works in Client Components while TypeScript types do not',
       ],
       correct: 1,
-      explanation: 'TypeScript declaration merging for ProcessEnv only provides autocomplete and compile-time hints — the types are erased when the code runs. If DATABASE_URL is missing, you only discover the error when a database query fails deep in application logic. Zod validates all variables the moment the app starts, throwing a descriptive error that lists every missing or malformed variable before any request is served.',
+      explanation: 'TypeScript declaration merging for ProcessEnv only provides autocomplete and compile-time hints - the types are erased when the code runs. If DATABASE_URL is missing, you only discover the error when a database query fails deep in application logic. Zod validates all variables the moment the app starts, throwing a descriptive error that lists every missing or malformed variable before any request is served.',
     },
   ],
   quiz: [
@@ -446,7 +446,7 @@ update();`,
       id: 'nextjs-env-q1',
       question: 'What is the NEXT_PUBLIC_ prefix for?',
       options: [
-        'It marks a variable as required — Next.js throws an error if it is missing',
+        'It marks a variable as required - Next.js throws an error if it is missing',
         'It inlines the variable value into the client JavaScript bundle at build time, making it accessible in both server and browser contexts',
         'It marks the variable as read-only and prevents it from being overridden',
         'It tells Next.js to validate the variable against a public schema',
@@ -460,7 +460,7 @@ update();`,
       options: [
         'Client Components cannot read NEXT_PUBLIC_ variables',
         'You need to also update next.config.ts for the change to take effect',
-        'NEXT_PUBLIC_ variables are inlined at build time — you need to restart the dev server (or rebuild) for the new value to be picked up',
+        'NEXT_PUBLIC_ variables are inlined at build time - you need to restart the dev server (or rebuild) for the new value to be picked up',
         'The variable name has a typo in the .env.local file',
       ],
       correct: 2,
@@ -470,10 +470,10 @@ update();`,
       id: 'nextjs-env-q3',
       question: 'Which file should you commit to version control to document required environment variables for other developers?',
       options: [
-        '.env.local — so every developer has the same values',
-        '.env.local.example — with variable names but empty values, serving as documentation',
-        '.env.production — so the CI/CD pipeline can use it',
-        'next.config.ts — with the variables hardcoded',
+        '.env.local - so every developer has the same values',
+        '.env.local.example - with variable names but empty values, serving as documentation',
+        '.env.production - so the CI/CD pipeline can use it',
+        'next.config.ts - with the variables hardcoded',
       ],
       correct: 1,
       explanation: 'A .env.local.example (or .env.example) file lists all required variable names with empty values or placeholder descriptions. It is safe to commit because it contains no actual secrets, and it serves as living documentation so new developers know exactly which variables to configure locally. The actual .env.local with real values stays in .gitignore.',

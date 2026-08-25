@@ -8,20 +8,20 @@ export const reactFormsLesson: ReactLesson = {
   order: 10,
   difficulty: 'intermediate',
   readingTime: 13,
-  description: 'Build fully functional forms in React — controlled inputs, handling multiple fields efficiently, form submission, client-side validation, and working with select, textarea, and checkbox elements.',
+  description: 'Build fully functional forms in React - controlled inputs, handling multiple fields efficiently, form submission, client-side validation, and working with select, textarea, and checkbox elements.',
   sections: [
     {
       type: 'text',
-      content: 'Forms are one of the most important parts of any web app — login screens, search bars, contact forms, checkout flows. In React, forms work differently from plain HTML. The recommended approach is "controlled components" — where React state is the single source of truth for every input value.',
+      content: 'Forms are one of the most important parts of any web app - login screens, search bars, contact forms, checkout flows. In React, forms work differently from plain HTML. The recommended approach is "controlled components" - where React state is the single source of truth for every input value.',
     },
     {
       type: 'heading',
-      content: '1. Controlled Inputs — React Owns the Value',
+      content: '1. Controlled Inputs - React Owns the Value',
     },
     {
       type: 'example',
       title: 'Binding an input to state with value and onChange',
-      content: 'A controlled input has its value driven by React state. You pass the state value to the "value" prop and update state in the "onChange" handler. This makes the input\'s current value always available in JavaScript — perfect for validation, formatting, or submitting. Without onChange, React will make the input read-only.',
+      content: 'A controlled input has its value driven by React state. You pass the state value to the "value" prop and update state in the "onChange" handler. This makes the input\'s current value always available in JavaScript - perfect for validation, formatting, or submitting. Without onChange, React will make the input read-only.',
       language: 'jsx',
       code: `function ControlledInput() {
   const [name, setName] = React.useState('');
@@ -39,7 +39,7 @@ export const reactFormsLesson: ReactLesson = {
       {/* The current value is always available in state */}
       <p>Hello, {name || 'stranger'}!</p>
 
-      {/* Live transformations — force uppercase */}
+      {/* Live transformations - force uppercase */}
       <input
         type="text"
         value={name.toUpperCase()}
@@ -119,7 +119,7 @@ export const reactFormsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Controlled versions of select, textarea, and checkbox',
-      content: 'In React, select uses value and onChange just like a text input — no selected attribute on the option. textarea also uses value rather than putting text between tags. Checkboxes are different — they use checked={boolean} and read e.target.checked (not e.target.value) in the onChange handler.',
+      content: 'In React, select uses value and onChange just like a text input - no selected attribute on the option. textarea also uses value rather than putting text between tags. Checkboxes are different - they use checked={boolean} and read e.target.checked (not e.target.value) in the onChange handler.',
       language: 'jsx',
       code: `function SpecialInputs() {
   const [role, setRole] = React.useState('developer');
@@ -129,7 +129,7 @@ export const reactFormsLesson: ReactLesson = {
 
   return (
     <form>
-      {/* SELECT — use value on the <select>, not "selected" on option */}
+      {/* SELECT - use value on the <select>, not "selected" on option */}
       <label>Role:</label>
       <select value={role} onChange={e => setRole(e.target.value)}>
         <option value="developer">Developer</option>
@@ -139,7 +139,7 @@ export const reactFormsLesson: ReactLesson = {
       </select>
       <p>Selected: {role}</p>
 
-      {/* TEXTAREA — value and onChange, not children */}
+      {/* TEXTAREA - value and onChange, not children */}
       <label>Bio:</label>
       <textarea
         value={bio}
@@ -149,7 +149,7 @@ export const reactFormsLesson: ReactLesson = {
       />
       <p>Characters: {bio.length}</p>
 
-      {/* CHECKBOX — use "checked" and e.target.checked */}
+      {/* CHECKBOX - use "checked" and e.target.checked */}
       <label>
         <input
           type="checkbox"
@@ -241,7 +241,7 @@ export const reactFormsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Reading input values on submit without controlling each keystroke',
-      content: 'Uncontrolled inputs do not use state — the DOM is the source of truth. You read the value using a ref only when you need it (e.g., on submit). This is simpler for forms you only need to read at submit time. Use React.createRef or useRef and attach it to the element via the ref prop.',
+      content: 'Uncontrolled inputs do not use state - the DOM is the source of truth. You read the value using a ref only when you need it (e.g., on submit). This is simpler for forms you only need to read at submit time. Use React.createRef or useRef and attach it to the element via the ref prop.',
       language: 'jsx',
       code: `function UncontrolledForm() {
   // Refs to read the DOM values on submit
@@ -260,7 +260,7 @@ export const reactFormsLesson: ReactLesson = {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        {/* No value or onChange — uncontrolled */}
+        {/* No value or onChange - uncontrolled */}
         <input ref={nameRef}  defaultValue="Alice" placeholder="Name" />
         <input ref={emailRef} type="email" placeholder="Email" />
         <button type="submit">Submit</button>

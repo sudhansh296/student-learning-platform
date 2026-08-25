@@ -12,7 +12,7 @@ export const tsFunctionsLesson: TsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Functions are where TypeScript provides the most value. By annotating parameters and return types, you create clear contracts between different parts of your code. TypeScript will verify every call site matches the contract — no more wrong argument order or missing required parameters.',
+      content: 'Functions are where TypeScript provides the most value. By annotating parameters and return types, you create clear contracts between different parts of your code. TypeScript will verify every call site matches the contract - no more wrong argument order or missing required parameters.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const tsFunctionsLesson: TsLesson = {
     {
       type: 'example',
       title: 'Annotating function inputs and outputs',
-      content: 'Add a colon and type after each parameter to annotate it. Add a colon and type after the closing parenthesis to annotate the return type. TypeScript infers the return type from the function body, so the return annotation is optional — but recommended for documentation and to catch accidental mismatches.',
+      content: 'Add a colon and type after each parameter to annotate it. Add a colon and type after the closing parenthesis to annotate the return type. TypeScript infers the return type from the function body, so the return annotation is optional - but recommended for documentation and to catch accidental mismatches.',
       language: 'typescript',
       code: `// Basic typed function
 function add(a: number, b: number): number {
@@ -31,15 +31,15 @@ function add(a: number, b: number): number {
 // Arrow function
 const multiply = (x: number, y: number): number => x * y;
 
-// Return type annotation is optional — TypeScript infers it
+// Return type annotation is optional - TypeScript infers it
 function greet(name: string) {
   return "Hello, " + name; // TypeScript infers: string
 }
 
-// void — function that returns nothing
+// void - function that returns nothing
 function logValue(val: unknown): void {
   console.log(val);
-  // no return — or "return;" with no value
+  // no return - or "return;" with no value
 }
 
 // Multiple parameter types
@@ -48,7 +48,7 @@ function formatDate(date: Date, locale: string, includeTime: boolean): string {
 }
 
 // TypeScript catches wrong calls:
-add(1, 2);           // OK — returns 3
+add(1, 2);           // OK - returns 3
 // add(1, "2");      // Error: Argument of type 'string' is not assignable to parameter of type 'number'
 // add(1);           // Error: Expected 2 arguments, but got 1`,
     },
@@ -59,9 +59,9 @@ add(1, 2);           // OK — returns 3
     {
       type: 'example',
       title: 'Optional (?) and default parameter values',
-      content: 'Add a "?" after the parameter name to make it optional — callers can omit it and the value inside the function will be undefined. Use "= value" to give a parameter a default. Default parameters are automatically optional from the callers perspective.',
+      content: 'Add a "?" after the parameter name to make it optional - callers can omit it and the value inside the function will be undefined. Use "= value" to give a parameter a default. Default parameters are automatically optional from the callers perspective.',
       language: 'typescript',
-      code: `// Optional parameter — must be handled carefully inside the function
+      code: `// Optional parameter - must be handled carefully inside the function
 function greetUser(name: string, title?: string): string {
   if (title) {
     return "Hello, " + title + " " + name;
@@ -71,7 +71,7 @@ function greetUser(name: string, title?: string): string {
 greetUser("Alice");          // "Hello, Alice"
 greetUser("Smith", "Dr.");   // "Hello, Dr. Smith"
 
-// Default parameter — caller can omit it
+// Default parameter - caller can omit it
 function createSlug(text: string, separator: string = "-"): string {
   return text.toLowerCase().replace(/\s+/g, separator);
 }
@@ -83,7 +83,7 @@ function buildUrl(
   host: string,           // required
   path: string,           // required
   port: number = 443,     // optional with default
-  protocol?: string       // optional — undefined if omitted
+  protocol?: string       // optional - undefined if omitted
 ): string {
   const p = protocol || "https";
   return p + "://" + host + ":" + port + path;
@@ -96,7 +96,7 @@ function buildUrl(
     {
       type: 'example',
       title: 'Collecting variable argument lists with rest params',
-      content: 'Rest parameters (...args) collect any number of arguments into a typed array. They must always be the last parameter. The type annotation goes on the array — rest: number[] means zero or more number arguments.',
+      content: 'Rest parameters (...args) collect any number of arguments into a typed array. They must always be the last parameter. The type annotation goes on the array - rest: number[] means zero or more number arguments.',
       language: 'typescript',
       code: `// Rest params collect extra args into a typed array
 function sum(...numbers: number[]): number {
@@ -131,12 +131,12 @@ function tag(template: string, ...values: (string | number)[]): string {
     {
       type: 'example',
       title: 'Describing function signatures as types',
-      content: 'In TypeScript you can describe the type of a function itself — its parameter types and return type. This is essential when passing functions as arguments (callbacks), storing them in variables, or defining interface methods.',
+      content: 'In TypeScript you can describe the type of a function itself - its parameter types and return type. This is essential when passing functions as arguments (callbacks), storing them in variables, or defining interface methods.',
       language: 'typescript',
       code: `// Function type annotation on a variable
 let calculate: (a: number, b: number) => number;
 calculate = (x, y) => x + y;    // OK
-calculate = (x, y) => x * y;    // OK — same signature
+calculate = (x, y) => x * y;    // OK - same signature
 // calculate = (x) => x;        // Error: missing second parameter
 
 // Function type in an interface
@@ -165,21 +165,21 @@ console.log([1,2,3,4,5].filter(isEven)); // [2, 4]`,
       title: 'Function overloads for multiple call signatures',
       content: 'Function overloads let you define multiple type signatures for the same function. TypeScript picks the right one based on the argument types at each call site. The implementation signature (the last one with the actual body) must be compatible with all overload signatures.',
       language: 'typescript',
-      code: `// Overload signatures — TypeScript uses these for type checking
+      code: `// Overload signatures - TypeScript uses these for type checking
 function format(value: string): string;
 function format(value: number): string;
 function format(value: Date): string;
 
-// Implementation — must be a superset of all overloads
+// Implementation - must be a superset of all overloads
 function format(value: string | number | Date): string {
   if (typeof value === "string") return value.trim();
   if (typeof value === "number") return value.toFixed(2);
   return value.toISOString().split("T")[0];
 }
 
-format("  hello  ");  // "hello" — string overload
-format(3.14159);      // "3.14" — number overload
-format(new Date());   // "2024-01-15" — Date overload`,
+format("  hello  ");  // "hello" - string overload
+format(3.14159);      // "3.14" - number overload
+format(new Date());   // "2024-01-15" - Date overload`,
     },
     {
       type: 'tryit',
@@ -242,7 +242,7 @@ document.getElementById('output').innerHTML =
       question: 'What is wrong with this function signature: function greet(title?: string, name: string): string',
       type: 'multiple-choice',
       options: [
-        'Nothing — it is valid TypeScript',
+        'Nothing - it is valid TypeScript',
         'Optional parameters cannot be used in functions',
         'Optional parameters must come after required parameters',
         'The return type should be void, not string',

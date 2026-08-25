@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactPerformanceLesson: ReactLesson = {
   id: 'react-performance',
@@ -12,32 +12,32 @@ export const reactPerformanceLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'React is fast by default. Before optimizing, always profile first — premature optimization adds complexity without real benefit. The three main optimization tools are React.memo (skip re-rendering unchanged components), useMemo (cache expensive calculations), and useCallback (cache function references).',
+      content: 'React is fast by default. Before optimizing, always profile first - premature optimization adds complexity without real benefit. The three main optimization tools are React.memo (skip re-rendering unchanged components), useMemo (cache expensive calculations), and useCallback (cache function references).',
     },
     {
       type: 'warning',
       title: 'Optimize only when you measure a problem',
-      content: 'Adding React.memo, useMemo, and useCallback to everything is not better — it adds overhead and complexity. Profile your app first. Re-renders are only a problem if they are slow, which usually means a component does expensive work or renders a massive list.',
+      content: 'Adding React.memo, useMemo, and useCallback to everything is not better - it adds overhead and complexity. Profile your app first. Re-renders are only a problem if they are slow, which usually means a component does expensive work or renders a massive list.',
     },
     {
       type: 'heading',
-      content: '1. React.memo — Skip Re-renders',
+      content: '1. React.memo - Skip Re-renders',
     },
     {
       type: 'example',
       title: 'React.memo wraps a component to skip re-renders if props havent changed',
-      content: 'By default, when a parent re-renders, all its children re-render too — even if their props are unchanged. React.memo wraps a component and tells React: "only re-render this if its props actually changed." It uses shallow comparison by default.',
+      content: 'By default, when a parent re-renders, all its children re-render too - even if their props are unchanged. React.memo wraps a component and tells React: "only re-render this if its props actually changed." It uses shallow comparison by default.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
-// Without memo — re-renders every time the parent renders
+// Without memo - re-renders every time the parent renders
 function ChildExpensive({ name }) {
   console.log('ChildExpensive rendered');
   // Imagine expensive calculations here...
   return <div>Hello, {name}!</div>;
 }
 
-// With memo — only re-renders if "name" prop changes
+// With memo - only re-renders if "name" prop changes
 const ChildMemo = memo(function Child({ name }) {
   console.log('ChildMemo rendered');
   return <div>Hello, {name}!</div>;
@@ -53,10 +53,10 @@ function Parent() {
         Count: {count}
       </button>
       
-      {/* Without memo — re-renders on every button click */}
+      {/* Without memo - re-renders on every button click */}
       <ChildExpensive name="Alice" />
 
-      {/* With memo — skips re-render because name="Alice" never changes */}
+      {/* With memo - skips re-render because name="Alice" never changes */}
       <ChildMemo name="Alice" />
     </div>
   );
@@ -69,7 +69,7 @@ function Parent() {
     },
     {
       type: 'heading',
-      content: '2. useMemo — Cache Expensive Calculations',
+      content: '2. useMemo - Cache Expensive Calculations',
     },
     {
       type: 'example',
@@ -78,7 +78,7 @@ function Parent() {
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
-// Slow function — imagine this processes thousands of items
+// Slow function - imagine this processes thousands of items
 function expensiveFilter(items, query) {
   console.log('Running expensive filter...');
   return items.filter(item => 
@@ -90,11 +90,11 @@ function ProductList({ products }) {
   const [query, setQuery]   = useState('');
   const [darkMode, setDarkMode] = useState(false);
 
-  // Without useMemo — runs expensiveFilter on EVERY render
+  // Without useMemo - runs expensiveFilter on EVERY render
   // including when darkMode changes (which has nothing to do with filtering)
   const filteredBad = expensiveFilter(products, query);
 
-  // With useMemo — only re-runs when products or query change
+  // With useMemo - only re-runs when products or query change
   // Toggling darkMode does NOT re-run the filter
   const filteredGood = useMemo(
     () => expensiveFilter(products, query),
@@ -114,7 +114,7 @@ function ProductList({ products }) {
     },
     {
       type: 'heading',
-      content: '3. useCallback — Stable Function References',
+      content: '3. useCallback - Stable Function References',
     },
     {
       type: 'example',
@@ -123,7 +123,7 @@ function ProductList({ products }) {
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
-// Memoized button — only re-renders if onClick or label changes
+// Memoized button - only re-renders if onClick or label changes
 const MemoButton = memo(function Button({ onClick, label }) {
   console.log('Button rendered:', label);
   return <button onClick={onClick}>{label}</button>;
@@ -133,15 +133,15 @@ function Counter() {
   const [count, setCount] = useState(0);
   const [other, setOther] = useState(0);
 
-  // Without useCallback — new function every render
+  // Without useCallback - new function every render
   // MemoButton re-renders even when "other" changes
   const handleClickBad = () => setCount(c => c + 1);
 
-  // With useCallback — same function reference unless [] deps change
+  // With useCallback - same function reference unless [] deps change
   // MemoButton correctly skips re-renders when "other" changes
   const handleClickGood = useCallback(() => {
     setCount(c => c + 1);
-  }, []); // empty deps — never changes
+  }, []); // empty deps - never changes
 
   return (
     <div>
@@ -155,7 +155,7 @@ function Counter() {
     },
     {
       type: 'heading',
-      content: '4. When to Optimize — Decision Guide',
+      content: '4. When to Optimize - Decision Guide',
     },
     {
       type: 'table',
@@ -165,7 +165,7 @@ function Counter() {
         ['React.memo', 'Component re-renders often with same props and render is slow', 'Shallow prop comparison on each render'],
         ['useMemo', 'Calculation is measurably slow and runs more than needed', 'Memory + comparison overhead'],
         ['useCallback', 'Function passed to memoized child or is useEffect dependency', 'Memory + comparison overhead'],
-        ['None', 'Component renders fast (most components)', 'Zero — simplest code'],
+        ['None', 'Component renders fast (most components)', 'Zero - simplest code'],
       ],
     },
     {
@@ -189,7 +189,7 @@ button { padding: 8px 14px; border: none; border-radius: 8px; cursor: pointer; f
     <div className="card" style={{ border: '2px solid #dbeafe' }}>
       <h3>{label}</h3>
       <p>Value: <strong>{value}</strong></p>
-      <span className="badge badge-green">✓ Memoized — only re-renders when value changes</span>
+      <span className="badge badge-green">✓ Memoized - only re-renders when value changes</span>
     </div>
   );
 });
@@ -215,10 +215,10 @@ function App() {
       <div className="card">
         <h3>Performance Demo</h3>
         <div className="row">
-          <button className="btn-blue" onClick={() => { setCount(c => c + 1); addLog('Count changed — useMemo will recalculate'); }}>
+          <button className="btn-blue" onClick={() => { setCount(c => c + 1); addLog('Count changed - useMemo will recalculate'); }}>
             Count: {count} (triggers useMemo)
           </button>
-          <button className="btn-purple" onClick={() => { setTheme(t => t === 'blue' ? 'purple' : 'blue'); addLog('Theme changed — useMemo skips!'); }}>
+          <button className="btn-purple" onClick={() => { setTheme(t => t === 'blue' ? 'purple' : 'blue'); addLog('Theme changed - useMemo skips!'); }}>
             Theme: {theme} (skips useMemo)
           </button>
         </div>

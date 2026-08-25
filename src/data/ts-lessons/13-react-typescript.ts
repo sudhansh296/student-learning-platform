@@ -1,4 +1,4 @@
-﻿import type { TsLesson } from '../ts-curriculum';
+import type { TsLesson } from '../ts-curriculum';
 
 export const tsReactLesson: TsLesson = {
   id: 'ts-react',
@@ -20,8 +20,8 @@ export const tsReactLesson: TsLesson = {
     },
     {
       type: 'example',
-      title: 'Props interfaces — define what a component accepts',
-      content: 'Define component props with an interface and use it as the type for the props parameter. TypeScript will check every place you use the component — missing required props and wrong types are caught before the browser ever runs the code.',
+      title: 'Props interfaces - define what a component accepts',
+      content: 'Define component props with an interface and use it as the type for the props parameter. TypeScript will check every place you use the component - missing required props and wrong types are caught before the browser ever runs the code.',
       language: 'typescript',
       code: `// (React is globally available)
 
@@ -67,7 +67,7 @@ function SearchForm() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<string[]>([]);
 
-  // Input change handler — typed with HTMLInputElement
+  // Input change handler - typed with HTMLInputElement
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setQuery(event.target.value); // event.target.value is string
   };
@@ -102,7 +102,7 @@ function SearchForm() {
     {
       type: 'example',
       title: 'Typing useState for objects and complex state',
-      content: 'useState is a generic function. TypeScript usually infers the type from the initial value, but for complex types — like objects, nullable values, or when you start with an empty state — you should pass the type explicitly: useState<User | null>(null).',
+      content: 'useState is a generic function. TypeScript usually infers the type from the initial value, but for complex types - like objects, nullable values, or when you start with an empty state - you should pass the type explicitly: useState<User | null>(null).',
       language: 'typescript',
       code: `// (React hooks: React.useState, React.useEffect, React.useRef, etc.)
 
@@ -114,13 +114,13 @@ interface User {
 }
 
 function UserProfile() {
-  // Inferred from initial value — string
+  // Inferred from initial value - string
   const [name, setName] = useState("Alice");
 
-  // Explicit generic — nullable User
+  // Explicit generic - nullable User
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  // Explicit generic — array of objects
+  // Explicit generic - array of objects
   const [users, setUsers] = useState<User[]>([]);
 
   // Loading/error state pattern
@@ -161,7 +161,7 @@ async function fetchUser(id: number): Promise<User> {
       code: `// (React hooks: React.useState, React.useEffect, React.useRef, etc.)
 
 function FocusInput() {
-  // DOM ref — must start with null, generic is the element type
+  // DOM ref - must start with null, generic is the element type
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -186,7 +186,7 @@ function FocusInput() {
   );
 }
 
-// Mutable ref — for storing values without re-renders
+// Mutable ref - for storing values without re-renders
 function Timer() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -205,7 +205,7 @@ function Timer() {
     },
     {
       type: 'example',
-      title: 'Typing children — ReactNode and PropsWithChildren',
+      title: 'Typing children - ReactNode and PropsWithChildren',
       content: 'When a component accepts children, type the children prop as React.ReactNode (which includes elements, strings, numbers, arrays, and more). A convenient shortcut is React.PropsWithChildren<YourProps> which automatically adds "children?: React.ReactNode" to your props type.',
       language: 'typescript',
       code: `// (React is globally available)
@@ -213,7 +213,7 @@ function Timer() {
 // Manual children typing
 interface CardProps {
   title: string;
-  children: React.ReactNode; // elements, strings, arrays — anything renderable
+  children: React.ReactNode; // elements, strings, arrays - anything renderable
   footer?: React.ReactNode;
 }
 
@@ -241,7 +241,7 @@ function Layout({ children, sidebar }: React.PropsWithChildren<LayoutProps>) {
   );
 }
 
-// Usage — TypeScript checks children shape
+// Usage - TypeScript checks children shape
 <Card title="Hello">
   <p>Any React content goes here</p>
 </Card>`,
@@ -309,13 +309,13 @@ console.log('  Usage: inputRef.current?.focus() -- optional chain for safety');`
       question: 'When should you provide an explicit generic to useState?',
       type: 'multiple-choice',
       options: [
-        'Always — TypeScript cannot infer useState types',
-        'Never — useState always infers correctly',
+        'Always - TypeScript cannot infer useState types',
+        'Never - useState always infers correctly',
         'When the initial value does not fully represent the type, like useState<User | null>(null)',
         'Only when using TypeScript 5+',
       ],
       correct: 2,
-      explanation: 'TypeScript infers the state type from the initial value. If you pass null, it infers null — not User | null. When the initial value does not represent all possible states, pass the type explicitly: useState<User | null>(null) or useState<string[]>([]).',
+      explanation: 'TypeScript infers the state type from the initial value. If you pass null, it infers null - not User | null. When the initial value does not represent all possible states, pass the type explicitly: useState<User | null>(null) or useState<string[]>([]).',
     },
   ],
   quiz: [
@@ -329,7 +329,7 @@ console.log('  Usage: inputRef.current?.focus() -- optional chain for safety');`
         'JSX.Element',
       ],
       correct: 2,
-      explanation: 'React.ReactNode is the broadest type for anything React can render: elements, strings, numbers, arrays, fragments, and null/undefined. Use it for children props and any other prop that accepts arbitrary renderable content. JSX.Element is more specific — only for a single React element.',
+      explanation: 'React.ReactNode is the broadest type for anything React can render: elements, strings, numbers, arrays, fragments, and null/undefined. Use it for children props and any other prop that accepts arbitrary renderable content. JSX.Element is more specific - only for a single React element.',
     },
   ],
 };

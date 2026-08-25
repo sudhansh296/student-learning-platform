@@ -12,7 +12,7 @@ export const nextjsErrorHandlingLesson: NextjsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'In production, errors are inevitable. A database query might fail, an API might be unreachable, or a user might navigate to a URL that does not exist. Next.js App Router has a built-in file-based error handling system that lets you define what users see in each of these situations — without a single try/catch in your page components.',
+      content: 'In production, errors are inevitable. A database query might fail, an API might be unreachable, or a user might navigate to a URL that does not exist. Next.js App Router has a built-in file-based error handling system that lets you define what users see in each of these situations - without a single try/catch in your page components.',
     },
     {
       type: 'heading',
@@ -20,30 +20,30 @@ export const nextjsErrorHandlingLesson: NextjsLesson = {
     },
     {
       type: 'text',
-      content: 'Next.js walks up the route segment tree to find the nearest error boundary. You can place error.tsx files at different levels of your app/ directory — each one catches errors from its segment and all child segments below it.',
+      content: 'Next.js walks up the route segment tree to find the nearest error boundary. You can place error.tsx files at different levels of your app/ directory - each one catches errors from its segment and all child segments below it.',
     },
     {
       type: 'table',
       title: 'Error handling files and what they catch',
       headers: ['File', 'What it catches', 'Reset available', 'Must be Client Component'],
       rows: [
-        ['error.tsx', 'Errors in the same route segment and its children', 'Yes — reset() re-renders the segment', 'Yes'],
-        ['not-found.tsx', 'Calls to notFound() and unmatched routes', 'No — shows static UI', 'No (can be Server Component)'],
-        ['global-error.tsx', 'Errors in the root layout (RootLayout)', 'Yes — reset() reloads the page', 'Yes — must include html and body'],
-        ['loading.tsx', 'Not an error handler — wraps in Suspense boundary', 'N/A', 'No'],
+        ['error.tsx', 'Errors in the same route segment and its children', 'Yes - reset() re-renders the segment', 'Yes'],
+        ['not-found.tsx', 'Calls to notFound() and unmatched routes', 'No - shows static UI', 'No (can be Server Component)'],
+        ['global-error.tsx', 'Errors in the root layout (RootLayout)', 'Yes - reset() reloads the page', 'Yes - must include html and body'],
+        ['loading.tsx', 'Not an error handler - wraps in Suspense boundary', 'N/A', 'No'],
       ],
     },
     {
       type: 'heading',
-      content: 'error.tsx — Route Segment Error Boundary',
+      content: 'error.tsx - Route Segment Error Boundary',
     },
     {
       type: 'text',
-      content: 'error.tsx is a React error boundary for its route segment. When an unhandled error is thrown during rendering, data fetching, or a Server Action in that segment, Next.js renders this component instead of the page. The error prop contains the Error object and the reset prop is a function that re-renders the segment — useful for transient errors like a failed network request.',
+      content: 'error.tsx is a React error boundary for its route segment. When an unhandled error is thrown during rendering, data fetching, or a Server Action in that segment, Next.js renders this component instead of the page. The error prop contains the Error object and the reset prop is a function that re-renders the segment - useful for transient errors like a failed network request.',
     },
     {
       type: 'example',
-      title: 'error.tsx — basic error boundary with reset',
+      title: 'error.tsx - basic error boundary with reset',
       content: 'error.tsx must be a Client Component because React error boundaries require class component lifecycle methods which are handled internally by React when the "use client" directive is present. The reset() function asks React to re-render the children of the error boundary without a full page navigation.',
       code: `'use client';
 
@@ -90,7 +90,7 @@ export default function DashboardError({ error, reset }: ErrorProps) {
     },
     {
       type: 'heading',
-      content: 'not-found.tsx — Custom 404 Pages',
+      content: 'not-found.tsx - Custom 404 Pages',
     },
     {
       type: 'text',
@@ -98,9 +98,9 @@ export default function DashboardError({ error, reset }: ErrorProps) {
     },
     {
       type: 'example',
-      title: 'not-found.tsx — custom 404 page',
-      content: 'not-found.tsx is a Server Component by default so it can fetch data if needed. Call notFound() from next/navigation inside any Server Component or Route Handler to trigger it — for example, when a database lookup returns null for a dynamic route parameter.',
-      code: `// app/not-found.tsx  (root-level — catches all unmatched URLs)
+      title: 'not-found.tsx - custom 404 page',
+      content: 'not-found.tsx is a Server Component by default so it can fetch data if needed. Call notFound() from next/navigation inside any Server Component or Route Handler to trigger it - for example, when a database lookup returns null for a dynamic route parameter.',
+      code: `// app/not-found.tsx  (root-level - catches all unmatched URLs)
 import Link from 'next/link';
 
 export default function NotFound() {
@@ -123,7 +123,7 @@ export default function NotFound() {
   );
 }
 
-// app/products/[id]/page.tsx — calling notFound() in a Server Component
+// app/products/[id]/page.tsx - calling notFound() in a Server Component
 import { notFound } from 'next/navigation';
 import { getProduct } from '@/lib/products';
 
@@ -141,21 +141,21 @@ export default async function ProductPage({ params }: { params: { id: string } }
     },
     {
       type: 'heading',
-      content: 'global-error.tsx — Root Layout Error Boundary',
+      content: 'global-error.tsx - Root Layout Error Boundary',
     },
     {
       type: 'text',
-      content: 'global-error.tsx catches errors that occur in the root layout (app/layout.tsx) itself — the container that wraps your entire application. Because it replaces the root layout when it renders, it must include its own html and body tags. It is the last resort error boundary and should be kept simple.',
+      content: 'global-error.tsx catches errors that occur in the root layout (app/layout.tsx) itself - the container that wraps your entire application. Because it replaces the root layout when it renders, it must include its own html and body tags. It is the last resort error boundary and should be kept simple.',
     },
     {
       type: 'example',
-      title: 'global-error.tsx — catches root layout errors',
+      title: 'global-error.tsx - catches root layout errors',
       content: 'global-error.tsx only activates in production builds because in development the default Next.js error overlay is used instead. Always include the html and body tags since this file completely replaces app/layout.tsx when it renders.',
       code: `'use client';
 
 // app/global-error.tsx
 // Catches errors in app/layout.tsx itself
-// Only visible in production — dev uses the error overlay
+// Only visible in production - dev uses the error overlay
 
 export default function GlobalError({
   error,
@@ -165,7 +165,7 @@ export default function GlobalError({
   reset: () => void;
 }) {
   return (
-    // Must include html and body — replaces the root layout
+    // Must include html and body - replaces the root layout
     <html>
       <body>
         <main
@@ -215,8 +215,8 @@ export default function GlobalError({
     {
       type: 'example',
       title: 'Using notFound() and redirect() inside data-fetching functions',
-      content: 'notFound() and redirect() from next/navigation throw special errors that Next.js intercepts internally — they are not regular JavaScript errors. You do not need a try/catch around them. Call them after determining the appropriate action based on fetched data.',
-      code: `// lib/data.ts — server-side data fetching helpers
+      content: 'notFound() and redirect() from next/navigation throw special errors that Next.js intercepts internally - they are not regular JavaScript errors. You do not need a try/catch around them. Call them after determining the appropriate action based on fetched data.',
+      code: `// lib/data.ts - server-side data fetching helpers
 import { notFound, redirect } from 'next/navigation';
 
 // Throws a Not Found signal if the user is not found
@@ -257,7 +257,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
     },
     {
       type: 'text',
-      content: 'In production, console.error() is not enough — errors need to be captured in a monitoring service like Sentry, Datadog, or LogRocket. The useEffect in error.tsx is the right place to call captureException(), and you can use the digest as a correlation ID between client and server.',
+      content: 'In production, console.error() is not enough - errors need to be captured in a monitoring service like Sentry, Datadog, or LogRocket. The useEffect in error.tsx is the right place to call captureException(), and you can use the digest as a correlation ID between client and server.',
     },
     {
       type: 'example',
@@ -294,7 +294,7 @@ export default function ErrorBoundary({
     {
       type: 'tip',
       title: 'Test error boundaries in development',
-      content: 'Throw a test error inside a Server Component to confirm your error.tsx renders correctly: throw new Error("test error"). Do the same with notFound() to confirm your not-found.tsx appears. In development you also see the Next.js error overlay — this is normal and only appears in dev mode.',
+      content: 'Throw a test error inside a Server Component to confirm your error.tsx renders correctly: throw new Error("test error"). Do the same with notFound() to confirm your not-found.tsx appears. In development you also see the Next.js error overlay - this is normal and only appears in dev mode.',
     },
     {
       type: 'tryit',
@@ -328,7 +328,7 @@ var flows = {
     file: 'app/global-error.tsx',
     color: '#7c3aed',
     path: ['global-error.tsx catches here (replaces RootLayout)'],
-    msg: 'An error occurred inside app/layout.tsx itself. Since the root layout is broken, global-error.tsx replaces it entirely — including html and body tags.',
+    msg: 'An error occurred inside app/layout.tsx itself. Since the root layout is broken, global-error.tsx replaces it entirely - including html and body tags.',
     userSees: 'A minimal fallback page with a reload button',
   },
 };
@@ -425,7 +425,7 @@ render();`,
         'A dynamic route with a catch-all segment',
       ],
       correct: 1,
-      explanation: 'notFound() throws a special error that Next.js intercepts and uses to render the nearest not-found.tsx. If no not-found.tsx is found in the segment hierarchy, Next.js uses its default 404 page. You do not need try/catch — notFound() is handled by the framework routing layer.',
+      explanation: 'notFound() throws a special error that Next.js intercepts and uses to render the nearest not-found.tsx. If no not-found.tsx is found in the segment hierarchy, Next.js uses its default 404 page. You do not need try/catch - notFound() is handled by the framework routing layer.',
     },
     {
       id: 'nextjs-error-3',
@@ -452,7 +452,7 @@ render();`,
         'Clears the browser cache and re-fetches all data',
       ],
       correct: 2,
-      explanation: 'reset() asks React to re-render the children of the error boundary segment without a full page navigation. This is useful for transient errors like a failed network request — pressing "Try again" retries the render and if the data loads successfully, the user sees the page normally.',
+      explanation: 'reset() asks React to re-render the children of the error boundary segment without a full page navigation. This is useful for transient errors like a failed network request - pressing "Try again" retries the render and if the data loads successfully, the user sees the page normally.',
     },
     {
       id: 'nextjs-error-q2',
@@ -476,7 +476,7 @@ render();`,
         'Only when deployed to Vercel',
       ],
       correct: 1,
-      explanation: 'In development, Next.js shows its built-in error overlay when a root layout error occurs. global-error.tsx only renders in production builds. This is important to keep in mind when testing — deploy a preview build to verify your global-error.tsx appears correctly.',
+      explanation: 'In development, Next.js shows its built-in error overlay when a root layout error occurs. global-error.tsx only renders in production builds. This is important to keep in mind when testing - deploy a preview build to verify your global-error.tsx appears correctly.',
     },
   ],
 };

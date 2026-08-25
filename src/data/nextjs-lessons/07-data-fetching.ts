@@ -1,4 +1,4 @@
-﻿import type { NextjsLesson } from '../nextjs-curriculum';
+import type { NextjsLesson } from '../nextjs-curriculum';
 
 export const nextjsDataFetchingLesson: NextjsLesson = {
   id: 'nextjs-data-fetching',

@@ -12,7 +12,7 @@ export const tsModulesLesson: TsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'TypeScript uses the same ES module syntax as modern JavaScript (import/export), with additions for type-only imports and exports. Understanding modules is essential for real projects — it is how you split code across files while keeping type safety across all of them.',
+      content: 'TypeScript uses the same ES module syntax as modern JavaScript (import/export), with additions for type-only imports and exports. Understanding modules is essential for real projects - it is how you split code across files while keeping type safety across all of them.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const tsModulesLesson: TsLesson = {
     {
       type: 'example',
       title: 'Exporting and importing types alongside values',
-      content: 'TypeScript modules work just like ES modules. You export types, interfaces, classes, and functions from one file and import them in another. TypeScript resolves the types automatically — if a file exports an interface, every file that imports from it gets full type safety.',
+      content: 'TypeScript modules work just like ES modules. You export types, interfaces, classes, and functions from one file and import them in another. TypeScript resolves the types automatically - if a file exports an interface, every file that imports from it gets full type safety.',
       language: 'typescript',
       code: `// --- user.ts ---
 export interface User {
@@ -61,13 +61,13 @@ export default function authenticate(user: User): boolean {
     },
     {
       type: 'example',
-      title: 'import type — import that is erased at runtime',
+      title: 'import type - import that is erased at runtime',
       content: 'The "import type" syntax imports types that exist only at compile time. TypeScript erases them from the JavaScript output entirely. This is important for avoiding circular dependencies and for bundlers that need to know which imports are type-only. Use it whenever you are importing something used only as a type annotation.',
       language: 'typescript',
-      code: `// Regular import — may include runtime code
+      code: `// Regular import - may include runtime code
 import { User, createUser } from "./user";
 
-// Type-only import — ALWAYS erased from JavaScript output
+// Type-only import - ALWAYS erased from JavaScript output
 import type { User as UserType } from "./user";
 import type { Product } from "./product";
 
@@ -79,7 +79,7 @@ function processUser(user: UserType): string {
   return user.name;
 }
 
-// Mixed import — explicit about which are type-only
+// Mixed import - explicit about which are type-only
 import { createUser as createUserFn, type User as U } from "./user";
 
 // In tsconfig.json with "verbatimModuleSyntax": true,
@@ -92,11 +92,11 @@ import { createUser as createUserFn, type User as U } from "./user";
     },
     {
       type: 'example',
-      title: '.d.ts files — type definitions without implementation',
+      title: '.d.ts files - type definitions without implementation',
       content: 'A declaration file (.d.ts) describes the types of a JavaScript library without any implementation. When you npm install a library that was not written in TypeScript, you need declaration files to get type safety. TypeScript reads .d.ts files to know what types a library exports.',
       language: 'typescript',
       code: `// --- math-utils.d.ts --- (declaration file for a JS library)
-// No implementation — just type signatures
+// No implementation - just type signatures
 
 declare function add(a: number, b: number): number;
 declare function multiply(a: number, b: number): number;
@@ -108,7 +108,7 @@ declare interface Vector2D {
 
 declare function distance(a: Vector2D, b: Vector2D): number;
 
-// Module declaration — typing an entire npm package
+// Module declaration - typing an entire npm package
 declare module "color-parser" {
   interface RGB {
     r: number;
@@ -133,7 +133,7 @@ const color = parse("#3b82f6"); // RGB type`,
     {
       type: 'example',
       title: 'Installing community type definitions with @types',
-      content: 'The DefinitelyTyped repository provides community-maintained type definitions for thousands of JavaScript libraries. Install them with "npm install -D @types/package-name". TypeScript automatically finds and uses them. Many modern packages ship their own types built in — check if "@types" is needed.',
+      content: 'The DefinitelyTyped repository provides community-maintained type definitions for thousands of JavaScript libraries. Install them with "npm install -D @types/package-name". TypeScript automatically finds and uses them. Many modern packages ship their own types built in - check if "@types" is needed.',
       language: 'typescript',
       code: `// Terminal:
 // npm install -D @types/node     (Node.js built-in types)
@@ -168,7 +168,7 @@ const ext: string = path.extname("document.pdf"); // ".pdf"
 
 // Simulating named exports from a "user.js" module
 const userModule = (() => {
-  // "private" — not exported
+  // "private" - not exported
   let nextId = 1;
 
   // "exported" items
@@ -198,9 +198,9 @@ const moduleExports = ['createUser (function)', 'isValidEmail (function)', 'DEFA
 const typeExports = ['User (interface)', 'UserId (type)', 'UserRole (type)'];
 
 document.getElementById('output').innerHTML =
-  '<div class="module"><div class="module-name">user.ts — value exports</div>' +
+  '<div class="module"><div class="module-name">user.ts - value exports</div>' +
   moduleExports.map(e => '<span class="export-item">' + e + '</span>').join(' ') +
-  '</div><div class="module"><div class="module-name">user.ts — type-only exports (erased in JS)</div>' +
+  '</div><div class="module"><div class="module-name">user.ts - type-only exports (erased in JS)</div>' +
   typeExports.map(e => '<span class="export-item">' + e + '</span>').join(' ') +
   '</div>';`,
     },
@@ -211,7 +211,7 @@ document.getElementById('output').innerHTML =
       question: 'What is the difference between "import { User }" and "import type { User }" in TypeScript?',
       type: 'multiple-choice',
       options: [
-        'They are identical — TypeScript treats them the same',
+        'They are identical - TypeScript treats them the same',
         '"import type" is only for classes; regular import is for interfaces',
         '"import type" is erased entirely from the JavaScript output; regular import may include runtime code',
         '"import type" imports more properties than a regular import',

@@ -8,11 +8,11 @@ export const expressTestingLesson: ExpressLesson = {
   difficulty: 'intermediate',
   readingTime: 13,
   title: 'Testing Express APIs',
-  description: 'Write unit and integration tests for your Express API using Jest and Supertest — from simple route tests to authenticated endpoints.',
+  description: 'Write unit and integration tests for your Express API using Jest and Supertest - from simple route tests to authenticated endpoints.',
   sections: [
     {
       type: 'text',
-      content: 'Testing Express APIs serves two purposes: it catches regressions when you refactor code, and it documents the expected behavior of every endpoint. A test that exercises POST /users and asserts a 201 response is also a living specification of what that route is supposed to do — more reliable than any README.',
+      content: 'Testing Express APIs serves two purposes: it catches regressions when you refactor code, and it documents the expected behavior of every endpoint. A test that exercises POST /users and asserts a 201 response is also a living specification of what that route is supposed to do - more reliable than any README.',
     },
     {
       type: 'heading',
@@ -28,7 +28,7 @@ export const expressTestingLesson: ExpressLesson = {
     {
       type: 'example',
       title: 'package.json test script and jest.config.js',
-      content: 'Adding a test script to package.json lets you run the full suite with npm test. The jest.config.js file controls the test environment — use node for API tests since no browser DOM is involved.',
+      content: 'Adding a test script to package.json lets you run the full suite with npm test. The jest.config.js file controls the test environment - use node for API tests since no browser DOM is involved.',
       language: 'javascript',
       code: `// package.json
 {
@@ -61,7 +61,7 @@ module.exports = {
     },
     {
       type: 'text',
-      content: 'describe() groups related tests under a label, it() (or test()) defines a single test case, and expect() makes assertions. beforeAll() runs setup once before all tests in a describe block — useful for seeding a test database. afterAll() runs cleanup such as closing a database connection.',
+      content: 'describe() groups related tests under a label, it() (or test()) defines a single test case, and expect() makes assertions. beforeAll() runs setup once before all tests in a describe block - useful for seeding a test database. afterAll() runs cleanup such as closing a database connection.',
     },
     {
       type: 'heading',
@@ -77,7 +77,7 @@ module.exports = {
     },
     {
       type: 'text',
-      content: 'POST tests send a body with .send() and assert the created resource is returned with a 201 status. Also test the failure path — send a request with missing required fields and assert a 400 response with an error message.',
+      content: 'POST tests send a body with .send() and assert the created resource is returned with a 201 status. Also test the failure path - send a request with missing required fields and assert a 400 response with an error message.',
     },
     {
       type: 'heading',
@@ -116,7 +116,7 @@ module.exports = {
       title: 'Jest and Supertest setup with first GET test',
       content: 'Importing the Express app without calling app.listen() lets Supertest manage the server lifecycle internally. Each test call creates a temporary server, makes the request, and tears it down, so no ports are occupied between tests.',
       language: 'javascript',
-      code: `// app.js — export the app without calling listen
+      code: `// app.js - export the app without calling listen
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -127,7 +127,7 @@ app.get('/health', function (req, res) {
 
 module.exports = app;
 
-// server.js — only call listen here
+// server.js - only call listen here
 const app = require('./app');
 app.listen(3000, () => console.log('Server running on 3000'));
 

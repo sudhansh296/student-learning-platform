@@ -12,12 +12,12 @@ export const nextjsIntroLesson: NextjsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Next.js is the React framework for production. Built by Vercel, it adds server-side rendering, file-based routing, API routes, and performance optimization on top of React. You write React components and Next.js handles everything else — routing, bundling, caching, and deployment.',
+      content: 'Next.js is the React framework for production. Built by Vercel, it adds server-side rendering, file-based routing, API routes, and performance optimization on top of React. You write React components and Next.js handles everything else - routing, bundling, caching, and deployment.',
     },
     {
       type: 'analogy',
       title: 'Professional kitchen vs ingredients',
-      content: 'Plain React is like cooking ingredients — you have everything you need but must assemble the kitchen yourself. Next.js is a fully-equipped professional kitchen — routing, server rendering, image optimization, and deployment are all pre-configured. You just cook.',
+      content: 'Plain React is like cooking ingredients - you have everything you need but must assemble the kitchen yourself. Next.js is a fully-equipped professional kitchen - routing, server rendering, image optimization, and deployment are all pre-configured. You just cook.',
     },
     {
       type: 'heading',
@@ -26,14 +26,14 @@ export const nextjsIntroLesson: NextjsLesson = {
     {
       type: 'list',
       items: [
-        'SSR for SEO — pages rendered on the server are fully indexable by search engines',
-        'File-based routing — no react-router needed, folders become URL segments automatically',
-        'API routes in the same project — build backend endpoints alongside your frontend',
-        'Automatic code splitting — only the JavaScript needed for each page is sent to the browser',
-        'Image optimization — next/image converts to WebP, lazy loads, and prevents layout shift',
-        'Built-in TypeScript support — zero config TypeScript with strict types out of the box',
-        'Server Components — render on the server with zero JavaScript sent to the client',
-        'Edge runtime support — run code at CDN edge nodes closest to your users',
+        'SSR for SEO - pages rendered on the server are fully indexable by search engines',
+        'File-based routing - no react-router needed, folders become URL segments automatically',
+        'API routes in the same project - build backend endpoints alongside your frontend',
+        'Automatic code splitting - only the JavaScript needed for each page is sent to the browser',
+        'Image optimization - next/image converts to WebP, lazy loads, and prevents layout shift',
+        'Built-in TypeScript support - zero config TypeScript with strict types out of the box',
+        'Server Components - render on the server with zero JavaScript sent to the client',
+        'Edge runtime support - run code at CDN edge nodes closest to your users',
       ],
     },
     {
@@ -65,7 +65,7 @@ export const nextjsIntroLesson: NextjsLesson = {
       language: 'typescript',
       code: `my-app/
 ├── app/                    # App Router root
-│   ├── layout.tsx          # Root layout (required) — wraps all pages
+│   ├── layout.tsx          # Root layout (required) - wraps all pages
 │   ├── page.tsx            # Homepage "/"
 │   ├── globals.css         # Global styles
 │   ├── about/
@@ -115,21 +115,21 @@ npm run dev
     {
       type: 'example',
       title: 'Your first Next.js page',
-      content: 'The default app/page.tsx is your homepage. Export a default React component and Next.js turns it into the "/" route automatically. Server Components can be async — you can fetch data directly in the component body.',
+      content: 'The default app/page.tsx is your homepage. Export a default React component and Next.js turns it into the "/" route automatically. Server Components can be async - you can fetch data directly in the component body.',
       language: 'typescript',
-      code: `// app/page.tsx — this file IS the "/" route
-// Server Component by default — runs on the server
+      code: `// app/page.tsx - this file IS the "/" route
+// Server Component by default - runs on the server
 
 export default function HomePage() {
   return (
     <main style={{ padding: '2rem' }}>
       <h1>Welcome to Next.js</h1>
-      <p>This is a Server Component — no JavaScript sent to the browser.</p>
+      <p>This is a Server Component - no JavaScript sent to the browser.</p>
     </main>
   );
 }
 
-// Async server component — fetch data directly
+// Async server component - fetch data directly
 export default async function BlogPage() {
   const posts = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5')
     .then(r => r.json());
@@ -215,7 +215,7 @@ navigate('/');`,
         'A testing library for React components',
       ],
       correct: 1,
-      explanation: 'Next.js is a React framework — it builds on top of React and adds server-side rendering, file-based routing, API routes, image optimization, and many other production features. You still write React components.',
+      explanation: 'Next.js is a React framework - it builds on top of React and adds server-side rendering, file-based routing, API routes, image optimization, and many other production features. You still write React components.',
     },
     {
       id: 'nextjs-intro-2',

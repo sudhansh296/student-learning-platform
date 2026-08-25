@@ -12,7 +12,7 @@ export const tsTypeAliasesLesson: TsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Type aliases and union types are among the most powerful features in TypeScript. A type alias gives any type a name. Union types let a value be one of several types. Together they let you model real-world data that can take multiple forms — like an API response that might be a success or an error.',
+      content: 'Type aliases and union types are among the most powerful features in TypeScript. A type alias gives any type a name. Union types let a value be one of several types. Together they let you model real-world data that can take multiple forms - like an API response that might be a success or an error.',
     },
     {
       type: 'heading',
@@ -20,8 +20,8 @@ export const tsTypeAliasesLesson: TsLesson = {
     },
     {
       type: 'example',
-      title: 'The type keyword — naming any type',
-      content: 'The "type" keyword creates an alias for any type — primitives, objects, functions, unions, or combinations. Unlike interfaces, type aliases can describe any type, not just objects. Use "type" when you need to name a union, intersection, primitive, or function type.',
+      title: 'The type keyword - naming any type',
+      content: 'The "type" keyword creates an alias for any type - primitives, objects, functions, unions, or combinations. Unlike interfaces, type aliases can describe any type, not just objects. Use "type" when you need to name a union, intersection, primitive, or function type.',
       language: 'typescript',
       code: `// Type aliases for primitives
 type UserId = number;
@@ -45,7 +45,7 @@ type Comparator<T> = (a: T, b: T) => number;
 const sortAsc: Comparator<number> = (a, b) => a - b;
 [3, 1, 4, 1, 5].sort(sortAsc); // [1, 1, 3, 4, 5]
 
-// Type vs interface — when to use which:
+// Type vs interface - when to use which:
 // Use interface for object shapes that may be extended
 // Use type for unions, intersections, primitives, function types`,
     },
@@ -55,8 +55,8 @@ const sortAsc: Comparator<number> = (a, b) => a - b;
     },
     {
       type: 'example',
-      title: 'A | B — a value that can be one of several types',
-      content: 'A union type uses the pipe operator (|) to say a value can be any one of the listed types. This is the TypeScript way to say "this could be a string OR a number". When working with a union, TypeScript requires you to handle each case — a feature called narrowing.',
+      title: 'A | B - a value that can be one of several types',
+      content: 'A union type uses the pipe operator (|) to say a value can be any one of the listed types. This is the TypeScript way to say "this could be a string OR a number". When working with a union, TypeScript requires you to handle each case - a feature called narrowing.',
       language: 'typescript',
       code: `// Basic union type
 type StringOrNumber = string | number;
@@ -65,7 +65,7 @@ let value: StringOrNumber = "hello";
 value = 42;       // also OK
 // value = true;  // Error: not in the union
 
-// Narrowing — handle each case
+// Narrowing - handle each case
 function processInput(input: string | number): string {
   if (typeof input === "string") {
     return input.toUpperCase();  // TypeScript knows: string
@@ -73,7 +73,7 @@ function processInput(input: string | number): string {
   return input.toFixed(2);       // TypeScript knows: number
 }
 
-// Union with null — common pattern
+// Union with null - common pattern
 type MaybeString = string | null;
 function findUser(id: number): string | null {
   if (id === 1) return "Alice";
@@ -95,13 +95,13 @@ type ID = string | number | null;`,
     },
     {
       type: 'example',
-      title: 'A & B — combining multiple types into one',
+      title: 'A & B - combining multiple types into one',
       content: 'An intersection type uses the ampersand (&) to combine multiple types. The result must satisfy ALL the combined types. This is useful for mixins, composing object types, and adding properties to existing types.',
       language: 'typescript',
       code: `type Named = { name: string };
 type Aged = { age: number };
 
-// Intersection — must have BOTH name and age
+// Intersection - must have BOTH name and age
 type Person = Named & Aged;
 
 const alice: Person = {
@@ -135,10 +135,10 @@ function save<T>(data: T & Timestamps): void {
     },
     {
       type: 'example',
-      title: 'Exact values as types — literal types',
-      content: 'A literal type is a type that is a specific value, not just a category. Instead of "string", you can say the type is exactly "north" or "south". Literal types are most powerful in unions — they create an exact set of allowed values, like an enum but lighter.',
+      title: 'Exact values as types - literal types',
+      content: 'A literal type is a type that is a specific value, not just a category. Instead of "string", you can say the type is exactly "north" or "south". Literal types are most powerful in unions - they create an exact set of allowed values, like an enum but lighter.',
       language: 'typescript',
-      code: `// String literal type — only these exact strings are valid
+      code: `// String literal type - only these exact strings are valid
 type Direction = "north" | "south" | "east" | "west";
 
 function move(dir: Direction): void {
@@ -174,7 +174,7 @@ const config = {
     },
     {
       type: 'example',
-      title: 'Tagged unions — model state machines safely',
+      title: 'Tagged unions - model state machines safely',
       content: 'A discriminated union is a union of object types where each has a common property (the "discriminant") with a unique literal type value. TypeScript uses this tag to narrow the type automatically in a switch or if statement. This pattern is excellent for modeling state machines, API responses, and events.',
       language: 'typescript',
       code: `// Each shape has a "kind" discriminant property
@@ -228,7 +228,7 @@ function processInput(input) {
 console.log(processInput('hello'));
 console.log(processInput(3.14159));
 
-// Discriminated union — shapes
+// Discriminated union - shapes
 function getArea(shape) {
   switch (shape.kind) {
     case 'circle':    return Math.PI * shape.radius ** 2;
@@ -269,7 +269,7 @@ document.getElementById('output').innerHTML =
         'Union is for objects only; intersection is for primitives only',
       ],
       correct: 1,
-      explanation: 'A union type (A | B) means the value can be EITHER type A OR type B. An intersection type (A & B) means the value must satisfy BOTH types simultaneously — it needs all properties of A and all properties of B.',
+      explanation: 'A union type (A | B) means the value can be EITHER type A OR type B. An intersection type (A & B) means the value must satisfy BOTH types simultaneously - it needs all properties of A and all properties of B.',
     },
     {
       id: 'ts-union-2',

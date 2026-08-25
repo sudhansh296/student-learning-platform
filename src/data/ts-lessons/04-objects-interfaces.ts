@@ -8,7 +8,7 @@ export const tsObjectsLesson: TsLesson = {
   order: 4,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Define the shape of objects with interfaces — optional properties, readonly, index signatures, and extending interfaces.',
+  description: 'Define the shape of objects with interfaces - optional properties, readonly, index signatures, and extending interfaces.',
   sections: [
     {
       type: 'text',
@@ -51,7 +51,7 @@ printUser({ name: "Alice", age: 25 }); // OK
     {
       type: 'example',
       title: 'Defining reusable object shapes with interface',
-      content: 'The interface keyword gives a name to an object shape so you can reuse it everywhere. Interfaces are one of the most important TypeScript features — they document what a function expects, what an API returns, and what shape your data must take throughout the application.',
+      content: 'The interface keyword gives a name to an object shape so you can reuse it everywhere. Interfaces are one of the most important TypeScript features - they document what a function expects, what an API returns, and what shape your data must take throughout the application.',
       language: 'typescript',
       code: `// Define the shape once, use it everywhere
 interface User {
@@ -94,13 +94,13 @@ const users: User[] = [
     {
       type: 'example',
       title: 'Optional (?), readonly, and their use cases',
-      content: 'Add a question mark after a property name to make it optional — TypeScript will accept the object with or without that property, but the type will be "string | undefined" when you access it. The readonly modifier prevents the property from being reassigned after the object is created.',
+      content: 'Add a question mark after a property name to make it optional - TypeScript will accept the object with or without that property, but the type will be "string | undefined" when you access it. The readonly modifier prevents the property from being reassigned after the object is created.',
       language: 'typescript',
       code: `interface Product {
   readonly id: number;       // cannot be changed after creation
   name: string;
   price: number;
-  description?: string;      // optional — may or may not be present
+  description?: string;      // optional - may or may not be present
   tags?: string[];           // optional array
 }
 
@@ -108,7 +108,7 @@ const laptop: Product = {
   id: 1,
   name: "MacBook Pro",
   price: 1999,
-  // description and tags are optional — OK to omit
+  // description and tags are optional - OK to omit
 };
 
 const phone: Product = {
@@ -127,7 +127,7 @@ if (laptop.description) {
   console.log(laptop.description.toUpperCase()); // Safe
 }
 // Use optional chaining for concise access:
-console.log(laptop.description?.toUpperCase()); // undefined — no error`,
+console.log(laptop.description?.toUpperCase()); // undefined - no error`,
     },
     {
       type: 'heading',
@@ -138,7 +138,7 @@ console.log(laptop.description?.toUpperCase()); // undefined — no error`,
       title: 'Objects with dynamic keys using index signatures',
       content: 'An index signature describes an object with unknown property names but known value types. This is useful for dictionaries, maps, and lookup tables where you dont know the keys ahead of time but you know all values share a type.',
       language: 'typescript',
-      code: `// Index signature — any string key, number value
+      code: `// Index signature - any string key, number value
 interface ScoreBoard {
   [playerName: string]: number;
 }
@@ -164,7 +164,7 @@ const config: Config = {
   retries: 3,
 };
 
-// Record<K, V> — cleaner syntax for the same thing
+// Record<K, V> - cleaner syntax for the same thing
 const lookup: Record<string, number> = {
   one: 1,
   two: 2,

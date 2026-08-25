@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactFetchDataLesson: ReactLesson = {
   id: 'react-fetch-data',
@@ -55,7 +55,7 @@ function UserList() {
   return (
     <ul>
       {users.map(user => (
-        <li key={user.id}>{user.name} — {user.email}</li>
+        <li key={user.id}>{user.name} - {user.email}</li>
       ))}
     </ul>
   );
@@ -67,16 +67,16 @@ function UserList() {
     },
     {
       type: 'example',
-      title: 'You cannot make React.useEffect async — use an inner async function',
+      title: 'You cannot make React.useEffect async - use an inner async function',
       content: 'React.useEffect cannot be an async function because React expects it to return either nothing or a cleanup function. The solution is to define an async function inside React.useEffect and call it immediately.',
       language: 'jsx',
-      code: `// ❌ Wrong — React.useEffect itself cannot be async
+      code: `// ❌ Wrong - React.useEffect itself cannot be async
 React.useEffect(async () => {
   const data = await fetch('/api/posts').then(r => r.json());
   setPosts(data);
 }, []);
 
-// ✅ Correct — define async function inside and call it
+// ✅ Correct - define async function inside and call it
 React.useEffect(() => {
   async function fetchPosts() {
     try {
@@ -163,7 +163,7 @@ function UserProfile({ userId }) {
     {
       type: 'example',
       title: 'Fetch multiple resources simultaneously',
-      content: 'When you need data from multiple endpoints, fetch them in parallel with Promise.all instead of sequentially. Parallel fetching is much faster — the total time is the slowest request, not the sum of all requests.',
+      content: 'When you need data from multiple endpoints, fetch them in parallel with Promise.all instead of sequentially. Parallel fetching is much faster - the total time is the slowest request, not the sum of all requests.',
       language: 'jsx',
       code: `// React hooks available via React.React.useState, React.React.useEffect etc.
 function Dashboard() {
@@ -172,7 +172,7 @@ function Dashboard() {
 
   React.useEffect(() => {
     async function fetchAll() {
-      // Fetch all three simultaneously — not one after another
+      // Fetch all three simultaneously - not one after another
       const [users, posts, comments] = await Promise.all([
         fetch('/api/users').then(r => r.json()),
         fetch('/api/posts').then(r => r.json()),
@@ -197,7 +197,7 @@ function Dashboard() {
   );
 }
 
-// Promise.allSettled — continues even if some requests fail
+// Promise.allSettled - continues even if some requests fail
 const results = await Promise.allSettled([
   fetch('/api/critical').then(r => r.json()),
   fetch('/api/optional').then(r => r.json()),
@@ -374,13 +374,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(<HackerNews />);`,
       question: 'What does Promise.all do differently from sequential awaits?',
       type: 'multiple-choice',
       options: [
-        'Nothing — they work identically',
+        'Nothing - they work identically',
         'Promise.all runs all requests in parallel; sequential awaits wait for each one before starting the next',
         'Promise.all is synchronous; sequential awaits are asynchronous',
         'Promise.all only works with fetch; sequential awaits work with any Promise',
       ],
       correct: 1,
-      explanation: 'Sequential awaits run one after another — the second request doesnt start until the first finishes. Promise.all starts all requests simultaneously and waits for all to complete. For 3 requests of 300ms each: sequential = 900ms, Promise.all = 300ms.',
+      explanation: 'Sequential awaits run one after another - the second request doesnt start until the first finishes. Promise.all starts all requests simultaneously and waits for all to complete. For 3 requests of 300ms each: sequential = 900ms, Promise.all = 300ms.',
     },
   ],
   quiz: [
@@ -389,12 +389,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(<HackerNews />);`,
       question: 'What happens if you forget to add cleanup in React.useEffect when fetching data?',
       options: [
         'The fetch request is cancelled automatically',
-        'Nothing — cleanup is only needed for subscriptions',
+        'Nothing - cleanup is only needed for subscriptions',
         'If the component unmounts before the fetch finishes, the callback still runs and tries to update state on an unmounted component',
         'React throws an error immediately',
       ],
       correct: 2,
-      explanation: 'Without cleanup, if the user navigates away (unmounting the component) before the fetch completes, the fetch eventually resolves and the .then() callback runs — trying to call setState on an unmounted component. This causes a warning and potential bugs. Use a cancellation flag or AbortController to prevent it.',
+      explanation: 'Without cleanup, if the user navigates away (unmounting the component) before the fetch completes, the fetch eventually resolves and the .then() callback runs - trying to call setState on an unmounted component. This causes a warning and potential bugs. Use a cancellation flag or AbortController to prevent it.',
     },
   ],
 };

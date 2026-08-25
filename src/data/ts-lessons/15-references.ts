@@ -8,7 +8,7 @@ export const tsReferencesLesson: TsLesson = {
   order: 15,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'Complete TypeScript cheat sheet — all types, common patterns, tsconfig options, and utility types at a glance.',
+  description: 'Complete TypeScript cheat sheet - all types, common patterns, tsconfig options, and utility types at a glance.',
   sections: [
     {
       type: 'text',
@@ -24,12 +24,12 @@ export const tsReferencesLesson: TsLesson = {
       headers: ['Type', 'Example', 'Notes'],
       rows: [
         ['string', 'let name: string = "Alice"', 'Text values'],
-        ['number', 'let age: number = 25', 'All numbers — int, float, etc.'],
+        ['number', 'let age: number = 25', 'All numbers - int, float, etc.'],
         ['boolean', 'let on: boolean = true', 'true or false'],
         ['null', 'let x: null = null', 'Explicit null'],
         ['undefined', 'let y: undefined', 'Unassigned value'],
-        ['any', 'let z: any = anything', 'Opt out of type checking — avoid'],
-        ['unknown', 'let u: unknown = input', 'Safe version of any — must narrow'],
+        ['any', 'let z: any = anything', 'Opt out of type checking - avoid'],
+        ['unknown', 'let u: unknown = input', 'Safe version of any - must narrow'],
         ['never', 'function err(): never { throw }', 'Function that never returns'],
         ['void', 'function log(): void {}', 'No return value'],
         ['object', 'let o: object = {}', 'Any non-primitive'],
@@ -106,9 +106,9 @@ async function fetchData<T>(url: string): Promise<T> {
       title: 'Built-in Utility Types',
       headers: ['Utility Type', 'What it Does', 'Example'],
       rows: [
-        ['Partial<T>', 'All properties optional', 'Partial<User> — all fields optional'],
-        ['Required<T>', 'All properties required', 'Required<Config> — no optional fields'],
-        ['Readonly<T>', 'All properties readonly', 'Readonly<Config> — no mutation'],
+        ['Partial<T>', 'All properties optional', 'Partial<User> - all fields optional'],
+        ['Required<T>', 'All properties required', 'Required<Config> - no optional fields'],
+        ['Readonly<T>', 'All properties readonly', 'Readonly<Config> - no mutation'],
         ['Pick<T, K>', 'Include only listed properties', 'Pick<User, "id" | "name">'],
         ['Omit<T, K>', 'Exclude listed properties', 'Omit<User, "password">'],
         ['Record<K, V>', 'Object with keys K and values V', 'Record<string, number>'],
@@ -148,7 +148,7 @@ async function fetchData<T>(url: string): Promise<T> {
     {
       type: 'example',
       title: 'When to use interface vs type',
-      content: 'Both interface and type can describe object shapes. The key differences: interfaces can be extended with extends and can be re-opened (declaration merging). Type aliases can describe unions, intersections, primitives, and tuples — not just objects. A practical rule: use interface for objects that might be extended; use type for unions and non-object types.',
+      content: 'Both interface and type can describe object shapes. The key differences: interfaces can be extended with extends and can be re-opened (declaration merging). Type aliases can describe unions, intersections, primitives, and tuples - not just objects. A practical rule: use interface for objects that might be extended; use type for unions and non-object types.',
       language: 'typescript',
       code: `// Use interface for extensible object shapes
 interface Animal {
@@ -168,7 +168,7 @@ type StringOrNumber = string | number;
 type Nullable<T> = T | null;
 type Callback = () => void;
 
-// Both work for simple object shapes — pick a style and be consistent
+// Both work for simple object shapes - pick a style and be consistent
 interface UserInterface { id: number; name: string; }
 type UserType = { id: number; name: string; };`,
     },
@@ -176,7 +176,7 @@ type UserType = { id: number; name: string; };`,
       type: 'tryit',
       title: 'Try It: TypeScript Type Explorer',
       css: `body{font-family:system-ui,sans-serif;padding:20px;} .type-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;} .type-card{background:#f0f7ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px;} .type-name{font-weight:700;color:#1d4ed8;font-size:12px;font-family:monospace;} .type-desc{font-size:11px;color:#6b7280;margin-top:3px;} .result-section{margin-top:14px;} h3{color:#1e40af;font-size:13px;margin:0 0 8px;}`,
-      js: `// TypeScript reference — interactive type explorer
+      js: `// TypeScript reference - interactive type explorer
 
 // Demonstrating key TypeScript concepts
 const typeSystem = {
@@ -251,7 +251,7 @@ document.getElementById('output').innerHTML =
         'interface is deprecated in TypeScript 5',
       ],
       correct: 1,
-      explanation: 'Both interface and type can describe object shapes. The key difference: type can describe anything — unions (A | B), intersections (A & B), primitives, function types, and more. Interfaces are specifically for object shapes and support declaration merging and class implementation via "implements".',
+      explanation: 'Both interface and type can describe object shapes. The key difference: type can describe anything - unions (A | B), intersections (A & B), primitives, function types, and more. Interfaces are specifically for object shapes and support declaration merging and class implementation via "implements".',
     },
   ],
   quiz: [

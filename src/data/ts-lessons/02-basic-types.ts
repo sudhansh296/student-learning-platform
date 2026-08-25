@@ -8,7 +8,7 @@ export const tsBasicTypesLesson: TsLesson = {
   order: 2,
   difficulty: 'beginner',
   readingTime: 10,
-  description: 'All primitive TypeScript types — string, number, boolean, null, undefined, any, unknown, never, void, and type inference.',
+  description: 'All primitive TypeScript types - string, number, boolean, null, undefined, any, unknown, never, void, and type inference.',
   sections: [
     {
       type: 'text',
@@ -20,15 +20,15 @@ export const tsBasicTypesLesson: TsLesson = {
     },
     {
       type: 'example',
-      title: 'string, number, boolean — the everyday primitives',
-      content: 'These three types cover the vast majority of variables you will annotate. TypeScript can infer them automatically from the initial value, so explicit annotations are often optional — but useful when declaring a variable before assigning it.',
+      title: 'string, number, boolean - the everyday primitives',
+      content: 'These three types cover the vast majority of variables you will annotate. TypeScript can infer them automatically from the initial value, so explicit annotations are often optional - but useful when declaring a variable before assigning it.',
       language: 'typescript',
       code: `// string
 let firstName: string = "Alice";
 let greeting: string = 'Hello, world';
 let template: string = "Name: " + firstName; // no template literals with vars in code strings
 
-// number — all numbers are the same type in TypeScript (int, float, etc.)
+// number - all numbers are the same type in TypeScript (int, float, etc.)
 let age: number = 25;
 let price: number = 9.99;
 let hex: number = 0xff;
@@ -38,12 +38,12 @@ let binary: number = 0b1010;
 let isLoggedIn: boolean = true;
 let hasPremium: boolean = false;
 
-// Type inference — TypeScript figures it out from the value
+// Type inference - TypeScript figures it out from the value
 let city = "New York";     // inferred as string
 let score = 100;           // inferred as number
 let active = true;         // inferred as boolean
 
-// Declare without initializing — must annotate
+// Declare without initializing - must annotate
 let username: string;
 username = "bob123";       // OK
 // username = 42;          // Error: Type 'number' is not assignable to type 'string'`,
@@ -55,27 +55,27 @@ username = "bob123";       // OK
     {
       type: 'example',
       title: 'The special types and when to use each',
-      content: 'TypeScript provides special types for unusual situations. "any" opts out of type checking entirely (avoid it). "unknown" is the safe version of "any" — you must check the type before using the value. "void" marks functions that return nothing. "never" marks code that never reaches the end.',
+      content: 'TypeScript provides special types for unusual situations. "any" opts out of type checking entirely (avoid it). "unknown" is the safe version of "any" - you must check the type before using the value. "void" marks functions that return nothing. "never" marks code that never reaches the end.',
       language: 'typescript',
-      code: `// any — disables type checking (avoid unless migrating JS)
+      code: `// any - disables type checking (avoid unless migrating JS)
 let data: any = "hello";
-data = 42;          // OK — any accepts anything
-data = { x: 1 };   // OK — no type safety at all
+data = 42;          // OK - any accepts anything
+data = { x: 1 };   // OK - no type safety at all
 
-// unknown — safe alternative to any
+// unknown - safe alternative to any
 let input: unknown = getUserInput();
 // console.log(input.toUpperCase()); // Error! Must check first
 if (typeof input === "string") {
-  console.log(input.toUpperCase()); // OK — TypeScript knows its a string here
+  console.log(input.toUpperCase()); // OK - TypeScript knows its a string here
 }
 
-// void — function that returns nothing
+// void - function that returns nothing
 function logMessage(msg: string): void {
   console.log(msg);
   // no return statement needed
 }
 
-// never — function that never returns (throws or infinite loop)
+// never - function that never returns (throws or infinite loop)
 function throwError(message: string): never {
   throw new Error(message);
 }
@@ -111,7 +111,7 @@ score = 95;
 
 // Optional chaining handles potential null/undefined safely
 const user = { profile: null as { bio: string } | null };
-const bio = user.profile?.bio; // "string | undefined" — safe
+const bio = user.profile?.bio; // "string | undefined" - safe
 // const bio2 = user.profile.bio; // Error! profile could be null`,
     },
     {
@@ -142,11 +142,11 @@ function getLabel(value: number) {
   // Inferred return type: string
 }
 
-// When NOT to rely on inference — annotate explicitly:
+// When NOT to rely on inference - annotate explicitly:
 // 1. Function parameters (TypeScript cant infer these)
 // 2. When declaring before assigning
 // 3. When the inferred type is too wide for your needs
-let result: string;   // declared before use — needs annotation
+let result: string;   // declared before use - needs annotation
 result = double(5).toString();`,
     },
     {
@@ -201,13 +201,13 @@ document.getElementById('output').innerHTML = examples.map(ex =>
       question: 'What is the difference between "any" and "unknown" in TypeScript?',
       type: 'multiple-choice',
       options: [
-        'They are identical — both disable type checking',
+        'They are identical - both disable type checking',
         '"any" disables type checking entirely; "unknown" requires a type check before use',
         '"unknown" is only for undefined values; "any" handles everything else',
         '"any" is for TypeScript 4+; "unknown" is the older version',
       ],
       correct: 1,
-      explanation: '"any" completely disables type checking — you can call any method or access any property on it. "unknown" is safer: TypeScript forces you to narrow the type (with typeof, instanceof, etc.) before you can use the value. Prefer unknown over any.',
+      explanation: '"any" completely disables type checking - you can call any method or access any property on it. "unknown" is safer: TypeScript forces you to narrow the type (with typeof, instanceof, etc.) before you can use the value. Prefer unknown over any.',
     },
     {
       id: 'ts-types-2',
@@ -228,7 +228,7 @@ document.getElementById('output').innerHTML = examples.map(ex =>
       id: 'ts-types-q1',
       question: 'When does TypeScript infer the type of a variable automatically?',
       options: [
-        'Never — you must always annotate types explicitly',
+        'Never - you must always annotate types explicitly',
         'Only for primitive types like string and number',
         'When a variable is initialized with a value at declaration',
         'Only inside function bodies',

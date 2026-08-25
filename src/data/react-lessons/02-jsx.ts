@@ -2,7 +2,7 @@ import type { ReactLesson } from '../react-curriculum';
 
 export const reactJsxLesson: ReactLesson = {
   id: 'react-jsx',
-  title: 'JSX — JavaScript XML',
+  title: 'JSX - JavaScript XML',
   slug: 'jsx',
   chapter: 'intro',
   order: 2,
@@ -12,16 +12,16 @@ export const reactJsxLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'JSX stands for JavaScript XML. It is a syntax extension that lets you write HTML-like code directly inside JavaScript. JSX is not valid JavaScript on its own — a tool called Babel compiles it into regular JavaScript before the browser runs it. JSX is the most natural way to describe what your UI should look like.',
+      content: 'JSX stands for JavaScript XML. It is a syntax extension that lets you write HTML-like code directly inside JavaScript. JSX is not valid JavaScript on its own - a tool called Babel compiles it into regular JavaScript before the browser runs it. JSX is the most natural way to describe what your UI should look like.',
     },
     {
       type: 'heading',
-      content: '1. JSX Basics — HTML Inside JavaScript',
+      content: '1. JSX Basics - HTML Inside JavaScript',
     },
     {
       type: 'example',
       title: 'Your first JSX element',
-      content: 'JSX looks like HTML but lives inside a JavaScript file. You can assign JSX to a variable just like any other value. Each JSX element must have exactly ONE root element — if you need to return multiple elements side by side, wrap them in a parent div or a Fragment (<>).',
+      content: 'JSX looks like HTML but lives inside a JavaScript file. You can assign JSX to a variable just like any other value. Each JSX element must have exactly ONE root element - if you need to return multiple elements side by side, wrap them in a parent div or a Fragment (<>).',
       language: 'jsx',
       code: `// JSX assigned to a variable
 const heading = <h1>Hello, React!</h1>;
@@ -34,7 +34,7 @@ const card = (
   </div>
 );
 
-// Or use a Fragment — no extra DOM element
+// Or use a Fragment - no extra DOM element
 const items = (
   <>
     <li>First</li>
@@ -50,7 +50,7 @@ const items = (
     {
       type: 'example',
       title: 'Embedding JS values and expressions with curly braces',
-      content: 'Curly braces {} let you escape from JSX back into JavaScript. Inside the braces you can put any valid JavaScript expression — a variable, a calculation, a function call, or a ternary. You cannot put statements (like if, for, while) directly in JSX — only expressions that produce a value.',
+      content: 'Curly braces {} let you escape from JSX back into JavaScript. Inside the braces you can put any valid JavaScript expression - a variable, a calculation, a function call, or a ternary. You cannot put statements (like if, for, while) directly in JSX - only expressions that produce a value.',
       language: 'jsx',
       code: `const name = "Alice";
 const score = 92;
@@ -68,7 +68,7 @@ function App() {
       {/* Function call */}
       <p>Today: {new Date().toDateString()}</p>
 
-      {/* Template — curly braces evaluate expressions */}
+      {/* Template - curly braces evaluate expressions */}
       <p>Half score: {score / 2}</p>
 
       {/* Ternary for conditional text */}
@@ -79,12 +79,12 @@ function App() {
     },
     {
       type: 'heading',
-      content: '3. JSX vs HTML — Key Differences',
+      content: '3. JSX vs HTML - Key Differences',
     },
     {
       type: 'example',
       title: 'className, htmlFor, and self-closing tags',
-      content: 'JSX uses camelCase for attributes because JSX compiles to JavaScript, and "class" and "for" are reserved keywords in JS. Use className instead of class for CSS classes, and htmlFor instead of for on labels. Every tag must be closed — either with a closing tag or self-closing slash like <img /> and <input />.',
+      content: 'JSX uses camelCase for attributes because JSX compiles to JavaScript, and "class" and "for" are reserved keywords in JS. Use className instead of class for CSS classes, and htmlFor instead of for on labels. Every tag must be closed - either with a closing tag or self-closing slash like <img /> and <input />.',
       language: 'jsx',
       code: `// HTML:              JSX:
 // class="btn"  →  className="btn"
@@ -128,7 +128,7 @@ function LoginForm() {
     {
       type: 'example',
       title: 'Applying inline styles with a JavaScript object',
-      content: 'In HTML you write style="color: red". In JSX the style attribute takes a JavaScript object, so you use double curly braces — the outer {} for JSX expression, the inner {} for the object literal. CSS property names become camelCase: background-color becomes backgroundColor, font-size becomes fontSize.',
+      content: 'In HTML you write style="color: red". In JSX the style attribute takes a JavaScript object, so you use double curly braces - the outer {} for JSX expression, the inner {} for the object literal. CSS property names become camelCase: background-color becomes backgroundColor, font-size becomes fontSize.',
       language: 'jsx',
       code: `function StyledBox() {
   // Style as a variable (cleaner for multiple properties)
@@ -168,7 +168,7 @@ function LoginForm() {
     {
       type: 'example',
       title: 'What Babel does behind the scenes',
-      content: 'JSX is just syntactic sugar. Babel transforms every JSX element into a React.createElement() call. The first argument is the element type, the second is props (attributes), and the rest are children. Understanding this helps you see why JSX has rules like single root elements and why component names must be capitalized — lowercase names are treated as HTML strings.',
+      content: 'JSX is just syntactic sugar. Babel transforms every JSX element into a React.createElement() call. The first argument is the element type, the second is props (attributes), and the rest are children. Understanding this helps you see why JSX has rules like single root elements and why component names must be capitalized - lowercase names are treated as HTML strings.',
       language: 'jsx',
       code: `// What you write:
 const element = <h1 className="title">Hello!</h1>;
@@ -283,7 +283,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       type: 'multiple-choice',
       options: ['Only string values', 'Any JavaScript expression that returns a value', 'Only function names', 'Only variable names'],
       correct: 1,
-      explanation: 'Curly braces in JSX can contain any valid JavaScript expression — variables, arithmetic, ternaries, function calls. They cannot contain statements like if, for, or while.',
+      explanation: 'Curly braces in JSX can contain any valid JavaScript expression - variables, arithmetic, ternaries, function calls. They cannot contain statements like if, for, or while.',
     },
   ],
   quiz: [
@@ -297,7 +297,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'DOM innerHTML strings',
       ],
       correct: 2,
-      explanation: 'Babel compiles every JSX element into a React.createElement(type, props, ...children) call. JSX is purely syntactic sugar — the browser never actually sees JSX.',
+      explanation: 'Babel compiles every JSX element into a React.createElement(type, props, ...children) call. JSX is purely syntactic sugar - the browser never actually sees JSX.',
     },
   ],
 };

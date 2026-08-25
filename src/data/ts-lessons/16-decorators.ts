@@ -8,7 +8,7 @@ export const tsDecoratorsLesson: TsLesson = {
   order: 16,
   difficulty: 'advanced',
   readingTime: 14,
-  description: 'Learn TypeScript decorators — the metadata annotation system used by Angular, NestJS, TypeORM, and class-validator.',
+  description: 'Learn TypeScript decorators - the metadata annotation system used by Angular, NestJS, TypeORM, and class-validator.',
   sections: [
     {
       type: 'text',
@@ -25,7 +25,7 @@ export const tsDecoratorsLesson: TsLesson = {
     {
       type: 'example',
       title: 'Class decorator that adds metadata',
-      content: 'A class decorator is a function that receives the class constructor as its only argument. It runs once when the class is defined — not each time the class is instantiated — making it the right place to attach metadata or wrap the constructor with additional logic.',
+      content: 'A class decorator is a function that receives the class constructor as its only argument. It runs once when the class is defined - not each time the class is instantiated - making it the right place to attach metadata or wrap the constructor with additional logic.',
       language: 'typescript',
       code: `// Enable in tsconfig: "experimentalDecorators": true
 
@@ -65,7 +65,7 @@ console.log((AppComponent as any).__selector); // 'app-root'`,
     {
       type: 'example',
       title: 'Method decorator that logs execution time',
-      content: 'A method decorator receives the class prototype, the method name, and the property descriptor. By replacing descriptor.value with a wrapper function, you intercept every call to that method — allowing you to log timing, add authorization checks, catch errors, or retry on failure without touching the original logic.',
+      content: 'A method decorator receives the class prototype, the method name, and the property descriptor. By replacing descriptor.value with a wrapper function, you intercept every call to that method - allowing you to log timing, add authorization checks, catch errors, or retry on failure without touching the original logic.',
       language: 'typescript',
       code: `function Log(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
   const originalMethod = descriptor.value;
@@ -117,7 +117,7 @@ console.log(svc.deleteOrder(42));`,
     {
       type: 'example',
       title: 'Property decorator for validation metadata',
-      content: 'Property decorators receive the class prototype and the property name. They cannot directly intercept reads and writes — instead, the standard pattern is to store validation rules or metadata in a side map keyed by the class and property name. A separate validation function then reads that metadata at runtime, which is exactly how class-validator works.',
+      content: 'Property decorators receive the class prototype and the property name. They cannot directly intercept reads and writes - instead, the standard pattern is to store validation rules or metadata in a side map keyed by the class and property name. A separate validation function then reads that metadata at runtime, which is exactly how class-validator works.',
       language: 'typescript',
       code: `// Simple metadata store (reflect-metadata does this automatically)
 const validationRules = new Map<string, { property: string; rule: string; message: string }[]>();
@@ -173,14 +173,14 @@ console.log(validate(dto));
     {
       type: 'example',
       title: 'Decorator factory with parameters',
-      content: 'A plain decorator function has a fixed signature — it cannot accept configuration. A decorator factory solves this by being a function that returns a decorator. The outer function captures your configuration in a closure, and the inner function is the actual decorator. This is the pattern behind @Column({ type: "varchar", length: 255 }) in TypeORM or @Get("/users") in NestJS.',
+      content: 'A plain decorator function has a fixed signature - it cannot accept configuration. A decorator factory solves this by being a function that returns a decorator. The outer function captures your configuration in a closure, and the inner function is the actual decorator. This is the pattern behind @Column({ type: "varchar", length: 255 }) in TypeORM or @Get("/users") in NestJS.',
       language: 'typescript',
-      code: `// Without factory — no way to pass arguments
+      code: `// Without factory - no way to pass arguments
 function ReadOnly(target: any, key: string) {
   Object.defineProperty(target, key, { writable: false });
 }
 
-// With factory — accepts configuration
+// With factory - accepts configuration
 function MinLength(min: number) {
   return function (target: any, propertyKey: string) {
     const className = target.constructor.name;
@@ -224,7 +224,7 @@ console.log((User as any).__tableName); // 'users'`,
     },
     {
       type: 'text',
-      content: 'Multiple decorators can be stacked on a single target. The evaluation order is top-to-bottom (outer to inner), but the execution order is bottom-to-top (inner to outer) — the same as mathematical function composition. For method decorators: @A @B method means A(B(method)). Understanding this order matters when decorators depend on each other.',
+      content: 'Multiple decorators can be stacked on a single target. The evaluation order is top-to-bottom (outer to inner), but the execution order is bottom-to-top (inner to outer) - the same as mathematical function composition. For method decorators: @A @B method means A(B(method)). Understanding this order matters when decorators depend on each other.',
     },
     {
       type: 'example',
@@ -389,7 +389,7 @@ frameworkDecorators.forEach(function(d) { console.log('  ' + d); });
     },
     {
       id: 'ts-dec-2',
-      question: 'When multiple decorators are stacked on a single method — @A on top and @B below — in what order do they execute?',
+      question: 'When multiple decorators are stacked on a single method - @A on top and @B below - in what order do they execute?',
       type: 'multiple-choice',
       options: [
         'A executes first, then B',
@@ -398,7 +398,7 @@ frameworkDecorators.forEach(function(d) { console.log('  ' + d); });
         'Only the top decorator executes',
       ],
       correct: 1,
-      explanation: 'Decorators are evaluated top-to-bottom but execute bottom-to-top — the same as mathematical function composition where @A @B method means A(B(method)). B wraps the original method first, then A wraps the result of B. This means @B runs first when the method is called.',
+      explanation: 'Decorators are evaluated top-to-bottom but execute bottom-to-top - the same as mathematical function composition where @A @B method means A(B(method)). B wraps the original method first, then A wraps the result of B. This means @B runs first when the method is called.',
     },
     {
       id: 'ts-dec-3',
@@ -411,7 +411,7 @@ frameworkDecorators.forEach(function(d) { console.log('  ' + d); });
         'Decorator factories bypass the need for experimentalDecorators',
       ],
       correct: 1,
-      explanation: 'A plain decorator has a fixed signature and cannot accept parameters. A decorator factory is a function that accepts your configuration and returns the actual decorator function. This pattern enables @Column({ type: "varchar", length: 255 }) style usage — the outer call captures options in a closure and the returned function does the actual decoration.',
+      explanation: 'A plain decorator has a fixed signature and cannot accept parameters. A decorator factory is a function that accepts your configuration and returns the actual decorator function. This pattern enables @Column({ type: "varchar", length: 255 }) style usage - the outer call captures options in a closure and the returned function does the actual decoration.',
     },
   ],
   quiz: [
@@ -437,7 +437,7 @@ frameworkDecorators.forEach(function(d) { console.log('  ' + d); });
         'It enables async methods inside the class',
       ],
       correct: 1,
-      explanation: '@Injectable() tells the NestJS dependency injection container that this class is a provider — it can be injected into controllers, other services, or any injectable. Under the hood, NestJS reads the reflect-metadata emitted by TypeScript to discover constructor parameter types and resolve the dependency graph.',
+      explanation: '@Injectable() tells the NestJS dependency injection container that this class is a provider - it can be injected into controllers, other services, or any injectable. Under the hood, NestJS reads the reflect-metadata emitted by TypeScript to discover constructor parameter types and resolve the dependency graph.',
     },
     {
       id: 'ts-dec-q3',

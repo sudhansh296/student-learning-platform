@@ -1,4 +1,4 @@
-﻿import type { NextjsLesson } from '../nextjs-curriculum';
+import type { NextjsLesson } from '../nextjs-curriculum';
 
 export const nextjsServerComponentsLesson: NextjsLesson = {
   id: 'nextjs-server-components',

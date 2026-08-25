@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactContextAdvancedLesson: ReactLesson = {
   id: 'react-context-advanced',
@@ -17,11 +17,11 @@ export const reactContextAdvancedLesson: ReactLesson = {
     {
       type: 'analogy',
       title: 'useReducer is like a bank account',
-      content: 'With useState you directly set the balance. With useReducer you submit transactions (actions) — deposit, withdraw, transfer. The reducer function processes each transaction and returns the new balance. The UI never directly manipulates state — it dispatches actions.',
+      content: 'With useState you directly set the balance. With useReducer you submit transactions (actions) - deposit, withdraw, transfer. The reducer function processes each transaction and returns the new balance. The UI never directly manipulates state - it dispatches actions.',
     },
     {
       type: 'heading',
-      content: '1. useReducer — The Basics',
+      content: '1. useReducer - The Basics',
     },
     {
       type: 'example',
@@ -30,7 +30,7 @@ export const reactContextAdvancedLesson: ReactLesson = {
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
-// Reducer — pure function, takes state + action, returns new state
+// Reducer - pure function, takes state + action, returns new state
 function counterReducer(state, action) {
   switch (action.type) {
     case 'INCREMENT':
@@ -71,7 +71,7 @@ function Counter() {
     {
       type: 'example',
       title: 'Managing a shopping cart with useReducer',
-      content: 'Shopping cart logic is a perfect use case — multiple related state values (items, total, count) that update together based on actions. The reducer keeps all logic in one place, making it testable and easy to reason about.',
+      content: 'Shopping cart logic is a perfect use case - multiple related state values (items, total, count) that update together based on actions. The reducer keeps all logic in one place, making it testable and easy to reason about.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -137,7 +137,7 @@ function Cart() {
     {
       type: 'example',
       title: 'Global state with useReducer + Context',
-      content: 'The most powerful pattern: useReducer manages complex state, Context distributes it globally. This is essentially how Redux works — but built into React. Share both state and dispatch through Context so any component can read or update the global state.',
+      content: 'The most powerful pattern: useReducer manages complex state, Context distributes it globally. This is essentially how Redux works - but built into React. Share both state and dispatch through Context so any component can read or update the global state.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -197,7 +197,7 @@ function Header() {
     },
     {
       type: 'heading',
-      content: '4. useState vs useReducer — When to Use Each',
+      content: '4. useState vs useReducer - When to Use Each',
     },
     {
       type: 'table',
@@ -275,7 +275,7 @@ function App() {
 
   return (
     <div className="card">
-      <h2>✅ Todo — useReducer Pattern</h2>
+      <h2>✅ Todo - useReducer Pattern</h2>
       <div className="row">
         <input
           value={input}
@@ -339,7 +339,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'Return the initial state',
       ],
       correct: 2,
-      explanation: 'The default case in a reducer should always return the current state. If you return undefined or null for unknown actions, your state will be wiped out. A reducer is a pure function — for any input it produces a predictable output without side effects.',
+      explanation: 'The default case in a reducer should always return the current state. If you return undefined or null for unknown actions, your state will be wiped out. A reducer is a pure function - for any input it produces a predictable output without side effects.',
     },
   ],
   quiz: [
@@ -353,7 +353,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'You can use reducers without React',
       ],
       correct: 1,
-      explanation: 'A reducer is a pure function — it takes state + action and deterministically returns new state with no side effects. This makes all state transitions predictable, easy to trace, and independently testable (just call the function with inputs and check the output). No component setup needed to test state logic.',
+      explanation: 'A reducer is a pure function - it takes state + action and deterministically returns new state with no side effects. This makes all state transitions predictable, easy to trace, and independently testable (just call the function with inputs and check the output). No component setup needed to test state logic.',
     },
   ],
 };

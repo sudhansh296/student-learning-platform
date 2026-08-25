@@ -1,8 +1,8 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactContextLesson: ReactLesson = {
   id: 'react-context',
-  title: 'Context API — Global State',
+  title: 'Context API - Global State',
   slug: 'context',
   chapter: 'advanced',
   order: 11,
@@ -17,7 +17,7 @@ export const reactContextLesson: ReactLesson = {
     {
       type: 'analogy',
       title: 'Context is like a radio broadcast',
-      content: 'Prop drilling is like passing a note from person to person down a long chain. Context is like a radio broadcast — the Provider broadcasts the value and any component that tunes in (calls useContext) receives it directly, no matter how deep it is.',
+      content: 'Prop drilling is like passing a note from person to person down a long chain. Context is like a radio broadcast - the Provider broadcasts the value and any component that tunes in (calls useContext) receives it directly, no matter how deep it is.',
     },
     {
       type: 'heading',
@@ -25,7 +25,7 @@ export const reactContextLesson: ReactLesson = {
     },
     {
       type: 'example',
-      title: 'The three steps — createContext, Provider, useContext',
+      title: 'The three steps - createContext, Provider, useContext',
       content: 'Using context requires three things: create a context object with createContext, wrap your component tree in the Provider, then read the value in any child with useContext. The Provider value prop is what all consumers will receive.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
@@ -42,7 +42,7 @@ function App() {
   );
 }
 
-// Step 3: Read it anywhere with useContext — no props needed!
+// Step 3: Read it anywhere with useContext - no props needed!
 function Page() {
   return <Navbar />;  // Navbar doesnt even know about theme
 }
@@ -52,7 +52,7 @@ function Navbar() {
 }
 
 function Button() {
-  // Reads context directly — skips Page and Navbar entirely
+  // Reads context directly - skips Page and Navbar entirely
   const theme = useContext(ThemeContext);
   return (
     <button style={{ background: theme === 'dark' ? '#1a1a1a' : '#fff' }}>
@@ -68,7 +68,7 @@ function Button() {
     {
       type: 'example',
       title: 'Combine context with useState to make values changeable',
-      content: 'Static context values are rarely useful. The real power comes from combining context with useState — put the state and setter function into the context so any component can both read and update the global value.',
+      content: 'Static context values are rarely useful. The real power comes from combining context with useState - put the state and setter function into the context so any component can both read and update the global value.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -118,11 +118,11 @@ function App() {
     },
     {
       type: 'heading',
-      content: '3. Avoiding Prop Drilling — Practical Example',
+      content: '3. Avoiding Prop Drilling - Practical Example',
     },
     {
       type: 'example',
-      title: 'User context — sharing auth state across the app',
+      title: 'User context - sharing auth state across the app',
       content: 'A common use case is sharing the logged-in user across many components. Without context, you would pass the user prop down through every level. With context, components that need the user can read it directly.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
@@ -153,7 +153,7 @@ function UserProvider({ children }) {
   );
 }
 
-// Deep child — no user prop needed
+// Deep child - no user prop needed
 function ProfileBadge() {
   const { user, logout } = useUser();
   if (!user) return null;
@@ -189,17 +189,17 @@ function App() {
       type: 'list',
       title: 'Good use cases for Context',
       items: [
-        'Theme (dark/light mode) — needed by many components',
-        'Current logged-in user — needed across the whole app',
-        'Language/locale — affects text in many places',
-        'Shopping cart — referenced by header, cart page, checkout',
-        'Feature flags — toggle features globally',
+        'Theme (dark/light mode) - needed by many components',
+        'Current logged-in user - needed across the whole app',
+        'Language/locale - affects text in many places',
+        'Shopping cart - referenced by header, cart page, checkout',
+        'Feature flags - toggle features globally',
       ],
     },
     {
       type: 'warning',
       title: 'Context is not a replacement for all state',
-      content: 'Do not put everything in context. Local state (useState inside a component) is simpler and faster for data that only one component needs. Context re-renders all consumers when the value changes — so avoid putting rapidly-changing values like mouse position into context.',
+      content: 'Do not put everything in context. Local state (useState inside a component) is simpler and faster for data that only one component needs. Context re-renders all consumers when the value changes - so avoid putting rapidly-changing values like mouse position into context.',
     },
     {
       type: 'tryit',
@@ -307,11 +307,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       options: [
         'Making components render faster',
         'Replacing all useState calls',
-        'Prop drilling — passing props through many intermediate components',
+        'Prop drilling - passing props through many intermediate components',
         'Fetching data from APIs',
       ],
       correct: 2,
-      explanation: 'Context solves prop drilling — the pattern where you must pass props through many intermediate components just to get data to a deeply nested child. With Context, any component can access the value directly without intermediaries needing to pass it along.',
+      explanation: 'Context solves prop drilling - the pattern where you must pass props through many intermediate components just to get data to a deeply nested child. With Context, any component can access the value directly without intermediaries needing to pass it along.',
     },
   ],
 };

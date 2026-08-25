@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactRouterLesson: ReactLesson = {
   id: 'react-router',
@@ -12,7 +12,7 @@ export const reactRouterLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'React Router is the standard library for routing in React apps. Routing means showing different components based on the URL — so /home shows the home page, /about shows the about page, etc. React Router handles this entirely on the client side without full page reloads.',
+      content: 'React Router is the standard library for routing in React apps. Routing means showing different components based on the URL - so /home shows the home page, /about shows the about page, etc. React Router handles this entirely on the client side without full page reloads.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const reactRouterLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Installing React Router and creating basic routes',
-      content: 'Install react-router-dom, wrap your app in BrowserRouter, then use Routes and Route to define which component renders for each URL path. Link replaces anchor tags for navigation — it updates the URL without a full page reload.',
+      content: 'Install react-router-dom, wrap your app in BrowserRouter, then use Routes and Route to define which component renders for each URL path. Link replaces anchor tags for navigation - it updates the URL without a full page reload.',
       language: 'jsx',
       code: `// Install: npm install react-router-dom
 
@@ -52,8 +52,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/blog"  element={<Blog />}  />
         
-        {/* 404 — catches any unmatched route */}
-        <Route path="*" element={<h1>404 — Page Not Found</h1>} />
+        {/* 404 - catches any unmatched route */}
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Routes>
     </BrowserRouter>
   );
@@ -61,7 +61,7 @@ function App() {
     },
     {
       type: 'heading',
-      content: '2. NavLink — Active Link Styling',
+      content: '2. NavLink - Active Link Styling',
     },
     {
       type: 'example',
@@ -158,12 +158,12 @@ function App() {
     },
     {
       type: 'heading',
-      content: '4. useNavigate — Programmatic Navigation',
+      content: '4. useNavigate - Programmatic Navigation',
     },
     {
       type: 'example',
       title: 'Navigate programmatically after actions like form submit',
-      content: 'useNavigate returns a function you can call to navigate programmatically — useful after form submission, login, or any action that should redirect the user. Pass -1 to go back like a browser back button.',
+      content: 'useNavigate returns a function you can call to navigate programmatically - useful after form submission, login, or any action that should redirect the user. Pass -1 to go back like a browser back button.',
       language: 'jsx',
       code: `import { useNavigate } from 'react-router-dom';
 
@@ -194,7 +194,7 @@ function LoginForm() {
       {/* Go back without knowing the previous URL */}
       <button type="button" onClick={() => navigate(-1)}>Back</button>
 
-      {/* Navigate with replace — removes current page from history */}
+      {/* Navigate with replace - removes current page from history */}
       <button type="button" onClick={() => navigate('/home', { replace: true })}>
         Go Home (no back history)
       </button>
@@ -213,7 +213,7 @@ function LoginForm() {
       language: 'jsx',
       code: `import { Routes, Route, Outlet, Link } from 'react-router-dom';
 
-// Dashboard layout — shared for all dashboard/* pages
+// Dashboard layout - shared for all dashboard/* pages
 function DashboardLayout() {
   return (
     <div style={{ display: 'flex', gap: 20 }}>
@@ -283,7 +283,7 @@ function ShopPage({ onSelectProduct }) {
       <h2>🛍️ Shop</h2>
       {products.map(p => (
         <div key={p.id} className="product-card" onClick={() => onSelectProduct(p)}>
-          <strong>{p.name}</strong> — {p.price}
+          <strong>{p.name}</strong> - {p.price}
         </div>
       ))}
     </div>
@@ -321,7 +321,7 @@ function App() {
     if (route === 'home')  return <HomePage />;
     if (route === 'shop')  return <ShopPage onSelectProduct={p => setSelectedProduct(p)} />;
     if (route === 'about') return <AboutPage />;
-    return <div className="page"><h2>404 — Not Found</h2></div>;
+    return <div className="page"><h2>404 - Not Found</h2></div>;
   }
 
   return (
@@ -348,13 +348,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       question: 'What is the difference between Link and a regular anchor tag in React Router?',
       type: 'multiple-choice',
       options: [
-        'There is no difference — both work the same way',
+        'There is no difference - both work the same way',
         'Link prevents a full page reload and updates the URL client-side',
         'Link only works with absolute URLs',
         'Anchor tags are not allowed in React',
       ],
       correct: 1,
-      explanation: 'React Router\'s Link component intercepts the click, updates the browser URL, and renders the matching component — all without a full page reload. Regular anchor tags (<a href>) trigger a full page reload, losing all React state.',
+      explanation: 'React Router\'s Link component intercepts the click, updates the browser URL, and renders the matching component - all without a full page reload. Regular anchor tags (<a href>) trigger a full page reload, losing all React state.',
     },
     {
       id: 'router-2',
@@ -375,9 +375,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       id: 'rrouterq1',
       question: 'What does the path="*" Route catch?',
       options: [
-        'All routes — it must be listed first',
+        'All routes - it must be listed first',
         'Only routes with a wildcard in their URL',
-        'Any URL that did not match a previous route — used for 404 pages',
+        'Any URL that did not match a previous route - used for 404 pages',
         'Routes with query strings',
       ],
       correct: 2,

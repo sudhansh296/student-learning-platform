@@ -2,7 +2,7 @@ import type { ReactLesson } from '../react-curriculum';
 
 export const reactPropsLesson: ReactLesson = {
   id: 'react-props',
-  title: 'Props — Passing Data',
+  title: 'Props - Passing Data',
   slug: 'props',
   chapter: 'core',
   order: 4,
@@ -12,7 +12,7 @@ export const reactPropsLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Props are the primary way to pass data between React components. They flow one way — downward from parent to child. You can pass any JavaScript value as a prop: strings, numbers, booleans, objects, arrays, and even functions. Understanding props well is the foundation of building flexible, reusable components.',
+      content: 'Props are the primary way to pass data between React components. They flow one way - downward from parent to child. You can pass any JavaScript value as a prop: strings, numbers, booleans, objects, arrays, and even functions. Understanding props well is the foundation of building flexible, reusable components.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const reactPropsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Strings, numbers, booleans, and expressions as props',
-      content: 'Strings can be passed with quotes or curly braces. Numbers, booleans, and all other JavaScript values must use curly braces. A boolean prop set to "true" can be written just as the attribute name alone — writing "disabled" is shorthand for "disabled={true}". Omitting a boolean prop means it will be undefined (falsy).',
+      content: 'Strings can be passed with quotes or curly braces. Numbers, booleans, and all other JavaScript values must use curly braces. A boolean prop set to "true" can be written just as the attribute name alone - writing "disabled" is shorthand for "disabled={true}". Omitting a boolean prop means it will be undefined (falsy).',
       language: 'jsx',
       code: `function ProductCard({ name, price, inStock, rating }) {
   return (
@@ -67,7 +67,7 @@ function App() {
     {
       type: 'example',
       title: 'Objects and arrays as prop values',
-      content: 'You can pass objects and arrays as props — they just need curly braces like any other JS value. A common pattern is to define data as an array of objects and pass it to a component. You can also spread an object directly onto a component with the spread operator, which passes each key as a separate prop.',
+      content: 'You can pass objects and arrays as props - they just need curly braces like any other JS value. A common pattern is to define data as an array of objects and pass it to a component. You can also spread an object directly onto a component with the spread operator, which passes each key as a separate prop.',
       language: 'jsx',
       code: `function UserProfile({ user }) {
   return (
@@ -90,11 +90,11 @@ function App() {
   // Passing as a prop directly
   const result1 = <UserProfile user={alice} />;
 
-  // Spreading — each key becomes its own prop
+  // Spreading - each key becomes its own prop
   // This is equivalent to: name="Alice" role="Developer" skills={[...]}
   // But UserProfile expects a "user" object, so we'd need to match the interface
   
-  // Passing array of objects — rendered with map
+  // Passing array of objects - rendered with map
   const users = [
     { id: 1, name: 'Alice', role: 'Dev', skills: ['React'] },
     { id: 2, name: 'Bob',   role: 'Design', skills: ['Figma', 'CSS'] },
@@ -115,8 +115,8 @@ function App() {
     },
     {
       type: 'example',
-      title: 'Callbacks — passing functions from parent to child',
-      content: 'Functions are first-class values in JavaScript, so you can pass them as props. This is how a child component communicates back to its parent — the parent passes a handler function, the child calls it when something happens. This pattern is called "lifting state up" and keeps data flowing in one direction.',
+      title: 'Callbacks - passing functions from parent to child',
+      content: 'Functions are first-class values in JavaScript, so you can pass them as props. This is how a child component communicates back to its parent - the parent passes a handler function, the child calls it when something happens. This pattern is called "lifting state up" and keeps data flowing in one direction.',
       language: 'jsx',
       code: `// Parent passes a function down; child calls it
 function Button({ label, onClick, variant = 'primary' }) {
@@ -165,11 +165,11 @@ function App() {
     {
       type: 'example',
       title: 'Passing props through multiple component layers',
-      content: 'Prop drilling happens when you need to pass data through several intermediate components that do not use the data themselves — they just pass it down to a deeply nested child. Drilling 2-3 levels is normal. Drilling 5+ levels signals that you might need a context or a state management solution. For now, understanding the pattern is what matters.',
+      content: 'Prop drilling happens when you need to pass data through several intermediate components that do not use the data themselves - they just pass it down to a deeply nested child. Drilling 2-3 levels is normal. Drilling 5+ levels signals that you might need a context or a state management solution. For now, understanding the pattern is what matters.',
       language: 'jsx',
       code: `// Data starts at App (top level)
 // It needs to reach DeepButton (3 levels down)
-// Middle components just pass it along — "drilling"
+// Middle components just pass it along - "drilling"
 
 function App() {
   const theme = 'dark';
@@ -207,19 +207,19 @@ function ThemeButton({ theme }) {
     },
     {
       type: 'example',
-      title: 'Never mutate props — always use state for changes',
-      content: 'Props are immutable — a component must never modify the props it receives. This is a core React rule. If a component needs to change data, it should use its own state (useState). Think of props as read-only input, and state as the components own mutable memory. Breaking this rule causes hard-to-debug bugs.',
+      title: 'Never mutate props - always use state for changes',
+      content: 'Props are immutable - a component must never modify the props it receives. This is a core React rule. If a component needs to change data, it should use its own state (useState). Think of props as read-only input, and state as the components own mutable memory. Breaking this rule causes hard-to-debug bugs.',
       language: 'jsx',
-      code: `// ❌ WRONG — never mutate props
+      code: `// ❌ WRONG - never mutate props
 function BadCounter({ count }) {
   function increment() {
-    count++; // This mutates the prop — do NOT do this!
+    count++; // This mutates the prop - do NOT do this!
     // React will not re-render because it doesnt know about this change
   }
   return <button onClick={increment}>{count}</button>;
 }
 
-// ✅ CORRECT — use state for values that change
+// ✅ CORRECT - use state for values that change
 function GoodCounter({ initialCount }) {
   const [count, setCount] = React.useState(initialCount);
 
@@ -356,7 +356,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'Setting default values for props',
       ],
       correct: 1,
-      explanation: 'Prop drilling is when you pass data through several component layers just to get it to a deeply nested child. The intermediate components do not use the data — they just forward it. Deep drilling (5+ levels) is a sign to reach for React Context.',
+      explanation: 'Prop drilling is when you pass data through several component layers just to get it to a deeply nested child. The intermediate components do not use the data - they just forward it. Deep drilling (5+ levels) is a sign to reach for React Context.',
     },
   ],
 };

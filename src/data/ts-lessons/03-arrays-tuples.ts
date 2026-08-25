@@ -21,9 +21,9 @@ export const tsArraysTuplesLesson: TsLesson = {
     {
       type: 'example',
       title: 'Annotating arrays with element types',
-      content: 'TypeScript arrays are annotated by adding [] after the element type. A number[] can only contain numbers — trying to push a string will be a compile error. TypeScript also infers array types from their initial values, so you rarely need to annotate simple arrays explicitly.',
+      content: 'TypeScript arrays are annotated by adding [] after the element type. A number[] can only contain numbers - trying to push a string will be a compile error. TypeScript also infers array types from their initial values, so you rarely need to annotate simple arrays explicitly.',
       language: 'typescript',
-      code: `// Array annotations — two equivalent syntaxes
+      code: `// Array annotations - two equivalent syntaxes
 let numbers: number[] = [1, 2, 3, 4, 5];
 let names: string[] = ["Alice", "Bob", "Charlie"];
 let flags: boolean[] = [true, false, true];
@@ -36,11 +36,11 @@ const tags = ["js", "ts", "react"]; // inferred as string[]
 numbers.push(6);         // OK
 // numbers.push("hello"); // Error: Argument of type 'string' is not assignable to type 'number'
 
-// Map, filter, reduce — TypeScript knows the types
+// Map, filter, reduce - TypeScript knows the types
 const doubled = numbers.map(n => n * 2);  // number[]
 const long = names.filter(s => s.length > 3); // string[]
 
-// Mixed types — union array
+// Mixed types - union array
 const mixed: (string | number)[] = [1, "two", 3, "four"];`,
     },
     {
@@ -49,14 +49,14 @@ const mixed: (string | number)[] = [1, "two", 3, "four"];`,
     },
     {
       type: 'example',
-      title: 'Array<T> — the generic form of array types',
+      title: 'Array<T> - the generic form of array types',
       content: 'TypeScript offers two syntaxes for array types: T[] and Array<T>. Both are identical. Array<T> reads as "an array of T". This syntax becomes useful when the element type itself is complex, like an array of objects or an array of functions.',
       language: 'typescript',
       code: `// T[] and Array<T> are exactly the same
 let nums1: number[] = [1, 2, 3];
 let nums2: Array<number> = [1, 2, 3]; // identical
 
-// Array of objects — both syntaxes work
+// Array of objects - both syntaxes work
 interface User {
   id: number;
   name: string;
@@ -72,7 +72,7 @@ callbacks.push(() => console.log("clicked"));
 let matrix: number[][] = [[1, 2], [3, 4], [5, 6]];
 let grid: Array<Array<string>> = [["a", "b"], ["c", "d"]];
 
-// Empty array — TypeScript needs help here
+// Empty array - TypeScript needs help here
 let items: string[] = []; // Annotate when starting empty
 items.push("first");`,
     },
@@ -83,7 +83,7 @@ items.push("first");`,
     {
       type: 'example',
       title: 'Preventing array mutation with readonly',
-      content: 'A readonly array cannot be modified after creation — no push, pop, or splice. This is useful for constants, configuration data, and when you want to guarantee that a function doesnt mutate an array it receives. Use ReadonlyArray<T> or readonly T[] syntax.',
+      content: 'A readonly array cannot be modified after creation - no push, pop, or splice. This is useful for constants, configuration data, and when you want to guarantee that a function doesnt mutate an array it receives. Use ReadonlyArray<T> or readonly T[] syntax.',
       language: 'typescript',
       code: `// readonly arrays cannot be mutated
 const COLORS: readonly string[] = ["red", "green", "blue"];
@@ -93,7 +93,7 @@ const COLORS: readonly string[] = ["red", "green", "blue"];
 // ReadonlyArray<T> is equivalent
 const SIZES: ReadonlyArray<number> = [8, 10, 12, 14, 16];
 
-// Useful for function parameters — promise you wont mutate it
+// Useful for function parameters - promise you wont mutate it
 function sum(nums: readonly number[]): number {
   return nums.reduce((acc, n) => acc + n, 0);
 }
@@ -111,15 +111,15 @@ type Direction = typeof DIRECTIONS[number]; // "north" | "south" | "east" | "wes
     },
     {
       type: 'example',
-      title: 'Tuples — fixed-length arrays with typed positions',
+      title: 'Tuples - fixed-length arrays with typed positions',
       content: 'A tuple is an array with a fixed number of elements where each position has a specific type. Unlike a regular array where all elements share the same type, each tuple position can have a different type. Tuples are perfect for representing pairs, triples, or any structured list where position matters.',
       language: 'typescript',
-      code: `// Basic tuple — [string, number]
+      code: `// Basic tuple - [string, number]
 let person: [string, number] = ["Alice", 25];
 // person = [25, "Alice"]; // Error: wrong order!
 // person = ["Alice", 25, true]; // Error: too many elements
 
-// Access by index — TypeScript knows each position's type
+// Access by index - TypeScript knows each position's type
 const name: string = person[0]; // TypeScript knows index 0 is string
 const age: number = person[1];  // TypeScript knows index 1 is number
 
@@ -224,7 +224,7 @@ document.getElementById('output').innerHTML =
         'Passing the array to functions',
       ],
       correct: 2,
-      explanation: 'A readonly array prevents mutation — you cannot call push, pop, splice, or assign to indices. You can still read elements and pass it to functions. This is useful for constants and for expressing that a function promises not to modify an array it receives.',
+      explanation: 'A readonly array prevents mutation - you cannot call push, pop, splice, or assign to indices. You can still read elements and pass it to functions. This is useful for constants and for expressing that a function promises not to modify an array it receives.',
     },
   ],
 };

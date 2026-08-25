@@ -12,12 +12,12 @@ export const reactIntroLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'React is a JavaScript library for building user interfaces. Created by Meta (Facebook) in 2013, it is now used by millions of developers to build everything from simple websites to complex apps like Facebook, Instagram, Airbnb, and Netflix. React does not replace HTML, CSS, or JavaScript — it organizes them into reusable components.',
+      content: 'React is a JavaScript library for building user interfaces. Created by Meta (Facebook) in 2013, it is now used by millions of developers to build everything from simple websites to complex apps like Facebook, Instagram, Airbnb, and Netflix. React does not replace HTML, CSS, or JavaScript - it organizes them into reusable components.',
     },
     {
       type: 'analogy',
       title: 'React is like LEGO bricks',
-      content: 'In plain HTML you write one big page. In React you build small, reusable pieces called components — like a Button, a Card, a Navbar. Then you assemble these pieces into pages, just like snapping LEGO bricks together. Change a brick once and every page that uses it updates automatically.',
+      content: 'In plain HTML you write one big page. In React you build small, reusable pieces called components - like a Button, a Card, a Navbar. Then you assemble these pieces into pages, just like snapping LEGO bricks together. Change a brick once and every page that uses it updates automatically.',
     },
     {
       type: 'heading',
@@ -26,24 +26,24 @@ export const reactIntroLesson: ReactLesson = {
     {
       type: 'list',
       items: [
-        'Components — reusable UI pieces you write once and use everywhere',
-        'Declarative — describe what the UI should look like, React updates the DOM efficiently',
-        'Virtual DOM — React compares changes and only updates what actually changed (fast!)',
-        'Huge ecosystem — thousands of libraries built specifically for React',
-        'React Native — use the same skills to build iOS and Android mobile apps',
+        'Components - reusable UI pieces you write once and use everywhere',
+        'Declarative - describe what the UI should look like, React updates the DOM efficiently',
+        'Virtual DOM - React compares changes and only updates what actually changed (fast!)',
+        'Huge ecosystem - thousands of libraries built specifically for React',
+        'React Native - use the same skills to build iOS and Android mobile apps',
         'Most in-demand frontend skill for jobs in 2026',
       ],
     },
     {
       type: 'heading',
-      content: 'How React Works — The Big Picture',
+      content: 'How React Works - The Big Picture',
     },
     {
       type: 'example',
-      title: 'Plain JS vs React — same result, different approach',
-      content: 'Plain JavaScript is imperative — you tell the browser HOW to change things step by step. React is declarative — you describe WHAT the UI should look like at any point in time, and React figures out the steps. This makes complex UIs much easier to reason about.',
+      title: 'Plain JS vs React - same result, different approach',
+      content: 'Plain JavaScript is imperative - you tell the browser HOW to change things step by step. React is declarative - you describe WHAT the UI should look like at any point in time, and React figures out the steps. This makes complex UIs much easier to reason about.',
       language: 'javascript',
-      code: `// PLAIN JAVASCRIPT — imperative (how to do it)
+      code: `// PLAIN JAVASCRIPT - imperative (how to do it)
 const btn = document.getElementById('btn');
 let count = 0;
 btn.addEventListener('click', () => {
@@ -51,7 +51,7 @@ btn.addEventListener('click', () => {
   document.getElementById('display').textContent = count;
 });
 
-// REACT — declarative (what it should look like)
+// REACT - declarative (what it should look like)
 // You just say: "show this count, and when clicked, increment it"
 // React handles all the DOM updates automatically
 function Counter() {
@@ -71,9 +71,9 @@ function Counter() {
     {
       type: 'example',
       title: 'A simple function component',
-      content: 'A React component is just a JavaScript function that returns JSX — which looks like HTML but is actually JavaScript. The function name must start with a capital letter. You render it like an HTML tag. Props (properties) let you pass data into a component, making it reusable with different content.',
+      content: 'A React component is just a JavaScript function that returns JSX - which looks like HTML but is actually JavaScript. The function name must start with a capital letter. You render it like an HTML tag. Props (properties) let you pass data into a component, making it reusable with different content.',
       language: 'jsx',
-      code: `// A React component — just a function that returns JSX
+      code: `// A React component - just a function that returns JSX
 function Welcome({ name }) {
   return (
     <div>
@@ -83,7 +83,7 @@ function Welcome({ name }) {
   );
 }
 
-// Render with different data — same component, different output
+// Render with different data - same component, different output
 <Welcome name="Alice" />
 <Welcome name="Bob" />
 <Welcome name="Carol" />
@@ -142,7 +142,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
     {
       type: 'note',
       title: 'JSX is not HTML',
-      content: 'JSX looks like HTML but it compiles to JavaScript. The browser never sees JSX — Babel transforms it into React.createElement() calls. This is why you use className instead of class, htmlFor instead of for, and why all tags must be closed.',
+      content: 'JSX looks like HTML but it compiles to JavaScript. The browser never sees JSX - Babel transforms it into React.createElement() calls. This is why you use className instead of class, htmlFor instead of for, and why all tags must be closed.',
     },
   ],
   exercises: [
@@ -152,7 +152,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       type: 'multiple-choice',
       options: ['An HTML file', 'A JavaScript function that returns JSX', 'A CSS class', 'A database model'],
       correct: 1,
-      explanation: 'A React component is a JavaScript function (or class) that returns JSX — the UI description. Function components are the modern standard.',
+      explanation: 'A React component is a JavaScript function (or class) that returns JSX - the UI description. Function components are the modern standard.',
     },
     {
       id: 'ri-2',

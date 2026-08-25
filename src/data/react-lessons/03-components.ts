@@ -2,13 +2,13 @@ import type { ReactLesson } from '../react-curriculum';
 
 export const reactComponentsLesson: ReactLesson = {
   id: 'react-components',
-  title: 'Components — Building Blocks',
+  title: 'Components - Building Blocks',
   slug: 'components',
   chapter: 'core',
   order: 3,
   difficulty: 'beginner',
   readingTime: 12,
-  description: 'Master React function components — how to create them, pass props, use the children prop, compose multiple components together, and follow PascalCase naming conventions.',
+  description: 'Master React function components - how to create them, pass props, use the children prop, compose multiple components together, and follow PascalCase naming conventions.',
   sections: [
     {
       type: 'text',
@@ -21,7 +21,7 @@ export const reactComponentsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Defining and using a function component',
-      content: 'A function component is a plain JavaScript function whose name starts with a capital letter and returns JSX. The capital letter is mandatory — React uses it to tell apart custom components (capitalized) from plain HTML tags (lowercase). You use the component just like an HTML tag in your JSX.',
+      content: 'A function component is a plain JavaScript function whose name starts with a capital letter and returns JSX. The capital letter is mandatory - React uses it to tell apart custom components (capitalized) from plain HTML tags (lowercase). You use the component just like an HTML tag in your JSX.',
       language: 'jsx',
       code: `// A minimal function component
 function Greeting() {
@@ -50,14 +50,14 @@ function App() {
     },
     {
       type: 'heading',
-      content: '2. Props — Passing Data to Components',
+      content: '2. Props - Passing Data to Components',
     },
     {
       type: 'example',
       title: 'Receiving props as a parameter object',
-      content: 'Props (properties) are how you pass data into a component from its parent. The component receives all passed attributes as a single "props" object. You access individual values like props.name, props.age, etc. Props make a component reusable — the same component can show different content depending on what props you give it.',
+      content: 'Props (properties) are how you pass data into a component from its parent. The component receives all passed attributes as a single "props" object. You access individual values like props.name, props.age, etc. Props make a component reusable - the same component can show different content depending on what props you give it.',
       language: 'jsx',
-      code: `// Props come in as one object — access with props.xxx
+      code: `// Props come in as one object - access with props.xxx
 function UserCard(props) {
   return (
     <div>
@@ -90,14 +90,14 @@ function App() {
     {
       type: 'example',
       title: 'Destructuring props for cleaner code',
-      content: 'Instead of writing props.name and props.age everywhere, you can destructure the props object directly in the function parameter. This is the most common pattern in real React code — it is shorter, cleaner, and makes it obvious which props a component needs.',
+      content: 'Instead of writing props.name and props.age everywhere, you can destructure the props object directly in the function parameter. This is the most common pattern in real React code - it is shorter, cleaner, and makes it obvious which props a component needs.',
       language: 'jsx',
-      code: `// Without destructuring — verbose
+      code: `// Without destructuring - verbose
 function Badge(props) {
   return <span className={props.type}>{props.label}</span>;
 }
 
-// With destructuring — clean and explicit
+// With destructuring - clean and explicit
 function Badge({ type, label }) {
   return <span className={type}>{label}</span>;
 }
@@ -132,7 +132,7 @@ function App() {
     {
       type: 'example',
       title: 'Wrapping content with children',
-      content: 'When you put content between opening and closing component tags, React automatically passes that content as the "children" prop. This is how you build wrapper or container components — like a Card, Modal, or Panel — that do not need to know what they will contain ahead of time.',
+      content: 'When you put content between opening and closing component tags, React automatically passes that content as the "children" prop. This is how you build wrapper or container components - like a Card, Modal, or Panel - that do not need to know what they will contain ahead of time.',
       language: 'jsx',
       code: `// Card component that wraps any content
 function Card({ title, children }) {
@@ -144,7 +144,7 @@ function Card({ title, children }) {
   );
 }
 
-// Section wrapper — just adds a title and padding
+// Section wrapper - just adds a title and padding
 function Section({ title, children }) {
   return (
     <section>
@@ -156,7 +156,7 @@ function Section({ title, children }) {
   );
 }
 
-// Using them — pass anything as children
+// Using them - pass anything as children
 function App() {
   return (
     <Section title="Latest Posts">
@@ -166,7 +166,7 @@ function App() {
       </Card>
 
       <Card>
-        {/* No title prop — the {title && ...} skips rendering it */}
+        {/* No title prop - the {title && ...} skips rendering it */}
         <img src="/banner.jpg" alt="Banner" />
         <p>An image card with no title.</p>
       </Card>
@@ -215,7 +215,7 @@ function Hero() {
   );
 }
 
-// The full page — assembled from parts
+// The full page - assembled from parts
 function App() {
   return (
     <div>

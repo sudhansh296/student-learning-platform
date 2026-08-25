@@ -8,11 +8,11 @@ export const expressFileUploadsLesson: ExpressLesson = {
   difficulty: 'intermediate',
   readingTime: 13,
   title: 'File Uploads with Multer',
-  description: 'Handle single and multiple file uploads in Express using Multer — with validation, storage configuration, and error handling.',
+  description: 'Handle single and multiple file uploads in Express using Multer - with validation, storage configuration, and error handling.',
   sections: [
     {
       type: 'text',
-      content: 'File uploads require a special content type called multipart/form-data. The built-in express.json() and express.urlencoded() middleware only parse application/json and application/x-www-form-urlencoded bodies — they cannot handle binary file data. You need a dedicated package like Multer to parse multipart requests.',
+      content: 'File uploads require a special content type called multipart/form-data. The built-in express.json() and express.urlencoded() middleware only parse application/json and application/x-www-form-urlencoded bodies - they cannot handle binary file data. You need a dedicated package like Multer to parse multipart requests.',
     },
     {
       type: 'heading',
@@ -32,7 +32,7 @@ export const expressFileUploadsLesson: ExpressLesson = {
     {
       type: 'analogy',
       title: 'RAM vs Hard Drive',
-      content: 'Memory storage is like RAM — fast, immediately accessible, but cleared when the process ends. Disk storage is like a hard drive — files persist permanently but require a file path and write operation. Use memory storage for small files you process immediately (resize, upload to S3). Use disk storage for files you keep on the server long-term.',
+      content: 'Memory storage is like RAM - fast, immediately accessible, but cleared when the process ends. Disk storage is like a hard drive - files persist permanently but require a file path and write operation. Use memory storage for small files you process immediately (resize, upload to S3). Use disk storage for files you keep on the server long-term.',
     },
     {
       type: 'table',
@@ -52,7 +52,7 @@ export const expressFileUploadsLesson: ExpressLesson = {
     },
     {
       type: 'text',
-      content: 'Use upload.single(fieldname) to accept one file. After the middleware runs, req.file contains all information about the uploaded file — fieldname, originalname, mimetype, size, and either buffer (memory) or path (disk).',
+      content: 'Use upload.single(fieldname) to accept one file. After the middleware runs, req.file contains all information about the uploaded file - fieldname, originalname, mimetype, size, and either buffer (memory) or path (disk).',
     },
     {
       type: 'table',
@@ -90,7 +90,7 @@ export const expressFileUploadsLesson: ExpressLesson = {
     },
     {
       type: 'text',
-      content: 'Multer itself does not block files by type or size — you must add that logic yourself. Use the fileFilter option to check mimetype before accepting the file. Use the limits option to set a maximum file size in bytes.',
+      content: 'Multer itself does not block files by type or size - you must add that logic yourself. Use the fileFilter option to check mimetype before accepting the file. Use the limits option to set a maximum file size in bytes.',
     },
     {
       type: 'heading',
@@ -319,7 +319,7 @@ function selectFile() {
   var reqFile = '// req.file object in your Express route\\nreq.file = {\\n  fieldname: \\"upload\\",\\n  originalname: \\"'+file.name+'\\",\\n  mimetype: \\"'+file.mime+'\\",\\n  size: '+file.size+',\\n  buffer: &lt;Buffer ... &gt; // memoryStorage\\n};';
 
   if (!typeOk || !sizeOk) {
-    reqFile = '// Upload rejected — file did not pass validation\\n// Route handler would return 400 Bad Request';
+    reqFile = '// Upload rejected - file did not pass validation\\n// Route handler would return 400 Bad Request';
   }
 
   document.getElementById('reqFile').textContent = reqFile;

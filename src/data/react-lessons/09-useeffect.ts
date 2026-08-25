@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactUseEffectLesson: ReactLesson = {
   id: 'react-useeffect',
@@ -8,11 +8,11 @@ export const reactUseEffectLesson: ReactLesson = {
   order: 9,
   difficulty: 'intermediate',
   readingTime: 13,
-  description: 'Master the useEffect hook — run side effects after render, control when effects re-run with the dependency array, clean up subscriptions, fetch data on mount, and avoid common pitfalls like infinite loops.',
+  description: 'Master the useEffect hook - run side effects after render, control when effects re-run with the dependency array, clean up subscriptions, fetch data on mount, and avoid common pitfalls like infinite loops.',
   sections: [
     {
       type: 'text',
-      content: 'useEffect lets you perform side effects from a function component. A "side effect" is anything that interacts with the outside world — fetching data, updating the document title, setting up timers, subscribing to events, or directly manipulating the DOM. useEffect runs after every render by default, but the dependency array gives you precise control over when it runs.',
+      content: 'useEffect lets you perform side effects from a function component. A "side effect" is anything that interacts with the outside world - fetching data, updating the document title, setting up timers, subscribing to events, or directly manipulating the DOM. useEffect runs after every render by default, but the dependency array gives you precise control over when it runs.',
     },
     {
       type: 'heading',
@@ -29,18 +29,18 @@ function EffectDemo() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState('Alice');
 
-  // 1. No dependency array — runs after EVERY render
+  // 1. No dependency array - runs after EVERY render
   useEffect(() => {
     console.log('Rendered! count =', count);
   });
 
-  // 2. Empty array — runs ONCE after mount (like componentDidMount)
+  // 2. Empty array - runs ONCE after mount (like componentDidMount)
   useEffect(() => {
-    console.log('Component mounted — runs once');
+    console.log('Component mounted - runs once');
     document.title = 'My App';
   }, []);
 
-  // 3. With dependencies — runs when count changes
+  // 3. With dependencies - runs when count changes
   useEffect(() => {
     console.log('Count changed to', count);
     document.title = 'Count: ' + count;
@@ -80,7 +80,7 @@ function EffectDemo() {
       setSeconds(prev => prev + 1);
     }, 1000);
 
-    // ✅ Return cleanup function — clears the timer
+    // ✅ Return cleanup function - clears the timer
     // Called when isRunning changes or component unmounts
     return () => {
       clearInterval(intervalId);
@@ -110,7 +110,7 @@ function WindowWidth() {
 
     // Cleanup: remove the listener to prevent memory leaks
     return () => window.removeEventListener('resize', handleResize);
-  }, []); // mount only — listener stays until unmount
+  }, []); // mount only - listener stays until unmount
 
   return <p>Window width: {width}px</p>;
 }`,
@@ -122,7 +122,7 @@ function WindowWidth() {
     {
       type: 'example',
       title: 'Loading data from an API when the component mounts',
-      content: 'Fetching data on mount is the most common useEffect use case. Put your fetch call inside useEffect with an empty dependency array so it runs once. Manage loading, data, and error as separate state variables. Note that the effect function itself cannot be async — but you can define and call an async function inside it.',
+      content: 'Fetching data on mount is the most common useEffect use case. Put your fetch call inside useEffect with an empty dependency array so it runs once. Manage loading, data, and error as separate state variables. Note that the effect function itself cannot be async - but you can define and call an async function inside it.',
       language: 'jsx',
       code: `function UsersList() {
   const [users, setUsers] = React.useState([]);
@@ -155,7 +155,7 @@ function WindowWidth() {
   return (
     <ul>
       {users.map(user => (
-        <li key={user.id}>{user.name} — {user.email}</li>
+        <li key={user.id}>{user.name} - {user.email}</li>
       ))}
     </ul>
   );
@@ -198,7 +198,7 @@ function WindowWidth() {
 
     // Cleanup: cancel the timeout if query changes again before 400ms
     return () => clearTimeout(timeoutId);
-  }, [query]); // dependency — re-run when query changes
+  }, [query]); // dependency - re-run when query changes
 
   return (
     <div>
@@ -211,14 +211,14 @@ function WindowWidth() {
     },
     {
       type: 'heading',
-      content: '5. Common Pitfall — Infinite Loop',
+      content: '5. Common Pitfall - Infinite Loop',
     },
     {
       type: 'example',
       title: 'How to avoid accidentally creating an infinite render loop',
       content: 'An infinite loop happens when you update state inside useEffect and include that state in the dependency array. The state update triggers a re-render, which runs the effect again, which updates state, which triggers another re-render... forever. The fix is to either remove the state from dependencies (if safe) or restructure the logic to break the cycle.',
       language: 'jsx',
-      code: `// ❌ INFINITE LOOP — count is in deps, but effect updates count!
+      code: `// ❌ INFINITE LOOP - count is in deps, but effect updates count!
 function BadComponent() {
   const [count, setCount] = React.useState(0);
 
@@ -227,7 +227,7 @@ function BadComponent() {
   }, [count]); // ← count here causes the infinite loop
 }
 
-// ✅ FIX 1: Use functional updater — no need for count in deps
+// ✅ FIX 1: Use functional updater - no need for count in deps
 function FixedComponent1() {
   const [count, setCount] = React.useState(0);
 
@@ -276,7 +276,7 @@ button { padding: 8px 14px; background: #2563eb; color: white; border: none; bor
 
   return (
     <div className="card">
-      <h3>useEffect — Live Clock</h3>
+      <h3>useEffect - Live Clock</h3>
       <div className="clock">{timeStr}</div>
       <div className="date">{dateStr}</div>
     </div>
@@ -296,7 +296,7 @@ function WindowSizeTracker() {
 
   return (
     <div className="card">
-      <h3>useEffect — Window Resize</h3>
+      <h3>useEffect - Window Resize</h3>
       <div className="width-val">{width}px</div>
       <div style={{ background: '#f3f4f6', borderRadius: 999, overflow: 'hidden', marginBottom: 8 }}>
         <div className="width-bar" style={{ width: pct + '%' }} />

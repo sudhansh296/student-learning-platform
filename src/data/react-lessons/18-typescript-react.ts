@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactTypeScriptLesson: ReactLesson = {
   id: 'react-typescript',
@@ -65,7 +65,7 @@ function Button({ label, onClick, variant = 'primary', disabled = false }: Butto
     {
       type: 'example',
       title: 'useState with generics for complex types',
-      content: 'TypeScript infers the type from the initial value for simple cases. For complex types — especially null/undefined initial values or union types — explicitly provide the generic type parameter.',
+      content: 'TypeScript infers the type from the initial value for simple cases. For complex types - especially null/undefined initial values or union types - explicitly provide the generic type parameter.',
       language: 'tsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -82,13 +82,13 @@ function UserProfile() {
   // TypeScript infers: useState<string>('')
   const [name, setName] = useState('');
 
-  // Explicit generic needed — initial value is null but will become User
+  // Explicit generic needed - initial value is null but will become User
   const [user, setUser] = useState<User | null>(null);
 
-  // Array of users — explicit generic for clarity
+  // Array of users - explicit generic for clarity
   const [users, setUsers] = useState<User[]>([]);
 
-  // Union type — needs explicit generic
+  // Union type - needs explicit generic
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   function loadUser() {
@@ -122,33 +122,33 @@ function TypedForm() {
   const [age, setAge]     = useState('');
   const [agreed, setAgreed] = useState(false);
 
-  // React.ChangeEvent<HTMLInputElement> — for text inputs
+  // React.ChangeEvent<HTMLInputElement> - for text inputs
   function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
     setName(e.target.value);
   }
 
-  // React.ChangeEvent<HTMLInputElement> — for number inputs too
+  // React.ChangeEvent<HTMLInputElement> - for number inputs too
   function handleAgeChange(e: React.ChangeEvent<HTMLInputElement>) {
     setAge(e.target.value);
   }
 
-  // React.ChangeEvent<HTMLInputElement> — for checkboxes use .checked
+  // React.ChangeEvent<HTMLInputElement> - for checkboxes use .checked
   function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
     setAgreed(e.target.checked);
   }
 
-  // React.ChangeEvent<HTMLSelectElement> — for select dropdowns
+  // React.ChangeEvent<HTMLSelectElement> - for select dropdowns
   function handleSelect(e: React.ChangeEvent<HTMLSelectElement>) {
     console.log(e.target.value);
   }
 
-  // React.MouseEvent<HTMLButtonElement> — for button clicks
+  // React.MouseEvent<HTMLButtonElement> - for button clicks
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     console.log('Clicked at:', e.clientX, e.clientY);
   }
 
-  // React.FormEvent<HTMLFormElement> — for form submit
+  // React.FormEvent<HTMLFormElement> - for form submit
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     console.log({ name, age, agreed });
@@ -171,7 +171,7 @@ function TypedForm() {
     {
       type: 'example',
       title: 'React.ReactNode for components that accept children',
-      content: 'When a component wraps other components (layout, card, modal), it receives children. Use React.ReactNode as the type — it accepts JSX, strings, numbers, null, and arrays.',
+      content: 'When a component wraps other components (layout, card, modal), it receives children. Use React.ReactNode as the type - it accepts JSX, strings, numbers, null, and arrays.',
       language: 'tsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
@@ -200,7 +200,7 @@ function Card({ title, children, footer }: CardProps) {
   );
 }
 
-// Usage — children can be anything
+// Usage - children can be anything
 <Card title="Profile">
   <p>Name: Alice</p>
   <p>Email: alice@example.com</p>
@@ -210,7 +210,7 @@ function Card({ title, children, footer }: CardProps) {
   <p>42 posts</p>
 </Card>
 
-// PropsWithChildren helper — alternative approach
+// PropsWithChildren helper - alternative approach
 // (React hooks available as React.useState, React.useEffect, etc.)
 
 interface PanelProps {
@@ -227,7 +227,7 @@ function Panel({ color, children }: PropsWithChildren<PanelProps>) {
     },
     {
       type: 'tryit',
-      title: 'Try It: Typed React Component (no TS in browser — see patterns)',
+      title: 'Try It: Typed React Component (no TS in browser - see patterns)',
       css: `body { font-family: system-ui, sans-serif; padding: 20px; background: #f8fafc; }
 .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
 h2 { margin: 0 0 14px; font-size: 16px; color: #1e293b; }
@@ -333,7 +333,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'children: Component[]',
       ],
       correct: 2,
-      explanation: 'React.ReactNode is the most permissive children type — it accepts strings, numbers, JSX elements, arrays, null, and undefined. JSX.Element is more restrictive (only JSX). string only accepts string literals. ReactNode is the correct choice for layout/wrapper components.',
+      explanation: 'React.ReactNode is the most permissive children type - it accepts strings, numbers, JSX elements, arrays, null, and undefined. JSX.Element is more restrictive (only JSX). string only accepts string literals. ReactNode is the correct choice for layout/wrapper components.',
     },
   ],
   quiz: [

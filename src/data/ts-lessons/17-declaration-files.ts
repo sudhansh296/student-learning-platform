@@ -8,11 +8,11 @@ export const tsDeclarationFilesLesson: TsLesson = {
   order: 17,
   difficulty: 'advanced',
   readingTime: 13,
-  description: 'Understand TypeScript declaration files — how they provide type information for JavaScript libraries and how to write your own.',
+  description: 'Understand TypeScript declaration files - how they provide type information for JavaScript libraries and how to write your own.',
   sections: [
     {
       type: 'text',
-      content: 'Declaration files (.d.ts) are TypeScript\'s way of describing the types of existing JavaScript code. They contain no runtime code — only type signatures. When the TypeScript compiler encounters a JavaScript module, it looks for a matching .d.ts file to understand what the module exports and how its API is shaped.',
+      content: 'Declaration files (.d.ts) are TypeScript\'s way of describing the types of existing JavaScript code. They contain no runtime code - only type signatures. When the TypeScript compiler encounters a JavaScript module, it looks for a matching .d.ts file to understand what the module exports and how its API is shaped.',
     },
     {
       type: 'heading',
@@ -20,7 +20,7 @@ export const tsDeclarationFilesLesson: TsLesson = {
     },
     {
       type: 'text',
-      content: 'A .d.ts file is a pure type description — it tells the TypeScript compiler what types exist without producing any JavaScript output. Think of it as the table of contents for a JavaScript library: it says "this module exports a function called greet that takes a string and returns a string," but the actual implementation lives in the .js file. This separation is what lets TypeScript work with JavaScript code that was never written in TypeScript.',
+      content: 'A .d.ts file is a pure type description - it tells the TypeScript compiler what types exist without producing any JavaScript output. Think of it as the table of contents for a JavaScript library: it says "this module exports a function called greet that takes a string and returns a string," but the actual implementation lives in the .js file. This separation is what lets TypeScript work with JavaScript code that was never written in TypeScript.',
     },
     {
       type: 'note',
@@ -95,7 +95,7 @@ declare module 'my-library' {
     },
     {
       type: 'text',
-      content: 'Declaration files use a set of declare keywords to describe JavaScript constructs without implementing them. Every top-level item that should be visible to the compiler must be declared. The keyword declare signals that the actual implementation will exist at runtime — the TypeScript compiler trusts you that it does.',
+      content: 'Declaration files use a set of declare keywords to describe JavaScript constructs without implementing them. Every top-level item that should be visible to the compiler must be declared. The keyword declare signals that the actual implementation will exist at runtime - the TypeScript compiler trusts you that it does.',
     },
     {
       type: 'example',
@@ -153,7 +153,7 @@ declare module 'string-utils' {
     },
     {
       type: 'text',
-      content: 'Module augmentation lets you add types to an existing module declaration without modifying its source. The classic use case is extending the Express Request interface to include properties added by middleware — such as a user object added by authentication middleware.',
+      content: 'Module augmentation lets you add types to an existing module declaration without modifying its source. The classic use case is extending the Express Request interface to include properties added by middleware - such as a user object added by authentication middleware.',
     },
     {
       type: 'example',
@@ -194,7 +194,7 @@ declare module 'express-serve-static-core' {
     },
     {
       type: 'text',
-      content: 'Global augmentation extends built-in TypeScript globals like Window, globalThis, or NodeJS.ProcessEnv. This is how you teach TypeScript about properties set at runtime by your application — for example, analytics trackers injected by a script tag, or custom environment variables accessed via process.env.',
+      content: 'Global augmentation extends built-in TypeScript globals like Window, globalThis, or NodeJS.ProcessEnv. This is how you teach TypeScript about properties set at runtime by your application - for example, analytics trackers injected by a script tag, or custom environment variables accessed via process.env.',
     },
     {
       type: 'example',
@@ -230,7 +230,7 @@ declare namespace NodeJS {
 }
 
 // Without this export, the file is a script (not a module) and
-// the declare global block is unnecessary — but it is good practice.
+// the declare global block is unnecessary - but it is good practice.
 export {};`,
     },
     {
@@ -239,7 +239,7 @@ export {};`,
     },
     {
       type: 'text',
-      content: 'TypeScript ships with a large set of built-in declaration files under the lib directory of the TypeScript package. lib.d.ts covers core JavaScript types like Array, Promise, and Map. lib.dom.d.ts covers all browser APIs — document, fetch, HTMLElement, and thousands more. The lib option in tsconfig.json controls which of these bundles are included. If you are writing Node.js code without a browser, you should exclude "dom" to avoid accidentally using browser-only globals.',
+      content: 'TypeScript ships with a large set of built-in declaration files under the lib directory of the TypeScript package. lib.d.ts covers core JavaScript types like Array, Promise, and Map. lib.dom.d.ts covers all browser APIs - document, fetch, HTMLElement, and thousands more. The lib option in tsconfig.json controls which of these bundles are included. If you are writing Node.js code without a browser, you should exclude "dom" to avoid accidentally using browser-only globals.',
     },
     {
       type: 'heading',
@@ -247,12 +247,12 @@ export {};`,
     },
     {
       type: 'text',
-      content: 'By default TypeScript automatically includes every package found in node_modules/@types/. The typeRoots option overrides the search locations, and the types option whitelists exactly which @types packages to include. Using types is a best practice for large projects — it prevents @types packages from leaking globals they should not be adding to your build.',
+      content: 'By default TypeScript automatically includes every package found in node_modules/@types/. The typeRoots option overrides the search locations, and the types option whitelists exactly which @types packages to include. Using types is a best practice for large projects - it prevents @types packages from leaking globals they should not be adding to your build.',
     },
     {
       type: 'example',
       title: 'Controlling type discovery with typeRoots and types in tsconfig',
-      content: 'The typeRoots option tells the compiler where to look for ambient type packages. The types array (when present) acts as an allowlist — only the named packages are included, even if others are installed. This is particularly important for avoiding conflicts between @types/node and browser type globals in a full-stack monorepo.',
+      content: 'The typeRoots option tells the compiler where to look for ambient type packages. The types array (when present) acts as an allowlist - only the named packages are included, even if others are installed. This is particularly important for avoiding conflicts between @types/node and browser type globals in a full-stack monorepo.',
       language: 'json',
       code: `{
   "compilerOptions": {
@@ -267,7 +267,7 @@ export {};`,
     "types": ["node", "jest"],
 
     // For a browser-only app:
-    // "types": []  — no @types packages; rely only on lib settings
+    // "types": []  - no @types packages; rely only on lib settings
     // "lib": ["ES2022", "DOM", "DOM.Iterable"]
   }
 }`,
@@ -373,12 +373,12 @@ console.log('  "types": ["node", "jest"]  // allowlist -- only these @types incl
       question: 'What does a .d.ts file contain?',
       options: [
         'Compiled JavaScript code and type metadata',
-        'Only type declarations — no runtime code or JavaScript output',
+        'Only type declarations - no runtime code or JavaScript output',
         'Source maps that link JavaScript to TypeScript',
         'A list of npm packages required by a TypeScript project',
       ],
       correct: 1,
-      explanation: 'A .d.ts file contains only type information — declare statements, interface definitions, type aliases, and module declarations. It produces no JavaScript output when compiled. Its sole purpose is to give the TypeScript compiler type information about JavaScript code that exists elsewhere, whether in node_modules, a CDN script, or a legacy codebase.',
+      explanation: 'A .d.ts file contains only type information - declare statements, interface definitions, type aliases, and module declarations. It produces no JavaScript output when compiled. Its sole purpose is to give the TypeScript compiler type information about JavaScript code that exists elsewhere, whether in node_modules, a CDN script, or a legacy codebase.',
     },
     {
       id: 'ts-dts-q2',
@@ -397,7 +397,7 @@ console.log('  "types": ["node", "jest"]  // allowlist -- only these @types incl
       question: 'What is the purpose of the declare global block in a TypeScript module file?',
       options: [
         'To declare variables that are shared across all files in the project without importing',
-        'To augment the global scope — adding or extending globally available types like Window or NodeJS.ProcessEnv',
+        'To augment the global scope - adding or extending globally available types like Window or NodeJS.ProcessEnv',
         'To mark a variable as available before the file is loaded by the browser',
         'To prevent TypeScript from type-checking code inside the block',
       ],

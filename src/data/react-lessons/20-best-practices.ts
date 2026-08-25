@@ -12,7 +12,7 @@ export const reactBestPracticesLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Learning React syntax is one thing — writing maintainable, scalable React code is another. This lesson covers the conventions, rules, and patterns that experienced React developers follow to keep large codebases healthy.',
+      content: 'Learning React syntax is one thing - writing maintainable, scalable React code is another. This lesson covers the conventions, rules, and patterns that experienced React developers follow to keep large codebases healthy.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const reactBestPracticesLesson: ReactLesson = {
     {
       type: 'example',
       title: 'A scalable React project structure',
-      content: 'There is no single "correct" folder structure. The most important rule is consistency. Group by feature or by type — both work, but feature-based grouping scales better for large apps.',
+      content: 'There is no single "correct" folder structure. The most important rule is consistency. Group by feature or by type - both work, but feature-based grouping scales better for large apps.',
       language: 'bash',
       code: `src/
 ├── components/           # Shared, reusable UI components
@@ -62,14 +62,14 @@ export const reactBestPracticesLesson: ReactLesson = {
       type: 'list',
       title: 'React naming rules and conventions',
       items: [
-        'Components: PascalCase — UserCard, ProductList, NavBar (required by React)',
-        'Files: match the component name — UserCard.tsx, not userCard.tsx',
-        'Props interfaces: suffix with Props — ButtonProps, CardProps',
-        'Hooks: always start with use — useFetch, useLocalStorage, useAuth',
-        'Event handlers: prefix with handle — handleClick, handleSubmit, handleChange',
-        'Boolean props: prefix with is/has/can — isLoading, hasError, canEdit',
-        'Context: suffix with Context — UserContext, ThemeContext',
-        'Providers: suffix with Provider — UserProvider, ThemeProvider',
+        'Components: PascalCase - UserCard, ProductList, NavBar (required by React)',
+        'Files: match the component name - UserCard.tsx, not userCard.tsx',
+        'Props interfaces: suffix with Props - ButtonProps, CardProps',
+        'Hooks: always start with use - useFetch, useLocalStorage, useAuth',
+        'Event handlers: prefix with handle - handleClick, handleSubmit, handleChange',
+        'Boolean props: prefix with is/has/can - isLoading, hasError, canEdit',
+        'Context: suffix with Context - UserContext, ThemeContext',
+        'Providers: suffix with Provider - UserProvider, ThemeProvider',
       ],
     },
     {
@@ -79,19 +79,19 @@ export const reactBestPracticesLesson: ReactLesson = {
     {
       type: 'example',
       title: 'The two rules you must never break',
-      content: 'React relies on the order that hooks are called. Breaking either rule causes bugs that are hard to debug — React will misidentify which state belongs to which hook.',
+      content: 'React relies on the order that hooks are called. Breaking either rule causes bugs that are hard to debug - React will misidentify which state belongs to which hook.',
       language: 'jsx',
       code: `// RULE 1: Only call hooks at the top level
 // Never inside conditionals, loops, or nested functions
 
-// ❌ Wrong — hooks inside an if statement
+// ❌ Wrong - hooks inside an if statement
 function BadComponent({ loggedIn }) {
   if (loggedIn) {
     const [name, setName] = useState(''); // hook inside condition!
   }
 }
 
-// ✅ Correct — hooks at the top, use condition inside
+// ✅ Correct - hooks at the top, use condition inside
 function GoodComponent({ loggedIn }) {
   const [name, setName] = useState('');
   if (!loggedIn) return <Login />;
@@ -101,12 +101,12 @@ function GoodComponent({ loggedIn }) {
 // RULE 2: Only call hooks from React functions
 // Not from regular JavaScript functions, classes, or event handlers
 
-// ❌ Wrong — hook in a regular function
+// ❌ Wrong - hook in a regular function
 function regularFunction() {
   const [count, setCount] = useState(0); // not a component or custom hook!
 }
 
-// ✅ Correct — only in components and custom hooks
+// ✅ Correct - only in components and custom hooks
 function MyComponent() {
   const [count, setCount] = useState(0); // ✓ inside component
 }
@@ -126,13 +126,13 @@ function useMyHook() {
       title: 'Top React mistakes and their fixes',
       headers: ['Mistake', 'Problem', 'Fix'],
       rows: [
-        ['Missing key in lists', 'React cant track which items changed', 'Use unique, stable IDs — not array index if items reorder'],
+        ['Missing key in lists', 'React cant track which items changed', 'Use unique, stable IDs - not array index if items reorder'],
         ['Mutating state directly', 'React doesnt detect the change', 'Always return new objects/arrays: spread, filter, map'],
         ['No cleanup in useEffect', 'Memory leaks on unmount', 'Return a cleanup function from useEffect'],
-        ['Too many useEffects', 'Hard to follow data flow', 'Derived values dont need effects — compute during render'],
+        ['Too many useEffects', 'Hard to follow data flow', 'Derived values dont need effects - compute during render'],
         ['useEffect with missing deps', 'Stale closures and bugs', 'Include all values you read inside the effect in the array'],
         ['Overusing useContext', 'Unnecessary re-renders everywhere', 'Keep context values stable; split contexts by change frequency'],
-        ['Giant components', 'Hard to test and maintain', 'Split into smaller focused components — aim for under 100 lines'],
+        ['Giant components', 'Hard to test and maintain', 'Split into smaller focused components - aim for under 100 lines'],
       ],
     },
     {
@@ -142,7 +142,7 @@ function useMyHook() {
     {
       type: 'example',
       title: 'Write tests that simulate user behavior',
-      content: 'React Testing Library (RTL) encourages testing from the user\'s perspective — what they see and interact with — rather than implementation details. This makes tests more resilient to refactors.',
+      content: 'React Testing Library (RTL) encourages testing from the user\'s perspective - what they see and interact with - rather than implementation details. This makes tests more resilient to refactors.',
       language: 'jsx',
       code: `// Install: npm install --save-dev @testing-library/react @testing-library/user-event
 
@@ -154,7 +154,7 @@ describe('Counter component', () => {
   test('renders initial count of 0', () => {
     render(<Counter />);
 
-    // Query by what the user sees — not by class name or ID
+    // Query by what the user sees - not by class name or ID
     expect(screen.getByText('Count: 0')).toBeInTheDocument();
   });
 
@@ -180,11 +180,11 @@ describe('Counter component', () => {
 });
 
 // Key RTL queries (in priority order):
-// getByRole        — accessible role (button, heading, textbox, etc.)
-// getByLabelText   — form field by its label
-// getByText        — by visible text
-// getByPlaceholderText — input by placeholder
-// getByTestId      — last resort: data-testid attribute`,
+// getByRole        - accessible role (button, heading, textbox, etc.)
+// getByLabelText   - form field by its label
+// getByText        - by visible text
+// getByPlaceholderText - input by placeholder
+// getByTestId      - last resort: data-testid attribute`,
     },
     {
       type: 'heading',
@@ -192,9 +192,9 @@ describe('Counter component', () => {
     },
     {
       type: 'list',
-      title: 'Before deploying — React performance checklist',
+      title: 'Before deploying - React performance checklist',
       items: [
-        'Production build: run npm run build — it enables all optimizations',
+        'Production build: run npm run build - it enables all optimizations',
         'Large lists: use react-window or react-virtual for virtualization',
         'Images: use next/image (Next.js) or lazy loading with loading="lazy"',
         'Code splitting: use React.lazy + Suspense for route-level splitting',
@@ -254,7 +254,7 @@ function App() {
         <div className="progress">
           <div className="progress-bar" style={{ width: pct + '%' }} />
         </div>
-        <div className="score">{checked.size}/{checklist.length} complete — {pct}%</div>
+        <div className="score">{checked.size}/{checklist.length} complete - {pct}%</div>
       </div>
       {cats.map(cat => (
         <div key={cat} className="card">
@@ -284,7 +284,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       type: 'multiple-choice',
       options: [
         'Hooks must be exported from their module',
-        'Only call hooks at the top level — never inside conditions, loops, or nested functions',
+        'Only call hooks at the top level - never inside conditions, loops, or nested functions',
         'Hooks can only be used in class components',
         'You can only call one hook per component',
       ],
@@ -297,12 +297,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       type: 'multiple-choice',
       options: [
         'Implementation details like component state and class names',
-        'What the user sees and interacts with — accessible roles, visible text, labels',
+        'What the user sees and interacts with - accessible roles, visible text, labels',
         'The internal React component tree structure',
         'The exact HTML output of components',
       ],
       correct: 1,
-      explanation: 'React Testing Library promotes testing from the user\'s perspective. Query elements by accessible role (getByRole), visible text (getByText), or label (getByLabelText). Avoid querying by class names or internal state — those are implementation details that may change without affecting user behavior.',
+      explanation: 'React Testing Library promotes testing from the user\'s perspective. Query elements by accessible role (getByRole), visible text (getByText), or label (getByLabelText). Avoid querying by class names or internal state - those are implementation details that may change without affecting user behavior.',
     },
   ],
   quiz: [
@@ -310,8 +310,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       id: 'rbpq1',
       question: 'When is the best time to add React.memo, useMemo, and useCallback optimizations?',
       options: [
-        'Always — add them to every component and value from the start',
-        'Never — React handles optimization automatically',
+        'Always - add them to every component and value from the start',
+        'Never - React handles optimization automatically',
         'After measuring a real performance problem with the profiler',
         'Only in TypeScript projects',
       ],

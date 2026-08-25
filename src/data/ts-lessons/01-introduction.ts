@@ -12,12 +12,12 @@ export const tsIntroLesson: TsLesson = {
   sections: [
     {
       type: 'text',
-      content: 'TypeScript is JavaScript with types. Built by Microsoft, it compiles to plain JavaScript and runs everywhere JS runs — browsers, Node.js, Deno, and any other JS environment. You write TypeScript during development, and the compiler strips all type annotations before shipping.',
+      content: 'TypeScript is JavaScript with types. Built by Microsoft, it compiles to plain JavaScript and runs everywhere JS runs - browsers, Node.js, Deno, and any other JS environment. You write TypeScript during development, and the compiler strips all type annotations before shipping.',
     },
     {
       type: 'analogy',
       title: 'A contract before building',
-      content: 'TypeScript is like writing a contract before building. JavaScript lets you build first and discover problems in production. TypeScript catches them before the code ever runs. The type system is your safety net — it tells you exactly what a function expects and what it returns, so entire categories of bugs simply cant happen.',
+      content: 'TypeScript is like writing a contract before building. JavaScript lets you build first and discover problems in production. TypeScript catches them before the code ever runs. The type system is your safety net - it tells you exactly what a function expects and what it returns, so entire categories of bugs simply cant happen.',
     },
     {
       type: 'heading',
@@ -26,34 +26,34 @@ export const tsIntroLesson: TsLesson = {
     {
       type: 'list',
       items: [
-        'Catches bugs before runtime — type errors are found at compile time, not in production',
-        'IDE autocomplete and IntelliSense — your editor knows the shape of every object',
-        'Safer refactoring — rename a property and TypeScript shows every place that breaks',
-        'Self-documenting code — function signatures describe exactly what they need',
-        'Works with any JS library — @types packages add types to thousands of npm packages',
+        'Catches bugs before runtime - type errors are found at compile time, not in production',
+        'IDE autocomplete and IntelliSense - your editor knows the shape of every object',
+        'Safer refactoring - rename a property and TypeScript shows every place that breaks',
+        'Self-documenting code - function signatures describe exactly what they need',
+        'Works with any JS library - @types packages add types to thousands of npm packages',
       ],
     },
     {
       type: 'heading',
-      content: 'JS vs TS — Side by Side',
+      content: 'JS vs TS - Side by Side',
     },
     {
       type: 'example',
-      title: 'JS vs TS — the same code with and without types',
-      content: 'In plain JavaScript, a function that expects a number will silently accept a string, leading to bugs at runtime. TypeScript adds a colon after the parameter name to specify its type — the compiler then prevents you from passing the wrong type before the code runs.',
+      title: 'JS vs TS - the same code with and without types',
+      content: 'In plain JavaScript, a function that expects a number will silently accept a string, leading to bugs at runtime. TypeScript adds a colon after the parameter name to specify its type - the compiler then prevents you from passing the wrong type before the code runs.',
       language: 'typescript',
-      code: `// JavaScript — no type safety
+      code: `// JavaScript - no type safety
 function add(a, b) {
   return a + b;
 }
-add(5, "3"); // Returns "53" — silent bug!
+add(5, "3"); // Returns "53" - silent bug!
 
-// TypeScript — type safe
+// TypeScript - type safe
 function addTS(a: number, b: number): number {
   return a + b;
 }
 // addTS(5, "3"); // Error: Argument of type 'string' is not assignable to type 'number'
-addTS(5, 3); // 8 — correct
+addTS(5, 3); // 8 - correct
 
 // TypeScript infers types automatically
 let message = "Hello"; // TypeScript knows this is string
@@ -66,7 +66,7 @@ let message = "Hello"; // TypeScript knows this is string
     {
       type: 'example',
       title: 'TS compiles to plain JavaScript',
-      content: 'TypeScript is a development tool — it never runs in the browser. The TypeScript compiler (tsc) strips all type annotations and produces clean JavaScript. You write TypeScript, ship JavaScript.',
+      content: 'TypeScript is a development tool - it never runs in the browser. The TypeScript compiler (tsc) strips all type annotations and produces clean JavaScript. You write TypeScript, ship JavaScript.',
       language: 'typescript',
       code: `// TypeScript source (.ts file)
 interface User {
@@ -81,7 +81,7 @@ function greet(user: User): string {
 const alex: User = { name: "Alex", age: 25 };
 console.log(greet(alex));
 
-// After tsc compiles it — pure JavaScript (.js file):
+// After tsc compiles it - pure JavaScript (.js file):
 // function greet(user) { return "Hello, " + user.name + "!"; }
 // const alex = { name: "Alex", age: 25 };
 // console.log(greet(alex));`,
@@ -93,14 +93,14 @@ console.log(greet(alex));
     {
       type: 'example',
       title: 'How to annotate variables, functions, and objects',
-      content: 'Type annotations use a colon followed by the type. They are always optional — TypeScript can infer most types automatically. Add annotations where the type is not obvious or where you want to be explicit about the contract.',
+      content: 'Type annotations use a colon followed by the type. They are always optional - TypeScript can infer most types automatically. Add annotations where the type is not obvious or where you want to be explicit about the contract.',
       language: 'typescript',
       code: `// Variable annotations
 let name: string = "Alice";
 let age: number = 25;
 let isActive: boolean = true;
 
-// TypeScript infers these — no annotation needed:
+// TypeScript infers these - no annotation needed:
 let inferred = "TypeScript knows this is string";
 let count = 42; // TypeScript knows this is number
 
@@ -187,7 +187,7 @@ document.getElementById('output').innerHTML = \`
         'WebAssembly modules',
       ],
       correct: 2,
-      explanation: 'The TypeScript compiler (tsc) takes .ts files and outputs plain .js files. All type annotations are stripped — the browser or Node.js only ever sees regular JavaScript.',
+      explanation: 'The TypeScript compiler (tsc) takes .ts files and outputs plain .js files. All type annotations are stripped - the browser or Node.js only ever sees regular JavaScript.',
     },
   ],
   quiz: [
@@ -197,11 +197,11 @@ document.getElementById('output').innerHTML = \`
       options: [
         'At runtime in the browser',
         'Only in production deployments',
-        'At compile time — before the code runs',
+        'At compile time - before the code runs',
         'Only when you run tests',
       ],
       correct: 2,
-      explanation: 'TypeScript catches type errors at compile time — when you run tsc or when your IDE processes the file. This means type bugs are found during development, not in production when real users encounter them.',
+      explanation: 'TypeScript catches type errors at compile time - when you run tsc or when your IDE processes the file. This means type bugs are found during development, not in production when real users encounter them.',
     },
   ],
 };

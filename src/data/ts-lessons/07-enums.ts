@@ -20,10 +20,10 @@ export const tsEnumsLesson: TsLesson = {
     },
     {
       type: 'example',
-      title: 'Numeric enums — auto-incremented integer values',
-      content: 'A numeric enum assigns integer values starting from 0 by default. The first member is 0, the second is 1, and so on. You can override the starting value or any individual value — the rest continue incrementing from there. Numeric enums compile to an object in JavaScript.',
+      title: 'Numeric enums - auto-incremented integer values',
+      content: 'A numeric enum assigns integer values starting from 0 by default. The first member is 0, the second is 1, and so on. You can override the starting value or any individual value - the rest continue incrementing from there. Numeric enums compile to an object in JavaScript.',
       language: 'typescript',
-      code: `// Basic numeric enum — auto-increments from 0
+      code: `// Basic numeric enum - auto-increments from 0
 enum Direction {
   North,  // 0
   South,  // 1
@@ -35,7 +35,7 @@ enum Direction {
 function move(dir: Direction): void {
   console.log("Moving in direction:", dir);
 }
-move(Direction.North); // OK — passes 0
+move(Direction.North); // OK - passes 0
 // move(0);           // Also works but less readable
 
 // Custom starting value
@@ -55,7 +55,7 @@ function handleStatus(status: HttpStatus): string {
 }
 
 // Numeric enums have reverse mappings
-console.log(Direction[0]);  // "North" — reverse lookup
+console.log(Direction[0]);  // "North" - reverse lookup
 console.log(Direction.North); // 0`,
     },
     {
@@ -64,10 +64,10 @@ console.log(Direction.North); // 0`,
     },
     {
       type: 'example',
-      title: 'String enums — human-readable values',
-      content: 'String enums give each member a string value. Unlike numeric enums, there is no auto-increment — you must specify every value explicitly. The big advantage: string enum values are readable in logs, network requests, and databases. They do NOT have reverse mappings.',
+      title: 'String enums - human-readable values',
+      content: 'String enums give each member a string value. Unlike numeric enums, there is no auto-increment - you must specify every value explicitly. The big advantage: string enum values are readable in logs, network requests, and databases. They do NOT have reverse mappings.',
       language: 'typescript',
-      code: `// String enum — every value must be set explicitly
+      code: `// String enum - every value must be set explicitly
 enum Color {
   Red = "RED",
   Green = "GREEN",
@@ -105,17 +105,17 @@ checkPermission(UserRole.Viewer, "edit");  // false`,
     },
     {
       type: 'example',
-      title: 'const enum — inlined at compile time for performance',
+      title: 'const enum - inlined at compile time for performance',
       content: 'A const enum is erased entirely during compilation. Each use of the enum member is replaced with its literal value inline. This produces smaller, faster JavaScript with no enum object at runtime. The trade-off: you lose the runtime reverse lookup and cannot iterate over const enums.',
       language: 'typescript',
-      code: `// Regular enum — compiles to a JS object
+      code: `// Regular enum - compiles to a JS object
 enum RegularDir {
   Up = "UP",
   Down = "DOWN",
 }
 // Compiled JS includes: { Up: "UP", Down: "DOWN", ... }
 
-// const enum — fully erased, values inlined
+// const enum - fully erased, values inlined
 const enum Keys {
   Enter = 13,
   Escape = 27,
@@ -144,7 +144,7 @@ function handleKey(code: number): string {
     {
       type: 'example',
       title: 'Using enums with exhaustive switch statements',
-      content: 'Enums pair perfectly with switch statements. TypeScript can check that you handled every case — a pattern called exhaustive checking. Use a "never" variable in the default case to get a compile error if you add a new enum value and forget to handle it.',
+      content: 'Enums pair perfectly with switch statements. TypeScript can check that you handled every case - a pattern called exhaustive checking. Use a "never" variable in the default case to get a compile error if you add a new enum value and forget to handle it.',
       language: 'typescript',
       code: `enum Status {
   Pending = "pending",
@@ -153,7 +153,7 @@ function handleKey(code: number): string {
   Deleted = "deleted",
 }
 
-// Exhaustive switch — TypeScript warns if you miss a case
+// Exhaustive switch - TypeScript warns if you miss a case
 function getStatusLabel(status: Status): string {
   switch (status) {
     case Status.Pending:   return "Awaiting approval";
@@ -257,7 +257,7 @@ document.getElementById('output').innerHTML =
       id: 'ts-enum-q1',
       question: 'When should you prefer a union type over an enum?',
       options: [
-        'Always — enums are deprecated in modern TypeScript',
+        'Always - enums are deprecated in modern TypeScript',
         'When you need to iterate over all possible values at runtime',
         'When you want simpler syntax, no runtime object, and natural JSON serialization',
         'When you need numeric values',

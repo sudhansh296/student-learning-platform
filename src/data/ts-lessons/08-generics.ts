@@ -8,7 +8,7 @@ export const tsGenericsLesson: TsLesson = {
   order: 8,
   difficulty: 'intermediate',
   readingTime: 10,
-  description: 'Write reusable, type-safe functions and interfaces with type parameters — generic functions, interfaces, generic classes, constraints, and defaults.',
+  description: 'Write reusable, type-safe functions and interfaces with type parameters - generic functions, interfaces, generic classes, constraints, and defaults.',
   sections: [
     {
       type: 'text',
@@ -17,7 +17,7 @@ export const tsGenericsLesson: TsLesson = {
     {
       type: 'analogy',
       title: 'Generics are like blank labels on a box',
-      content: 'Imagine a box with a blank label. When you put apples in it, the label reads "apple box". When you put books in it, it reads "book box". Generics work the same way — you write the function once with a placeholder type T, and TypeScript fills in the actual type when you use it. The box (function) is the same; the label (type) adapts to what you put inside.',
+      content: 'Imagine a box with a blank label. When you put apples in it, the label reads "apple box". When you put books in it, it reads "book box". Generics work the same way - you write the function once with a placeholder type T, and TypeScript fills in the actual type when you use it. The box (function) is the same; the label (type) adapts to what you put inside.',
     },
     {
       type: 'heading',
@@ -28,12 +28,12 @@ export const tsGenericsLesson: TsLesson = {
       title: 'Writing a function that works with any type',
       content: 'A generic function uses angle brackets to declare a type parameter before the parentheses. When you call the function, TypeScript infers the type from the argument. You can also pass the type explicitly with angle brackets if inference does not work.',
       language: 'typescript',
-      code: `// Without generics — loses type information
+      code: `// Without generics - loses type information
 function firstAny(arr: any[]): any {
-  return arr[0]; // returns any — not useful
+  return arr[0]; // returns any - not useful
 }
 
-// With generics — preserves the type
+// With generics - preserves the type
 function first<T>(arr: T[]): T {
   return arr[0];
 }
@@ -84,7 +84,7 @@ interface ApiResponse<T> {
 type UserResponse = ApiResponse<{ id: number; name: string }>;
 type ListResponse = ApiResponse<string[]>;
 
-// Paginated result — generic over the item type
+// Paginated result - generic over the item type
 interface PaginatedResult<T> {
   items: T[];
   total: number;
@@ -115,7 +115,7 @@ const entry: KeyValue<string, number> = { key: "score", value: 95 };`,
     {
       type: 'example',
       title: 'A generic Stack data structure',
-      content: 'Classes can use type parameters just like functions and interfaces. A classic example is a Stack — a last-in-first-out collection. With generics, one Stack implementation works for numbers, strings, or any other type, while still being fully type-safe.',
+      content: 'Classes can use type parameters just like functions and interfaces. A classic example is a Stack - a last-in-first-out collection. With generics, one Stack implementation works for numbers, strings, or any other type, while still being fully type-safe.',
       language: 'typescript',
       code: `class Stack<T> {
   private items: T[] = [];
@@ -160,7 +160,7 @@ console.log(strStack.peek()); // "b"`,
     {
       type: 'example',
       title: 'Constraining type parameters with extends',
-      content: 'Sometimes a generic needs to be more than just "any type" — it needs to have certain properties. The "extends" keyword constrains the type parameter. "T extends { length: number }" means T can be any type that has a length property, like string, array, or anything else with a length.',
+      content: 'Sometimes a generic needs to be more than just "any type" - it needs to have certain properties. The "extends" keyword constrains the type parameter. "T extends { length: number }" means T can be any type that has a length property, like string, array, or anything else with a length.',
       language: 'typescript',
       code: `// Constrain T to types that have a .length property
 function logLength<T extends { length: number }>(item: T): T {
@@ -168,8 +168,8 @@ function logLength<T extends { length: number }>(item: T): T {
   return item;
 }
 
-logLength("hello");        // 5 — string has length
-logLength([1, 2, 3]);     // 3 — array has length
+logLength("hello");        // 5 - string has length
+logLength([1, 2, 3]);     // 3 - array has length
 // logLength(42);          // Error: number doesnt have length
 
 // Constrain to object types with a specific property
@@ -241,12 +241,12 @@ document.getElementById('output').innerHTML =
       type: 'multiple-choice',
       options: [
         'T is a shortcut for "type any"',
-        'T is a type parameter — a placeholder that TypeScript fills with the actual type when the function is called',
+        'T is a type parameter - a placeholder that TypeScript fills with the actual type when the function is called',
         'T must always be a TypeScript built-in type',
         'T stands for "Template" and is only for string operations',
       ],
       correct: 1,
-      explanation: 'T is a type parameter — a placeholder declared between angle brackets. When you call the function, TypeScript infers (or you specify) what T is based on the argument. The letter T is a convention; you could use any name like Item, Value, or DataType.',
+      explanation: 'T is a type parameter - a placeholder declared between angle brackets. When you call the function, TypeScript infers (or you specify) what T is based on the argument. The letter T is a convention; you could use any name like Item, Value, or DataType.',
     },
     {
       id: 'ts-gen-2',
@@ -268,12 +268,12 @@ document.getElementById('output').innerHTML =
       question: 'Why are generics preferred over "any" for writing reusable functions?',
       options: [
         'Generics are faster at runtime than using any',
-        'Generics preserve type information — the return type relates to the input type',
+        'Generics preserve type information - the return type relates to the input type',
         'any is deprecated and will be removed from TypeScript',
         'Generics automatically validate data at runtime',
       ],
       correct: 1,
-      explanation: 'With "any", TypeScript loses all type information — if a function returns "any", callers get no type safety. With generics, the relationship between input and output types is preserved. If you pass a number[], the function knows it returns number (not any), keeping full type safety at all call sites.',
+      explanation: 'With "any", TypeScript loses all type information - if a function returns "any", callers get no type safety. With generics, the relationship between input and output types is preserved. If you pass a number[], the function knows it returns number (not any), keeping full type safety at all call sites.',
     },
   ],
 };

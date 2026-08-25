@@ -89,7 +89,7 @@ export const expressReferencesLesson: ExpressLesson = {
     {
       type: 'example',
       title: 'Production-ready Express app setup',
-      content: 'This shows a production-grade server setup that layers helmet for HTTP security headers, CORS for cross-origin control, morgan for request logging, compression for gzip responses, and rate limiting to block abusive clients — all applied before any route handlers run.',
+      content: 'This shows a production-grade server setup that layers helmet for HTTP security headers, CORS for cross-origin control, morgan for request logging, compression for gzip responses, and rate limiting to block abusive clients - all applied before any route handlers run.',
       language: 'javascript',
       code: `const express = require('express');
 const helmet = require('helmet'); // Security headers

@@ -1,4 +1,4 @@
-﻿import type { ReactLesson } from '../react-curriculum';
+import type { ReactLesson } from '../react-curriculum';
 
 export const reactPatternsLesson: ReactLesson = {
   id: 'react-patterns',
@@ -20,7 +20,7 @@ export const reactPatternsLesson: ReactLesson = {
     },
     {
       type: 'example',
-      title: 'Use composition — components inside components — instead of extending classes',
+      title: 'Use composition - components inside components - instead of extending classes',
       content: 'React favors composition over class inheritance. Instead of extending a BaseCard class, you compose components by passing children and props. This is more flexible because you can compose behavior from multiple sources.',
       language: 'jsx',
       code: `// ❌ Inheritance approach (not the React way)
@@ -28,7 +28,7 @@ class BaseCard extends Component { render() { ... } }
 class UserCard extends BaseCard { ... }
 class ProductCard extends BaseCard { ... }
 
-// ✅ Composition approach — the React way
+// ✅ Composition approach - the React way
 // Generic Card accepts whatever children you give it
 function Card({ title, children, footer, color = '#2563eb' }) {
   return (
@@ -96,7 +96,7 @@ function MouseTracker({ render }) {
   );
 }
 
-// Usage — parent decides how to render the position
+// Usage - parent decides how to render the position
 function App() {
   return (
     <>
@@ -135,7 +135,7 @@ function App() {
 
 const TabsContext = createContext(null);
 
-// Parent — manages state
+// Parent - manages state
 function Tabs({ children, defaultTab = 0 }) {
   const [activeTab, setActiveTab] = useState(defaultTab);
   return (
@@ -145,7 +145,7 @@ function Tabs({ children, defaultTab = 0 }) {
   );
 }
 
-// Child — Tab buttons
+// Child - Tab buttons
 function TabList({ children }) {
   return <div style={{ display: 'flex', borderBottom: '2px solid #e5e7eb' }}>{children}</div>;
 }
@@ -171,7 +171,7 @@ function Tab({ children, index }) {
   );
 }
 
-// Child — Panel content
+// Child - Panel content
 function TabPanel({ children, index }) {
   const { activeTab } = useContext(TabsContext);
   if (activeTab !== index) return null;
@@ -205,12 +205,12 @@ function App() {
     },
     {
       type: 'example',
-      title: 'Controlled — React owns the value; Uncontrolled — DOM owns the value',
+      title: 'Controlled - React owns the value; Uncontrolled - DOM owns the value',
       content: 'Controlled components store form values in React state (value + onChange). Uncontrolled components let the DOM manage the value and you read it when needed via a ref. Controlled gives you more control; uncontrolled is simpler for simple forms.',
       language: 'jsx',
       code: `// (React hooks available as React.useState, React.useEffect, etc.)
 
-// CONTROLLED — React state drives the input
+// CONTROLLED - React state drives the input
 function ControlledForm() {
   const [email, setEmail] = useState('');
 
@@ -236,23 +236,23 @@ function ControlledForm() {
   );
 }
 
-// UNCONTROLLED — DOM manages the input
+// UNCONTROLLED - DOM manages the input
 function UncontrolledForm() {
   const emailRef = useRef(null);
 
   function handleSubmit() {
-    // Read value only when needed — no state needed
+    // Read value only when needed - no state needed
     console.log('Email:', emailRef.current.value);
   }
 
   return (
     <div>
       <input
-        ref={emailRef}          // attach ref — no value/onChange needed
+        ref={emailRef}          // attach ref - no value/onChange needed
         defaultValue="alice@example.com"  // initial value only
         placeholder="Uncontrolled input"
       />
-      {/* No live preview — DOM manages state */}
+      {/* No live preview - DOM manages state */}
       <button onClick={handleSubmit}>Submit</button>
     </div>
   );
@@ -348,7 +348,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'Through CSS class names',
       ],
       correct: 1,
-      explanation: 'Compound components use React Context internally. The parent component creates a Context and provides state through it. Child components (Tab, TabPanel, etc.) read from that Context with useContext. Users of the compound component dont need to manage this — it happens automatically.',
+      explanation: 'Compound components use React Context internally. The parent component creates a Context and provides state through it. Child components (Tab, TabPanel, etc.) read from that Context with useContext. Users of the compound component dont need to manage this - it happens automatically.',
     },
     {
       id: 'patterns-2',
@@ -375,7 +375,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
         'Because React.Component was removed in React 18',
       ],
       correct: 1,
-      explanation: 'Class inheritance creates tight coupling — child classes depend on parent internals. With composition, you build components by combining smaller pieces. React provides two composition mechanisms: children props (pass JSX into a component) and specialization (one component renders another with specific props). This is more flexible because you can compose from multiple sources simultaneously.',
+      explanation: 'Class inheritance creates tight coupling - child classes depend on parent internals. With composition, you build components by combining smaller pieces. React provides two composition mechanisms: children props (pass JSX into a component) and specialization (one component renders another with specific props). This is more flexible because you can compose from multiple sources simultaneously.',
     },
   ],
 };

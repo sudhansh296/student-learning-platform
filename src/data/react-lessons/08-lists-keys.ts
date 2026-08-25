@@ -12,7 +12,7 @@ export const reactListsLesson: ReactLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Rendering a list of items is one of the most common tasks in React — product lists, user feeds, navigation menus, comment threads. React uses JavaScript\'s .map() method to transform arrays into JSX elements. Each element in a list must have a unique "key" prop so React can track changes efficiently.',
+      content: 'Rendering a list of items is one of the most common tasks in React - product lists, user feeds, navigation menus, comment threads. React uses JavaScript\'s .map() method to transform arrays into JSX elements. Each element in a list must have a unique "key" prop so React can track changes efficiently.',
     },
     {
       type: 'heading',
@@ -21,7 +21,7 @@ export const reactListsLesson: ReactLesson = {
     {
       type: 'example',
       title: 'Transforming an array into JSX elements',
-      content: 'The .map() method creates a new array by transforming each item. When you return JSX from the callback, you get an array of JSX elements. React renders arrays automatically — just put the result inside {}. Every element in the array needs a unique key prop so React can track each item.',
+      content: 'The .map() method creates a new array by transforming each item. When you return JSX from the callback, you get an array of JSX elements. React renders arrays automatically - just put the result inside {}. Every element in the array needs a unique key prop so React can track each item.',
       language: 'jsx',
       code: `const fruits = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry'];
 
@@ -60,9 +60,9 @@ function FruitGrid() {
     {
       type: 'example',
       title: 'How React uses keys to reconcile the DOM',
-      content: 'React uses keys to identify which items in a list have changed, been added, or been removed. Without keys, React would re-render the entire list on every change. With stable unique keys, React knows exactly which item to update — making list operations (add, delete, reorder) very fast. Without keys, React logs a warning and may produce incorrect behavior when items are reordered.',
+      content: 'React uses keys to identify which items in a list have changed, been added, or been removed. Without keys, React would re-render the entire list on every change. With stable unique keys, React knows exactly which item to update - making list operations (add, delete, reorder) very fast. Without keys, React logs a warning and may produce incorrect behavior when items are reordered.',
       language: 'jsx',
-      code: `// ❌ No key — React warning + potential bugs on reorder
+      code: `// ❌ No key - React warning + potential bugs on reorder
 function BadList({ items }) {
   return (
     <ul>
@@ -73,7 +73,7 @@ function BadList({ items }) {
   );
 }
 
-// ❌ Index as key — OK for static lists, bad for dynamic ones
+// ❌ Index as key - OK for static lists, bad for dynamic ones
 // If items are reordered/deleted, index changes → wrong item re-renders
 function OkayList({ items }) {
   return (
@@ -85,7 +85,7 @@ function OkayList({ items }) {
   );
 }
 
-// ✅ Stable unique ID — always the right choice for mutable lists
+// ✅ Stable unique ID - always the right choice for mutable lists
 function GoodList({ items }) {
   return (
     <ul>
@@ -154,7 +154,7 @@ function UserList() {
     {
       type: 'example',
       title: 'Combining .filter() and .map() for searchable lists',
-      content: 'You can chain .filter() before .map() to show only matching items. Filtering does not mutate the original array — it returns a new array. This pattern is the foundation for search bars, category filters, and status filters. The filtered and mapped result is computed fresh on every render.',
+      content: 'You can chain .filter() before .map() to show only matching items. Filtering does not mutate the original array - it returns a new array. This pattern is the foundation for search bars, category filters, and status filters. The filtered and mapped result is computed fresh on every render.',
       language: 'jsx',
       code: `function FilterableList() {
   const [query, setQuery] = React.useState('');
@@ -190,7 +190,7 @@ function UserList() {
       {visible.map(p => (
         <div key={p.id}>
           <strong>{p.name}</strong>
-          <span> — {p.category}</span>
+          <span> - {p.category}</span>
           <span> {p.available ? '✅' : '❌'}</span>
         </div>
       ))}
@@ -206,8 +206,8 @@ function UserList() {
     },
     {
       type: 'example',
-      title: 'Key scope — unique within siblings, not globally',
-      content: 'Keys only need to be unique among siblings in the same list. Two different lists can have the same key values without conflict. The key is never passed as a prop to the component — if you need the ID inside the component, pass it as a separate prop too.',
+      title: 'Key scope - unique within siblings, not globally',
+      content: 'Keys only need to be unique among siblings in the same list. Two different lists can have the same key values without conflict. The key is never passed as a prop to the component - if you need the ID inside the component, pass it as a separate prop too.',
       language: 'jsx',
       code: `const todoItems = [
   { id: 101, text: 'Buy milk' },
@@ -215,7 +215,7 @@ function UserList() {
 ];
 
 const doneItems = [
-  { id: 101, text: 'Send email' }, // same id 101 is OK — different list
+  { id: 101, text: 'Send email' }, // same id 101 is OK - different list
   { id: 103, text: 'Read book' },
 ];
 
@@ -375,10 +375,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
       question: 'Can you access the "key" prop inside a component?',
       type: 'multiple-choice',
       options: [
-        'Yes — it is available as props.key',
-        'Yes — but only in class components',
-        'No — key is used by React internally and is not passed to the component',
-        'No — key only works with HTML elements',
+        'Yes - it is available as props.key',
+        'Yes - but only in class components',
+        'No - key is used by React internally and is not passed to the component',
+        'No - key only works with HTML elements',
       ],
       correct: 2,
       explanation: 'The key prop is consumed by React internally for reconciliation. It is never passed to the component as a prop. If you need the ID value inside the component, pass it as a separate prop: <Item key={item.id} id={item.id} />.',
