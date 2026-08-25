@@ -119,27 +119,58 @@ export default function MernPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       {/* Hero Section */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' }}>
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)' }}>
+        {/* Animated blobs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full opacity-20"
+            style={{ background: 'radial-gradient(circle, #10b981, transparent)' }} />
+          <div className="absolute top-10 right-10 w-72 h-72 rounded-full opacity-15"
+            style={{ background: 'radial-gradient(circle, #6366f1, transparent)' }} />
+          <div className="absolute bottom-0 left-1/2 w-80 h-80 rounded-full opacity-10"
+            style={{ background: 'radial-gradient(circle, #06b6d4, transparent)', transform: 'translate(-50%, 30%)' }} />
+          {/* Dot grid */}
+          <div className="absolute inset-0 opacity-[0.07]"
+            style={{ backgroundImage: 'radial-gradient(circle at 1.5px 1.5px, white 1px, transparent 0)', backgroundSize: '36px 36px' }} />
         </div>
+
         <div className="relative max-w-screen-xl mx-auto px-4 lg:px-6 py-16 lg:py-24">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm mb-6">
-              <Zap className="w-4 h-4 text-white" />
-              <span className="text-sm font-bold text-white">Full-Stack Development</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)' }}>
+              <Zap className="w-4 h-4" style={{ color: '#10b981' }} />
+              <span className="text-sm font-bold" style={{ color: '#10b981' }}>Full-Stack Development</span>
             </div>
             <h1 className="text-4xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-              Master the MERN Stack
+              Master the{' '}
+              <span style={{ background: 'linear-gradient(90deg, #10b981, #06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                MERN Stack
+              </span>
             </h1>
-            <p className="text-lg lg:text-xl text-white/90 mb-8 leading-relaxed">
-              Build modern, scalable web applications using MongoDB, Express.js, React, and Node.js. 
+            <p className="text-lg lg:text-xl mb-8 leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
+              Build modern, scalable web applications using MongoDB, Express.js, React, and Node.js.
               Learn the most popular JavaScript full-stack combination used by companies worldwide.
             </p>
+
+            {/* Tech pill badges */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {[
+                { label: 'MongoDB', color: '#10b981' },
+                { label: 'Express.js', color: '#6366f1' },
+                { label: 'React', color: '#06b6d4' },
+                { label: 'Node.js', color: '#22c55e' },
+              ].map(t => (
+                <span key={t.label} className="px-3 py-1 rounded-full text-xs font-bold"
+                  style={{ background: `${t.color}20`, border: `1px solid ${t.color}40`, color: t.color }}>
+                  {t.label}
+                </span>
+              ))}
+            </div>
+
             <div className="flex flex-wrap gap-4">
               <Link
                 href="#technologies"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-emerald-600 rounded-xl font-bold text-sm hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all hover:-translate-y-0.5"
+                style={{ background: 'linear-gradient(135deg,#10b981,#059669)', color: 'white', boxShadow: '0 4px 20px rgba(16,185,129,0.4)' }}
               >
                 <BookOpen className="w-4 h-4" />
                 Start Learning
@@ -147,7 +178,8 @@ export default function MernPage() {
               </Link>
               <Link
                 href="/projects"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm text-white rounded-xl font-bold text-sm hover:bg-white/20 transition-all border-2 border-white/30"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all hover:-translate-y-0.5"
+                style={{ background: 'rgba(255,255,255,0.08)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}
               >
                 <Code2 className="w-4 h-4" />
                 View Projects
