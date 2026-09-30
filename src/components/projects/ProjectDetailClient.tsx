@@ -15,7 +15,7 @@ import {
   Play,
   ExternalLink,
 } from 'lucide-react';
-import { web, sampleHtmlForCss, sampleHtmlForJs } from '@/lib/runInEditor';
+import { runInEditor, isServerSnippet, detectLanguage } from '@/lib/runInEditor';
 import type { Project } from '@/data/projects/types';
 
 interface Props {
@@ -96,13 +96,38 @@ interface LessonSectionProps {
   isFrontendProject: boolean;
 }
 
-/** Where "Open in Editor" for this lesson's code should send the user — null when there's no sensible way to run it (TypeScript-only source, JSON, etc). */
-function lessonEditorHref(isFrontendProject: boolean, projectSlug: string, code: string, lang: string): string | null {
+// Lesson snippets for react/backend/fullstack projects are fragments — they reference a helper defined in
+// another lesson, import a package the editor doesn't load, or mix frontend/backend code in one file. Detect
+// what kind of fragment it is and hand it to runInEditor(), which already knows how to heal exactly this
+// (strip/stub missing imports, auto-render a bare component, route Node code to the server sim, etc.) —
+// the same machinery that already powers "Run in Editor" on every plain lesson page (CodeBlock.tsx).
+const NEXTJS_SIGNS = /'use (client|server)'|"use (client|server)"|\bgenerateMetadata\b|\bgenerateStaticParams\b|^[ \t]*\/\/[ \t]*(?:src\/)?(?:app|pages)\//m;
+const JSX_SHAPE = /<\/[A-Za-z][\w.]*>|<[A-Za-z][\w.]*(?:\s[^<>]*)?\/>|return\s*\(\s*<[A-Za-z]/;
+
+/**
+ * Where "Open in Editor" for this code should send the user — null when there's no sensible way to run it.
+ * A non-frontend project's lesson snippet is a deliberate excerpt (it teaches one idea and often names a
+ * helper defined in a different lesson or file) — healing can't make an inherently-partial excerpt
+ * self-contained, so the button only appears for a complete file, verified to actually run end to end.
+ */
+function lessonEditorHref(isFrontendProject: boolean, isCompleteFile: boolean, projectSlug: string, code: string, lang: string): string | null {
   if (isFrontendProject) return `/playground?project=${projectSlug}`;
-  if (lang === 'html') return web(code, '', '', 'html', 'HTML').href;
-  if (lang === 'css') return web(sampleHtmlForCss(code), code, '', 'css', 'CSS').href;
-  if (lang === 'javascript') return web(sampleHtmlForJs(code), '', code, 'js', 'JS').href;
-  return null;
+  if (!isCompleteFile) return null;
+  if (!code.trim()) return null;
+  // A file that imports a sibling project file (./..., @/...) isn't self-contained either — the healer
+  // deliberately leaves those imports alone rather than guessing a stub, so running it in isolation fails.
+  if (/^[ \t]*import\s+[^;]*?\bfrom\s+['"](?:\.|@\/)[^'"]*['"]/m.test(code)) return null;
+  if (lang === 'html' || lang === 'css') return runInEditor(lang, code, lang)?.href ?? null;
+  if (lang !== 'javascript' && lang !== 'typescript') return null;
+
+  const effLang = detectLanguage(code, lang);
+  let tech: string;
+  if (NEXTJS_SIGNS.test(code)) tech = 'nextjs';
+  else if (isServerSnippet(code)) tech = 'nodejs';
+  else if (JSX_SHAPE.test(code)) tech = 'react';
+  else tech = effLang === 'typescript' ? 'ts' : 'js';
+
+  return runInEditor(tech, code, effLang)?.href ?? null;
 }
 
 interface ViewItem { key: string; label: string; language: string; content: string; isCompleteFile: boolean }
@@ -118,7 +143,7 @@ function LessonSection({ index, lesson, filesToShow, lessonSnippet, snippetLang,
   const current = items[activeIdx];
   const displayCode = current?.content ?? '';
   const displayLang = current?.language ?? '';
-  const editorHref = lessonEditorHref(isFrontendProject, projectSlug, displayCode, displayLang);
+  const editorHref = lessonEditorHref(isFrontendProject, current?.isCompleteFile ?? false, projectSlug, displayCode, displayLang);
 
   return (
     <div className="relative">
@@ -374,6 +399,17 @@ export function ProjectDetailClient({ project }: Props) {
             </a>
           )}
         </div>
+
+        {/* Non-frontend projects span multiple real files and/or real npm packages — code here is for reading, not standalone execution */}
+        {!isFrontend && (
+          <div className="mt-4 flex items-start gap-2.5 px-4 py-3 rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-900/50 dark:bg-amber-950/30">
+            <span className="text-amber-500 mt-0.5 shrink-0">&#9432;</span>
+            <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+              This project&apos;s files reference each other and real npm packages, so they&apos;re for reading and learning, not standalone browser execution.
+              &quot;Open in Editor&quot; only appears where a file actually runs on its own — copy the rest into a real local project (<code className="font-mono">npm install</code>, all files present) to run it.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* ── EMBEDDED LIVE DEMO (for deployed projects) ── */}
@@ -584,7 +620,7 @@ export function ProjectDetailClient({ project }: Props) {
                     </div>
                     <div className="flex items-center gap-1">
                       {(() => {
-                        const href = lessonEditorHref(isFrontend, project.slug, f.content, f.language);
+                        const href = lessonEditorHref(isFrontend, true, project.slug, f.content, f.language);
                         return href ? (
                           <a
                             href={href}

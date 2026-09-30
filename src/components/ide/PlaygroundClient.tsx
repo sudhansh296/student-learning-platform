@@ -1349,10 +1349,12 @@ try{
   }
 
   if (hasReact) {
-    // Strip ES module import statements — CDN React is already loaded globally
+    // Strip ES module import/export statements — CDN React is already loaded globally, and the code
+    // below wraps this in a function body, where "export" is a syntax error (only valid at top level).
     let rc = jsContent
       .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*$/gm, '')
-      .replace(/^import\s+['"][^'"]+['"]\s*;?\s*$/gm, '');
+      .replace(/^import\s+['"][^'"]+['"]\s*;?\s*$/gm, '')
+      .replace(/^export\s+(default\s+)?/gm, '');
     if (!rc.includes('ReactDOM.createRoot') && !rc.includes('ReactDOM.render')) {
       const m = rc.match(/function\s+([A-Z]\w*)/g);
       const last = m ? m[m.length-1].replace('function ','') : '';
