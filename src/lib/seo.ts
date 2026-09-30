@@ -5,6 +5,9 @@ import { LESSON_SEO } from '@/data/seo/lessons';
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://webdevatlas.com').replace(/\/$/, '');
 export const SITE_NAME = 'WebDev Atlas';
 
+/** Google Search Console's HTML-tag verification code (Settings → Ownership verification → HTML tag → the "content" value only, not the full <meta> tag). Empty until set. */
+export const GOOGLE_SITE_VERIFICATION = (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? '').trim();
+
 /** SEO landing pages (cheat sheets, roadmaps, question banks) that belong in the sitemap. Add a path here when a hub page is created. */
 export const HUB_PAGES: string[] = [
   '/javascript-cheatsheet',

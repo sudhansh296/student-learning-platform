@@ -7,7 +7,7 @@ import { ScrollingTicker } from '@/components/layout/ScrollingTicker';
 import { Footer } from '@/components/layout/Footer';
 import { SearchHighlight } from '@/components/search/SearchHighlight';
 import { Suspense } from 'react';
-import { SITE_URL, SITE_NAME } from '@/lib/seo';
+import { SITE_URL, SITE_NAME, GOOGLE_SITE_VERIFICATION } from '@/lib/seo';
 import { ADSENSE_CLIENT, ADSENSE_ENABLED } from '@/lib/adsense';
 import { AdSenseLoader } from '@/components/ads/AdSenseLoader';
 
@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image' },
   // lets Google verify site ownership for AdSense; only present once a publisher id is configured
   ...(ADSENSE_ENABLED ? { other: { 'google-adsense-account': ADSENSE_CLIENT } } : {}),
+  // lets Google verify site ownership for Search Console; only present once a verification code is configured
+  ...(GOOGLE_SITE_VERIFICATION ? { verification: { google: GOOGLE_SITE_VERIFICATION } } : {}),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
