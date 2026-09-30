@@ -18,6 +18,13 @@ import { urlShortenerProject } from './url-shortener';
 import { musicPlayerProject } from './music-player';
 import { fileSharingProject } from './file-sharing';
 import { kanbanBoardProject } from './kanban-board';
+import { postgresqlQueryLabProject } from './postgresql-query-lab';
+import { dockerCommandSimulatorProject } from './docker-command-simulator';
+import { sqlFundamentalsExplorerProject } from './sql-fundamentals-explorer';
+import { sqliteNotesVaultProject } from './sqlite-notes-vault';
+import { redisCacheLabProject } from './redis-cache-lab';
+import { typescriptFormValidatorProject } from './typescript-form-validator';
+import { nextjsBlogServerActionsProject } from './nextjs-blog-server-actions';
 import type { Project } from './types';
 
 export const allProjects: Project[] = [
@@ -41,6 +48,13 @@ export const allProjects: Project[] = [
   musicPlayerProject,
   fileSharingProject,
   kanbanBoardProject,
+  postgresqlQueryLabProject,
+  dockerCommandSimulatorProject,
+  sqlFundamentalsExplorerProject,
+  sqliteNotesVaultProject,
+  redisCacheLabProject,
+  typescriptFormValidatorProject,
+  nextjsBlogServerActionsProject,
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {

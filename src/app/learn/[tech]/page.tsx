@@ -1,9 +1,12 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getTechnologyBySlug } from '@/data/technologies';
+import { getTechnologyBySlug, technologies } from '@/data/technologies';
+import { COURSES } from '@/lib/courses';
 import { Breadcrumb } from '@/components/docs/Breadcrumb';
 import { Clock, ArrowRight, BookOpen, CheckCircle2 } from 'lucide-react';
 import type { Metadata } from 'next';
+import { GuideLinks } from '@/components/seo/GuideLinks';
+import { hubLinksForOverview, pageMetadata, clampDescription } from '@/lib/seo';
 
 interface Props {
   params: Promise<{ tech: string }>;
@@ -13,10 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tech } = await params;
   const technology = getTechnologyBySlug(tech);
   if (!technology) return { title: 'Not Found' };
-  return {
-    title: `${technology.name} Tutorial & Documentation`,
-    description: technology.longDescription || technology.description,
-  };
+  return pageMetadata({
+    title: `Learn ${technology.name} — Free Tutorial`,
+    description: clampDescription(technology.longDescription || technology.description, technology.name),
+    path: `/learn/${tech}`,
+  });
 }
 
 const difficultyInfo = {
@@ -32,6 +36,18 @@ export default async function TechOverviewPage({ params }: Props) {
   if (!technology) notFound();
 
   const d = difficultyInfo[technology.difficulty] ?? difficultyInfo.beginner;
+
+  // The topic list in the technology data can name lessons that do not exist. When it does, list the real lessons instead,
+  // so every link on this page opens a page.
+  const course = COURSES.find((c) => c.id === (tech === 'javascript' ? 'js' : tech === 'rest-api' ? 'restapi' : tech));
+  const realSlugs = course ? new Set(course.lessons.map((l) => l.slug)) : null;
+  const dataTopics = new Map(technology.topics.map((t) => [t.slug, t]));
+  const topics: { id: string; slug: string; title: string; description: string; readingTime: number }[] =
+    course && realSlugs && technology.topics.some((t) => !realSlugs.has(t.slug))
+      ? [...new Map(course.lessons.map((l) => [l.slug, l])).values()].map((l, i) => dataTopics.get(l.slug) ?? { id: `${technology.id}-lesson-${i}`, slug: l.slug, title: l.title, description: l.description ?? '', readingTime: 10 })
+      : technology.topics;
+  // only link to technologies that have a page
+  const relatedTechnologies = (technology.relatedTechnologies ?? []).filter((slug) => technologies.some((t) => t.slug === slug));
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 lg:px-6 py-10">
@@ -77,7 +93,7 @@ export default async function TechOverviewPage({ params }: Props) {
           </div>
           <div>
             <p className="text-xs text-muted-foreground uppercase tracking-wider">Topics</p>
-            <p className="text-sm font-semibold text-foreground">{technology.topics.length} available</p>
+            <p className="text-sm font-semibold text-foreground">{topics.length} available</p>
           </div>
           <div>
             <p className="text-xs text-muted-foreground uppercase tracking-wider">Category</p>
@@ -110,7 +126,7 @@ export default async function TechOverviewPage({ params }: Props) {
             All Topics
           </h2>
           <div className="space-y-2">
-            {technology.topics.map((topic, index) => (
+            {topics.map((topic, index) => (
               <Link
                 key={topic.id}
                 href={
@@ -145,16 +161,16 @@ export default async function TechOverviewPage({ params }: Props) {
           </div>
 
           {/* Start learning CTA */}
-          {technology.topics.length > 0 && (
+          {topics.length > 0 && (
             <Link
               href={
                 technology.id === 'javascript'
-                  ? `/js/${technology.topics[0].slug}`
+                  ? `/js/${topics[0].slug}`
                   : technology.id === 'html'
-                  ? `/html/${technology.topics[0].slug}`
+                  ? `/html/${topics[0].slug}`
                   : technology.id === 'css'
-                  ? `/css/${technology.topics[0].slug}`
-                  : `/learn/${technology.slug}/${technology.topics[0].slug}`
+                  ? `/css/${topics[0].slug}`
+                  : `/learn/${technology.slug}/${topics[0].slug}`
               }
               className="mt-6 flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors"
             >
@@ -170,26 +186,28 @@ export default async function TechOverviewPage({ params }: Props) {
           <div className="p-5 rounded-xl border border-border bg-background">
             <h3 className="font-semibold text-foreground mb-3 text-sm">What you&apos;ll learn</h3>
             <ul className="space-y-2">
-              {technology.topics.slice(0, 6).map(t => (
+              {topics.slice(0, 6).map(t => (
                 <li key={t.id} className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-green-500 shrink-0 mt-0.5" />
                   <span className="text-xs text-muted-foreground">{t.title}</span>
                 </li>
               ))}
-              {technology.topics.length > 6 && (
+              {topics.length > 6 && (
                 <li className="text-xs text-muted-foreground pl-5">
-                  ...and {technology.topics.length - 6} more topics
+                  ...and {topics.length - 6} more topics
                 </li>
               )}
             </ul>
           </div>
 
+          <GuideLinks title="Cheat sheets, roadmaps and interview questions" links={hubLinksForOverview(technology.slug)} className="p-5 rounded-xl border border-border bg-background" />
+
           {/* Related technologies */}
-          {technology.relatedTechnologies && (
+          {relatedTechnologies.length > 0 && (
             <div className="p-5 rounded-xl border border-border bg-background">
               <h3 className="font-semibold text-foreground mb-3 text-sm">Related Technologies</h3>
               <div className="flex flex-wrap gap-2">
-                {technology.relatedTechnologies.map(slug => (
+                {relatedTechnologies.map(slug => (
                   <Link
                     key={slug}
                     href={`/learn/${slug}`}
