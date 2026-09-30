@@ -7,7 +7,7 @@ export const nodejsRestApiLesson: NodejsLesson = {
   chapter: 'server',
   order: 10,
   difficulty: 'intermediate',
-  readingTime: 15,
+  readingTime: 18,
   description: 'REST principles, CRUD operations, HTTP methods, status codes, and building production-ready APIs.',
   sections: [
     {
@@ -335,6 +335,141 @@ document.getElementById('output').innerHTML =
   '</div>';
 
 renderResources();`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Putting verbs in URLs, such as /getUsers or /createUser. Fix: name the resource with a noun and let the HTTP method be the verb: GET /users, POST /users.',
+        'Returning 200 for everything. Fix: use meaningful status codes: 201 for created, 204 for no content, 400 for bad input, 404 for not found and 500 for server errors.',
+        'Trusting req.body without checking it. Fix: validate required fields, types and lengths before using the data.',
+        'Forgetting app.use(express.json()) and wondering why req.body is undefined. Fix: register the JSON parser before your routes.',
+        'Sending internal error messages or stack traces to clients. Fix: log the details on the server and return a short, safe message.',
+        'Changing data in a GET route. Fix: GET must be safe to repeat; use POST, PUT, PATCH or DELETE for changes.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'The backend for web and mobile apps: users, products, orders and comments.',
+        'Connecting a React front end to a database through your own API.',
+        'Public APIs that other developers call, such as weather, maps or payments.',
+        'Webhooks, where another service sends events to a URL on your server.',
+        'Microservices that talk to each other over HTTP.',
+        'Admin dashboards that create, edit and delete records.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Add create and delete routes to a tasks API',
+    },
+    {
+      type: 'text',
+      content: 'The starter already lists tasks. Add POST /tasks (create a task from req.body.title, reply 201 with the new task, or 400 if the title is missing) and DELETE /tasks/:id (reply 204 when deleted, or 404 with an error message if the id does not exist). Open the code in the editor and test each route with the request tester.',
+    },
+    {
+      type: 'example',
+      title: 'Starter code',
+      content: 'Open this in the editor, complete the TODO parts and test with the tester that appears next to the code.',
+      code: `const express = require('express');
+const app = express();
+app.use(express.json());
+
+let tasks = [{ id: 1, title: 'Learn REST', done: false }];
+let nextId = 2;
+
+// GET /tasks - list all tasks
+app.get('/tasks', (req, res) => {
+  res.json(tasks);
+});
+
+// TODO: POST /tasks - create a task from req.body.title (201, or 400 if title is missing)
+
+// TODO: DELETE /tasks/:id - remove the task (204, or 404 if it does not exist)
+
+app.listen(3000, () => console.log('API ready on port 3000'));`,
+      language: 'javascript',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'POST /tasks with {"title":"Write tests"} returns 201 and {"id":2,"title":"Write tests","done":false}. POST without a title returns 400. DELETE /tasks/1 returns 204, and DELETE /tasks/99 returns 404 with {"error":"Task not found"}.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Use req.body.title for the new task and increment nextId. For delete, find the index with tasks.findIndex, return res.status(404).json({ error: "Task not found" }) if it is -1, otherwise splice it out and send res.sendStatus(204).',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `const express = require('express');
+const app = express();
+app.use(express.json());
+
+let tasks = [{ id: 1, title: 'Learn REST', done: false }];
+let nextId = 2;
+
+// GET /tasks - list all tasks
+app.get('/tasks', (req, res) => {
+  res.json(tasks);
+});
+
+// POST /tasks - create a task
+app.post('/tasks', (req, res) => {
+  const title = req.body && req.body.title;
+  if (!title) {
+    return res.status(400).json({ error: 'title is required' });
+  }
+  const task = { id: nextId++, title, done: false };
+  tasks.push(task);
+  res.status(201).json(task);
+});
+
+// DELETE /tasks/:id - remove a task
+app.delete('/tasks/:id', (req, res) => {
+  const index = tasks.findIndex((t) => t.id === Number(req.params.id));
+  if (index === -1) {
+    return res.status(404).json({ error: 'Task not found' });
+  }
+  tasks.splice(index, 1);
+  res.sendStatus(204);
+});
+
+app.listen(3000, () => console.log('API ready on port 3000'));`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What does REST mean?',
+      content: 'An API style where each resource has a URL, the HTTP method says what to do with it, and each request carries everything the server needs, so the server keeps no session between requests.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between PUT and PATCH?',
+      content: 'PUT replaces the whole resource with the data you send. PATCH changes only the fields you send.',
+    },
+    {
+      type: 'note',
+      title: 'Which status code should I use for invalid input?',
+      content: 'Use 400 Bad Request (some teams use 422 for validation errors) and include a clear message about what was wrong.',
+    },
+    {
+      type: 'note',
+      title: 'Do I need a database for a REST API?',
+      content: 'For a real app, yes. In-memory arrays like the one above are fine for learning but disappear when the server restarts.',
     },
   ],
   exercises: [

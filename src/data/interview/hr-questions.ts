@@ -11,9 +11,9 @@ export const hrInterviewQuestions: InterviewQuestion[] = [
     shortAnswer: 'Give a 2-minute professional summary: current role/background, relevant skills and experience, what you\'re looking for. Tailor it to the role. End with why you\'re excited about this opportunity.',
     detailedExplanation: 'This is your elevator pitch. Structure it as: Present (current role/what you do), Past (relevant experience that got you here), Future (what you\'re looking for and why this role). Keep it to 90 seconds - 2 minutes. Focus on professional journey, not personal life. Mention 2-3 relevant technologies or achievements. Bridge to why you\'re interested in this specific role.',
     example: {
-      code: `// Structure: Present â†’ Past â†’ Future
+      code: `// Structure: Present → Past → Future
 
-// âœ… Strong answer (customize for your situation):
+// ✅ Strong answer (customize for your situation):
 "I'm a full-stack developer with 2 years of experience 
 building web applications with React and Node.js. 
 
@@ -25,7 +25,7 @@ MongoDB databases.
 
 I'm looking to join a company where I can work on 
 products that have real user impact, and where I can 
-continue growing â€” particularly in system design and 
+continue growing — particularly in system design and 
 large-scale backend architecture.
 
 When I saw this role at [Company], I was excited because 
@@ -33,11 +33,11 @@ your product directly impacts [specific thing you care about],
 and the tech stack aligns perfectly with my experience."
 
 // What to AVOID:
-// âŒ "I'm a hard worker who loves to code"
-// âŒ Starting with your birth city or personal info
-// âŒ Reading your resume line by line
-// âŒ Being too long (>3 minutes)
-// âŒ Not connecting to the role
+// ❌ "I'm a hard worker who loves to code"
+// ❌ Starting with your birth city or personal info
+// ❌ Reading your resume line by line
+// ❌ Being too long (>3 minutes)
+// ❌ Not connecting to the role
 
 // Tips:
 // - Practice until it feels natural, not rehearsed
@@ -46,7 +46,7 @@ and the tech stack aligns perfectly with my experience."
 // - Show personality - be conversational`,
       language: 'javascript'
     },
-    interviewAnswer: 'Keep it professional and focused on the job. Practice this until it flows naturally â€” it sets the tone for the entire interview. Tailor the "why this role" part specifically to each company.',
+    interviewAnswer: 'Keep it professional and focused on the job. Practice this until it flows naturally — it sets the tone for the entire interview. Tailor the "why this role" part specifically to each company.',
     commonMistakes: [
       'Going on for too long (over 3 minutes)',
       'Starting with personal/family details',
@@ -68,8 +68,8 @@ and the tech stack aligns perfectly with my experience."
     question: 'What are your strengths and weaknesses?',
     difficulty: 'beginner',
     tags: ['self-awareness', 'hr', 'growth'],
-    shortAnswer: 'Strengths: pick 2-3 genuine ones with examples. Weaknesses: be honest about a real weakness but focus on how you\'re actively working on it. Never say "I work too hard" â€” it\'s a clichÃ© that signals low self-awareness.',
-    detailedExplanation: 'Strengths should be relevant to the role and backed with examples. Weaknesses must be genuine but not disqualifying for the position. The growth focus is key â€” interviewers want to see self-awareness and ability to improve. Pick a real weakness that you\'ve recognized and are actively addressing. Avoid the classic "perfectionism" or "I work too hard" clichÃ©s.',
+    shortAnswer: 'Strengths: pick 2-3 genuine ones with examples. Weaknesses: be honest about a real weakness but focus on how you\'re actively working on it. Never say "I work too hard" — it\'s a cliché that signals low self-awareness.',
+    detailedExplanation: 'Strengths should be relevant to the role and backed with examples. Weaknesses must be genuine but not disqualifying for the position. The growth focus is key — interviewers want to see self-awareness and ability to improve. Pick a real weakness that you\'ve recognized and are actively addressing. Avoid the classic "perfectionism" or "I work too hard" clichés.',
     example: {
       code: `// STRENGTHS - with evidence
 "One of my strengths is breaking down complex problems 
@@ -99,16 +99,16 @@ at high-level architecture. I'm currently reading
 through system design practice problems."
 
 // What NOT to say:
-// âŒ "I'm a perfectionist" (overused, not believable)
-// âŒ "I work too hard" (humble brag, shows no self-awareness)
-// âŒ A core skill for the job (deal breaker)
-// âŒ "I don't have any weaknesses" (red flag)
-// âŒ Vague: "I sometimes procrastinate" without growth plan`,
+// ❌ "I'm a perfectionist" (overused, not believable)
+// ❌ "I work too hard" (humble brag, shows no self-awareness)
+// ❌ A core skill for the job (deal breaker)
+// ❌ "I don't have any weaknesses" (red flag)
+// ❌ Vague: "I sometimes procrastinate" without growth plan`,
       language: 'javascript'
     },
     interviewAnswer: 'Be authentic. Interviewers have heard "perfectionism" thousands of times. A real weakness with genuine growth steps shows maturity and self-awareness, which is far more impressive. For strengths, always pair them with a brief, concrete example from your experience.',
     commonMistakes: [
-      'Using the "perfectionism" clichÃ©',
+      'Using the "perfectionism" cliché',
       'Giving a weakness that\'s actually a strength (work too hard)',
       'Not having a growth plan for your weakness',
       'Strengths with no supporting examples'
@@ -129,7 +129,7 @@ through system design practice problems."
     difficulty: 'beginner',
     tags: ['problem-solving', 'star', 'technical'],
     shortAnswer: 'Use STAR method: Situation (context), Task (what was needed), Action (what YOU specifically did), Result (measurable outcome). Focus on your specific contributions and what you learned.',
-    detailedExplanation: 'Behavioral questions like "tell me about a time" use the STAR framework: Situation (brief context), Task (what needed to be done, your role), Action (specific steps you took â€” say "I" not "we"), Result (quantifiable outcome when possible, and what you learned). Pick a genuine challenge where you overcame obstacles and can speak to technical depth.',
+    detailedExplanation: 'Behavioral questions like "tell me about a time" use the STAR framework: Situation (brief context), Task (what needed to be done, your role), Action (specific steps you took — say "I" not "we"), Result (quantifiable outcome when possible, and what you learned). Pick a genuine challenge where you overcame obstacles and can speak to technical depth.',
     example: {
       code: `// STAR Framework Applied
 
@@ -147,16 +147,16 @@ and reducing the load time to under 2 seconds."
 "First, I used Lighthouse and Chrome DevTools to identify 
 the main issues. I found three critical problems:
 
-1. The entire app was in one 2.4MB JavaScript bundle â€” 
+1. The entire app was in one 2.4MB JavaScript bundle — 
    I implemented code splitting with React.lazy and split 
    routes into separate chunks.
    
-2. We were loading all 200 product images upfront â€” I 
+2. We were loading all 200 product images upfront — I 
    added lazy loading with the Intersection Observer API 
    and converted images to WebP format.
    
 3. The product catalog API was being called on every 
-   render without caching â€” I added React Query for 
+   render without caching — I added React Query for 
    API response caching with a 5-minute stale time.
 
 I also analyzed network requests and found we were loading 
@@ -172,7 +172,7 @@ I also documented the process as a performance audit
 guide for future features."
 
 // What makes this answer strong:
-// - Specific numbers (2.4MB â†’ 340KB, 8s â†’ 1.4s)
+// - Specific numbers (2.4MB → 340KB, 8s → 1.4s)
 // - Multiple specific technical solutions
 // - Business impact (23% bounce rate reduction)
 // - Shows learning/documentation`,
@@ -182,7 +182,7 @@ guide for future features."
     commonMistakes: [
       'Using "we" instead of "I" (can\'t tell your contribution)',
       'No measurable result',
-      'Too vague â€” no technical detail',
+      'Too vague — no technical detail',
       'Choosing a problem that\'s too simple'
     ],
     realWorldUse: 'Every behavioral interview uses the STAR method. Prepare 5-6 STAR stories covering: challenge overcome, conflict resolved, leadership shown, failure learned from, collaboration success.',
@@ -201,7 +201,7 @@ guide for future features."
     difficulty: 'beginner',
     tags: ['teamwork', 'conflict-resolution', 'star'],
     shortAnswer: 'Use STAR method. Show you addressed the conflict professionally, focused on the issue not the person, sought to understand their perspective, and reached a solution collaboratively. Never badmouth the colleague.',
-    detailedExplanation: 'Conflict questions assess maturity, communication, and professionalism. Interviewers want to see that you can navigate disagreements without escalation or avoidance. Key behaviors: approach directly (not via manager or email), listen to understand, focus on shared goals, find compromise. The outcome doesn\'t have to be "you won" â€” learning to collaborate is the point.',
+    detailedExplanation: 'Conflict questions assess maturity, communication, and professionalism. Interviewers want to see that you can navigate disagreements without escalation or avoidance. Key behaviors: approach directly (not via manager or email), listen to understand, focus on shared goals, find compromise. The outcome doesn\'t have to be "you won" — learning to collaborate is the point.',
     example: {
       code: `// Strong STAR answer for conflict question
 
@@ -224,7 +224,7 @@ a quick comparison document covering bundle size impact,
 learning curve, and fit for our use case.
 
 During the meeting, I asked them to walk me through why 
-they preferred Redux â€” I learned they were concerned about 
+they preferred Redux — I learned they were concerned about 
 consistency with the rest of the codebase. That was a 
 valid point I hadn't considered fully.
 
@@ -249,7 +249,7 @@ decisions, which the team adopted for future choices."
 // - Built a process for future disagreements`,
       language: 'javascript'
     },
-    interviewAnswer: 'Never say you\'ve never had conflict â€” it signals you avoid confrontation. Pick a real story where disagreement was resolved professionally. The goal is to show you can work through differences without damaging relationships.',
+    interviewAnswer: 'Never say you\'ve never had conflict — it signals you avoid confrontation. Pick a real story where disagreement was resolved professionally. The goal is to show you can work through differences without damaging relationships.',
     commonMistakes: [
       '"I\'ve never had a conflict" (avoidance is a red flag)',
       'Making the colleague look bad',
@@ -282,15 +282,15 @@ decisions, which the team adopted for future choices."
 // - Understand their mission statement
 // - Know their tech stack (from job description)
 
-// âœ… Strong answer:
+// ✅ Strong answer:
 "I've been using [Product] for about a year to manage 
 my freelance projects, and I've always been impressed 
-by how [specific feature] works â€” it's one of the 
+by how [specific feature] works — it's one of the 
 smoothest UX experiences I've seen for [problem it solves].
 
 I read your engineering blog post about how you built 
 the real-time collaboration feature using WebSockets 
-and CRDTs â€” that's exactly the kind of technically 
+and CRDTs — that's exactly the kind of technically 
 interesting problem I want to work on.
 
 Beyond the technical side, I'm aligned with your 
@@ -298,11 +298,11 @@ mission around [specific mission aspect]. I want to
 work somewhere where engineering decisions have real 
 user impact.
 
-And practically, your tech stack â€” React, Node.js, 
-and PostgreSQL â€” is exactly what I've been building 
+And practically, your tech stack — React, Node.js, 
+and PostgreSQL — is exactly what I've been building 
 with, so I'd hit the ground running."
 
-// âŒ Generic answers to avoid:
+// ❌ Generic answers to avoid:
 // "You're a leading company in the industry."
 // "The salary and benefits are great."
 // "I heard it's a good place to work."
@@ -341,10 +341,10 @@ with, so I'd hit the ground running."
     shortAnswer: 'Show ambition with realistic direction. Connect your goals to growth you\'d get from this role. Avoid extremes: too vague ("I want to grow") or too specific ("I want your job"). Show you\'re invested in the work, not just the title.',
     detailedExplanation: 'Interviewers want to know if your goals align with what the role offers, if you\'re ambitious but realistic, and if you plan to stay long enough to add value. Two to three years of contributions is what most companies hope for. Show direction without tying yourself to a specific title. Express interest in depth of skill and impact, not just promotion.',
     example: {
-      code: `// âœ… Strong answer for a developer role:
+      code: `// ✅ Strong answer for a developer role:
 "In 5 years, I see myself as a senior or lead developer 
 who can independently drive technical decisions for a 
-product area â€” not just implementing features but 
+product area — not just implementing features but 
 contributing to architecture, mentoring junior developers, 
 and working closely with product to shape what gets built 
 and how.
@@ -355,12 +355,12 @@ leadership. I think a role like this, where I'd be working
 with an experienced team on complex problems, is the 
 right environment to build those skills.
 
-I'm not obsessed with titles â€” I care more about the 
+I'm not obsessed with titles — I care more about the 
 quality of problems I get to work on and the impact 
 I can have."
 
-// âœ… For more senior role:
-"I'd like to be in a technical leadership role â€” either 
+// ✅ For more senior role:
+"I'd like to be in a technical leadership role — either 
 as a staff engineer or engineering manager, depending 
 on how I grow and what opportunities emerge. I enjoy 
 both deep technical work and helping others improve, 
@@ -370,7 +370,7 @@ This role appeals to me because [specific aspect]
 would help me develop [specific skill] that's important 
 for either path."
 
-// âŒ Answers to avoid:
+// ❌ Answers to avoid:
 // "Honestly, I just want to be doing a good job and 
 //  see where life takes me." (no ambition)
 // "I want your job." (presumptuous)
@@ -378,14 +378,14 @@ for either path."
 // "I'll be a VP in 5 years." (unrealistic for junior)`,
       language: 'javascript'
     },
-    interviewAnswer: 'Show ambition but connect it to the skills you\'d develop in this role. Companies invest in hiring and training â€” they want to know you\'ll be around to provide return on that investment. Tying your goals to what you\'d learn in this specific role shows alignment.',
+    interviewAnswer: 'Show ambition but connect it to the skills you\'d develop in this role. Companies invest in hiring and training — they want to know you\'ll be around to provide return on that investment. Tying your goals to what you\'d learn in this specific role shows alignment.',
     commonMistakes: [
       'Being so vague you sound disinterested',
       'Mentioning starting a company (signals exit plan)',
       'Unrealistic expectations (CEO in 5 years)',
       'Not connecting goals to this specific role'
     ],
-    realWorldUse: 'Standard HR question at every company. Have a genuine answer that reflects your actual career thinking â€” forced answers are obvious.',
+    realWorldUse: 'Standard HR question at every company. Have a genuine answer that reflects your actual career thinking — forced answers are obvious.',
     followUpQuestions: [
       'What skills do you want to develop?',
       'Do you prefer technical or management track?',
@@ -403,7 +403,7 @@ for either path."
     shortAnswer: 'Pick a real failure (not a humble brag). Own it completely, don\'t blame others. Focus on what you learned and how you changed your behavior afterward. Show growth mindset.',
     detailedExplanation: 'This question is a growth mindset test. Interviewers want to see self-awareness, accountability, and learning from mistakes. The story matters less than your reflection on it. Avoid failures that were out of your control, involve blaming others, or are so small they don\'t show any real stakes. Pick something where you genuinely dropped the ball and grew from it.',
     example: {
-      code: `// âœ… Genuine failure answer
+      code: `// ✅ Genuine failure answer
 
 // SITUATION + TASK:
 "Early in my first developer job, I was confident in 
@@ -413,7 +413,7 @@ without fully testing the rollback script.
 // WHAT HAPPENED (the failure):
 The migration had a bug that caused some user data to 
 become inaccessible. The issue affected about 200 users 
-and took 4 hours to resolve. It was genuinely my fault â€” 
+and took 4 hours to resolve. It was genuinely my fault — 
 I cut corners on testing because I was confident it 
 would work, and I didn't get a proper code review."
 
@@ -440,21 +440,21 @@ I haven't had a data incident since."
 // - Specific lessons learned
 // - Behavioral change (not just "I'll be more careful")
 
-// âŒ Avoid:
+// ❌ Avoid:
 // "I once missed a deadline because the requirements 
 //  kept changing." (blaming others)
 // "I worked so hard I burned out." (humble brag)
 // Choosing something so minor it has no stakes`,
       language: 'javascript'
     },
-    interviewAnswer: 'The best failure stories show real accountability and specific behavioral change. "I\'ll be more careful next time" is not learning. "I now do X every time because of this" is learning. Own it completely â€” interviewers respect honesty far more than a polished story with excuses.',
+    interviewAnswer: 'The best failure stories show real accountability and specific behavioral change. "I\'ll be more careful next time" is not learning. "I now do X every time because of this" is learning. Own it completely — interviewers respect honesty far more than a polished story with excuses.',
     commonMistakes: [
       'Blaming external factors (requirements changed, team failed)',
       'Choosing something too minor (no stakes)',
       'Choosing something disqualifying for the role',
       'Lessons that are too vague ("be more careful")'
     ],
-    realWorldUse: 'Companies hiring senior engineers especially care about this â€” they\'ve learned that people who can\'t acknowledge failure are dangerous to work with.',
+    realWorldUse: 'Companies hiring senior engineers especially care about this — they\'ve learned that people who can\'t acknowledge failure are dangerous to work with.',
     followUpQuestions: [
       'How did you fix the situation?',
       'How did it affect your team?',
@@ -469,8 +469,8 @@ I haven't had a data incident since."
     question: 'What are your salary expectations?',
     difficulty: 'beginner',
     tags: ['salary', 'negotiation', 'hr'],
-    shortAnswer: 'Research market rates first. Give a range based on research, not a single number. Anchor high but reasonably. Never give a number before the company does if you can avoid it â€” ask about their range first.',
-    detailedExplanation: 'Salary negotiation is a skill. First, research market rates using Glassdoor, Levels.fyi, LinkedIn Salary, and Blind for your role, location, and experience level. Try to get the company to state their range first. If you must go first, give a well-researched range anchored at the higher end. Never anchor too low â€” it\'s hard to negotiate up. Consider total compensation (base, equity, bonus, benefits).',
+    shortAnswer: 'Research market rates first. Give a range based on research, not a single number. Anchor high but reasonably. Never give a number before the company does if you can avoid it — ask about their range first.',
+    detailedExplanation: 'Salary negotiation is a skill. First, research market rates using Glassdoor, Levels.fyi, LinkedIn Salary, and Blind for your role, location, and experience level. Try to get the company to state their range first. If you must go first, give a well-researched range anchored at the higher end. Never anchor too low — it\'s hard to negotiate up. Consider total compensation (base, equity, bonus, benefits).',
     example: {
       code: `// Strategy 1: Deflect first (best option)
 Interviewer: "What are your salary expectations?"
@@ -494,7 +494,7 @@ including equity and benefits."
 // - Anchor at the HIGHER end of your range
 // - Mention "open to discussing full package" (equity, etc)
 // - Don't apologize for your number
-// - Never accept on the spot â€” "I'll think about it"
+// - Never accept on the spot — "I'll think about it"
 
 // Strategy 3: If asked about current salary
 // (illegal to ask in many US states)
@@ -511,7 +511,7 @@ flexibility to come up to [target number]?"
 // Worst answer: "Yes, that's fine" without negotiating`,
       language: 'javascript'
     },
-    interviewAnswer: 'Never give a number without research. Use Levels.fyi for tech companies, Glassdoor for others. Give a range anchored 10-20% above your target â€” it\'s expected, and companies rarely offer above the middle of their stated range. Always negotiate the first offer; it\'s expected and shows you know your worth.',
+    interviewAnswer: 'Never give a number without research. Use Levels.fyi for tech companies, Glassdoor for others. Give a range anchored 10-20% above your target — it\'s expected, and companies rarely offer above the middle of their stated range. Always negotiate the first offer; it\'s expected and shows you know your worth.',
     commonMistakes: [
       'Giving a number too low (anchors negotiation low)',
       'Saying "whatever is fair" (leaves money on the table)',
@@ -536,7 +536,7 @@ flexibility to come up to [target number]?"
     shortAnswer: 'Stay positive and forward-focused. Talk about what you\'re moving toward, not what you\'re running from. Never badmouth your current employer. Valid reasons: growth opportunity, new challenges, better alignment with interests.',
     detailedExplanation: 'This is a trap for negativity. Even if your boss is terrible, don\'t say so. The interviewer doesn\'t know if you\'re the problem. Focus on what you want more of, not what you hate. Valid positive reasons: want bigger scale, want to work on different technology, company direction changed, want to contribute to a product you use, seeking mentorship opportunities, career advancement.',
     example: {
-      code: `// âœ… Forward-focused answers:
+      code: `// ✅ Forward-focused answers:
 
 // Scenario: Want more growth
 "I've learned a lot in my current role and am proud 
@@ -564,7 +564,7 @@ used the time to [what you did: side projects, open
 source, courses], and I'm excited to find a role 
 where I can contribute."
 
-// âŒ Things to NEVER say:
+// ❌ Things to NEVER say:
 // "My boss is terrible and micromanages everything"
 // "I hate the company culture"
 // "I'm not being paid enough" (first thing - red flag)
@@ -572,19 +572,19 @@ where I can contribute."
 // Even if all these are true - don't say them
 
 // Transform negatives to positives:
-// "Boss micromanages" â†’ "I'm looking for more autonomy"
-// "Boring work" â†’ "I want more challenging technical problems"
-// "Bad culture" â†’ "I'm looking for a more collaborative team"`,
+// "Boss micromanages" → "I'm looking for more autonomy"
+// "Boring work" → "I want more challenging technical problems"
+// "Bad culture" → "I'm looking for a more collaborative team"`,
       language: 'javascript'
     },
-    interviewAnswer: 'Always be honest but frame it positively. Interviewers ask this partly to detect red flags â€” if you badmouth your current employer, they wonder if you\'ll do the same to them. Genuinely forward-focused answers about growth, challenge, or alignment with interests are the most believable and impressive.',
+    interviewAnswer: 'Always be honest but frame it positively. Interviewers ask this partly to detect red flags — if you badmouth your current employer, they wonder if you\'ll do the same to them. Genuinely forward-focused answers about growth, challenge, or alignment with interests are the most believable and impressive.',
     commonMistakes: [
       'Badmouthing current employer or manager',
       'Saying only "for more money"',
       'Not having a real answer (vague)',
       'Being dishonest (it often comes out)'
     ],
-    realWorldUse: 'Asked at every interview. Have a genuine, positive answer ready. If you were laid off, be straightforward â€” it\'s common and not a stigma.',
+    realWorldUse: 'Asked at every interview. Have a genuine, positive answer ready. If you were laid off, be straightforward — it\'s common and not a stigma.',
     followUpQuestions: [
       'What did you like most about your current role?',
       'What would make you stay at your current job?',
@@ -600,7 +600,7 @@ where I can contribute."
     difficulty: 'beginner',
     tags: ['questions', 'research', 'engagement'],
     shortAnswer: 'Always have 3-5 thoughtful questions prepared. Ask about the team, tech stack, biggest challenges, growth opportunities, and what success looks like. Never say "No, I think you\'ve covered everything."',
-    detailedExplanation: 'Saying you have no questions is a red flag â€” it signals low engagement. Questions show you\'re evaluating the role seriously, not just taking any offer. Ask questions that help you make a decision, that show you\'ve done research, and that demonstrate genuine curiosity. Avoid asking about salary/benefits in early rounds (HR round is fine), vacation policies, or anything easily found on their website.',
+    detailedExplanation: 'Saying you have no questions is a red flag — it signals low engagement. Questions show you\'re evaluating the role seriously, not just taking any offer. Ask questions that help you make a decision, that show you\'ve done research, and that demonstrate genuine curiosity. Avoid asking about salary/benefits in early rounds (HR round is fine), vacation policies, or anything easily found on their website.',
     example: {
       code: `// Great questions to ask (pick 3-5 relevant ones):
 
@@ -615,7 +615,7 @@ is currently facing?"
 feature development and technical debt?"
 
 // About the team
-"Can you tell me about the team I'd be joining â€” 
+"Can you tell me about the team I'd be joining — 
 size, how long people have been here, how you 
 collaborate?"
 
@@ -650,7 +650,7 @@ What was the outcome of that approach?"
 "I noticed you recently [launched a feature/changed 
 direction]. How has that affected the engineering team?"
 
-// âŒ Avoid these questions:
+// ❌ Avoid these questions:
 // "What are the vacation days?"
 // "Can I work from home?" (ask but save for offer stage)
 // "What does the company do?" (Google it)
@@ -672,7 +672,7 @@ direction]. How has that affected the engineering team?"
     ]
   },
 
-  // â”€â”€ BATCH 1 (1-10) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── BATCH 1 (1-10) ──────────────────────────────────────────────────────────
 
   {
     id: 'hr-new-remote-work',
@@ -686,7 +686,7 @@ direction]. How has that affected the engineering team?"
     example: {
       code: `// Remote productivity system (real example)
 
-// 1. Fixed schedule â€” treat remote like in-office
+// 1. Fixed schedule — treat remote like in-office
 "I work 9-6 with a hard shutdown. I block deep-work 
 hours in the morning (9-12) when I do complex coding, 
 and reserve afternoons for meetings, reviews, and 
@@ -720,7 +720,7 @@ the social side alive."
 // - Blockers communicated proactively`,
       language: 'javascript'
     },
-    interviewAnswer: 'Remote hiring is competitive â€” companies want proof you have the habits, not just the intention. Be specific about tools, routines, and how you maintain team visibility. Vague "I\'m disciplined" answers don\'t land.',
+    interviewAnswer: 'Remote hiring is competitive — companies want proof you have the habits, not just the intention. Be specific about tools, routines, and how you maintain team visibility. Vague "I\'m disciplined" answers don\'t land.',
     commonMistakes: [
       'Vague answers with no specific habits',
       'Not mentioning communication and visibility',
@@ -743,12 +743,12 @@ the social side alive."
     difficulty: 'beginner',
     tags: ['feedback', 'growth', 'self-awareness', 'star'],
     shortAnswer: 'Use STAR. Show you listened without defensiveness, reflected on whether the feedback was valid, and made a concrete change. Receiving feedback well is a professional skill.',
-    detailedExplanation: 'This question tests emotional maturity and growth mindset. Interviewers look for: no defensiveness, genuine reflection, and behavioral change. Pick a real example where the feedback stung a little â€” if it was easy, it doesn\'t show much. The ability to separate ego from work is a key signal of a high-performing collaborator.',
+    detailedExplanation: 'This question tests emotional maturity and growth mindset. Interviewers look for: no defensiveness, genuine reflection, and behavioral change. Pick a real example where the feedback stung a little — if it was easy, it doesn\'t show much. The ability to separate ego from work is a key signal of a high-performing collaborator.',
     example: {
       code: `// SITUATION:
 "Six months into my first job, my tech lead gave me 
 feedback in my review that my code was hard to review 
-â€” functions were too long, naming wasn't clear, and 
+— functions were too long, naming wasn't clear, and 
 I rarely wrote comments explaining the 'why'."
 
 // MY INITIAL REACTION (be honest):
@@ -760,7 +760,7 @@ before responding."
 "I asked my lead to walk me through a PR with me 
 and explain what specifically was hard to follow. 
 Seeing it from a reviewer's perspective was a 
-wake-up call â€” I realized I was writing code I 
+wake-up call — I realized I was writing code I 
 could read, not code others could read.
 
 I bought 'Clean Code' by Robert Martin, applied the 
@@ -813,7 +813,7 @@ internalized that readable code is collaborative code."
 "If I have 3 deadlines converging, I first list each 
 task with its deadline, impact (blocking who?), and 
 effort estimate. Often one is blocking another person 
-or team â€” that gets prioritized regardless of effort."
+or team — that gets prioritized regardless of effort."
 
 // Step 2: Time-block ruthlessly
 "I block deep focus time for the highest-priority item 
@@ -822,7 +822,7 @@ one is complete enough to hand off or submit."
 
 // Step 3: Communicate early
 "If I can see I won't hit all deadlines at full quality, 
-I raise the conflict immediately â€” not on the due date.
+I raise the conflict immediately — not on the due date.
 'I have X, Y, and Z due Friday. X is taking longer 
 than estimated. Can we adjust Y's deadline or reduce 
 scope on Z?'"
@@ -838,7 +838,7 @@ MVP for each task."
 a feature PR for code review, and documentation due. 
 The bug was blocking the sales demo so it went first. 
 I asked a teammate to start the documentation while 
-I finished the feature. Everything shipped â€” the bug 
+I finished the feature. Everything shipped — the bug 
 that day, feature next morning, docs by EOD."`,
       language: 'javascript'
     },
@@ -847,7 +847,7 @@ that day, feature next morning, docs by EOD."`,
       '"I just work harder/longer" (not sustainable)',
       'No mention of communicating with stakeholders',
       'Always saying yes without scope negotiation',
-      'No system â€” pure gut feeling'
+      'No system — pure gut feeling'
     ],
     realWorldUse: 'Sprint crunches, production bugs during feature development, and cross-team dependencies make this a constant challenge. This skill separates reliable engineers from unpredictable ones.',
     followUpQuestions: [
@@ -865,7 +865,7 @@ that day, feature next morning, docs by EOD."`,
     difficulty: 'beginner',
     tags: ['learning', 'growth', 'self-improvement'],
     shortAnswer: 'Show a concrete, consistent learning system: specific sources, regular habits, and application of what you learn through side projects or at work.',
-    detailedExplanation: 'Technology moves fast. Interviewers want to see that you\'re self-driven learners, not people who only learn what their job requires. The best answers combine passive learning (blogs, newsletters, podcasts) with active application (building things, contributing to open source, applying concepts at work). Generic "I read tech blogs" isn\'t enough â€” be specific.',
+    detailedExplanation: 'Technology moves fast. Interviewers want to see that you\'re self-driven learners, not people who only learn what their job requires. The best answers combine passive learning (blogs, newsletters, podcasts) with active application (building things, contributing to open source, applying concepts at work). Generic "I read tech blogs" isn\'t enough — be specific.',
     example: {
       code: `// Learning system (be specific about sources)
 
@@ -899,7 +899,7 @@ than docs do."
 
 // At work:
 "I volunteer to be the person who evaluates new libraries 
-when we're considering a change â€” it forces me to go 
+when we're considering a change — it forces me to go 
 deep quickly."`,
       language: 'javascript'
     },
@@ -942,7 +942,7 @@ without progress, or I become unusually quiet in Slack."
 from screens. I come back with a fresh perspective 
 about 80% of the time. For longer crunches, I break 
 work into 90-minute focus blocks with real breaks 
-instead of grinding for 6 hours straight â€” I actually 
+instead of grinding for 6 hours straight — I actually 
 produce more this way."
 
 // Preventing the problem:
@@ -956,7 +956,7 @@ the worst pressure."
 "If I'm genuinely underwater, I say so early. 
 'I'm struggling with X, can we pair on it?' or 
 'At current pace I'll finish Y by Thursday, not 
-Tuesday â€” does that break anything?' is always 
+Tuesday — does that break anything?' is always 
 better than missing silently."
 
 // Real crunch example:
@@ -991,15 +991,15 @@ thrashing."`,
     difficulty: 'intermediate',
     tags: ['leadership', 'initiative', 'star', 'ownership'],
     shortAnswer: 'Use STAR. Show you identified a problem others didn\'t act on, took ownership beyond your job description, and produced a measurable result. Leadership at any level is about initiative, not title.',
-    detailedExplanation: 'This question is especially important for mid-to-senior roles. Interviewers want self-starters who don\'t wait to be told what to do. Examples don\'t need to involve managing people â€” refactoring a failing CI pipeline, creating documentation nobody asked for, or organizing a knowledge-sharing session all count. The key elements: you saw a gap, you stepped up, and it had impact.',
+    detailedExplanation: 'This question is especially important for mid-to-senior roles. Interviewers want self-starters who don\'t wait to be told what to do. Examples don\'t need to involve managing people — refactoring a failing CI pipeline, creating documentation nobody asked for, or organizing a knowledge-sharing session all count. The key elements: you saw a gap, you stepped up, and it had impact.',
     example: {
       code: `// SITUATION:
 "At my previous company, our deployment process was 
-largely manual â€” someone would SSH into the server, 
+largely manual — someone would SSH into the server, 
 pull the latest code, run migrations manually, and 
 hope nothing went wrong. We had 2 failed deployments 
 in a month that caused downtime. It wasn't my team's 
-responsibility â€” DevOps was a single person who was 
+responsibility — DevOps was a single person who was 
 already stretched thin."
 
 // INITIATIVE TAKEN:
@@ -1030,7 +1030,7 @@ highlighted it in my performance review as
 // - Measurable impact (zero downtime, hours saved)`,
       language: 'javascript'
     },
-    interviewAnswer: 'The best initiative stories solve a real problem that was bothering everyone but nobody owned. If you can quantify the impact â€” time saved, bugs prevented, people helped â€” the story becomes significantly more compelling.',
+    interviewAnswer: 'The best initiative stories solve a real problem that was bothering everyone but nobody owned. If you can quantify the impact — time saved, bugs prevented, people helped — the story becomes significantly more compelling.',
     commonMistakes: [
       'Describing "initiative" that was actually asked of you',
       'No measurable result or team impact',
@@ -1053,19 +1053,19 @@ highlighted it in my performance review as
     difficulty: 'intermediate',
     tags: ['disagreement', 'management', 'communication', 'star'],
     shortAnswer: 'Show you raised the disagreement professionally, explained your reasoning with data, listened to their perspective, and ultimately respected the decision even if it went against you. Never badmouth the manager.',
-    detailedExplanation: 'This question checks whether you\'re blindly obedient (bad) or combatively independent (also bad). The ideal is "disagree and commit" â€” you voiced a reasoned objection, had a productive dialogue, and supported the final decision regardless of outcome. Managers value people who push back thoughtfully, not people who nod along or go rogue.',
+    detailedExplanation: 'This question checks whether you\'re blindly obedient (bad) or combatively independent (also bad). The ideal is "disagree and commit" — you voiced a reasoned objection, had a productive dialogue, and supported the final decision regardless of outcome. Managers value people who push back thoughtfully, not people who nod along or go rogue.',
     example: {
       code: `// SITUATION:
 "My manager decided we should rewrite our REST API 
 endpoints in GraphQL to 'modernize' the stack. I had 
-concerns â€” our team had no GraphQL experience, our 
+concerns — our team had no GraphQL experience, our 
 clients were simple, and we were mid-sprint on a 
 feature delivery. I disagreed with the timing and scope."
 
 // HOW I RAISED IT:
 "I didn't push back in the team meeting. Instead, I 
 sent my manager a Slack message: 'I have some concerns 
-about the GraphQL migration timing â€” can we find 20 
+about the GraphQL migration timing — can we find 20 
 minutes this week to talk through it?'
 
 In that meeting, I came prepared:
@@ -1084,7 +1084,7 @@ and the team was much better prepared."
 // If the decision went the other way:
 "Even if my manager had decided to proceed anyway, 
 I would have committed fully. I raised my concern, 
-it was considered â€” after that, my job is to execute 
+it was considered — after that, my job is to execute 
 well, not to be right."
 
 // Key principles:
@@ -1124,7 +1124,7 @@ well, not to be right."
 feature, the business decided to switch from Stripe 
 to a different payment processor (Adyen) due to a 
 partnership deal. The integration APIs were completely 
-different â€” most of my work couldn't be reused."
+different — most of my work couldn't be reused."
 
 // MY RESPONSE:
 "My first reaction was frustration, but I contained it. 
@@ -1142,7 +1142,7 @@ migration plan for my manager: what was reusable, what
 needed rebuilding, and a revised timeline estimate.
 
 I delivered the Adyen integration in 2.5 weeks instead 
-of the original 2 â€” faster than the revised estimate."
+of the original 2 — faster than the revised estimate."
 
 // LEARNING:
 "I started abstracting payment-provider logic behind 
@@ -1180,13 +1180,13 @@ team standard."
     difficulty: 'beginner',
     tags: ['communication', 'collaboration', 'non-technical', 'hr'],
     shortAnswer: 'Lead with impact, not implementation. Use analogies and visuals. Confirm understanding without being condescending. Translate "what we built" into "what it means for the business."',
-    detailedExplanation: 'As developers grow in seniority, communication with non-technical stakeholders becomes increasingly important. Interviewers â€” especially for senior or lead roles â€” want to see that you can bridge the gap between engineering and business. Key skills: translating technical concepts to business outcomes, not using jargon, calibrating depth to the audience, and confirming understanding.',
+    detailedExplanation: 'As developers grow in seniority, communication with non-technical stakeholders becomes increasingly important. Interviewers — especially for senior or lead roles — want to see that you can bridge the gap between engineering and business. Key skills: translating technical concepts to business outcomes, not using jargon, calibrating depth to the audience, and confirming understanding.',
     example: {
       code: `// Principles for non-technical communication
 
 // 1. Lead with impact, not implementation
-// âŒ "We refactored the database query layer"
-// âœ… "We fixed the root cause of the slow reports â€” 
+// ❌ "We refactored the database query layer"
+// ✅ "We fixed the root cause of the slow reports — 
 //     they'll load in under 2 seconds now instead of 30"
 
 // 2. Use the right analogy
@@ -1194,7 +1194,7 @@ team standard."
 'Imagine your phone stores the last 20 contacts you 
 called so you don't have to search the full address 
 book every time. Our cache does the same for database 
-results â€” the most common queries are answered 
+results — the most common queries are answered 
 instantly from memory.'"
 
 // 3. Calibrate depth to the audience
@@ -1211,16 +1211,16 @@ queries to batch loading with DataLoader.'"
 (better than "Is that clear?" which can feel patronizing)
 
 // 5. What to avoid
-// âŒ "It's technically complicated to explain"
-// âŒ Full technical jargon (API, ORM, latency P99)
-// âŒ Skipping the 'why should I care' part
+// ❌ "It's technically complicated to explain"
+// ❌ Full technical jargon (API, ORM, latency P99)
+// ❌ Skipping the 'why should I care' part
 
 // Real story structure:
 "A PM asked why a feature was taking 3 sprints. 
 Instead of explaining microservices, I drew a 
 quick diagram: 'We need to touch 4 different systems 
 that don't talk to each other. Building the bridge 
-between them is the time â€” the feature itself is 
+between them is the time — the feature itself is 
 actually small.'"`,
       language: 'javascript'
     },
@@ -1246,14 +1246,14 @@ actually small.'"`,
     question: 'Describe a situation where you went above and beyond your job responsibilities.',
     difficulty: 'beginner',
     tags: ['ownership', 'initiative', 'star', 'impact'],
-    shortAnswer: 'Use STAR. Show genuine ownership â€” you identified something that needed doing beyond your role, did it, and it benefited the team or product. Not about working extra hours but about taking responsibility.',
-    detailedExplanation: 'Going above and beyond isn\'t about logging extra hours â€” it\'s about ownership of outcomes beyond your assigned tasks. This includes: volunteering for high-impact-but-unowned work, helping teammates who are blocked, improving processes nobody asked you to fix, and advocating for users when it wasn\'t required. Companies value this because it signals you care about the product, not just your to-do list.',
+    shortAnswer: 'Use STAR. Show genuine ownership — you identified something that needed doing beyond your role, did it, and it benefited the team or product. Not about working extra hours but about taking responsibility.',
+    detailedExplanation: 'Going above and beyond isn\'t about logging extra hours — it\'s about ownership of outcomes beyond your assigned tasks. This includes: volunteering for high-impact-but-unowned work, helping teammates who are blocked, improving processes nobody asked you to fix, and advocating for users when it wasn\'t required. Companies value this because it signals you care about the product, not just your to-do list.',
     example: {
       code: `// SITUATION:
 "We were in QA for a major feature release. I noticed 
 that our test environment was missing some production 
 data edge cases that had caused bugs in previous releases. 
-Setting up better test data wasn't my ticket â€” it was 
+Setting up better test data wasn't my ticket — it was 
 'owned' by QA, who was already overwhelmed."
 
 // ACTION:
@@ -1270,7 +1270,7 @@ for every future release."
 
 // RESULT:
 "We caught 3 bugs in that release that wouldn't have 
-been found otherwise â€” two of them were regressions 
+been found otherwise — two of them were regressions 
 that had affected users previously. The QA lead told 
 me it was the most useful thing a dev had done for 
 them all year. The seed scripts are still in use."
@@ -1282,7 +1282,7 @@ them all year. The seed scripts are still in use."
 // - Benefited users (bugs caught before release)`,
       language: 'javascript'
     },
-    interviewAnswer: 'The strongest stories have three qualities: the work wasn\'t assigned to you, it had real impact, and it benefited someone other than just yourself. Going above and beyond for self-promotion doesn\'t count â€” genuine helpfulness and ownership do.',
+    interviewAnswer: 'The strongest stories have three qualities: the work wasn\'t assigned to you, it had real impact, and it benefited someone other than just yourself. Going above and beyond for self-promotion doesn\'t count — genuine helpfulness and ownership do.',
     commonMistakes: [
       'Describing extra hours as the "above and beyond" without actual impact',
       'Work that was actually part of your job description',
@@ -1297,7 +1297,7 @@ them all year. The seed scripts are still in use."
     ]
   },
 
-  // â”€â”€ BATCH 2 (11-20) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── BATCH 2 (11-20) ─────────────────────────────────────────────────────────
 
   {
     id: 'hr-new-mentor',
@@ -1330,7 +1330,7 @@ pattern you can use everywhere for this situation.'"
 // Principle 3: Pair on the right things
 "I pair on new concepts and unfamiliar patterns. I don't 
 pair on things they can figure out with 20 minutes of 
-reading docs â€” that growth is important too."
+reading docs — that growth is important too."
 
 // Principle 4: Regular check-ins
 "Weekly 1-on-1s, even 15 minutes. Two questions: 
@@ -1342,7 +1342,7 @@ consistent space."
 "The junior developer I mentored over 6 months went 
 from needing help on almost every PR to independently 
 shipping features and reviewing others' code. Their 
-first solo feature shipped with no rework â€” that was 
+first solo feature shipped with no rework — that was 
 the milestone I was working toward."`,
       language: 'javascript'
     },
@@ -1369,7 +1369,7 @@ the milestone I was working toward."`,
     difficulty: 'intermediate',
     tags: ['ambiguity', 'requirements', 'communication', 'problem-solving'],
     shortAnswer: 'Ask the right clarifying questions, document your understanding, identify assumptions explicitly, build in feedback loops, and don\'t wait for perfect requirements to start. Progress and alignment trump perfect clarity.',
-    detailedExplanation: 'Vague requirements are the norm, not the exception. Interviewers â€” especially for product-facing roles â€” want to see that you can operate without a complete specification. The ideal engineer narrows ambiguity through targeted questions, makes reasonable assumptions explicit, ships something to validate early, and iterates. Waiting for perfect requirements is a common junior mistake.',
+    detailedExplanation: 'Vague requirements are the norm, not the exception. Interviewers — especially for product-facing roles — want to see that you can operate without a complete specification. The ideal engineer narrows ambiguity through targeted questions, makes reasonable assumptions explicit, ships something to validate early, and iterates. Waiting for perfect requirements is a common junior mistake.',
     example: {
       code: `// My process for ambiguous requirements
 
@@ -1384,7 +1384,7 @@ anything:
 
 // Step 2: Ask targeted, not scattered questions
 "I group my questions and bring them in one message 
-or meeting â€” not 10 separate pings. I also propose 
+or meeting — not 10 separate pings. I also propose 
 answers when I can: 'I'm assuming we want to target 
 mobile users on 4G. Is that right?'"
 
@@ -1407,7 +1407,7 @@ takes 10 minutes and saves 3 days of wrong work."
 // - Waiting for complete requirements before starting`,
       language: 'javascript'
     },
-    interviewAnswer: 'The goal is alignment, not clarity for its own sake. A documented assumption is almost as good as an explicit requirement â€” it\'s verifiable and correctable. Companies want engineers who move forward intelligently, not ones who stall waiting for perfect specs.',
+    interviewAnswer: 'The goal is alignment, not clarity for its own sake. A documented assumption is almost as good as an explicit requirement — it\'s verifiable and correctable. Companies want engineers who move forward intelligently, not ones who stall waiting for perfect specs.',
     commonMistakes: [
       'Asking too many questions before starting anything',
       'Building without validating assumptions',
@@ -1437,7 +1437,7 @@ takes 10 minutes and saves 3 days of wrong work."
 // 1. Meeting facilitation
 "In meetings where I'm a lead, I actively solicit 
 input from people who haven't spoken: 'Sam, you've 
-worked with this codebase longer than anyone â€” 
+worked with this codebase longer than anyone — 
 what's your read?' 
 
 I also interrupt 'stacktracking' (where the same 
@@ -1453,24 +1453,24 @@ context I didn't have."
 
 // 3. Onboarding and documentation
 "I write onboarding docs that assume no tribal 
-knowledge â€” no 'just ask Alice' steps. Information 
+knowledge — no 'just ask Alice' steps. Information 
 that lives only in someone's head is exclusionary 
 by default."
 
 // 4. Amplifying quieter voices
 "When a quieter colleague makes a good point that 
 gets glossed over, I explicitly name it: 
-'Going back to what Maya said â€” I think that's 
+'Going back to what Maya said — I think that's 
 actually the key insight here.'"
 
 // 5. Confronting exclusion professionally
 "If I hear an exclusive comment (even if unintentional), 
 I address it privately after the meeting: 
-'Hey, the comment about [X] may have landed badly â€” 
+'Hey, the comment about [X] may have landed badly — 
 I don't think you meant it that way but worth knowing.'"`,
       language: 'javascript'
     },
-    interviewAnswer: 'Be specific and behavioral. "I believe in diversity" is not an answer. "Here\'s what I actually do" is. You don\'t need a perfect record â€” showing you think about it and act on it consistently is what matters.',
+    interviewAnswer: 'Be specific and behavioral. "I believe in diversity" is not an answer. "Here\'s what I actually do" is. You don\'t need a perfect record — showing you think about it and act on it consistently is what matters.',
     commonMistakes: [
       'Generic value statements with no actions',
       'Focusing only on hiring, not day-to-day culture',
@@ -1492,14 +1492,14 @@ I don't think you meant it that way but worth knowing.'"`,
     question: 'How do you balance writing clean code with meeting tight deadlines?',
     difficulty: 'intermediate',
     tags: ['trade-offs', 'technical-debt', 'pragmatism', 'quality'],
-    shortAnswer: 'Show you understand that the dichotomy is mostly false: clean code is usually faster. But explain how you make trade-off decisions explicitly â€” what shortcuts are acceptable, when, and how you track debt for cleanup.',
+    shortAnswer: 'Show you understand that the dichotomy is mostly false: clean code is usually faster. But explain how you make trade-off decisions explicitly — what shortcuts are acceptable, when, and how you track debt for cleanup.',
     detailedExplanation: 'This question probes your pragmatism vs idealism balance. Interviewers don\'t want a perfectionist who misses deadlines for beautiful code, nor someone who ships trash under any pressure. The ideal: you have quality standards, you know when to bend them with explicit acknowledgment, you ship working code, and you leave breadcrumbs (TODO comments, tech debt tickets) for cleanup.',
     example: {
       code: `// My framework for clean code vs deadlines
 
 // Core belief:
 "The framing as a dichotomy is mostly wrong. Messy code 
-usually makes you slower, not faster â€” you spend more 
+usually makes you slower, not faster — you spend more 
 time debugging and the next person spends more time 
 understanding it. Clean code is often the faster path."
 
@@ -1519,7 +1519,7 @@ and fix it properly in the next sprint."
 // Communication about trade-offs:
 "If a deadline genuinely requires a quality compromise, 
 I make it explicit: 'I can ship X by Friday but it will 
-need cleanup â€” here's what I'd do differently with 
+need cleanup — here's what I'd do differently with 
 another day.' This lets the team make an informed 
 decision and documents the trade-off."
 
@@ -1563,13 +1563,13 @@ immediately and could start on [specific date]."
 
 // Longer notice period:
 "My contract requires 4 weeks' notice, which I intend 
-to honor. I want to transition my work properly â€” I'd 
+to honor. I want to transition my work properly — I'd 
 rather take the time to hand off well than leave the 
 team in a difficult spot. I could start on [date + 4 weeks]."
 
 // If you need time for personal reasons:
 "I can give 2 weeks' notice, but I'd also appreciate 
-2 weeks before starting for [moving, family matter â€” 
+2 weeks before starting for [moving, family matter — 
 brief reason]. I could start [4 weeks from now]. 
 If the start date is flexible, that would be ideal."
 
@@ -1579,11 +1579,11 @@ week to wrap up some personal commitments, but
 I could realistically start [1 week from offer acceptance]."
 
 // What NOT to do:
-// âŒ Say you can start sooner than you can
-// âŒ Abandon your current employer without notice
+// ❌ Say you can start sooner than you can
+// ❌ Abandon your current employer without notice
 //    (it tells the new employer you'll do the same to them)
-// âŒ Be vague: "sometime next month"
-// âŒ Promise flexibility you don't have
+// ❌ Be vague: "sometime next month"
+// ❌ Promise flexibility you don't have
 
 // Pro tip:
 // If start date matters to the company, ask:
@@ -1636,7 +1636,7 @@ I was proud of what we shipped."
 
 // Narrative arc (tie it together):
 "Looking at the full picture: A was a layoff, 
-D was a closure â€” both involuntary. B to C was 
+D was a closure — both involuntary. B to C was 
 intentional because I wanted backend experience. 
 Each move has been toward full-stack depth and 
 more complex systems. This role is the right 
@@ -1645,17 +1645,17 @@ next step for that same reason."
 // Commitment signal:
 "I'm aware the resume looks like a lot of moves. 
 What I can tell you is I've stayed through difficulty 
-when there was a reason to â€” at Company C I turned 
+when there was a reason to — at Company C I turned 
 down a higher offer from a competitor because I 
 wanted to finish the product launch I'd started."
 
 // What to avoid:
-// âŒ Vague: "I just wanted new challenges each time"
-// âŒ Badmouthing former employers
-// âŒ Defensive or apologetic tone`,
+// ❌ Vague: "I just wanted new challenges each time"
+// ❌ Badmouthing former employers
+// ❌ Defensive or apologetic tone`,
       language: 'javascript'
     },
-    interviewAnswer: 'Anticipate this question and prepare a clear, confident narrative for each transition. The interviewer is checking for a pattern of instability or poor judgment â€” show them neither by being direct and having coherent reasons.',
+    interviewAnswer: 'Anticipate this question and prepare a clear, confident narrative for each transition. The interviewer is checking for a pattern of instability or poor judgment — show them neither by being direct and having coherent reasons.',
     commonMistakes: [
       'Appearing defensive or embarrassed',
       'Vague reasons that sound made up',
@@ -1677,21 +1677,21 @@ wanted to finish the product launch I'd started."
     question: 'Are you more of an independent worker or do you prefer collaborating with a team?',
     difficulty: 'beginner',
     tags: ['work-style', 'collaboration', 'independence', 'hr'],
-    shortAnswer: 'The right answer is both â€” show you\'re comfortable with deep individual focus AND collaborative work, and that you know when each mode is appropriate. Explain with concrete examples.',
+    shortAnswer: 'The right answer is both — show you\'re comfortable with deep individual focus AND collaborative work, and that you know when each mode is appropriate. Explain with concrete examples.',
     detailedExplanation: 'This question assesses self-awareness about work style and fit. Most engineering roles require both modes: deep solo focus for coding and debugging, collaboration for design, code review, and planning. Neither extreme (lone wolf or can\'t work without constant input) is ideal. Demonstrate range and situational awareness.',
     example: {
       code: `// Balanced answer with specifics
 
 // Independent mode (when and why):
-"For implementation work â€” actually writing code, 
-debugging, and problem-solving â€” I prefer deep, 
+"For implementation work — actually writing code, 
+debugging, and problem-solving — I prefer deep, 
 uninterrupted blocks. I do my best work in 2-3 hour 
 focus sessions with no Slack interruptions. 
 I protect those blocks aggressively."
 
 // Collaborative mode (when and why):
 "For design decisions, architecture discussions, 
-and code review, collaboration is essential â€” 
+and code review, collaboration is essential — 
 you simply can't get to the best solution alone. 
 Two people reviewing a system design catch 90% 
 of what one person misses."
@@ -1710,7 +1710,7 @@ most of the week, then reconvene for code review
 and integration. That rhythm felt ideal."
 
 // What I ask about new teams:
-"I ask about a team's communication norms early â€” 
+"I ask about a team's communication norms early — 
 not because I need a specific style, but because 
 I want to match the rhythm of the team rather than 
 create friction by operating differently."`,
@@ -1723,7 +1723,7 @@ create friction by operating differently."`,
       'Not connecting work style to role requirements',
       'Sounding like you don\'t know yourself'
     ],
-    realWorldUse: 'Engineering cultures vary enormously â€” some are highly async and independent, others are highly collaborative. Knowing your style and asking about theirs is smart interview practice.',
+    realWorldUse: 'Engineering cultures vary enormously — some are highly async and independent, others are highly collaborative. Knowing your style and asking about theirs is smart interview practice.',
     followUpQuestions: [
       'How do you handle it when collaboration is needed but your team prefers working independently?',
       'Do you prefer pair programming?',
@@ -1746,7 +1746,7 @@ create friction by operating differently."`,
 // Motivator: Solving hard problems
 "I get genuine satisfaction from debugging a complex 
 problem that's stumped the team for days. The moment 
-the root cause clicks â€” that's the feeling I chase. 
+the root cause clicks — that's the feeling I chase. 
 This role appeals to me because the distributed 
 systems challenges you described are exactly the 
 kind of hard problems I want to work on."
@@ -1755,14 +1755,14 @@ kind of hard problems I want to work on."
 "What energizes me most is seeing real people use 
 something I built. When I shipped the search redesign 
 at my last job, I read through user feedback for days 
-â€” seeing users find things they couldn't find before 
+— seeing users find things they couldn't find before 
 was deeply satisfying. A consumer product at this 
 scale would give me that multiplied significantly."
 
 // Motivator: Learning
 "I'm motivated by the steep parts of the learning curve. 
-When I'm in new territory â€” unfamiliar codebase, 
-new technology, new domain â€” I'm at my most engaged. 
+When I'm in new territory — unfamiliar codebase, 
+new technology, new domain — I'm at my most engaged. 
 I deliberately seek out the parts of a problem I 
 don't understand yet."
 
@@ -1770,16 +1770,16 @@ don't understand yet."
 "Increasingly, what I find motivating is helping 
 other people get unstuck. When a junior dev ships 
 their first feature independently after I've worked 
-with them â€” that's more satisfying than shipping 
+with them — that's more satisfying than shipping 
 the feature myself."
 
-// âŒ Avoid:
+// ❌ Avoid:
 // "I'm motivated by salary and growth" (transactional)
 // "I love coding" (too vague)
 // "I want to be a senior engineer" (title focus)`,
       language: 'javascript'
     },
-    interviewAnswer: 'Specificity makes motivation believable. Generic answers sound performed. Think about what actually got you out of bed excited about a project and describe that â€” even small examples are more convincing than polished abstractions.',
+    interviewAnswer: 'Specificity makes motivation believable. Generic answers sound performed. Think about what actually got you out of bed excited about a project and describe that — even small examples are more convincing than polished abstractions.',
     commonMistakes: [
       'Pure extrinsic motivators (money, title)',
       'Vague answers ("I love technology")',
@@ -1802,14 +1802,14 @@ the feature myself."
     difficulty: 'intermediate',
     tags: ['mistakes', 'accountability', 'process', 'blameless-culture'],
     shortAnswer: 'Acknowledge immediately, contain the impact, communicate transparently, fix it, and run a post-mortem to prevent recurrence. Speed of acknowledgment and quality of prevention matters more than the mistake itself.',
-    detailedExplanation: 'How someone handles mistakes tells you more about them than whether they make them â€” everyone makes mistakes. Interviewers want to see: fast acknowledgment (no covering up), clear-headed problem-solving under stress, transparent communication with affected parties, and a systemic fix that prevents recurrence. Blameless post-mortems are the gold standard.',
+    detailedExplanation: 'How someone handles mistakes tells you more about them than whether they make them — everyone makes mistakes. Interviewers want to see: fast acknowledgment (no covering up), clear-headed problem-solving under stress, transparent communication with affected parties, and a systemic fix that prevents recurrence. Blameless post-mortems are the gold standard.',
     example: {
       code: `// My process when I make a mistake
 
 // Step 1: Acknowledge immediately
 "When I realize I've made a mistake, I tell my 
-team immediately â€” even before I know the full 
-scope. 'I think I may have broken X â€” I'm investigating 
+team immediately — even before I know the full 
+scope. 'I think I may have broken X — I'm investigating 
 now, will update in 30 minutes.'
 
 Waiting until I have a solution before acknowledging 
@@ -1822,8 +1822,8 @@ work on the proper fix, often with help."
 
 // Step 3: Communicate transparently
 "After resolution, I write a clear post-mortem: 
-what happened, timeline, root cause, impact, and â€” 
-most importantly â€” what I'm changing to prevent it. 
+what happened, timeline, root cause, impact, and — 
+most importantly — what I'm changing to prevent it. 
 Not 'I'll be more careful' but specific process changes."
 
 // Step 4: No defensive post-mortem
@@ -1864,17 +1864,17 @@ process. No repeat in 18 months."`,
     question: 'Do you have any personal projects or side projects you\'re working on?',
     difficulty: 'beginner',
     tags: ['side-projects', 'passion', 'self-learning', 'initiative'],
-    shortAnswer: 'Share something genuine â€” even a small, unfinished project shows curiosity and initiative. Explain what problem it solves, what you\'re learning from it, and why you built it. Not having side projects isn\'t disqualifying, but having one is an asset.',
-    detailedExplanation: 'Side projects are an optional but impactful signal of genuine passion for the craft. Interviewers aren\'t looking for a polished product â€” they\'re looking for self-directed learning and curiosity beyond the day job. Even a half-built CLI tool or a small open source contribution is meaningful. If you don\'t have side projects, answer honestly and redirect to other forms of continuous learning.',
+    shortAnswer: 'Share something genuine — even a small, unfinished project shows curiosity and initiative. Explain what problem it solves, what you\'re learning from it, and why you built it. Not having side projects isn\'t disqualifying, but having one is an asset.',
+    detailedExplanation: 'Side projects are an optional but impactful signal of genuine passion for the craft. Interviewers aren\'t looking for a polished product — they\'re looking for self-directed learning and curiosity beyond the day job. Even a half-built CLI tool or a small open source contribution is meaningful. If you don\'t have side projects, answer honestly and redirect to other forms of continuous learning.',
     example: {
       code: `// If you have a side project (be specific):
 "I'm building a personal finance tracker because 
-I was frustrated with existing apps â€” they're either 
+I was frustrated with existing apps — they're either 
 too simple or require connecting bank accounts, which 
 I don't want to do. It's a Next.js app with a Postgres 
 database and CSV import from bank statements.
 
-The app itself isn't the interesting part â€” I'm 
+The app itself isn't the interesting part — I'm 
 using it to learn proper database design with real 
 normalization challenges and to experiment with 
 React Server Components in Next.js 14. It's helped 
@@ -1883,22 +1883,22 @@ tutorial would."
 
 // If you have an open source contribution:
 "I maintain a small utility library for formatting 
-currency in different locales â€” it has about 200 
+currency in different locales — it has about 200 
 stars on GitHub. It was born from a problem I had 
 at work. Maintaining it taught me about semver, 
 release management, and handling issue reports from 
-strangers â€” a different skill than building something 
+strangers — a different skill than building something 
 yourself."
 
 // If you don't have active side projects (honest):
-"I don't have an active side project right now â€” 
+"I don't have an active side project right now — 
 I've found that after a full work week I need real 
 downtime to stay sustainable. What I do instead 
 is spend time reading and working through structured 
-courses â€” currently going through the Rust book and 
+courses — currently going through the Rust book and 
 building the exercises."
 
-// âŒ Avoid:
+// ❌ Avoid:
 // Pretending you have a side project you don't
 // A project you haven't touched in 2 years
 // Vague: "I'm always experimenting with new things"`,
@@ -1919,7 +1919,7 @@ building the exercises."
     ]
   },
 
-  // â”€â”€ BATCH 3 (21-30) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── BATCH 3 (21-30) ─────────────────────────────────────────────────────────
 
   {
     id: 'hr-new-biggest-achievement',
@@ -1929,13 +1929,13 @@ building the exercises."
     difficulty: 'beginner',
     tags: ['achievement', 'impact', 'star', 'hr'],
     shortAnswer: 'Use STAR. Pick something with measurable impact, where you played a key role, and that relates to the work you\'d do in the new role. Quantify whenever possible.',
-    detailedExplanation: 'This is your highlight reel question. The goal is to pick your strongest, most relevant story with the most concrete impact. Don\'t be modest â€” this is the time to quantify your best work. Connect the achievement to skills the new role requires. If you have multiple candidates, pick the one most aligned with the role and save the others for follow-up questions.',
+    detailedExplanation: 'This is your highlight reel question. The goal is to pick your strongest, most relevant story with the most concrete impact. Don\'t be modest — this is the time to quantify your best work. Connect the achievement to skills the new role requires. If you have multiple candidates, pick the one most aligned with the role and save the others for follow-up questions.',
     example: {
       code: `// Strong achievement answer with STAR
 
 // SITUATION + TASK:
 "In my previous role, we had a checkout flow with 
-a 68% cart abandonment rate on mobile â€” well above 
+a 68% cart abandonment rate on mobile — well above 
 industry average. The PM tasked me with leading 
 a redesign to bring it down."
 
@@ -1958,7 +1958,7 @@ A/B tests on each, and shipped the winning variant
 after 2 weeks of data."
 
 // RESULT:
-"Mobile cart abandonment dropped from 68% to 41% â€” 
+"Mobile cart abandonment dropped from 68% to 41% — 
 a 27-point improvement. On our traffic volume, that 
 translated to roughly $180,000 in additional monthly 
 revenue. It was the highest-impact project I've shipped 
@@ -1993,7 +1993,7 @@ and it was recognized in the company's quarterly review."
     question: 'How would your colleagues describe you?',
     difficulty: 'beginner',
     tags: ['self-perception', 'hr', 'culture', 'soft-skills'],
-    shortAnswer: 'Give 3 specific traits with brief supporting examples. Balance technical and soft skills. Be honest â€” interviewers often reference-check, and you want alignment between self-perception and how you actually are.',
+    shortAnswer: 'Give 3 specific traits with brief supporting examples. Balance technical and soft skills. Be honest — interviewers often reference-check, and you want alignment between self-perception and how you actually are.',
     detailedExplanation: 'This question probes self-awareness and personal brand. Interviewers compare what you say against how you present in the interview. Key: pick traits that are genuine, relevant to the role, and that you can support with a quick example. Avoid generic answers ("hardworking", "dedicated") that everyone says. Specific, slightly surprising traits ("I\'m the person who writes the post-mortems nobody asked for") are more memorable.',
     example: {
       code: `// Strong 3-trait answer with examples
@@ -2002,7 +2002,7 @@ and it was recognized in the company's quarterly review."
 "They'd probably say I'm someone you can always 
 count on to ship what I commit to. I have a 
 personal rule: if I say I'll have something done 
-by Thursday, it's done by Thursday â€” and if it 
+by Thursday, it's done by Thursday — and if it 
 looks like it won't be, I flag it by Tuesday, 
 not Thursday morning."
 
@@ -2015,7 +2015,7 @@ have told me my PRs are the easiest to review on
 the team because of the context I include."
 
 // Trait 3: Curious/honest
-"And probably that I ask a lot of questions â€” 
+"And probably that I ask a lot of questions — 
 not because I'm confused, but because I like to 
 understand the 'why' behind decisions. I've been 
 told it makes meetings more productive because 
@@ -2024,17 +2024,17 @@ they were making."
 
 // Optional: add a weakness-adjacent trait for authenticity
 "If they were being completely honest, they'd 
-also say I can be slow to delegate â€” I sometimes 
+also say I can be slow to delegate — I sometimes 
 hold on to tasks longer than I should instead 
 of asking for help. I'm actively working on that."
 
-// âŒ Generic answers to avoid:
-// "Hardworking" â€” everyone says this
-// "Team player" â€” means nothing without example
-// "Passionate about code" â€” clichÃ©`,
+// ❌ Generic answers to avoid:
+// "Hardworking" — everyone says this
+// "Team player" — means nothing without example
+// "Passionate about code" — cliché`,
       language: 'javascript'
     },
-    interviewAnswer: 'Brief examples make traits credible. The optional weakness-adjacent trait at the end adds authenticity â€” it shows self-awareness without undermining the positive picture.',
+    interviewAnswer: 'Brief examples make traits credible. The optional weakness-adjacent trait at the end adds authenticity — it shows self-awareness without undermining the positive picture.',
     commonMistakes: [
       'Three generic traits with no examples',
       'Traits that are irrelevant to the role',
@@ -2056,13 +2056,13 @@ of asking for help. I'm actively working on that."
     question: 'How do you manage work-life balance?',
     difficulty: 'beginner',
     tags: ['work-life-balance', 'sustainability', 'hr', 'wellbeing'],
-    shortAnswer: 'Show that you have clear boundaries and sustainable habits â€” and that you perform better because of them, not despite them. Avoiding burnout benefits the team, not just you.',
-    detailedExplanation: 'Companies increasingly understand that burnout is bad for productivity. They want people who are sustainable, not martyrs who flame out. Key signals: you have real boundaries, you communicate about capacity honestly, and you take proper downtime. Avoid glorifying overwork â€” it\'s a red flag in 2025, not a virtue signal.',
+    shortAnswer: 'Show that you have clear boundaries and sustainable habits — and that you perform better because of them, not despite them. Avoiding burnout benefits the team, not just you.',
+    detailedExplanation: 'Companies increasingly understand that burnout is bad for productivity. They want people who are sustainable, not martyrs who flame out. Key signals: you have real boundaries, you communicate about capacity honestly, and you take proper downtime. Avoid glorifying overwork — it\'s a red flag in 2025, not a virtue signal.',
     example: {
       code: `// Healthy work-life balance framing
 
 // Clear shutdown routine:
-"I have a firm end time â€” usually 6pm. I close 
+"I have a firm end time — usually 6pm. I close 
 Slack on my personal devices after that. Not because 
 I don't care about my work, but because I've found 
 that I produce higher quality work in focused hours 
@@ -2070,14 +2070,14 @@ than I do grinding through low-energy evenings."
 
 // Protecting recovery time:
 "On weekends, I don't check work messages. I have 
-hobbies that are completely unrelated to tech â€” 
-[running, cooking, reading â€” whatever is genuine]. 
+hobbies that are completely unrelated to tech — 
+[running, cooking, reading — whatever is genuine]. 
 This isn't laziness; it's maintenance. I come back 
 Monday genuinely refreshed."
 
 // Crunch transparency:
-"When there's a genuine crunch â€” a launch, a critical 
-incident â€” I put in extra hours without complaint. 
+"When there's a genuine crunch — a launch, a critical 
+incident — I put in extra hours without complaint. 
 But I also expect recovery time afterward. If we 
 sprint, we rest. I've worked at a place that expected 
 permanent crunch mode and it wasn't sustainable for 
@@ -2119,7 +2119,7 @@ priority?' This protects quality across everything."
     difficulty: 'intermediate',
     tags: ['decision-making', 'ambiguity', 'judgment', 'hr'],
     shortAnswer: 'Gather the minimum viable information needed for the decision, make assumptions explicit, choose reversible actions when possible, decide with confidence, and course-correct when new data arrives.',
-    detailedExplanation: 'Most real decisions are made with incomplete information. Perfect data is rarely available. Interviewers want to see a rational, time-bounded decision-making framework â€” not someone who is paralyzed without complete information, nor someone who makes gut-only calls. Key principles: distinguish reversible from irreversible decisions, set a decision deadline, document the assumptions, and remain genuinely open to changing course.',
+    detailedExplanation: 'Most real decisions are made with incomplete information. Perfect data is rarely available. Interviewers want to see a rational, time-bounded decision-making framework — not someone who is paralyzed without complete information, nor someone who makes gut-only calls. Key principles: distinguish reversible from irreversible decisions, set a decision deadline, document the assumptions, and remain genuinely open to changing course.',
     example: {
       code: `// Decision-making framework under uncertainty
 
@@ -2182,7 +2182,7 @@ return. No one lost time waiting."`,
     difficulty: 'beginner',
     tags: ['logistics', 'relocation', 'travel', 'hr'],
     shortAnswer: 'Answer honestly with your actual constraints. If open to relocation, say so. If not, say so clearly and ask if remote is an option. Vagueness wastes everyone\'s time.',
-    detailedExplanation: 'This is a straightforward logistics question. Interviewers are checking compatibility with role requirements. Honesty is essential â€” misrepresenting flexibility leads to problems at offer stage or after joining. If travel is involved, ask what "some travel" or "occasional" means in specific terms (days per month, international or domestic).',
+    detailedExplanation: 'This is a straightforward logistics question. Interviewers are checking compatibility with role requirements. Honesty is essential — misrepresenting flexibility leads to problems at offer stage or after joining. If travel is involved, ask what "some travel" or "occasional" means in specific terms (days per month, international or domestic).',
     example: {
       code: `// Honest and direct answers
 
@@ -2193,21 +2193,21 @@ company need the move to happen?"
 
 // Open to relocation with a timeline:
 "I'm open to relocating, though I'd need about 
-2 months to manage the transition â€” wrapping up 
+2 months to manage the transition — wrapping up 
 my lease and finding housing. Would that work 
 with the timeline?"
 
 // Not open to relocation but flexible on remote:
 "I'm not in a position to relocate right now due 
-to [family, partner's job â€” brief honest reason]. 
+to [family, partner's job — brief honest reason]. 
 Is there flexibility for this role to be remote 
 or hybrid? I saw the job description mentioned 
-[location] â€” I want to make sure we're aligned 
+[location] — I want to make sure we're aligned 
 before going further."
 
-// Travel question â€” ask for specifics:
+// Travel question — ask for specifics:
 "I'm comfortable with occasional travel. Can you 
-give me a sense of what that looks like in practice â€” 
+give me a sense of what that looks like in practice — 
 roughly how many days per month and mostly domestic 
 or international?"
 
@@ -2217,13 +2217,13 @@ per month difficult. If the role requires significant
 travel, I want to know that upfront so we can figure 
 out if it's workable."
 
-// âŒ Avoid:
+// ❌ Avoid:
 // Being vague to avoid the conversation
 // Saying yes when the answer is no
 // Not asking for specifics on "some travel"`,
       language: 'javascript'
     },
-    interviewAnswer: 'This is a compatibility question, not a commitment question. Be clear about your actual constraints early â€” discovering misalignment at the offer stage wastes everyone\'s time and goodwill.',
+    interviewAnswer: 'This is a compatibility question, not a commitment question. Be clear about your actual constraints early — discovering misalignment at the offer stage wastes everyone\'s time and goodwill.',
     commonMistakes: [
       'Being vague to delay an uncomfortable answer',
       'Agreeing to things you\'re not actually willing to do',
@@ -2246,11 +2246,11 @@ out if it's workable."
     difficulty: 'beginner',
     tags: ['learning', 'adaptability', 'fast-learning', 'star'],
     shortAnswer: 'Use STAR. Show your method for learning under time pressure: ruthless prioritization of what matters for the task, learning-by-doing over passive study, and asking the right people the right questions.',
-    detailedExplanation: 'Fast learning is one of the most valuable engineering skills. Every new job, codebase, or technology requires it. Interviewers want to see a repeatable system â€” not luck or natural talent. Key behaviors: identify the minimum you need to learn for the task at hand, learn by building something, use official docs before YouTube, and ask targeted questions to colleagues rather than asking them to explain everything.',
+    detailedExplanation: 'Fast learning is one of the most valuable engineering skills. Every new job, codebase, or technology requires it. Interviewers want to see a repeatable system — not luck or natural talent. Key behaviors: identify the minimum you need to learn for the task at hand, learn by building something, use official docs before YouTube, and ask targeted questions to colleagues rather than asking them to explain everything.',
     example: {
       code: `// SITUATION:
 "Two weeks into a new job, I was asked to fix a 
-critical bug in a Kubernetes deployment â€” a system 
+critical bug in a Kubernetes deployment — a system 
 I'd never worked with before. The bug was causing 
 intermittent pod restarts that affected 15% of users."
 
@@ -2280,7 +2280,7 @@ resolved: about 3 hours."
 // My general fast-learning system:
 // 1. Narrow to the minimum viable knowledge for the task
 // 2. Official docs > tutorials for accuracy
-// 3. Build/apply immediately â€” don't just read
+// 3. Build/apply immediately — don't just read
 // 4. Ask experts targeted, specific questions
 // 5. Write down what I learn (it sticks better)`,
       language: 'javascript'
@@ -2289,10 +2289,10 @@ resolved: about 3 hours."
     commonMistakes: [
       'Claiming "I just figured it out" with no process described',
       'Story where the learning took months (not fast enough)',
-      'Learning something trivial â€” not a meaningful challenge',
+      'Learning something trivial — not a meaningful challenge',
       'No measurable outcome from the learning'
     ],
-    realWorldUse: 'Switching companies, migrating technology stacks, taking on new domains â€” fast learning is needed constantly throughout an engineering career.',
+    realWorldUse: 'Switching companies, migrating technology stacks, taking on new domains — fast learning is needed constantly throughout an engineering career.',
     followUpQuestions: [
       'How do you retain what you learn quickly?',
       'What\'s your go-to approach when you\'re completely stuck on something new?',
@@ -2308,7 +2308,7 @@ resolved: about 3 hours."
     difficulty: 'beginner',
     tags: ['open-source', 'community', 'hr', 'initiative'],
     shortAnswer: 'If yes, be specific about what you contributed and what you learned. If no, be honest and talk about how you use open source, your interest in contributing, and what has held you back.',
-    detailedExplanation: 'Open source contributions are a bonus, not a requirement. Interviewers at companies that value open source community (many product companies do) use this to gauge initiative, code sharing habits, and community engagement. Contribution doesn\'t mean a major PR â€” it includes documentation improvements, bug reports, small fixes, or maintaining your own library.',
+    detailedExplanation: 'Open source contributions are a bonus, not a requirement. Interviewers at companies that value open source community (many product companies do) use this to gauge initiative, code sharing habits, and community engagement. Contribution doesn\'t mean a major PR — it includes documentation improvements, bug reports, small fixes, or maintaining your own library.',
     example: {
       code: `// If you have contributed:
 "I\'ve made small contributions to two projects. 
@@ -2318,7 +2318,7 @@ missing TypeScript overload for a mutation hook.
 It got merged after one review cycle.
 
 More substantially, I maintain a small utility 
-library I open-sourced from a work project â€” 
+library I open-sourced from a work project — 
 it's a set of form validation helpers. It has 
 about 150 stars, which means people are using it, 
 and I respond to issues within a few days. 
@@ -2328,8 +2328,8 @@ empathetic when I file issues on other projects."
 
 // If you haven't contributed formally:
 "I haven't submitted a PR to a major project yet. 
-I use open source extensively â€” most of my stack 
-is open source â€” and I've filed a few detailed 
+I use open source extensively — most of my stack 
+is open source — and I've filed a few detailed 
 bug reports with reproductions, which I think 
 of as a light form of contribution.
 
@@ -2337,9 +2337,9 @@ Contributing code has been on my list and I've
 held back mainly from imposter syndrome about 
 code quality standards. I'm planning to start 
 with documentation contributions on a library 
-I use daily â€” lower bar, high value for the project."
+I use daily — lower bar, high value for the project."
 
-// âŒ Don't say:
+// ❌ Don't say:
 // "I don't have time for that"
 // "I don't think my code is good enough for public"
 //  (without having tried)`,
@@ -2368,11 +2368,11 @@ I use daily â€” lower bar, high value for the project."
     difficulty: 'beginner',
     tags: ['pride', 'impact', 'star', 'hr'],
     shortAnswer: 'Pick a project with a meaningful outcome, real challenges you overcame, and ideally some connection to the work in the new role. Explain what you\'re proud of: the outcome, the process, the collaboration, or the learning.',
-    detailedExplanation: 'This is an open-ended story question that reveals values and judgment. What you\'re proud of signals what you care about â€” impact, technical elegance, user outcomes, team collaboration. Pick your best story and explain not just what you built but why you\'re proud of it specifically. The "why" is more revealing than the "what."',
+    detailedExplanation: 'This is an open-ended story question that reveals values and judgment. What you\'re proud of signals what you care about — impact, technical elegance, user outcomes, team collaboration. Pick your best story and explain not just what you built but why you\'re proud of it specifically. The "why" is more revealing than the "what."',
     example: {
       code: `// WHAT WAS BUILT:
 "I rebuilt our company's real-time notification 
-system â€” it had become a source of daily complaints 
+system — it had become a source of daily complaints 
 from users and was causing about 2% of sessions 
 to end with an error state."
 
@@ -2386,7 +2386,7 @@ downtime was the hard part."
 
 // HOW I DID IT:
 "I used a feature flag to gradually roll out 
-the WebSocket implementation â€” 1%, then 10%, 
+the WebSocket implementation — 1%, then 10%, 
 then 50%, monitoring error rates at each stage 
 before proceeding. I wrote a fallback that 
 automatically downgraded to long-polling if 
@@ -2402,7 +2402,7 @@ from 2.8 to 4.4 out of 5 in the next survey."
 // WHY I'M PROUD:
 "I'm proud of it because it was technically 
 challenging, it had direct user impact I could 
-measure, and I did it safely â€” the gradual 
+measure, and I did it safely — the gradual 
 rollout meant no one even noticed the migration 
 was happening."`,
       language: 'javascript'
@@ -2430,11 +2430,11 @@ was happening."`,
     difficulty: 'beginner',
     tags: ['culture', 'company-size', 'hr', 'fit'],
     shortAnswer: 'Be honest about your preference but show adaptability. Connect your preference to the kind of impact and learning you want, not just comfort. Then connect it to the company you\'re interviewing with.',
-    detailedExplanation: 'This question is a fit probe â€” the interviewer wants to know if the company\'s size and culture matches what energizes you. Being honest prevents mismatches that hurt both sides. If you genuinely prefer small teams, say so with a reason. If you\'ve only worked in one type of environment, acknowledge that and show genuine curiosity about what\'s different.',
+    detailedExplanation: 'This question is a fit probe — the interviewer wants to know if the company\'s size and culture matches what energizes you. Being honest prevents mismatches that hurt both sides. If you genuinely prefer small teams, say so with a reason. If you\'ve only worked in one type of environment, acknowledge that and show genuine curiosity about what\'s different.',
     example: {
       code: `// Prefer startups/small teams:
-"I\'ve done my best work in smaller teams â€” typically 
-5-15 engineers â€” where I can see the full system and 
+"I\'ve done my best work in smaller teams — typically 
+5-15 engineers — where I can see the full system and 
 have real ownership over decisions. I like being close 
 to the product and customer feedback, and at my last 
 company (30 people) I shipped features and saw user 
@@ -2446,13 +2446,13 @@ processes when they don\'t exist."
 
 // Prefer larger companies:
 "I\'ve worked in startups and while I learned a lot, 
-I\'ve realized I actually thrive with more structure â€” 
+I\'ve realized I actually thrive with more structure — 
 strong engineering practices, dedicated design and 
 QA, and senior engineers to learn from. I\'m looking 
 for a company at a stage where those things are solid."
 
 // Honest middle ground:
-"I\'ve mostly worked in 50-200 person companies â€” 
+"I\'ve mostly worked in 50-200 person companies — 
 big enough to have real engineering practices but 
 small enough to know most people. I\'m genuinely 
 curious about [this company\'s size/stage] and what 
@@ -2460,7 +2460,7 @@ that means for how engineering works day-to-day."
 
 // Connect to the interviewing company:
 "Your team size of [X] engineers sounds like the 
-right scale for me â€” enough to collaborate and 
+right scale for me — enough to collaborate and 
 learn from, small enough that my contributions 
 have visible impact."`,
       language: 'javascript'
@@ -2494,13 +2494,13 @@ have visible impact."`,
 "We were redesigning our mobile onboarding flow. 
 The designer proposed a multi-step animation 
 sequence between screens that I estimated would 
-take 3 weeks to implement correctly â€” significantly 
+take 3 weeks to implement correctly — significantly 
 over budget for the sprint."
 
 // HOW I ENGAGED (not just pushed back):
 "Instead of saying 'that\'ll take too long', I 
 scheduled a 30-minute meeting with the designer 
-to understand what they were trying to achieve â€” 
+to understand what they were trying to achieve — 
 what was the experience goal behind the animation?
 
 They said the goal was to make transitions feel 
@@ -2525,7 +2525,7 @@ because we shipped on time. And I learned that
 // - Outcome-focused collaboration`,
       language: 'javascript'
     },
-    interviewAnswer: 'The best cross-functional work happens when engineers engage with the "why" rather than just implementing the "what." Showing you go upstream in the design process â€” rather than just receiving specs â€” signals product-minded engineering.',
+    interviewAnswer: 'The best cross-functional work happens when engineers engage with the "why" rather than just implementing the "what." Showing you go upstream in the design process — rather than just receiving specs — signals product-minded engineering.',
     commonMistakes: [
       'Describing yourself as just implementing what design handed over',
       'A story where you pushed back without understanding the goal',
@@ -2540,7 +2540,7 @@ because we shipped on time. And I learned that
     ]
   },
 
-  // â”€â”€ BATCH 4 (31-40) â€” sourced from real FAANG/top-tech interview patterns â”€â”€â”€â”€
+  // ── BATCH 4 (31-40) — sourced from real FAANG/top-tech interview patterns ────
 
   {
     id: 'hr-new-legacy-code',
@@ -2559,7 +2559,7 @@ because we shipped on time. And I learned that
 reproduce the bug consistently. If I can't 
 reproduce it, I can't know when I've fixed it."
 
-// Step 2: Read the code â€” trace, don't assume
+// Step 2: Read the code — trace, don't assume
 "I trace the execution path from the entry point 
 related to the bug. I use the debugger or add 
 strategic console.log / logging to understand 
@@ -2571,7 +2571,7 @@ think it should be doing."
 fails because of it. This gives me a safety net 
 and a clear definition of 'fixed.' In a legacy 
 codebase with no tests, this is especially 
-important â€” the first test you write is as 
+important — the first test you write is as 
 valuable as the fix itself."
 
 // Step 4: Narrow with git blame and history
@@ -2589,22 +2589,22 @@ something else I don't know about."
 // Step 6: Document what I found
 "After fixing, I add a comment explaining 
 what this code does and why. The next person 
-â€” which might be future me â€” will thank me."
+— which might be future me — will thank me."
 
 // What NOT to do:
-// âŒ Rewrite large sections to "understand" it
-// âŒ Change code that isn't directly related to the bug
-// âŒ Fix without a regression test`,
+// ❌ Rewrite large sections to "understand" it
+// ❌ Change code that isn't directly related to the bug
+// ❌ Fix without a regression test`,
       language: 'javascript'
     },
-    interviewAnswer: 'The discipline of "understand before changing" is what separates engineers who fix bugs safely from engineers who create new ones. In a legacy system, every change has unknown downstream effects â€” methodical exploration beats fast guessing every time.',
+    interviewAnswer: 'The discipline of "understand before changing" is what separates engineers who fix bugs safely from engineers who create new ones. In a legacy system, every change has unknown downstream effects — methodical exploration beats fast guessing every time.',
     commonMistakes: [
       'Jumping to code changes before understanding the flow',
       'No regression test after the fix',
       'Rewriting unrelated code during the fix',
       'Not using git history as documentation'
     ],
-    realWorldUse: 'Most companies have legacy code. The ability to navigate systems that predate your tenure â€” safely and methodically â€” is one of the most valuable things a mid-to-senior engineer can do.',
+    realWorldUse: 'Most companies have legacy code. The ability to navigate systems that predate your tenure — safely and methodically — is one of the most valuable things a mid-to-senior engineer can do.',
     followUpQuestions: [
       'How do you balance fixing a legacy bug vs. refactoring the surrounding code?',
       'What\'s the riskiest bug fix you\'ve ever made?',
@@ -2619,8 +2619,8 @@ what this code does and why. The next person
     question: 'Tell me about a time you had to push back on a product manager\'s deadline.',
     difficulty: 'intermediate',
     tags: ['conflict', 'product', 'deadlines', 'star', 'communication'],
-    shortAnswer: 'Use STAR. Show you pushed back with data and a specific alternative â€” not just "that\'s too fast." You negotiated scope or timeline constructively and maintained a good working relationship with the PM.',
-    detailedExplanation: 'This question tests your ability to be assertive without being combative. PMs and engineers have different incentives â€” PMs want to ship, engineers want to ship well. The best outcome is an honest conversation about tradeoffs with a mutually acceptable solution. Key signals: you came with data (not feelings), you proposed an alternative (not just a veto), and you committed fully once a decision was made.',
+    shortAnswer: 'Use STAR. Show you pushed back with data and a specific alternative — not just "that\'s too fast." You negotiated scope or timeline constructively and maintained a good working relationship with the PM.',
+    detailedExplanation: 'This question tests your ability to be assertive without being combative. PMs and engineers have different incentives — PMs want to ship, engineers want to ship well. The best outcome is an honest conversation about tradeoffs with a mutually acceptable solution. Key signals: you came with data (not feelings), you proposed an alternative (not just a veto), and you committed fully once a decision was made.',
     example: {
       code: `// SITUATION:
 "A PM asked for a full OAuth2 integration with 
@@ -2635,7 +2635,7 @@ the timeline."
 
 // In that meeting, I came prepared with:
 "1. A task breakdown: auth flow, token storage, 
-   refresh logic, error handling, security review â€” 
+   refresh logic, error handling, security review — 
    with realistic time estimates per component
 
 2. A risk list: what happens if we rush this 
@@ -2649,7 +2649,7 @@ the timeline."
 // OUTCOME:
 "The PM agreed to phase it. In hindsight, the 
 phased approach was actually better for users 
-too â€” we could measure adoption at each step. 
+too — we could measure adoption at each step. 
 The PM later told me she appreciated that I 
 came with an alternative rather than just 
 telling her it couldn't be done."
@@ -2657,7 +2657,7 @@ telling her it couldn't be done."
 // Key elements:
 // - Private conversation, not a public battle
 // - Data-driven (task breakdown, time estimates)
-// - Proposed alternative â€” not just a veto
+// - Proposed alternative — not just a veto
 // - Risk framing that speaks to business impact`,
       language: 'javascript'
     },
@@ -2684,7 +2684,7 @@ telling her it couldn't be done."
     difficulty: 'intermediate',
     tags: ['failure', 'technical-decision', 'learning', 'star'],
     shortAnswer: 'Own it fully. Explain what the decision was, why you made it (with the information you had at the time), what went wrong, and what you changed. Bonus points for the process you now use to avoid the same mistake.',
-    detailedExplanation: 'Every experienced engineer has a wrong-tech story. The question assesses honesty, self-awareness, and learning from technical mistakes. Interviewers are suspicious of engineers who claim never to have made a wrong technical call â€” it suggests either no experience or no reflection. The ideal answer: a genuine misjudgment with clear reasoning about why it seemed right at the time and a concrete process change afterward.',
+    detailedExplanation: 'Every experienced engineer has a wrong-tech story. The question assesses honesty, self-awareness, and learning from technical mistakes. Interviewers are suspicious of engineers who claim never to have made a wrong technical call — it suggests either no experience or no reflection. The ideal answer: a genuine misjudgment with clear reasoning about why it seemed right at the time and a concrete process change afterward.',
     example: {
       code: `// SITUATION:
 "Two years into my career, I was building a 
@@ -2694,7 +2694,7 @@ and because I was comfortable with JSON documents."
 
 // THE PROBLEM:
 "Six months later, the reporting queries became 
-increasingly complex â€” lots of joins between 
+increasingly complex — lots of joins between 
 collections, aggregation across nested arrays. 
 MongoDB can handle this, but the aggregation 
 pipeline syntax was far more complex than SQL 
@@ -2718,13 +2718,13 @@ involves multiple joins and aggregations on
 structured data, relational is almost always 
 the right choice.
 
-I also make technology decisions more visibly now â€” 
+I also make technology decisions more visibly now — 
 writing a short tech note with alternatives considered 
 and the reasoning for my choice. That makes the 
 decision reviewable and correctable by others."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The most important part of this answer is the process change â€” not just "I\'ll be more careful" but a specific decision-making improvement. That\'s what demonstrates growth rather than just regret.',
+    interviewAnswer: 'The most important part of this answer is the process change — not just "I\'ll be more careful" but a specific decision-making improvement. That\'s what demonstrates growth rather than just regret.',
     commonMistakes: [
       'Choosing a trivial example with no real impact',
       'Blaming incomplete requirements for the wrong choice',
@@ -2753,7 +2753,7 @@ decision reviewable and correctable by others."`,
 "While building a new feature, I needed data 
 from three different APIs. Under deadline pressure, 
 I made three sequential API calls in the request 
-handler â€” simple, worked fine."
+handler — simple, worked fine."
 
 // WHEN I REALIZED IT WAS DEBT:
 "Two sprints later, I was adding a fourth API call 
@@ -2766,7 +2766,7 @@ had copied my pattern in adjacent code."
 
 // WHAT I DID:
 "I opened a Jira ticket: 'API call parallelization 
-in data-fetching handlers â€” technical debt.' I 
+in data-fetching handlers — technical debt.' I 
 described the pattern, how many places it appeared 
 (6 handlers at that point), the latency cost, and 
 a proposed fix using Promise.all.
@@ -2783,7 +2783,7 @@ warning. The debt pattern can no longer silently
 spread."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The story is stronger when the debt was in your own code â€” it demonstrates self-awareness rather than blame. The structural prevention (a linting rule, a pattern library, a PR checklist item) is what makes the answer senior-level.',
+    interviewAnswer: 'The story is stronger when the debt was in your own code — it demonstrates self-awareness rather than blame. The structural prevention (a linting rule, a pattern library, a PR checklist item) is what makes the answer senior-level.',
     commonMistakes: [
       'Only describing debt in other people\'s code',
       'No concrete measure of the debt\'s impact',
@@ -2806,7 +2806,7 @@ spread."`,
     difficulty: 'intermediate',
     tags: ['production', 'failure', 'accountability', 'post-mortem', 'star'],
     shortAnswer: 'Own it fully with no blame-shifting. Use STAR: what happened, how you detected it, what you did immediately (contain + fix), how you communicated, and what process change you made to prevent recurrence.',
-    detailedExplanation: 'This is the highest-stakes failure question. Every experienced engineer has a production incident story. Interviewers aren\'t looking for someone who never breaks things â€” they\'re looking for someone who responds to incidents with speed, transparency, and learning. The blameless post-mortem mindset is what separates mature engineers from immature ones.',
+    detailedExplanation: 'This is the highest-stakes failure question. Every experienced engineer has a production incident story. Interviewers aren\'t looking for someone who never breaks things — they\'re looking for someone who responds to incidents with speed, transparency, and learning. The blameless post-mortem mindset is what separates mature engineers from immature ones.',
     example: {
       code: `// SITUATION:
 "I was deploying a database migration that renamed 
@@ -2826,12 +2826,12 @@ emails. Users stopped receiving notifications."
 // IMMEDIATE RESPONSE:
 "I saw the spike in Datadog, recognized the 
 deployment timing, and paged the team channel: 
-'I think my migration broke background jobs â€” 
+'I think my migration broke background jobs — 
 investigating now, may need rollback.'
 
 I identified the specific error in logs within 
 4 minutes. Two options: rollback the migration 
-(risky â€” the app code was already using the new 
+(risky — the app code was already using the new 
 column name) or hot-fix the background job. 
 I chose the hot-fix, deployed in 12 minutes. 
 Job failure rate returned to zero."
@@ -2849,7 +2849,7 @@ on impact: notifications delayed for ~25 minutes
 for some users. No data was lost."`,
       language: 'javascript'
     },
-    interviewAnswer: 'Specific numbers â€” how long the incident lasted, how many users were affected, how quickly you responded â€” make this story compelling and credible. The post-mortem and prevention step are what make it a growth story rather than just a horror story.',
+    interviewAnswer: 'Specific numbers — how long the incident lasted, how many users were affected, how quickly you responded — make this story compelling and credible. The post-mortem and prevention step are what make it a growth story rather than just a horror story.',
     commonMistakes: [
       'Minimizing the impact to seem less culpable',
       'Blaming infrastructure, the codebase, or others',
@@ -2872,7 +2872,7 @@ for some users. No data was lost."`,
     difficulty: 'intermediate',
     tags: ['leadership', 'influence', 'ownership', 'communication', 'star'],
     shortAnswer: 'Use STAR. Show you pushed for something you genuinely believed in, backed your position with data, earned buy-in through evidence not authority, and stayed committed even when the initial reception was cold.',
-    detailedExplanation: 'This question assesses intellectual courage and influence without authority. Interviewers â€” especially for senior and staff roles â€” want engineers who drive technical direction, not just follow it. Key signals: you had a real technical conviction, you made the case with evidence (prototype, benchmark, clear tradeoff analysis), and the outcome either validated your position or changed your mind â€” both are acceptable outcomes.',
+    detailedExplanation: 'This question assesses intellectual courage and influence without authority. Interviewers — especially for senior and staff roles — want engineers who drive technical direction, not just follow it. Key signals: you had a real technical conviction, you made the case with evidence (prototype, benchmark, clear tradeoff analysis), and the outcome either validated your position or changed your mind — both are acceptable outcomes.',
     example: {
       code: `// SITUATION:
 "Our team was building a new API layer. The existing 
@@ -2883,7 +2883,7 @@ across 6 different views, leading to either massive
 over-fetching or 12 narrow REST endpoints."
 
 // INITIAL RECEPTION:
-"The lead engineer was skeptical â€” more complexity, 
+"The lead engineer was skeptical — more complexity, 
 new tooling, steeper learning curve. Two others 
 just went along with whatever the lead said. 
 My proposal was politely dismissed in the initial 
@@ -2910,7 +2910,7 @@ best technical decisions the team had made
 that year."
 
 // Key principle:
-// Don't win the argument â€” win the data.
+// Don't win the argument — win the data.
 // A prototype or benchmark beats a debate every time.`,
       language: 'javascript'
     },
@@ -2959,9 +2959,9 @@ committed to the client."
 what we could definitely ship in 2 weeks, what 
 would need to slip, and the business risk of 
 each. 'Email scheduling is not in the launch 
-commitment â€” dropping it from this sprint saves 
+commitment — dropping it from this sprint saves 
 2 weeks. CSV export is straightforward and 
-improves trust with the client â€” I can add it 
+improves trust with the client — I can add it 
 without the scheduling component in 3 days.'"
 
 // RESULT:
@@ -3006,26 +3006,26 @@ early access to core functionality."
       code: `// SITUATION:
 "Early in my second job, I submitted a PR for 
 a new authentication flow. A senior engineer 
-left 11 comments â€” some minor, but several 
+left 11 comments — some minor, but several 
 were quite blunt. One said: 'This session 
-handling is fundamentally wrong â€” it\'s not 
+handling is fundamentally wrong — it\'s not 
 thread-safe and will cause data leaks under 
 concurrent requests.'"
 
 // MY INITIAL REACTION (honest):
 "My first instinct was to defend it. I'd spent 
 3 days on this PR and had tested it. I typed 
-a response â€” then deleted it."
+a response — then deleted it."
 
 // WHAT I DID INSTEAD:
 "I took 30 minutes to research the thread-safety 
 issue before responding. I found two articles 
-that confirmed the reviewer was right â€” my 
+that confirmed the reviewer was right — my 
 implementation would fail under concurrent 
 requests in a way that my single-threaded 
 tests couldn't catch.
 
-I replied: 'You\'re right, I missed this â€” 
+I replied: 'You\'re right, I missed this — 
 I\'ve read up on the issue and here\'s my 
 proposed fix. Can you confirm this addresses 
 the concern?'"
@@ -3033,7 +3033,7 @@ the concern?'"
 // OUTCOME:
 "The senior engineer responded positively. 
 We had a 20-minute call where he walked me 
-through concurrent session patterns â€” probably 
+through concurrent session patterns — probably 
 the most useful learning I had in that job. 
 The next few PRs I submitted, he left far 
 fewer comments."
@@ -3068,18 +3068,18 @@ edge cases."`,
     difficulty: 'intermediate',
     tags: ['prioritization', 'communication', 'stakeholders', 'time-management'],
     shortAnswer: 'Surface the conflict explicitly with stakeholders, force a real stack-ranking conversation, deliver incrementally on the top item, and be transparent about what\'s waiting and why.',
-    detailedExplanation: 'Infinite "high priority" is a real organizational dysfunction. The worst response is to work on everything simultaneously and deliver nothing well. The best response is to make the prioritization decision visible â€” with stakeholders, not unilaterally. Key skills: facilitated prioritization (asking the right questions to force a ranking), transparent capacity communication, and delivering the top item fully before starting the next.',
+    detailedExplanation: 'Infinite "high priority" is a real organizational dysfunction. The worst response is to work on everything simultaneously and deliver nothing well. The best response is to make the prioritization decision visible — with stakeholders, not unilaterally. Key skills: facilitated prioritization (asking the right questions to force a ranking), transparent capacity communication, and delivering the top item fully before starting the next.',
     example: {
       code: `// The problem:
-"Every ticket in the sprint was marked P1 â€” Critical. 
+"Every ticket in the sprint was marked P1 — Critical. 
 Three different stakeholders each thought their 
 feature was the most important. I had enough 
 capacity for 2 of the 4 items at acceptable quality."
 
 // What NOT to do:
-// âŒ Context-switch between all 4 â€” ship nothing well
-// âŒ Pick one silently and surprise everyone else
-// âŒ Ask your manager to decide (they'll say do all 4)
+// ❌ Context-switch between all 4 — ship nothing well
+// ❌ Pick one silently and surprise everyone else
+// ❌ Ask your manager to decide (they'll say do all 4)
 
 // What I did:
 
@@ -3093,7 +3093,7 @@ wins that conversation immediately.'"
 
 // Step 2: Ask the forcing question
 "'If only one of these shipped this sprint and 
-the others slipped by two weeks â€” which one 
+the others slipped by two weeks — which one 
 would hurt the business most?' 
 
 That question usually produces a real answer.
@@ -3111,14 +3111,14 @@ the sprint after. No surprises. All stakeholders
 were informed in advance."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The most important move is making the tradeoff visible to the people who should be making it â€” stakeholders and PM â€” not making it yourself in silence. Your job is to execute on the decided priority, not to absorb the dysfunction of unclear priorities alone.',
+    interviewAnswer: 'The most important move is making the tradeoff visible to the people who should be making it — stakeholders and PM — not making it yourself in silence. Your job is to execute on the decided priority, not to absorb the dysfunction of unclear priorities alone.',
     commonMistakes: [
       'Trying to do everything and delivering nothing well',
       'Silently choosing priority without stakeholder input',
       'Escalating to your manager as the first move',
       'No transparency about what\'s being delayed and why'
     ],
-    realWorldUse: 'Priority inflation is endemic at most companies. Engineers who can force productive prioritization conversations â€” without creating drama â€” are invaluable.',
+    realWorldUse: 'Priority inflation is endemic at most companies. Engineers who can force productive prioritization conversations — without creating drama — are invaluable.',
     followUpQuestions: [
       'What if the stakeholders couldn\'t agree on the ranking?',
       'How do you handle a stakeholder who is upset their item was deprioritized?',
@@ -3140,14 +3140,14 @@ were informed in advance."`,
 "I was building an API feature that depended 
 on a database schema migration being completed 
 by another engineer. Two days before our shared 
-deadline, the migration was still not in review â€” 
+deadline, the migration was still not in review — 
 the engineer had been pulled into a production 
 incident."
 
 // STEP 1: Reach out directly
 "I messaged the engineer directly (not in the 
 public channel): 'Hey, I know you\'ve been dealing 
-with the incident â€” the migration is a dependency 
+with the incident — the migration is a dependency 
 for my feature. Can you give me a rough ETA? 
 Even a rough timeline would help me plan.'"
 
@@ -3161,18 +3161,18 @@ which might be faster than starting from scratch.'"
 "While waiting, I mocked the database layer 
 locally so I could develop and test my API 
 logic against a fake schema. That way I wasn\'t 
-sitting idle â€” I had clean, testable code ready 
+sitting idle — I had clean, testable code ready 
 to plug in the real migration when it landed."
 
 // STEP 4: Communicate upward (not escalate)
 "I updated our PM with a one-liner in the 
 daily standup: 'My feature is waiting on 
-the DB migration â€” on track for Thursday 
+the DB migration — on track for Thursday 
 instead of Tuesday, no action needed yet.'"
 
 // RESULT:
 "Migration landed Wednesday. My feature was 
-done Thursday â€” one day late total instead 
+done Thursday — one day late total instead 
 of two. No escalation needed."`,
       language: 'javascript'
     },
@@ -3191,7 +3191,7 @@ of two. No escalation needed."`,
     ]
   },
 
-  // â”€â”€ BATCH 5 (41-50) â€” sourced from real FAANG/top-tech interview patterns â”€â”€â”€â”€
+  // ── BATCH 5 (41-50) — sourced from real FAANG/top-tech interview patterns ────
 
   {
     id: 'hr-new-pivoted-approach',
@@ -3204,7 +3204,7 @@ of two. No escalation needed."`,
     detailedExplanation: 'Mid-sprint pivots test adaptability and decision-making under pressure. Interviewers want to see that you can recognize a wrong path early and change course without excessive attachment to sunk cost. The worst outcome is continuing down a path you know is wrong because you\'ve invested time in it. The best outcome is recognizing the issue, assessing alternatives, and pivoting with a clear communication to the team.',
     example: {
       code: `// SITUATION:
-"I was building a real-time feature using polling â€” 
+"I was building a real-time feature using polling — 
 the frontend would hit an API every 5 seconds to 
 check for updates. On day 3 of a 10-day sprint, 
 a load test revealed the polling would generate 
@@ -3212,17 +3212,17 @@ enough traffic to exceed our server capacity
 by ~3x at our projected user scale."
 
 // RECOGNIZING THE PIVOT:
-"I ran the numbers: 10,000 users Ã— polling 
+"I ran the numbers: 10,000 users × polling 
 every 5 seconds = 2M API calls/hour. Our 
 infrastructure was built for ~600k calls/hour. 
-Continuing wasn\'t viable â€” this would bring 
+Continuing wasn\'t viable — this would bring 
 down the service at launch."
 
 // THE PIVOT DECISION:
 "I evaluated two alternatives: 
-1. WebSockets â€” real-time, right tool, but 3-4 
+1. WebSockets — real-time, right tool, but 3-4 
    days of rework given our current stack
-2. Long-polling with exponential backoff â€” 
+2. Long-polling with exponential backoff — 
    1 day of rework, significantly reduces load
 
 I chose long-polling with backoff as a pragmatic 
@@ -3233,7 +3233,7 @@ WebSockets in a follow-on sprint."
 // COMMUNICATION:
 "I flagged it in standup: 'I\'ve found a scalability 
 issue with my current approach. Pivoting to long-polling 
-â€” this keeps me on schedule but I\'ll need to update 
+— this keeps me on schedule but I\'ll need to update 
 the architecture doc.'"
 
 // RESULT:
@@ -3243,14 +3243,14 @@ that I didn\'t hide the issue and the team appreciated
 that I'd brought a solution, not just a problem."`,
       language: 'javascript'
     },
-    interviewAnswer: 'Sunk cost is the enemy of good technical decisions. Recognizing early that a path won\'t work â€” and being willing to say so â€” is more valuable than being right in the first place. Coming with a proposed pivot rather than just a problem is what makes the communication constructive.',
+    interviewAnswer: 'Sunk cost is the enemy of good technical decisions. Recognizing early that a path won\'t work — and being willing to say so — is more valuable than being right in the first place. Coming with a proposed pivot rather than just a problem is what makes the communication constructive.',
     commonMistakes: [
       'Continuing the wrong approach until the last day of the sprint',
       'Pivoting without communicating the reason to the team',
       'No concrete alternative proposed before raising the issue',
       'Treating the pivot as a failure rather than good engineering judgment'
     ],
-    realWorldUse: 'Engineering plans are estimates, not contracts. The engineers who pivot well â€” early, decisively, with good communication â€” are the ones companies trust with complex, ambiguous projects.',
+    realWorldUse: 'Engineering plans are estimates, not contracts. The engineers who pivot well — early, decisively, with good communication — are the ones companies trust with complex, ambiguous projects.',
     followUpQuestions: [
       'How do you prevent mid-sprint pivots from becoming the norm on your teams?',
       'How much time do you invest in technical design before starting implementation?',
@@ -3266,7 +3266,7 @@ that I'd brought a solution, not just a problem."`,
     difficulty: 'intermediate',
     tags: ['post-mortem', 'leadership', 'incident-response', 'blameless-culture'],
     shortAnswer: 'Show you drove a blameless process: focused on systems and processes rather than people, identified the true root cause (not just the surface trigger), and produced actionable items that actually got implemented.',
-    detailedExplanation: 'Post-mortems done well are one of the highest-leverage activities in engineering. Done badly â€” blame-focused, surface-level, action items ignored â€” they waste everyone\'s time and leave the system fragile. Interviewers for senior and lead roles care deeply about your ability to run or contribute to effective post-mortems. Key signals: blameless framing, deep root cause analysis (5 Whys or similar), and concrete follow-through.',
+    detailedExplanation: 'Post-mortems done well are one of the highest-leverage activities in engineering. Done badly — blame-focused, surface-level, action items ignored — they waste everyone\'s time and leave the system fragile. Interviewers for senior and lead roles care deeply about your ability to run or contribute to effective post-mortems. Key signals: blameless framing, deep root cause analysis (5 Whys or similar), and concrete follow-through.',
     example: {
       code: `// SITUATION:
 "We had a 90-minute outage affecting all users 
@@ -3285,24 +3285,24 @@ not who made the mistake.'"
 
 // 2. Built a detailed timeline
 "We reconstructed a minute-by-minute timeline: 
-deployment at 2:14pm â†’ first error at 2:18pm â†’ 
-alert triggered at 2:26pm â†’ rollback at 3:41pm. 
+deployment at 2:14pm → first error at 2:18pm → 
+alert triggered at 2:26pm → rollback at 3:41pm. 
 The 75-minute gap between first error and rollback 
-was the key finding â€” we were slow to respond 
+was the key finding — we were slow to respond 
 despite having monitoring."
 
 // 3. Did a 5-Whys root cause analysis
 "Why did the outage happen?
-â†’ Wrong env var in production config
+→ Wrong env var in production config
 Why did wrong env var get deployed?
-â†’ No automated validation of environment-specific vars
+→ No automated validation of environment-specific vars
 Why was there no validation?
-â†’ Our deploy pipeline had no config sanity checks
+→ Our deploy pipeline had no config sanity checks
 Why?
-â†’ Config validation was always 'someone\'s job' but 
+→ Config validation was always 'someone\'s job' but 
   no one owned it
 Why did the alert take 12 minutes to fire?
-â†’ Our alert threshold was set too high (5% error rate)"
+→ Our alert threshold was set too high (5% error rate)"
 
 // 4. Action items with owners and dates
 "3 action items, each with an owner and a deadline:
@@ -3337,11 +3337,11 @@ We haven\'t had a config-related outage since."`,
     question: 'Tell me about a time you had to make a critical decision with incomplete information.',
     difficulty: 'intermediate',
     tags: ['decision-making', 'ambiguity', 'judgment', 'star'],
-    shortAnswer: 'Use STAR. Show you gathered the most critical information fast, made your assumptions explicit, chose the most reversible option when possible, and made a clear decision â€” then updated it as more data came in.',
+    shortAnswer: 'Use STAR. Show you gathered the most critical information fast, made your assumptions explicit, chose the most reversible option when possible, and made a clear decision — then updated it as more data came in.',
     detailedExplanation: 'This is a key question at Amazon (tests "Bias for Action") and OpenAI. Interviewers want to see you don\'t freeze under uncertainty, but also that you don\'t make reckless calls without seeking any information. The ideal is: rapid triage of what information is needed vs. nice-to-have, a decisive call, documented assumptions, and genuine openness to revision.',
     example: {
       code: `// SITUATION:
-"Production was showing degraded performance â€” 
+"Production was showing degraded performance — 
 response times up 4x. Our on-call engineer 
 was unreachable. I was the most senior engineer 
 available. We had three competing hypotheses:
@@ -3354,21 +3354,21 @@ available. We had three competing hypotheses:
 // Step 1: Gather minimum critical data fast
 "I had 5 minutes of data: deployment logs, 
 DB slow query log, traffic graph. Traffic 
-was normal â€” ruled out #3. Slow query log 
-showed nothing unusual â€” tentatively ruled 
+was normal — ruled out #3. Slow query log 
+showed nothing unusual — tentatively ruled 
 out #2. The deployment was the most likely cause."
 
 // Step 2: Choose the reversible action
 "I could rollback the deployment (reversible 
 and fast, 5 minutes) or debug further (20+ 
 minutes, no guarantee). The rollback was 
-the right call â€” even if the deployment 
+the right call — even if the deployment 
 wasn\'t the cause, we\'d lose nothing except 
 the deployment itself."
 
 // Step 3: Communicate before acting
 "I posted in the incident channel: 
-\'Initiating rollback of last deployment â€” 
+\'Initiating rollback of last deployment — 
 most likely cause based on timeline. Will 
 report in 10 minutes.\'"
 
@@ -3388,7 +3388,7 @@ they have information you don\'t."`,
     },
     interviewAnswer: 'The "reversible action" principle is one of the most useful mental models for decisions under uncertainty. When you can\'t know which choice is right, choose the one that can be undone. Save the irreversible decisions for when you have more data.',
     commonMistakes: [
-      'Analysis paralysis â€” waiting for perfect data',
+      'Analysis paralysis — waiting for perfect data',
       'Taking irreversible action without even basic triage',
       'Not communicating intent before acting',
       'Not documenting assumptions so others can correct you'
@@ -3408,8 +3408,8 @@ they have information you don\'t."`,
     question: 'What is the biggest lesson you\'ve learned in your engineering career so far?',
     difficulty: 'beginner',
     tags: ['reflection', 'growth', 'values', 'hr'],
-    shortAnswer: 'Pick a genuine, specific insight â€” not a platitude. The most compelling answers come from a real experience that changed how you work. Connect it to something observable in how you operate today.',
-    detailedExplanation: 'This open-ended reflection question reveals values, self-awareness, and intellectual maturity. Interviewers are looking for candidates who have genuinely reflected on their growth â€” not people who produce motivational poster quotes. The best answers are specific, connected to a real experience, and describe a behavioral change that is still visible in how you work today.',
+    shortAnswer: 'Pick a genuine, specific insight — not a platitude. The most compelling answers come from a real experience that changed how you work. Connect it to something observable in how you operate today.',
+    detailedExplanation: 'This open-ended reflection question reveals values, self-awareness, and intellectual maturity. Interviewers are looking for candidates who have genuinely reflected on their growth — not people who produce motivational poster quotes. The best answers are specific, connected to a real experience, and describe a behavioral change that is still visible in how you work today.',
     example: {
       code: `// Strong answer examples
 
@@ -3418,7 +3418,7 @@ they have information you don\'t."`,
 for myself, not for my team. I thought 'if it works 
 and I understand it, it\'s good code.' A code review 
 from a senior engineer early in my career showed me 
-how wrong that was â€” they couldn\'t follow my logic 
+how wrong that was — they couldn\'t follow my logic 
 at all without reading every line carefully.
 
 I now read every function I write and ask: 
@@ -3429,7 +3429,7 @@ engineering hours than any feature I\'ve ever shipped."
 
 // Lesson: Communication is the job
 "The biggest lesson was that writing code is maybe 
-50% of my job. The other 50% is communication â€” 
+50% of my job. The other 50% is communication — 
 setting expectations, raising blockers, writing 
 clear PRs, explaining technical decisions to PMs. 
 I used to think communication was overhead. 
@@ -3448,7 +3448,7 @@ other eyes catch things early that are expensive
 to change later."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The lesson should feel earned, not borrowed. A lesson from a real experience â€” even a painful one â€” is far more compelling than a lesson that sounds like it was taken from a blog post.',
+    interviewAnswer: 'The lesson should feel earned, not borrowed. A lesson from a real experience — even a painful one — is far more compelling than a lesson that sounds like it was taken from a blog post.',
     commonMistakes: [
       'Platitudes without a specific experience behind them',
       'A lesson that isn\'t visible in how you actually work now',
@@ -3471,20 +3471,20 @@ to change later."`,
     difficulty: 'intermediate',
     tags: ['initiative', 'ownership', 'proactive', 'star'],
     shortAnswer: 'Use STAR. Show genuine initiative: you noticed a real problem that others were ignoring or hadn\'t seen, built something to address it, and the outcome benefited more than just yourself.',
-    detailedExplanation: 'This question directly tests Amazon\'s "Ownership" principle and what Google calls "Googleyness" â€” going beyond your assigned scope to improve the system. The best stories are ones where you noticed friction that others had accepted as normal, decided not to accept it, and invested your own time to address it. The solution doesn\'t need to be a large project â€” a script that saves the team 2 hours a week is genuinely impactful.',
+    detailedExplanation: 'This question directly tests Amazon\'s "Ownership" principle and what Google calls "Googleyness" — going beyond your assigned scope to improve the system. The best stories are ones where you noticed friction that others had accepted as normal, decided not to accept it, and invested your own time to address it. The solution doesn\'t need to be a large project — a script that saves the team 2 hours a week is genuinely impactful.',
     example: {
       code: `// SITUATION:
 "Our team deployed by manually SSHing into servers, 
 running a checklist of commands, and hoping nothing 
 went wrong. We averaged one broken deployment per 
-month. Nobody had been assigned to fix this â€” 
+month. Nobody had been assigned to fix this — 
 it was just 'how things were done.'"
 
 // THE PROBLEM I IDENTIFIED:
 "The manual deploy process had three failure modes:
 1. Steps were skipped under time pressure
 2. No automated test run before deploy
-3. No easy rollback â€” rollback required 
+3. No easy rollback — rollback required 
    re-running the entire process in reverse"
 
 // WHAT I DID:
@@ -3496,7 +3496,7 @@ one-command rollback.
 
 I tested it 5 times in staging, then proposed 
 it to the team in a Monday demo: \'I built 
-a deploy automation â€” here\'s a 5-minute demo. 
+a deploy automation — here\'s a 5-minute demo. 
 It takes 8 minutes vs. our current 25 minutes 
 and includes a safety rollback.'"
 
@@ -3514,14 +3514,14 @@ broke. The fact that it helped everyone else
 was a bonus."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The most compelling initiative stories have two qualities: the problem was real and painful for multiple people, and nobody had formally assigned it to anyone. Those are the conditions for genuine ownership â€” stepping into a vacuum and filling it.',
+    interviewAnswer: 'The most compelling initiative stories have two qualities: the problem was real and painful for multiple people, and nobody had formally assigned it to anyone. Those are the conditions for genuine ownership — stepping into a vacuum and filling it.',
     commonMistakes: [
       'A solution to a problem only you had (not team-level impact)',
       'Work that was actually assigned to you',
       'No measurable result or adoption',
       'A story where you got permission before starting (ownership is acting first, informing after)'
     ],
-    realWorldUse: 'The best engineering teams are full of people who fix things they didn\'t have to fix. This trait â€” more than any specific skill â€” determines who gets promoted to lead and staff roles.',
+    realWorldUse: 'The best engineering teams are full of people who fix things they didn\'t have to fix. This trait — more than any specific skill — determines who gets promoted to lead and staff roles.',
     followUpQuestions: [
       'What would have happened if you hadn\'t done it?',
       'How did you get others to adopt it?',
@@ -3537,7 +3537,7 @@ was a bonus."`,
     difficulty: 'beginner',
     tags: ['fast-learning', 'adaptability', 'star', 'initiative'],
     shortAnswer: 'Use STAR. Show your method for fast learning: you narrowed to the minimum needed, learned by building, asked targeted questions to experts, and delivered despite the knowledge gap.',
-    detailedExplanation: 'Rapid technology learning is tested explicitly at Microsoft ("How would you solve a problem with unfamiliar technology?") and implicitly at most companies. The best answer describes a repeatable system â€” not luck or natural talent. Key elements: you scoped your learning to the task, you used the best available resources efficiently, you applied immediately (learning by doing), and you delivered.',
+    detailedExplanation: 'Rapid technology learning is tested explicitly at Microsoft ("How would you solve a problem with unfamiliar technology?") and implicitly at most companies. The best answer describes a repeatable system — not luck or natural talent. Key elements: you scoped your learning to the task, you used the best available resources efficiently, you applied immediately (learning by doing), and you delivered.',
     example: {
       code: `// SITUATION:
 "I was tasked with building a data pipeline that 
@@ -3552,13 +3552,13 @@ in 10 days."
 to do: consume messages from a topic, deserialize 
 JSON, transform the data, write to PostgreSQL. 
 I listed the Kafka concepts I needed: Consumer, 
-Consumer Group, Topic, Offset. That\'s it â€” 
+Consumer Group, Topic, Offset. That\'s it — 
 I didn\'t need to understand Kafka internals or 
 producer logic for this task."
 
 // Step 2: Official docs + one focused tutorial
 "I read the Kafka consumer documentation end-to-end 
-(not the whole docs â€” just consumer). Then one 
+(not the whole docs — just consumer). Then one 
 YouTube tutorial specifically on Kafka with Node.js. 
 Total: 4 hours of study."
 
@@ -3575,7 +3575,7 @@ commits that I should know about for production?\'
 That answer saved me 2 days of debugging later."
 
 // RESULT:
-"Pipeline was in production on day 8 â€” 
+"Pipeline was in production on day 8 — 
 2 days ahead of schedule. No Kafka-related 
 issues in the first 3 months."`,
       language: 'javascript'
@@ -3602,21 +3602,21 @@ issues in the first 3 months."`,
     question: 'Tell me about a time you had to make a tradeoff between moving fast and doing it right.',
     difficulty: 'intermediate',
     tags: ['tradeoffs', 'speed', 'quality', 'pragmatism', 'star'],
-    shortAnswer: 'Show that you made the tradeoff explicitly and transparently â€” not by default or under pressure. Explain the decision criteria, what you chose to defer, and how you tracked the deferred work.',
+    shortAnswer: 'Show that you made the tradeoff explicitly and transparently — not by default or under pressure. Explain the decision criteria, what you chose to defer, and how you tracked the deferred work.',
     detailedExplanation: 'This is a values and judgment question. Companies want engineers who can make intelligent tradeoffs, not engineers who always insist on perfection or always cut corners under pressure. The ideal answer: you had a genuine dilemma, you assessed the business impact of both options, you chose one with eyes open, you communicated the tradeoff, and you followed through on the deferred work.',
     example: {
       code: `// SITUATION:
 "We had a product launch in 3 days and discovered 
-our error handling in the payment flow was incomplete â€” 
+our error handling in the payment flow was incomplete — 
 some edge cases (card declined mid-session, 
 network timeout during payment) had no user-facing 
 error messages and would just fail silently."
 
 // THE TRADEOFF:
-"Option A: Proper fix â€” 4-5 days. Add error handling, 
+"Option A: Proper fix — 4-5 days. Add error handling, 
   write tests, get full code review. Miss launch.
 
-Option B: Fast fix â€” 1 day. Add basic catch-all 
+Option B: Fast fix — 1 day. Add basic catch-all 
   error messages, log all payment errors, 
   disable payment silently failing. Not elegant, 
   but not a silent failure either. Add proper 
@@ -3627,7 +3627,7 @@ Option B: Fast fix â€” 1 day. Add basic catch-all
 - User impact of silent failures (high) vs. 
   user impact of generic error message (medium)
 - Business impact of missing launch (high)
-- Security risk of the fast fix (low â€” 
+- Security risk of the fast fix (low — 
   we\'re logging errors, not ignoring them)
 
 Generic error message is worse UX but safe. 
@@ -3640,17 +3640,17 @@ shipping option B: specific edge cases,
 ideal behavior, and tagged it to the 
 post-launch cleanup sprint. I also added 
 a comment in the code: 
-// TODO: Replace with specific error handling â€” 
+// TODO: Replace with specific error handling — 
 // [Jira ticket link]. Shipped 3 Nov 2024."
 
 // RESULT:
 "Launched on time. Two edge case errors surfaced 
-in the first week â€” both caught by our logging 
+in the first week — both caught by our logging 
 and showed the generic message (not silent). 
 Proper handling shipped 8 days post-launch."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The tradeoff is only good engineering if it was made deliberately. Accidental shortcuts that you discover later aren\'t tradeoffs â€” they\'re mistakes. A deliberate, documented, tracked shortcut is a legitimate engineering decision.',
+    interviewAnswer: 'The tradeoff is only good engineering if it was made deliberately. Accidental shortcuts that you discover later aren\'t tradeoffs — they\'re mistakes. A deliberate, documented, tracked shortcut is a legitimate engineering decision.',
     commonMistakes: [
       'Framing "I just shipped it quickly" as a deliberate tradeoff',
       'No tracking of the deferred work (it never gets done)',
@@ -3672,7 +3672,7 @@ Proper handling shipped 8 days post-launch."`,
     question: 'Why did you become a software engineer?',
     difficulty: 'beginner',
     tags: ['motivation', 'passion', 'hr', 'origin-story'],
-    shortAnswer: 'Be genuine. Companies like LinkedIn and Microsoft ask this explicitly to gauge passion for the craft. The best answers are specific â€” a problem you solved, something you built, a moment of realization â€” not generic ("I like technology").',
+    shortAnswer: 'Be genuine. Companies like LinkedIn and Microsoft ask this explicitly to gauge passion for the craft. The best answers are specific — a problem you solved, something you built, a moment of realization — not generic ("I like technology").',
     detailedExplanation: 'This question is used as an icebreaker but also as a motivation probe. Interviewers want to see genuine enthusiasm for building software, not just a career choice made for salary or stability. The best answers have a specific origin story: a first program, a problem solved, a game modded, a feeling of control over a computer that felt magical. Connect it to what you still love about it today.',
     example: {
       code: `// Strong origin story answers
@@ -3682,8 +3682,8 @@ Proper handling shipped 8 days post-launch."`,
 a seating chart for 300 students. I was doing 
 it manually in Excel, which took hours. Then 
 I wrote a basic Python script that did it in 
-seconds. That moment â€” making the computer do 
-the tedious work for me â€” was when I understood 
+seconds. That moment — making the computer do 
+the tedious work for me — was when I understood 
 what programming actually was. I\'ve been chasing 
 that feeling ever since."
 
@@ -3699,17 +3699,17 @@ that didn\'t exist before is still what drives me."
 "I became an engineer because software is the 
 highest-leverage skill I know of. One person 
 with good code can affect millions of people. 
-I wanted to build things at that scale â€” 
+I wanted to build things at that scale — 
 not just do work, but multiply impact. 
 That\'s still why I care about the work 
 I do."
 
 // Connect to today:
-"And I still love it â€” particularly [specific 
+"And I still love it — particularly [specific 
 aspect: distributed systems, UI performance, 
 open source], because [genuine reason]."
 
-// âŒ Avoid:
+// ❌ Avoid:
 // "It pays well" (even if true, not only this)
 // "I\'ve always been good with computers" (vague)
 // "I saw it was a growing field" (purely strategic)`,
@@ -3722,7 +3722,7 @@ open source], because [genuine reason]."
       'No connection to what you still enjoy about it',
       'A story that sounds borrowed, not lived'
     ],
-    realWorldUse: 'Companies that care about culture â€” Microsoft, LinkedIn, Airbnb â€” ask this explicitly. It\'s also a conversation builder that can unlock genuine connection with the interviewer.',
+    realWorldUse: 'Companies that care about culture — Microsoft, LinkedIn, Airbnb — ask this explicitly. It\'s also a conversation builder that can unlock genuine connection with the interviewer.',
     followUpQuestions: [
       'What part of engineering do you still love the most?',
       'Has your reason for loving it changed as you\'ve grown?',
@@ -3737,12 +3737,12 @@ open source], because [genuine reason]."
     question: 'Tell me about a time you exceeded expectations.',
     difficulty: 'beginner',
     tags: ['achievement', 'ownership', 'star', 'impact'],
-    shortAnswer: 'Use STAR. Choose a story where you delivered significantly more value than was asked for â€” not by working longer, but by identifying a higher-value version of the task and delivering it. Quantify the delta.',
-    detailedExplanation: 'This is a direct request for your best performance story. Interviewers at companies like Google (Googleyness) and Amazon ("Deliver Results," "Invent and Simplify") use this to assess drive and judgment about what "done" means. Exceeding expectations isn\'t about heroic hours â€” it\'s about understanding what success looks like and going beyond the minimum viable delivery to the maximum valuable delivery.',
+    shortAnswer: 'Use STAR. Choose a story where you delivered significantly more value than was asked for — not by working longer, but by identifying a higher-value version of the task and delivering it. Quantify the delta.',
+    detailedExplanation: 'This is a direct request for your best performance story. Interviewers at companies like Google (Googleyness) and Amazon ("Deliver Results," "Invent and Simplify") use this to assess drive and judgment about what "done" means. Exceeding expectations isn\'t about heroic hours — it\'s about understanding what success looks like and going beyond the minimum viable delivery to the maximum valuable delivery.',
     example: {
       code: `// SITUATION:
 "I was asked to add a basic search bar to our 
-admin dashboard â€” a simple text filter on a 
+admin dashboard — a simple text filter on a 
 table of 500 records. The PM\'s expectation: 
 client-side filtering, search by name, done 
 in 1 day."
@@ -3751,16 +3751,16 @@ in 1 day."
 "Before starting, I spent 30 minutes shadowing 
 two admin users to understand how they actually 
 used the table. I found that they most often 
-searched by status AND date range together â€” 
+searched by status AND date range together — 
 a combination that a simple name filter 
 wouldn\'t support at all.
 
 I built: 
-- Client-side text filter (original ask â€” 2 hours)
-- Status dropdown filter (discovered need â€” 2 hours)
-- Date range filter (discovered need â€” 3 hours)
+- Client-side text filter (original ask — 2 hours)
+- Status dropdown filter (discovered need — 2 hours)
+- Date range filter (discovered need — 3 hours)
 - A filter combination that preserved state 
-  on page refresh (usability â€” 1 hour)
+  on page refresh (usability — 1 hour)
 
 Total time: 8 hours vs. the 1-day budget."
 
@@ -3779,7 +3779,7 @@ built for that. The difference was 30 minutes
 of user research."`,
       language: 'javascript'
     },
-    interviewAnswer: 'The highest-leverage version of exceeding expectations is understanding the real problem behind the request and solving that â€” not just adding more features to the requested feature. "User research" sounds big but can be as simple as watching someone use the tool for 20 minutes.',
+    interviewAnswer: 'The highest-leverage version of exceeding expectations is understanding the real problem behind the request and solving that — not just adding more features to the requested feature. "User research" sounds big but can be as simple as watching someone use the tool for 20 minutes.',
     commonMistakes: [
       'Exceeding expectations by working more hours (not the same as delivering more value)',
       'No measurable delta between expected and actual outcome',
@@ -3801,17 +3801,17 @@ of user research."`,
     question: 'Why are you a good fit for this role?',
     difficulty: 'beginner',
     tags: ['fit', 'self-promotion', 'hr', 'research'],
-    shortAnswer: 'Map your 3 strongest relevant skills directly to the specific needs of the role. Use concrete evidence for each. Show you\'ve read the JD carefully and researched the company â€” generic answers are immediately obvious.',
+    shortAnswer: 'Map your 3 strongest relevant skills directly to the specific needs of the role. Use concrete evidence for each. Show you\'ve read the JD carefully and researched the company — generic answers are immediately obvious.',
     detailedExplanation: 'This is your closing argument question. It\'s an invitation to connect your experience directly to the role requirements. Most candidates give generic answers that could apply to any job. The best answers are specific: skill from your background + requirement from the JD + evidence. Prepare this answer by going through the job description line by line and identifying your 3 strongest matches.',
     example: {
-      code: `// Framework: JD requirement â†’ Your evidence
+      code: `// Framework: JD requirement → Your evidence
 
 // Example for a senior fullstack role
 
 // Match 1: React + Node (core technical requirement)
 "The role asks for strong React and Node.js experience. 
 I\'ve spent the last 3 years building production apps 
-in both â€” including a Node.js microservices architecture 
+in both — including a Node.js microservices architecture 
 that handles 50k requests/minute and a React SPA 
 with a custom rendering pipeline that reduced 
 TTI by 40%."
@@ -3819,7 +3819,7 @@ TTI by 40%."
 // Match 2: Ownership + product-thinking
 "The JD emphasizes 'engineers who think like product 
 owners.' In my last role, I initiated and led a 
-checkout redesign that wasn\'t on the roadmap â€” 
+checkout redesign that wasn\'t on the roadmap — 
 identified a 68% cart abandonment rate, built 
 the business case, led the project, and reduced 
 abandonment to 41%. That kind of ownership is 
@@ -3828,7 +3828,7 @@ how I naturally work."
 // Match 3: Team scale / collaborative culture
 "The role mentions a team of 8 engineers working 
 in a closely collaborative culture. My best work 
-has been in exactly that team size â€” small enough 
+has been in exactly that team size — small enough 
 for fast decisions, large enough to have specializations. 
 I thrive in those dynamics and have specifically 
 sought out roles with that structure."

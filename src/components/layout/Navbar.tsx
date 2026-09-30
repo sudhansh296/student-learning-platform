@@ -1,9 +1,11 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { Search, Menu, X, ChevronDown, Terminal, BookOpen } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
-import { searchTechnologies } from '@/data/technologies';
+import { useLessonSearch, hitHref } from '@/lib/searchClient';
+import { SearchResultList } from '@/components/search/SearchResultList';
 
 // 5 category buttons — each navigates directly to its page
 const learnCategories = [
@@ -25,10 +27,12 @@ const navItems = [
   { label:'Learn',        href:'/learn',       isLearn: true },
   { label:'MERN Stack',   href:'/mern',        isMern: true },
   { label:'Technologies', href:'/technologies' },
+  { label:'Reference',    href:'/reference' },
   { label:'Databases',    href:'/databases' },
   { label:'Roadmaps',     href:'/roadmaps' },
   { label:'Practice', href:'/projects', children:[
     { label:'Projects',       href:'/projects',  desc:'Build real applications' },
+    { label:'Quizzes',        href:'/practice',  desc:'Quick multiple-choice quizzes' },
     { label:'Interview Prep', href:'/interview', desc:'Q&A with detailed answers' },
     { label:'Compare Tech',   href:'/compare',   desc:'Side-by-side analysis' },
     { label:'Dev Tools',      href:'/tools',     desc:'12 browser-based tools' },
@@ -36,11 +40,13 @@ const navItems = [
 ];
 
 export function Navbar() {
+  const router = useRouter();
+  const [active, setActive] = useState(0);
   const [mob, setMob]     = useState(false);
   const [drop, setDrop]   = useState<string|null>(null);
   const [sOpen, setSOpen] = useState(false);
   const [q, setQ]         = useState('');
-  const [res, setRes]     = useState<ReturnType<typeof searchTechnologies>>([]);
+  const { hits: res, loading, corrected, marks } = useLessonSearch(q);
   const [sc, setSc]       = useState(false);
   const sRef = useRef<HTMLDivElement>(null);
   const nRef = useRef<HTMLDivElement>(null);
@@ -50,8 +56,6 @@ export function Navbar() {
     window.addEventListener('scroll', onScroll, { passive:true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => { setRes(q.length > 1 ? searchTechnologies(q) : []); }, [q]);
 
   useEffect(() => {
     const h = (e: MouseEvent) => {
@@ -232,45 +236,25 @@ export function Navbar() {
               </button>
 
               {sOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 rounded-xl z-50 overflow-hidden"
+                <div className="absolute right-0 top-full mt-2 w-[26rem] max-w-[92vw] rounded-xl z-50 overflow-hidden"
                   style={{ background:'var(--card)', border:'1px solid var(--line)', boxShadow:'0 16px 48px rgba(0,0,0,.15)' }}>
                   <div className="flex items-center gap-2.5 px-4 py-3" style={{ borderBottom:'1px solid var(--line)' }}>
                     <Search className="w-4 h-4 shrink-0" style={{ color:'var(--text-3)' }}/>
-                    <input autoFocus type="text" placeholder="Search JavaScript, React, CSS..."
+                    <input autoFocus type="text" placeholder="Search any topic: promises, flexbox, JOIN…"
                       className="flex-1 text-sm outline-none bg-transparent"
                       style={{ color:'var(--text)' }}
-                      value={q} onChange={e => setQ(e.target.value)}/>
+                      value={q} onChange={e => { setQ(e.target.value); setActive(0); }}
+                      onKeyDown={e => {
+                        if (e.key === 'ArrowDown' && res.length) { e.preventDefault(); setActive(a => (a + 1) % res.length); }
+                        else if (e.key === 'ArrowUp' && res.length) { e.preventDefault(); setActive(a => (a - 1 + res.length) % res.length); }
+                        else if (e.key === 'Enter' && res.length) { e.preventDefault(); router.push(hitHref(res[Math.min(active, res.length - 1)], marks)); setSOpen(false); setQ(''); setActive(0); }
+                      }}/>
                     {q && <button onClick={() => setQ('')}><X className="w-4 h-4" style={{ color:'var(--text-3)' }}/></button>}
                   </div>
                   {res.length > 0 ? (
-                    <ul className="max-h-72 overflow-y-auto py-1">
-                      {res.map((r,i) => (
-                        <li key={i}>
-                          <Link href={
-                            r.type==='topic'&&r.technologySlug
-                              ? r.technologySlug === 'html' ? `/html/${r.slug}`
-                                : r.technologySlug === 'css' ? `/css/${r.slug}`
-                                : r.technologySlug === 'javascript' ? `/js/${r.slug}`
-                                : `/learn/${r.technologySlug}/${r.slug}`
-                              : `/learn/${r.slug}`
-                          }
-                            onClick={() => { setSOpen(false); setQ(''); }}
-                            className="flex items-start gap-3 px-4 py-2.5 transition-colors"
-                            style={{ borderBottom:'1px solid var(--line)' }}
-                            onMouseEnter={e=>((e.currentTarget as HTMLAnchorElement).style.background='var(--bg-section)')}
-                            onMouseLeave={e=>((e.currentTarget as HTMLAnchorElement).style.background='')}>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded mt-0.5 uppercase tracking-wider shrink-0"
-                              style={{ background:'#eff6ff', color:'#1d4ed8' }}>{r.category}</span>
-                            <div>
-                              <p className="text-[13px] font-semibold" style={{ color:'var(--text)' }}>{r.title}</p>
-                              <p className="text-[11px] mt-0.5 line-clamp-1" style={{ color:'var(--text-3)' }}>{r.description}</p>
-                            </div>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : q.length > 1 ? (
-                    <p className="px-4 py-8 text-center text-sm" style={{ color:'var(--text-3)' }}>No results for &ldquo;{q}&rdquo;</p>
+                    <SearchResultList hits={res} marks={marks} corrected={corrected} active={active} onHover={setActive} onPick={() => { setSOpen(false); setQ(''); setActive(0); }} className="max-h-[26rem]" />
+                  ) : q.trim().length > 1 ? (
+                    <p className="px-4 py-8 text-center text-sm" style={{ color:'var(--text-3)' }}>{loading ? 'Searching…' : <>No results for &ldquo;{q}&rdquo;</>}</p>
                   ) : (
                     <div className="px-4 py-3">
                       <p className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color:'var(--text-3)' }}>Quick access</p>
@@ -302,7 +286,7 @@ export function Navbar() {
 
             <ThemeToggle/>
 
-            <button onClick={() => setMob(!mob)}
+            <button onClick={() => setMob(!mob)} aria-label={mob ? 'Close menu' : 'Open menu'} aria-expanded={mob}
               className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors"
               style={{ border:'1px solid var(--line)' }}
               onMouseEnter={e=>((e.currentTarget as HTMLButtonElement).style.background='var(--bg-section)')}

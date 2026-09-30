@@ -7,7 +7,7 @@ export const expressMiddlewareLesson: ExpressLesson = {
   chapter: 'middleware',
   order: 3,
   difficulty: 'intermediate',
-  readingTime: 14,
+  readingTime: 17,
   description: 'Understanding middleware, app.use(), middleware chain, next() function, and creating custom middleware.',
   sections: [
     {
@@ -287,6 +287,134 @@ function render() {
 }
 
 render();`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Forgetting to call next() or send a response, so the request hangs. Fix: every middleware must either end the response or call next().',
+        'Calling next() after already sending a response, which causes "Cannot set headers after they are sent". Fix: return right after sending, for example return res.status(401).json(...).',
+        'Registering middleware after the routes that need it. Fix: middleware runs in the order it is registered, so add parsers, loggers and auth first.',
+        'Writing an error handler with the wrong signature. Fix: it must take exactly four parameters (err, req, res, next) and be registered after the routes.',
+        'Letting errors in async code go unhandled. Fix: in Express 4 call next(err) from a catch block (Express 5 forwards rejected promises for you).',
+        'Running expensive work on every request. Fix: mount middleware only on the paths that need it, such as app.use("/admin", checkAdmin).',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Logging every request with its method, URL and duration.',
+        'Parsing JSON and form data with express.json() and express.urlencoded().',
+        'Checking a login token or session before protected routes.',
+        'Rate limiting to slow down abuse and brute-force attempts.',
+        'Setting CORS headers so a front end on another origin can call the API.',
+        'One central error handler that returns consistent JSON errors, plus serving static files.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Write a logger and a token check',
+    },
+    {
+      type: 'text',
+      content: 'Add two middleware functions. logger prints the method and URL of every request and then calls next(). requireToken lets a request through only if the x-token header equals "secret"; otherwise it replies 401 with an error message. Use logger for the whole app and requireToken only on /private, then test both routes in the request tester.',
+    },
+    {
+      type: 'example',
+      title: 'Starter code',
+      content: 'Open this in the editor, complete the TODO parts and test with the tester that appears next to the code.',
+      code: `const express = require('express');
+const app = express();
+
+// TODO 1: logger - console.log(req.method + ' ' + req.url), then call next()
+// TODO 2: requireToken - if req.headers['x-token'] is not 'secret', reply 401 with { error: 'Missing or wrong token' }, otherwise call next()
+
+// TODO 3: use logger for every request
+
+app.get('/public', (req, res) => {
+  res.json({ message: 'Anyone can see this' });
+});
+
+// TODO 4: protect this route with requireToken
+app.get('/private', (req, res) => {
+  res.json({ message: 'Secret data' });
+});
+
+app.listen(3000, () => console.log('Server ready'));`,
+      language: 'javascript',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'GET /public always returns {"message":"Anyone can see this"}. GET /private without the header returns 401 {"error":"Missing or wrong token"}; with the header x-token: secret it returns {"message":"Secret data"}. Every request is logged in the console.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'A middleware is (req, res, next) => { ... }. Read the header with req.headers["x-token"]. Pass requireToken as the second argument of the route: app.get("/private", requireToken, handler).',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `const express = require('express');
+const app = express();
+
+function logger(req, res, next) {
+  console.log(req.method + ' ' + req.url);
+  next();
+}
+
+function requireToken(req, res, next) {
+  if (req.headers['x-token'] !== 'secret') {
+    return res.status(401).json({ error: 'Missing or wrong token' });
+  }
+  next();
+}
+
+app.use(logger);
+
+app.get('/public', (req, res) => {
+  res.json({ message: 'Anyone can see this' });
+});
+
+app.get('/private', requireToken, (req, res) => {
+  res.json({ message: 'Secret data' });
+});
+
+app.listen(3000, () => console.log('Server ready'));`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What does next() do?',
+      content: 'It hands the request to the next middleware or route handler. If you do not call it and do not send a response, the request never finishes.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between app.use and app.get?',
+      content: 'app.use runs for every HTTP method on paths that start with the given path, and is used for middleware. app.get handles only GET requests for that exact route.',
+    },
+    {
+      type: 'note',
+      title: 'Does the order of middleware matter?',
+      content: 'Yes. Express runs middleware and routes from top to bottom in the order you registered them.',
+    },
+    {
+      type: 'note',
+      title: 'How is error-handling middleware different?',
+      content: 'It has four parameters (err, req, res, next). Express calls it when you pass an error to next(err) or when code throws.',
     },
   ],
   exercises: [

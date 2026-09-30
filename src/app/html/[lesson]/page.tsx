@@ -3,6 +3,8 @@ import { htmlChapters } from '@/data/html-curriculum';
 import { htmlLessons } from '@/data/html-lessons/index';
 import { HtmlLessonClient } from '@/components/html/HtmlLessonClient';
 import type { Metadata } from 'next';
+import { lessonMetadata, withH1 } from '@/lib/seo';
+import { LessonSeoExtras } from '@/components/seo/LessonSeoExtras';
 
 interface Props { params: Promise<{ lesson: string }> }
 
@@ -10,7 +12,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lesson } = await params;
   const l = htmlLessons.find(x => x.slug === lesson);
   if (!l) return { title: 'Not Found' };
-  return { title: `${l.title} — HTML Tutorial`, description: l.description };
+  return lessonMetadata('html', l);
 }
 
 export default async function HtmlLessonPage({ params }: Props) {
@@ -23,12 +25,15 @@ export default async function HtmlLessonPage({ params }: Props) {
   const next = idx < htmlLessons.length - 1 ? htmlLessons[idx + 1] : null;
 
   return (
-    <HtmlLessonClient
-      lesson={lessonData}
-      allLessons={htmlLessons}
-      chapters={htmlChapters}
-      prev={prev}
-      next={next}
-    />
+    <>
+      <HtmlLessonClient
+        lesson={withH1('html', lessonData)}
+        allLessons={htmlLessons}
+        chapters={htmlChapters}
+        prev={prev}
+        next={next}
+      />
+      <LessonSeoExtras courseId="html" lesson={lessonData} />
+    </>
   );
 }

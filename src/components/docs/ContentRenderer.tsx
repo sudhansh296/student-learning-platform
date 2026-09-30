@@ -2,7 +2,6 @@ import { ContentSection } from '@/lib/types';
 import { CodeBlock } from './CodeBlock';
 import { Callout } from './Callout';
 import { AnalogyBox } from './AnalogyBox';
-import { InlinePlayground } from './InlinePlayground';
 
 interface ContentRendererProps {
   sections: ContentSection[];
@@ -35,8 +34,7 @@ export function ContentRenderer({ sections }: ContentRendererProps) {
                 key={index}
                 code={section.content || ''}
                 language={section.language}
-                filename={section.filename}
-                output={section.output}
+                filename={section.filename}
                 showLineNumbers={section.language !== 'bash'}
               />
             );
@@ -113,8 +111,7 @@ export function ContentRenderer({ sections }: ContentRendererProps) {
                 )}
                 <CodeBlock
                   code={section.content || ''}
-                  language={section.language || 'javascript'}
-                  output={section.output}
+                  language={section.language || 'javascript'}
                   showLineNumbers
                 />
               </div>

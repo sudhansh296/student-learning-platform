@@ -7,7 +7,7 @@ export const reactPerformanceLesson: ReactLesson = {
   chapter: 'advanced',
   order: 14,
   difficulty: 'advanced',
-  readingTime: 15,
+  readingTime: 18,
   description: 'Optimize React apps with React.memo, useMemo, and useCallback. Learn when re-renders are actually a problem and how to profile before optimizing.',
   sections: [
     {
@@ -237,6 +237,158 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Optimising before measuring. Fix: use the React DevTools Profiler to find slow renders first; most components are already fast enough.',
+        'Wrapping every component in memo and every function in useCallback. Fix: each one has a cost; use them where re-renders are proven to be expensive.',
+        'Using memo but passing a new object, array or function as a prop on every render, which defeats it. Fix: stabilise those props with useMemo and useCallback.',
+        'Using array index as key in changing lists. Fix: use a stable id so React can reuse the right elements.',
+        'Putting frequently changing state high in the tree so everything below re-renders. Fix: keep state as close as possible to where it is used.',
+        'Doing heavy calculations in the render body. Fix: cache the result with useMemo, or move the work out of the component.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Long lists and tables, where a single row change should not re-render every row.',
+        'Charts and dashboards that update often.',
+        'Search boxes that filter big data sets without lagging.',
+        'Code splitting with lazy loading so the first page loads faster.',
+        'Large forms where typing in one field should not re-render all the others.',
+        'Virtualised lists that only render the rows currently on screen.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Stop the needless re-renders',
+    },
+    {
+      type: 'text',
+      content: 'Each Row shows how many times it has rendered. Right now every click on the counter re-renders all rows. Wrap Row in memo and keep handleSelect stable with useCallback, then check that clicking the counter no longer increases the render numbers.',
+    },
+    {
+      type: 'tryit',
+      title: 'Stop the needless re-renders',
+      content: 'Complete the TODO parts of the component, press Run and check the behaviour described below.',
+      jsx: `const { useState, useCallback, useRef, memo } = React;
+
+// TODO: wrap Row in memo
+function Row({ label, onSelect }) {
+  const renders = useRef(0);
+  renders.current += 1;
+  return (
+    <li onClick={() => onSelect(label)}>
+      {label} <small>(rendered {renders.current}x)</small>
+    </li>
+  );
+}
+
+function App() {
+  const [count, setCount] = useState(0);
+  const [selected, setSelected] = useState('none');
+
+  // TODO: keep this function the same between renders
+  const handleSelect = (label) => setSelected(label);
+
+  return (
+    <div>
+      <button className="counter" onClick={() => setCount(count + 1)}>Clicks: {count}</button>
+      <p>Selected: {selected}</p>
+      <ul>
+        {['Apples', 'Bananas', 'Cherries'].map((label) => (
+          <Row key={label} label={label} onSelect={handleSelect} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+      css: `body { font-family: system-ui, sans-serif; padding: 20px; }
+button { cursor: pointer; }
+li { cursor: pointer; padding: 6px 0; }
+small { color: #64748b; }
+.counter { background: #0f172a; color: #fff; border: 0; border-radius: 6px; padding: 8px 14px; }`,
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'Before the fix, each counter click increases every "rendered Nx" number. After the fix each row stays at "rendered 1x" when you click the counter, and clicking a row still updates "Selected".',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'const Row = memo(function Row(...) { ... }) skips a render when its props are equal. Because handleSelect is a new function every render, wrap it: const handleSelect = useCallback((label) => setSelected(label), []).',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// In a real project, start with: import { useState, useCallback, useRef, memo } from 'react';
+
+const Row = memo(function Row({ label, onSelect }) {
+  const renders = useRef(0);
+  renders.current += 1;
+  return (
+    <li onClick={() => onSelect(label)}>
+      {label} <small>(rendered {renders.current}x)</small>
+    </li>
+  );
+});
+
+function App() {
+  const [count, setCount] = useState(0);
+  const [selected, setSelected] = useState('none');
+
+  const handleSelect = useCallback((label) => setSelected(label), []);
+
+  return (
+    <div>
+      <button className="counter" onClick={() => setCount(count + 1)}>Clicks: {count}</button>
+      <p>Selected: {selected}</p>
+      <ul>
+        {['Apples', 'Bananas', 'Cherries'].map((label) => (
+          <Row key={label} label={label} onSelect={handleSelect} />
+        ))}
+      </ul>
+    </div>
+  );
+}`,
+      language: 'jsx',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'Why does a child re-render when its parent re-renders?',
+      content: 'By default React re-renders all children of a component that re-rendered, even if their props did not change. React.memo lets a child skip the render when props are equal.',
+    },
+    {
+      type: 'note',
+      title: 'When should I use useMemo and useCallback?',
+      content: 'When a calculation is really expensive, or when you pass a value or function to a memoised child. Otherwise they add complexity for no gain.',
+    },
+    {
+      type: 'note',
+      title: 'How do I find what is slow?',
+      content: 'Record a session in the React DevTools Profiler and look for components that render often or take long.',
+    },
+    {
+      type: 'note',
+      title: 'Is re-rendering bad?',
+      content: 'No. Rendering is normal and usually cheap. Only worry when users notice lag or the Profiler shows a real problem.',
     },
   ],
   exercises: [

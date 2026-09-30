@@ -8,6 +8,7 @@ import { cssGridLesson }         from './07-grid';
 import { cssPositioningLesson }  from './08-positioning';
 import { cssAnimationsLesson }   from './09-animations';
 import { cssResponsiveLesson }   from './10-responsive';
+import { cssReferencesLesson }   from './11-references';
 
 export const cssLessons = [
   cssIntroLesson,
@@ -20,4 +21,5 @@ export const cssLessons = [
   cssPositioningLesson,
   cssAnimationsLesson,
   cssResponsiveLesson,
+  cssReferencesLesson,
 ];

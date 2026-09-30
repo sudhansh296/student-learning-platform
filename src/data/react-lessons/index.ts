@@ -18,6 +18,7 @@ import { reactContextAdvancedLesson }   from './17-context-advanced';
 import { reactTypeScriptLesson }        from './18-typescript-react';
 import { reactPatternsLesson }          from './19-patterns';
 import { reactBestPracticesLesson }     from './20-best-practices';
+import { reactReferencesLesson }        from './21-references';
 
 export {
   reactIntroLesson,
@@ -40,6 +41,7 @@ export {
   reactTypeScriptLesson,
   reactPatternsLesson,
   reactBestPracticesLesson,
+  reactReferencesLesson,
 };
 
 export const reactLessons = [
@@ -63,4 +65,5 @@ export const reactLessons = [
   reactTypeScriptLesson,
   reactPatternsLesson,
   reactBestPracticesLesson,
+  reactReferencesLesson,
 ];

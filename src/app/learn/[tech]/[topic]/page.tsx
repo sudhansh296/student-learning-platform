@@ -115,16 +115,16 @@ export default async function TopicPage({ params }: Props) {
           </div>
 
           {/* Prev/Next navigation */}
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-8 flex flex-wrap items-stretch justify-between gap-3">
             {prevTopic ? (
               <Link
                 href={`/learn/${technology.slug}/${prevTopic.slug}`}
-                className="group flex items-center gap-3 p-4 rounded-xl border border-border hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-sm transition-all bg-background"
+                className="group max-w-full sm:max-w-[48%] flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-border hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-sm transition-all bg-background"
               >
-                <ChevronLeft className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 shrink-0" />
+                <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-blue-500 shrink-0" />
                 <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">Previous</p>
-                  <p className="text-sm font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
+                  <p className="text-[11px] text-muted-foreground">Previous</p>
+                  <p className="text-[13px] font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
                     {prevTopic.title}
                   </p>
                 </div>
@@ -134,15 +134,15 @@ export default async function TopicPage({ params }: Props) {
             {nextTopic ? (
               <Link
                 href={`/learn/${technology.slug}/${nextTopic.slug}`}
-                className="group flex items-center justify-end gap-3 p-4 rounded-xl border border-border hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-sm transition-all bg-background text-right"
+                className="group max-w-full sm:max-w-[48%] flex items-center justify-end gap-3 px-3.5 py-2.5 rounded-xl border border-border hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-sm transition-all bg-background text-right"
               >
                 <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">Next</p>
-                  <p className="text-sm font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
+                  <p className="text-[11px] text-muted-foreground">Next</p>
+                  <p className="text-[13px] font-medium text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400 truncate">
                     {nextTopic.title}
                   </p>
                 </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 shrink-0" />
+                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-blue-500 shrink-0" />
               </Link>
             ) : <div />}
           </div>

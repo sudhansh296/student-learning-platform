@@ -2,7 +2,7 @@ import type { JSLesson } from '../js-curriculum';
 
 export const jsFunctionsLesson: JSLesson = {
   id: 'js-functions-complete', title: 'Functions - Complete Guide', slug: 'functions',
-  chapter: 'functions', order: 8, difficulty: 'beginner', readingTime: 16,
+  chapter: 'functions', order: 8, difficulty: 'beginner', readingTime: 19,
   description: 'Master every type of JavaScript function - declarations, expressions, arrow functions, parameters, default values, rest/spread, higher-order functions, and closures.',
   sections: [
     { type: 'text', content: 'A function is a reusable block of code that performs a specific task. You define it once and call it whenever needed. Functions are the most important concept in JavaScript - everything in modern JS (React components, event handlers, async operations) is built with functions.' },
@@ -284,6 +284,130 @@ function createGreet() {
   document.getElementById('greetResult').textContent = greeter(n);
 }`,
       mode: 'full' },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Forgetting return. Fix: a function without return gives back undefined, so return the value you want the caller to receive.',
+        'Calling a function without parentheses and expecting a result, for example greet instead of greet(). Fix: greet is the function itself, greet() runs it.',
+        'Using an arrow function as an object method and expecting this to be the object. Fix: arrow functions do not have their own this; use a regular method for that case.',
+        'Passing the result instead of the function to a callback, such as button.addEventListener("click", save()). Fix: pass save (no parentheses) so the browser calls it later.',
+        'Changing an object or array that was passed in. Fix: arguments that are objects are shared with the caller, so copy them (spread) if you need to change them.',
+        'Writing very long functions that do many jobs. Fix: split them into small functions with one clear job and a descriptive name.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Event handlers: every click, input and submit in a web page runs a function.',
+        'Helper functions such as formatPrice or isValidEmail that are reused across a project.',
+        'Array methods (map, filter, reduce) take a function that describes what to do with each item.',
+        'API helper functions that wrap fetch so headers and error handling live in one place.',
+        'React components are functions that return the user interface.',
+        'Closures create private state, for example a counter or a rate limiter.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Three small helper functions',
+    },
+    {
+      type: 'text',
+      content: 'Write add(a, b), greet(name) with the default value "friend", and applyDiscount(price, percent) where percent defaults to 10. Then call them as shown in the console lines and compare your output with the expected result.',
+    },
+    {
+      type: 'tryit',
+      title: 'Three small helper functions',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `function add(a, b) {
+  // TODO: return the sum
+}
+
+function greet(name) {
+  // TODO: give name a default of 'friend' and return 'Hello, ' + name + '!'
+}
+
+function applyDiscount(price, percent) {
+  // TODO: default percent to 10 and return the discounted price
+}
+
+console.log(add(2, 3));
+console.log(greet());
+console.log(greet('Ada'));
+console.log(applyDiscount(100));
+console.log(applyDiscount(100, 25));`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `5
+Hello, friend!
+Hello, Ada!
+90
+75`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Default parameters are written in the parameter list: function greet(name = "friend"). A discount of p percent is price - (price * p) / 100.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `function add(a, b) {
+  return a + b;
+}
+
+function greet(name = 'friend') {
+  return 'Hello, ' + name + '!';
+}
+
+function applyDiscount(price, percent = 10) {
+  return price - (price * percent) / 100;
+}
+
+console.log(add(2, 3));
+console.log(greet());
+console.log(greet('Ada'));
+console.log(applyDiscount(100));
+console.log(applyDiscount(100, 25));`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between a function declaration and an arrow function?',
+      content: 'A declaration is hoisted, so you can call it before it appears in the file, and it has its own this. An arrow function is shorter, is not hoisted like a declaration, and uses the this of the surrounding code.',
+    },
+    {
+      type: 'note',
+      title: 'Do parameters and arguments mean the same thing?',
+      content: 'Parameters are the names in the function definition. Arguments are the actual values you pass when you call it.',
+    },
+    {
+      type: 'note',
+      title: 'Why does my function return undefined?',
+      content: 'Either there is no return statement, or return is followed by a line break so it returns nothing. Put the value on the same line as return.',
+    },
+    {
+      type: 'note',
+      title: 'When should I use a callback?',
+      content: 'Use one when you want to hand a piece of behaviour to another function, such as what to do for each item or after a timer ends.',
+    },
   ],
   exercises: [
     { id: 'fn-1', question: 'What is the concise arrow function for: function double(x) { return x * 2; }', type: 'multiple-choice', options: ['const double = x => x * 2;', 'const double = (x) { x * 2 }', 'arrow double(x) => x*2', 'const double = => x * 2'], correct: 0, explanation: 'const double = x => x * 2; - with a single parameter and a single-expression body, you can omit the parentheses around the parameter and the curly braces/return keyword.' },

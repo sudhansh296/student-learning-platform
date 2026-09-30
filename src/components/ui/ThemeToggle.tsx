@@ -7,6 +7,8 @@ export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   
+  // Server has no theme; this mount-flip is the standard next-themes hydration guard.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
   
   // Show placeholder while mounting to prevent hydration mismatch

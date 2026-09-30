@@ -2,7 +2,7 @@ import type { CssLesson } from '../css-curriculum';
 
 export const cssSelectorsLesson: CssLesson = {
   id: 'css-selectors', title: 'CSS Selectors', slug: 'selectors',
-  chapter: 'selectors', order: 2, difficulty: 'beginner', readingTime: 14,
+  chapter: 'selectors', order: 2, difficulty: 'beginner', readingTime: 17,
   description: 'Master all CSS selectors - element, class, ID, attribute, pseudo-classes, pseudo-elements, combinators, and specificity.',
   sections: [
     { type: 'text', content: 'A CSS selector targets HTML elements so you can apply styles to them. Knowing all the ways to select elements is one of the most powerful skills in CSS. The selector is everything that comes before the opening curly brace { }.' },
@@ -203,6 +203,125 @@ input[type="email"] { background: #f0fdf4; border-color: #86efac; }
 input::placeholder { color: #9ca3af; }
 button { padding: 10px; background: #2563eb; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }`,
       mode: 'html' },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Using ID selectors for styling everywhere. Fix: IDs are very specific and hard to override later; style with classes and keep IDs for page anchors and JavaScript.',
+        'Mixing up .card.title with .card .title. Fix: no space means one element that has both classes; a space means a .title somewhere inside a .card.',
+        'Reaching for !important to win a fight. Fix: find out why the other rule is stronger (specificity or order) and adjust the selector instead.',
+        'Forgetting the dot or hash, for example writing card { } for a class. Fix: classes start with . and IDs with #; plain names select HTML tags.',
+        'Assuming the last rule always wins. Fix: specificity decides first; source order only breaks ties between equally specific selectors.',
+        'Long selector chains like div ul li a span. Fix: put a class on the element you want to style; short selectors survive HTML changes.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Styling navigation links and their hover and focus states with a:hover and a:focus-visible.',
+        'Zebra-striped tables with tr:nth-child(even).',
+        'Form feedback such as input:focus, input:invalid and button:disabled.',
+        'Decorative icons, quotes and labels with ::before and ::after, without extra HTML.',
+        'Targeting only direct children of a menu with .menu > li.',
+        'Reusable component classes such as .btn, .btn-primary and .card in a design system.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Style a menu with selectors',
+    },
+    {
+      type: 'text',
+      content: 'Turn the plain list into a tidy menu using only selectors. Remove the bullets, colour the links dark grey without underline, give every second item a light background, make the first item bold, and on hover turn the link blue with an underline.',
+    },
+    {
+      type: 'tryit',
+      title: 'Style a menu with selectors',
+      content: 'Edit the CSS tab, press Run and compare the result with the description below.',
+      html: `<ul class="menu">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Courses</a></li>
+  <li><a href="#">Projects</a></li>
+  <li><a href="#">Contact</a></li>
+</ul>`,
+      css: `.menu {
+  width: 240px;
+  font-family: system-ui, sans-serif;
+}
+
+/* TODO: remove the bullets and default padding from .menu */
+/* TODO: stripe every second item with :nth-child(even) */
+/* TODO: make the first item bold with :first-child */
+/* TODO: style the links, and add a :hover state */`,
+      mode: 'css',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'A narrow menu with no bullets. Items 2 and 4 have a light grey background, "Home" is bold, and hovering a link turns it blue and underlined.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Use .menu li:nth-child(even) for the striped rows and .menu li:first-child for the bold item. Put the hover colour on .menu a:hover.',
+    },
+    {
+      type: 'code',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution, as a complete page you can run in the editor. Compare it with your own version.',
+      code: `<style>
+.menu {
+  width: 240px;
+  font-family: system-ui, sans-serif;
+  list-style: none;
+  padding: 0;
+}
+.menu li { padding: 10px 14px; }
+.menu li:nth-child(even) { background: #f1f5f9; }
+.menu li:first-child { font-weight: 700; }
+.menu a { color: #334155; text-decoration: none; }
+.menu a:hover { color: #2563eb; text-decoration: underline; }
+</style>
+
+<ul class="menu">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Courses</a></li>
+  <li><a href="#">Projects</a></li>
+  <li><a href="#">Contact</a></li>
+</ul>`,
+      language: 'html',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is CSS specificity?',
+      content: 'A score that decides which rule wins when several match the same element. Inline styles beat IDs, IDs beat classes, and classes beat plain element selectors.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between a class and an ID?',
+      content: 'A class can be used on many elements and is the normal way to style. An ID must be unique on the page and is better kept for anchors and scripts.',
+    },
+    {
+      type: 'note',
+      title: 'What do the space, > and + combinators mean?',
+      content: 'A space selects any descendant, > selects only direct children, and + selects the element that comes right after another.',
+    },
+    {
+      type: 'note',
+      title: 'How do I apply one style to several selectors?',
+      content: 'Separate them with commas, for example h1, h2, h3 { margin-top: 0; }.',
+    },
   ],
   exercises: [
     { id: 'sel1', question: 'Which selector targets all <p> elements inside a .container?', type: 'multiple-choice', options: ['.container > p', '.container + p', '.container p', '.container ~ p'], correct: 2, explanation: '.container p (descendant selector, space between) targets ALL <p> elements nested anywhere inside .container. The > child combinator would only target direct children.' },

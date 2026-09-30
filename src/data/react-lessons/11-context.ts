@@ -7,7 +7,7 @@ export const reactContextLesson: ReactLesson = {
   chapter: 'advanced',
   order: 11,
   difficulty: 'intermediate',
-  readingTime: 14,
+  readingTime: 17,
   description: 'Solve prop drilling with Reacts built-in Context API. Learn createContext, useContext, the Provider pattern, and when to use context vs lifting state.',
   sections: [
     {
@@ -270,6 +270,172 @@ function AppContent() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Putting all state in context. Fix: keep local state local and use context only for values many distant components need, such as theme or the current user.',
+        'Forgetting to wrap components in the Provider, so useContext returns the default value. Fix: place the Provider above every component that reads the context.',
+        'Creating a new object for the value on every render, which re-renders all consumers. Fix: keep the value stable with useMemo, or split rarely changing data into its own context.',
+        'Calling useContext outside a function component or hook. Fix: hooks work only inside components and custom hooks.',
+        'Using one huge context for unrelated data. Fix: create a few small contexts (theme, auth, cart) so a change re-renders only its own consumers.',
+        'Forgetting a helpful default or error when the Provider is missing. Fix: wrap useContext in a custom hook that throws a clear message.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Theme: light or dark mode used by many components.',
+        'The logged-in user and their permissions.',
+        'Language and locale for a translated site.',
+        'A shopping cart count shown in the header and updated from product cards.',
+        'Toast or notification systems that any component can trigger.',
+        'Settings and feature flags shared across a whole app.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Share a cart count with context',
+    },
+    {
+      type: 'text',
+      content: 'The header should show how many items are in the cart, and every product card has an Add to cart button. Finish CartProvider so it keeps a count in state and provides both count and addItem through context.',
+    },
+    {
+      type: 'tryit',
+      title: 'Share a cart count with context',
+      content: 'Complete the TODO parts of the component, press Run and check the behaviour described below.',
+      jsx: `const { createContext, useContext, useState } = React;
+
+const CartContext = createContext(null);
+
+function CartProvider({ children }) {
+  // TODO: keep the count in state and provide { count, addItem }
+  return (
+    <CartContext.Provider value={{ count: 0, addItem: () => {} }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+function Header() {
+  const { count } = useContext(CartContext);
+  return <div className="header">My Shop - Cart: {count}</div>;
+}
+
+function ProductCard({ name }) {
+  const { addItem } = useContext(CartContext);
+  return (
+    <div className="card">
+      <span>{name}</span>
+      <button onClick={addItem}>Add to cart</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <CartProvider>
+      <Header />
+      <ProductCard name="Notebook" />
+      <ProductCard name="Pen" />
+    </CartProvider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+      css: `body { font-family: system-ui, sans-serif; padding: 20px; }
+button { cursor: pointer; }
+.header { background: #1e293b; color: #fff; padding: 12px 16px; border-radius: 8px; margin-bottom: 12px; font-weight: 700; }
+.card { display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; }
+.card button { background: #6366f1; color: #fff; border: 0; border-radius: 6px; padding: 6px 12px; }`,
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'The header starts with "Cart: 0". Clicking Add to cart on any product increases the number in the header by one.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Inside CartProvider use const [count, setCount] = useState(0) and const addItem = () => setCount(c => c + 1), then pass value={{ count, addItem }} to the Provider.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// In a real project, start with: import { createContext, useContext, useState } from 'react';
+
+const CartContext = createContext(null);
+
+function CartProvider({ children }) {
+  const [count, setCount] = useState(0);
+  const addItem = () => setCount((c) => c + 1);
+
+  return (
+    <CartContext.Provider value={{ count, addItem }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+function Header() {
+  const { count } = useContext(CartContext);
+  return <div className="header">My Shop - Cart: {count}</div>;
+}
+
+function ProductCard({ name }) {
+  const { addItem } = useContext(CartContext);
+  return (
+    <div className="card">
+      <span>{name}</span>
+      <button onClick={addItem}>Add to cart</button>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <CartProvider>
+      <Header />
+      <ProductCard name="Notebook" />
+      <ProductCard name="Pen" />
+    </CartProvider>
+  );
+}`,
+      language: 'jsx',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What problem does context solve?',
+      content: 'Prop drilling: passing a value through many components that do not use it just to reach one that does.',
+    },
+    {
+      type: 'note',
+      title: 'Is context a replacement for Redux?',
+      content: 'For small and medium apps, often yes, especially for values that rarely change. Bigger apps with complex updates may still prefer a state library.',
+    },
+    {
+      type: 'note',
+      title: 'Why do all my components re-render when the context changes?',
+      content: 'Every component that calls useContext for that context re-renders when its value changes. Split contexts so components only subscribe to what they need.',
+    },
+    {
+      type: 'note',
+      title: 'Can I use more than one context?',
+      content: 'Yes. Nest several Providers, one for each concern such as theme, user and cart.',
     },
   ],
   exercises: [

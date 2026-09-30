@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
 import { allMongodbLessons } from '@/data/mongodb-lessons/index';
-import { mongodbChapters } from '@/data/mongodb-curriculum';
 import MongodbLessonClient from '@/components/mongodb/MongodbLessonClient';
 import type { Metadata } from 'next';
+import { lessonMetadata, withH1 } from '@/lib/seo';
+import { LessonSeoExtras } from '@/components/seo/LessonSeoExtras';
 
 interface Props { params: Promise<{ lesson: string }> }
 
@@ -10,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lesson } = await params;
   const l = allMongodbLessons.find(x => x.slug === lesson);
   if (!l) return { title: 'Not Found' };
-  return { title: `${l.title} - MongoDB Tutorial`, description: l.description };
+  return lessonMetadata('mongodb', l);
 }
 
 export default async function MongodbLessonPage({ params }: Props) {
@@ -19,9 +20,12 @@ export default async function MongodbLessonPage({ params }: Props) {
   const lessonData = all.find(x => x.slug === lesson);
   if (!lessonData) notFound();
   return (
-    <MongodbLessonClient
-      lesson={lessonData}
-      allLessons={all}
-    />
+    <>
+      <MongodbLessonClient
+        lesson={withH1('mongodb', lessonData)}
+        allLessons={all}
+      />
+      <LessonSeoExtras courseId="mongodb" lesson={lessonData} />
+    </>
   );
 }

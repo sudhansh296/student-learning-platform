@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-# Block API routes from crawlers
-Disallow: /api/
-
-Sitemap: https://webdevatlas.com/sitemap.xml

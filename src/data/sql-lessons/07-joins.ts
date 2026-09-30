@@ -12,7 +12,7 @@ export const lesson07: SqlLesson = {
   sections: [
     {
       type: 'text',
-      content: 'Relational databases split data across multiple tables to avoid duplication â€” this is called normalization. A users table stores user information; an orders table stores order information. But often you need data from both at once: "show me all orders with the customer name." JOINs are how you combine data from multiple tables in a single query.'
+      content: 'Relational databases split data across multiple tables to avoid duplication — this is called normalization. A users table stores user information; an orders table stores order information. But often you need data from both at once: "show me all orders with the customer name." JOINs are how you combine data from multiple tables in a single query.'
     },
     {
       type: 'heading',
@@ -20,7 +20,7 @@ export const lesson07: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'Consider storing the customer name on every order row. If a customer updates their name, you would need to update every order row â€” missing even one creates inconsistency. Instead, orders store a user_id foreign key. To get the name, you JOIN the orders table to the users table on the shared key. This way names are stored once and stay consistent everywhere.'
+      content: 'Consider storing the customer name on every order row. If a customer updates their name, you would need to update every order row — missing even one creates inconsistency. Instead, orders store a user_id foreign key. To get the name, you JOIN the orders table to the users table on the shared key. This way names are stored once and stay consistent everywhere.'
     },
     {
       type: 'analogy',
@@ -33,7 +33,7 @@ export const lesson07: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'INNER JOIN returns only rows where there is a matching row in both tables. If an order has a user_id that does not exist in the users table, that order is excluded from the result. If a user has no orders, they are also excluded. INNER JOIN is the most common type â€” it returns the intersection of both tables based on the join condition.'
+      content: 'INNER JOIN returns only rows where there is a matching row in both tables. If an order has a user_id that does not exist in the users table, that order is excluded from the result. If a user has no orders, they are also excluded. INNER JOIN is the most common type — it returns the intersection of both tables based on the join condition.'
     },
     {
       type: 'heading',
@@ -45,7 +45,7 @@ export const lesson07: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'A common LEFT JOIN use case: find all users even those with no orders. With INNER JOIN, users with no orders disappear. With LEFT JOIN, they stay in the result and their order columns show NULL â€” you can then use WHERE order_id IS NULL to find users with no orders at all.'
+      content: 'A common LEFT JOIN use case: find all users even those with no orders. With INNER JOIN, users with no orders disappear. With LEFT JOIN, they stay in the result and their order columns show NULL — you can then use WHERE order_id IS NULL to find users with no orders at all.'
     },
     {
       type: 'heading',
@@ -53,7 +53,7 @@ export const lesson07: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'RIGHT JOIN is the mirror of LEFT JOIN â€” it keeps all rows from the right table and NULLs for unmatched left rows. In practice, most developers rewrite RIGHT JOINs as LEFT JOINs by swapping table order â€” this makes queries easier to read left-to-right.'
+      content: 'RIGHT JOIN is the mirror of LEFT JOIN — it keeps all rows from the right table and NULLs for unmatched left rows. In practice, most developers rewrite RIGHT JOINs as LEFT JOINs by swapping table order — this makes queries easier to read left-to-right.'
     },
     {
       type: 'text',
@@ -65,11 +65,11 @@ export const lesson07: SqlLesson = {
     },
     {
       type: 'text',
-      content: 'CROSS JOIN returns the Cartesian product â€” every possible combination of rows from both tables. If table A has 100 rows and table B has 50 rows, CROSS JOIN produces 5,000 rows. It is rarely used intentionally but easy to create accidentally by forgetting the ON clause in older-style JOIN syntax.'
+      content: 'CROSS JOIN returns the Cartesian product — every possible combination of rows from both tables. If table A has 100 rows and table B has 50 rows, CROSS JOIN produces 5,000 rows. It is rarely used intentionally but easy to create accidentally by forgetting the ON clause in older-style JOIN syntax.'
     },
     {
       type: 'text',
-      content: 'SELF JOIN joins a table to itself. This is useful for hierarchical data where rows reference other rows in the same table â€” like an employees table where each employee has a manager_id pointing to another row in the same table.'
+      content: 'SELF JOIN joins a table to itself. This is useful for hierarchical data where rows reference other rows in the same table — like an employees table where each employee has a manager_id pointing to another row in the same table.'
     },
     {
       type: 'table',
@@ -78,7 +78,7 @@ export const lesson07: SqlLesson = {
       rows: [
         ['INNER JOIN', 'Only rows with matches in both tables', 'Get orders with customer details (both must exist)'],
         ['LEFT JOIN', 'All left rows + matching right rows (NULLs for no match)', 'Get all users, including those with no orders'],
-        ['RIGHT JOIN', 'All right rows + matching left rows (NULLs for no match)', 'Rarely used â€” rewrite as LEFT JOIN'],
+        ['RIGHT JOIN', 'All right rows + matching left rows (NULLs for no match)', 'Rarely used — rewrite as LEFT JOIN'],
         ['FULL OUTER JOIN', 'All rows from both tables, NULLs for non-matches', 'Find mismatches between two datasets'],
         ['CROSS JOIN', 'Every combination (Cartesian product)', 'Generate combinations (e.g., all size/color pairs)'],
         ['SELF JOIN', 'Table joined to itself', 'Hierarchical data like org charts, employee-manager']
@@ -306,7 +306,7 @@ render();`,
         'INNER JOIN orders WHERE orders.user_id NOT IN (SELECT id FROM users)'
       ],
       correct: 1,
-      explanation: 'LEFT JOIN returns all users, with NULL for order columns when no matching order exists. Adding WHERE orders.id IS NULL then filters to only the users without orders â€” the "anti-join" pattern.'
+      explanation: 'LEFT JOIN returns all users, with NULL for order columns when no matching order exists. Adding WHERE orders.id IS NULL then filters to only the users without orders — the "anti-join" pattern.'
     },
     {
       id: 'ex-sql-7-3',
@@ -319,7 +319,7 @@ render();`,
         'An error'
       ],
       correct: 1,
-      explanation: 'INNER JOIN returns only rows where the ON condition matches in both tables. If no rows match, the result is an empty result set with zero rows â€” not an error, just no data.'
+      explanation: 'INNER JOIN returns only rows where the ON condition matches in both tables. If no rows match, the result is an empty result set with zero rows — not an error, just no data.'
     }
   ],
   quiz: [
@@ -357,7 +357,7 @@ render();`,
         'SELF JOIN is not valid SQL'
       ],
       correct: 1,
-      explanation: 'A SELF JOIN joins a table to itself using table aliases. It is used for hierarchical data where rows reference other rows in the same table â€” like employees with manager_id pointing to another employee, or categories with parent_id.'
+      explanation: 'A SELF JOIN joins a table to itself using table aliases. It is used for hierarchical data where rows reference other rows in the same table — like employees with manager_id pointing to another employee, or categories with parent_id.'
     }
   ]
 };

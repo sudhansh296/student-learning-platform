@@ -271,6 +271,133 @@ function copyCss() {
 window.update=update; window.applyTemplate=applyTemplate; window.copyCss=copyCss;
 update();`,
      mode:'full'},
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Putting display: grid on the items instead of the container. Fix: the container gets display: grid and the columns; the items are placed automatically.',
+        'Mixing up auto-fit and auto-fill. Fix: auto-fit stretches the columns to fill the row when there are few items, while auto-fill keeps empty columns.',
+        'Using fixed pixel columns that overflow on phones. Fix: use fr units, minmax() or repeat(auto-fit, minmax(...)) so the columns adapt.',
+        'Spacing items with margins. Fix: use gap for consistent space between rows and columns.',
+        'Reading grid-column: 1 / 3 as "1 to 3 columns". Fix: the second number is a grid line, so 1 / 3 covers two columns; span 2 is clearer.',
+        'Using grid for a simple row of items. Fix: flexbox is shorter for one-dimensional layouts.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Page layouts with header, sidebar, main content and footer using grid-template-areas.',
+        'Image galleries and product listings.',
+        'Dashboards where some cards are wider or taller than others.',
+        'Responsive card grids that need no media queries thanks to auto-fit and minmax().',
+        'Forms with labels and inputs aligned in two columns.',
+        'Calendars and boards where items sit in a strict grid.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: A gallery that adapts to the screen width',
+    },
+    {
+      type: 'text',
+      content: 'Turn the six tiles into a grid where every column is at least 140px wide, the columns fill the whole row, and there is a 12px gap. Do not use media queries. Open the preview in full screen (or resize) to watch the number of columns change.',
+    },
+    {
+      type: 'tryit',
+      title: 'A gallery that adapts to the screen width',
+      content: 'Edit the CSS tab, press Run and compare the result with the description below.',
+      html: `<div class="gallery">
+  <div class="tile">1</div>
+  <div class="tile">2</div>
+  <div class="tile">3</div>
+  <div class="tile">4</div>
+  <div class="tile">5</div>
+  <div class="tile">6</div>
+</div>`,
+      css: `.gallery {
+  font-family: system-ui, sans-serif;
+  /* TODO: make this a grid with auto-fit columns and a gap */
+}
+.tile {
+  background: #dbeafe;
+  padding: 30px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 700;
+}`,
+      mode: 'css',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'The tiles form a grid with a 12px gap. On a wide preview you get several columns; as the width shrinks, tiles wrap into fewer columns and never get narrower than 140px.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) creates as many columns as fit, each at least 140px and sharing leftover space.',
+    },
+    {
+      type: 'code',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution, as a complete page you can run in the editor. Compare it with your own version.',
+      code: `<style>
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  font-family: system-ui, sans-serif;
+}
+.tile {
+  background: #dbeafe;
+  padding: 30px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 700;
+}
+</style>
+
+<div class="gallery">
+  <div class="tile">1</div>
+  <div class="tile">2</div>
+  <div class="tile">3</div>
+  <div class="tile">4</div>
+  <div class="tile">5</div>
+  <div class="tile">6</div>
+</div>`,
+      language: 'html',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between CSS Grid and Flexbox?',
+      content: 'Flexbox lays items out along one axis (a row or a column). Grid controls rows and columns together, which suits whole layouts.',
+    },
+    {
+      type: 'note',
+      title: 'What does the fr unit mean?',
+      content: 'One fr is one share of the free space in the grid container, so 1fr 2fr gives the second column twice the space of the first.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between auto-fit and auto-fill?',
+      content: 'Both create as many columns as fit. With few items, auto-fit collapses the empty columns so the items stretch, and auto-fill keeps the empty columns.',
+    },
+    {
+      type: 'note',
+      title: 'How do I make an item span more than one column?',
+      content: 'Use grid-column: span 2 on the item, or grid-column: 1 / 3 with explicit grid lines.',
+    },
   ],
   exercises:[
     {id:'gr1',question:'What does grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) do?',type:'multiple-choice',options:['Creates exactly 200 columns','Creates responsive columns that are at least 200px and share remaining space','Creates one column of 200px','Nothing - invalid syntax'],correct:1,explanation:'auto-fit creates as many columns as fit, each at least 200px wide. On wide screens you get 4-5 columns, on mobile you get 1. This creates a responsive grid with NO media queries needed.'},

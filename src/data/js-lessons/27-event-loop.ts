@@ -133,6 +133,125 @@ button{padding:9px 18px;background:#2563eb;color:white;border:none;border-radius
     add('② Sync: End', 'sync');
   }, 100);
 }`,mode:'full'},
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Thinking setTimeout(fn, 0) runs immediately. Fix: it runs after the current code and after all pending microtasks, on a later turn of the event loop.',
+        'Believing JavaScript runs things in parallel. Fix: there is one call stack; the browser or Node.js does the waiting and queues callbacks for later.',
+        'Blocking the main thread with a long loop and freezing the page. Fix: split heavy work into chunks, use a Web Worker, or move it to the server.',
+        'Expecting Promise callbacks to run after timers. Fix: Promise callbacks are microtasks and run before the next timer callback.',
+        'Assuming code after await runs synchronously. Fix: everything after await is scheduled as a microtask and runs after the current synchronous code finishes.',
+        'Relying on exact timer delays. Fix: setTimeout only guarantees "not earlier than"; a busy stack makes it later.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Explaining why a page freezes: a long synchronous task blocks the event loop.',
+        'Choosing between setTimeout, Promises and requestAnimationFrame for smooth UI updates.',
+        'Debugging logs that appear in a surprising order in async code.',
+        'Debounce and throttle helpers for typing and scrolling.',
+        'Understanding React state updates, effects and batching, which are scheduled around the event loop.',
+        'A very common JavaScript interview topic: predict the output order.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Predict the order, then run it',
+    },
+    {
+      type: 'text',
+      content: 'Read the code and write down the order in which the six lines will print before you run it. Then run it and compare. Finally add one more setTimeout with a delay of 0 and one more Promise.then and predict again.',
+    },
+    {
+      type: 'tryit',
+      title: 'Predict the order, then run it',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `console.log('A');
+
+setTimeout(() => console.log('B (timeout)'), 0);
+
+Promise.resolve().then(() => console.log('C (promise)'));
+
+(async () => {
+  console.log('D (inside async, before await)');
+  await null;
+  console.log('E (after await)');
+})();
+
+console.log('F');`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `A
+D (inside async, before await)
+F
+C (promise)
+E (after await)
+B (timeout)`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Synchronous code first, then all microtasks (Promise callbacks and code after await) in the order they were queued, and only then timer callbacks.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// Nothing to fix here: the task is to predict the order.
+// Synchronous: A, D, F  |  microtasks: C, E  |  timer: B
+console.log('A');
+
+setTimeout(() => console.log('B (timeout)'), 0);
+
+Promise.resolve().then(() => console.log('C (promise)'));
+
+(async () => {
+  console.log('D (inside async, before await)');
+  await null;
+  console.log('E (after await)');
+})();
+
+console.log('F');`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the event loop?',
+      content: 'The mechanism that takes finished tasks from the queues and runs them on the single call stack whenever the stack is empty.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between a microtask and a macrotask?',
+      content: 'Microtasks (Promise callbacks, queueMicrotask) run right after the current code, before anything else. Macrotasks (timers, events) run one at a time on later turns.',
+    },
+    {
+      type: 'note',
+      title: 'Is JavaScript single-threaded?',
+      content: 'Your code runs on one thread, but the browser or Node.js can do work such as network requests in the background and hand the result back through the queues.',
+    },
+    {
+      type: 'note',
+      title: 'Why does setTimeout(fn, 0) not run at once?',
+      content: 'Because it is a macrotask. The current code and all queued microtasks must finish first.',
+    },
   ],
   exercises:[{id:'el1',question:'Why do Promise callbacks run before setTimeout callbacks (even with 0ms delay)?',type:'multiple-choice',options:['Promises are faster','Promises go into the microtask queue which is processed before the macrotask queue','setTimeout is broken','JavaScript prioritizes Promises'],correct:1,explanation:'Promises use the MICROTASK queue. setTimeout uses the MACROTASK queue. The event loop always processes ALL pending microtasks before picking up the next macro task. So even setTimeout(fn, 0) runs after all pending Promise callbacks.'}],
   quiz:[{id:'eq1',question:'What is the event loop?',options:['A type of JavaScript loop','The mechanism that checks if the call stack is empty and processes queued callbacks','A method on Array','A way to handle errors'],correct:1,explanation:'The event loop continuously checks: "Is the call stack empty?" If yes, it first processes all microtasks, then picks one macro task from the callback queue and pushes it onto the call stack. This single mechanism enables all of JavaScript\'s asynchronous behavior.'}],

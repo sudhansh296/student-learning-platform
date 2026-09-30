@@ -15,6 +15,7 @@ import {
   Play,
   ExternalLink,
 } from 'lucide-react';
+import { web, sampleHtmlForCss, sampleHtmlForJs } from '@/lib/runInEditor';
 import type { Project } from '@/data/projects/types';
 
 interface Props {
@@ -90,15 +91,34 @@ interface LessonSectionProps {
   isLast: boolean;
   copiedKey: string | null;
   onCopy: (text: string, key: string) => void;
+  /** Frontend lessons show ALL project files together — open the full project in the playground instead of one file. */
+  projectSlug: string;
+  isFrontendProject: boolean;
 }
 
-function LessonSection({ index, lesson, filesToShow, lessonSnippet, snippetLang, isLast, copiedKey, onCopy }: LessonSectionProps) {
-  const [activeFile, setActiveFile] = useState(0);
+/** Where "Open in Editor" for this lesson's code should send the user — null when there's no sensible way to run it (TypeScript-only source, JSON, etc). */
+function lessonEditorHref(isFrontendProject: boolean, projectSlug: string, code: string, lang: string): string | null {
+  if (isFrontendProject) return `/playground?project=${projectSlug}`;
+  if (lang === 'html') return web(code, '', '', 'html', 'HTML').href;
+  if (lang === 'css') return web(sampleHtmlForCss(code), code, '', 'css', 'CSS').href;
+  if (lang === 'javascript') return web(sampleHtmlForJs(code), '', code, 'js', 'JS').href;
+  return null;
+}
 
-  const hasFiles = filesToShow.length > 0;
-  const currentFile = hasFiles ? filesToShow[activeFile] : null;
-  const displayCode = currentFile ? currentFile.content : lessonSnippet;
-  const displayLang = currentFile ? currentFile.language : snippetLang;
+interface ViewItem { key: string; label: string; language: string; content: string; isCompleteFile: boolean }
+
+function LessonSection({ index, lesson, filesToShow, lessonSnippet, snippetLang, isLast, copiedKey, onCopy, projectSlug, isFrontendProject }: LessonSectionProps) {
+  // The lesson's own snippet (what this lesson actually teaches) comes first and is shown by default;
+  // the project's complete file(s) are secondary tabs so readers can see the code in full context.
+  const items: ViewItem[] = [];
+  if (lessonSnippet) items.push({ key: 'snippet', label: getLangLabel(snippetLang as 'html' | 'css' | 'javascript'), language: snippetLang, content: lessonSnippet, isCompleteFile: false });
+  filesToShow.forEach(f => items.push({ key: f.path, label: f.path.split('/').pop() || f.path, language: f.language, content: f.content, isCompleteFile: true }));
+
+  const [activeIdx, setActiveIdx] = useState(0);
+  const current = items[activeIdx];
+  const displayCode = current?.content ?? '';
+  const displayLang = current?.language ?? '';
+  const editorHref = lessonEditorHref(isFrontendProject, projectSlug, displayCode, displayLang);
 
   return (
     <div className="relative">
@@ -115,24 +135,24 @@ function LessonSection({ index, lesson, filesToShow, lessonSnippet, snippetLang,
         {lesson.explanation}
       </p>
 
-      {/* Code — full files with tab switcher if multiple files */}
-      {(hasFiles || lessonSnippet) && (
+      {/* Code — lesson's own snippet by default, complete file(s) as extra tabs */}
+      {items.length > 0 && (
         <div className="rounded-xl overflow-hidden border border-border shadow-sm">
           {/* Tab header */}
           <div className="flex items-center justify-between bg-[#161b22] border-b border-[#30363d] px-3 py-1.5">
             <div className="flex items-center gap-1">
-              {hasFiles ? (
-                filesToShow.map((f, fi) => (
+              {items.length > 1 ? (
+                items.map((it, idx) => (
                   <button
-                    key={f.path}
-                    onClick={() => setActiveFile(fi)}
+                    key={it.key}
+                    onClick={() => setActiveIdx(idx)}
                     className={`px-3 py-1 rounded text-xs font-mono font-semibold transition-colors ${
-                      fi === activeFile
-                        ? `bg-[#21262d] ${getLangColor(f.language)}`
+                      idx === activeIdx
+                        ? `bg-[#21262d] ${getLangColor(it.language)}`
                         : 'text-[#8b949e] hover:text-white'
                     }`}
                   >
-                    {f.path.split('/').pop()}
+                    {it.label}
                   </button>
                 ))
               ) : (
@@ -140,18 +160,34 @@ function LessonSection({ index, lesson, filesToShow, lessonSnippet, snippetLang,
                   {getLangLabel(displayLang as 'html' | 'css' | 'javascript' | 'typescript' | 'json' | 'markdown' | 'bash' | 'text')}
                 </span>
               )}
-              <span className="text-[10px] px-2 py-0.5 rounded bg-[#21262d] text-[#484f58] font-mono ml-1">
-                complete file
-              </span>
+              {current?.isCompleteFile && (
+                <span className="text-[10px] px-2 py-0.5 rounded bg-[#21262d] text-[#8b949e] font-mono ml-1">
+                  complete file
+                </span>
+              )}
             </div>
-            <button
-              onClick={() => onCopy(displayCode, lesson.id + '-' + (currentFile?.path || ''))}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
-            >
-              {copiedKey === lesson.id + '-' + (currentFile?.path || '')
-                ? <><span className="w-3 h-3 text-green-400">&#10003;</span><span className="text-green-400">Copied</span></>
-                : <><span className="w-3 h-3">&#128203;</span><span>Copy</span></>}
-            </button>
+            <div className="flex items-center gap-1">
+              {editorHref && (
+                <a
+                  href={editorHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-[11px] font-semibold text-[#3fb950] hover:text-white transition-colors px-2.5 py-1 rounded border border-[#238636] hover:bg-[#238636]"
+                  title="Open this code in the code editor and run it"
+                >
+                  <Play className="w-3 h-3" />
+                  <span>Open in Editor</span>
+                </a>
+              )}
+              <button
+                onClick={() => onCopy(displayCode, lesson.id + '-' + (current?.key || ''))}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
+              >
+                {copiedKey === lesson.id + '-' + (current?.key || '')
+                  ? <><Check className="w-3 h-3 text-green-400" /><span className="text-green-400">Copied</span></>
+                  : <><Copy className="w-3 h-3" /><span>Copy</span></>}
+              </button>
+            </div>
           </div>
 
           {/* Code content */}
@@ -294,9 +330,9 @@ export function ProjectDetailClient({ project }: Props) {
 
         {/* Action buttons */}
         <div className="flex gap-2 flex-wrap">
-          {project.playgroundKey && (
+          {project.files.some(f => f.language === 'html') && (
             <a
-              href={`/playground?template=${project.playgroundKey}`}
+              href={`/playground?project=${project.slug}`}
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#1a1a1a] hover:bg-[#2a2a2a] text-white text-sm font-semibold transition-colors"
             >
               <Terminal className="w-4 h-4 text-green-400" />
@@ -420,7 +456,7 @@ export function ProjectDetailClient({ project }: Props) {
                     <span className={`text-xs font-mono font-semibold ${getLangColor(f.language)}`}>
                       {getLangLabel(f.language)}
                     </span>
-                    <span className="text-xs text-[#484f58] ml-1">{f.path}</span>
+                    <span className="text-xs text-[#7d8590] ml-1">{f.path}</span>
                   </div>
                   <button
                     onClick={() => copyToClipboard(f.content, f.path)}
@@ -474,7 +510,7 @@ export function ProjectDetailClient({ project }: Props) {
             const isFrontendProject = project.type === 'frontend';
 
             // Files to show for this lesson
-            let filesToShow = isFrontendProject
+            const filesToShow = isFrontendProject
               ? project.files // show all files for frontend (HTML + CSS + JS)
               : lesson.js
               ? project.files.filter(f => f.language === 'javascript' || f.language === 'typescript')
@@ -484,8 +520,7 @@ export function ProjectDetailClient({ project }: Props) {
               ? project.files.filter(f => f.language === 'css')
               : project.files; // fallback: show all
 
-            // If no project files matched, use the lesson snippet as fallback
-            const hasProjectFiles = filesToShow.length > 0;
+            // The lesson's own snippet is what it actually teaches; complete project files are shown as extra tabs.
             const lessonSnippet = lesson.js || lesson.html || lesson.css || '';
             const snippetLang = lesson.js ? 'javascript' : lesson.html ? 'html' : 'css';
 
@@ -494,12 +529,14 @@ export function ProjectDetailClient({ project }: Props) {
                 key={lesson.id}
                 index={i}
                 lesson={lesson}
-                filesToShow={hasProjectFiles ? filesToShow : []}
-                lessonSnippet={hasProjectFiles ? '' : lessonSnippet}
+                filesToShow={filesToShow}
+                lessonSnippet={lessonSnippet}
                 snippetLang={snippetLang}
                 isLast={i === project.lessons.length - 1}
                 copiedKey={copiedKey}
                 onCopy={copyToClipboard}
+                projectSlug={project.slug}
+                isFrontendProject={isFrontendProject}
               />
             );
           })}
@@ -543,16 +580,33 @@ export function ProjectDetailClient({ project }: Props) {
                       <span className={`text-xs font-mono font-semibold ${getLangColor(f.language)}`}>
                         {getLangLabel(f.language)}
                       </span>
-                      <span className="text-xs text-[#484f58]">{f.path}</span>
+                      <span className="text-xs text-[#7d8590]">{f.path}</span>
                     </div>
-                    <button
-                      onClick={() => copyToClipboard(f.content, 'file-' + f.path)}
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
-                    >
-                      {copiedKey === 'file-' + f.path
-                        ? <><Check className="w-3 h-3 text-green-400" /><span className="text-green-400">Copied</span></>
-                        : <><Copy className="w-3 h-3" /><span>Copy</span></>}
-                    </button>
+                    <div className="flex items-center gap-1">
+                      {(() => {
+                        const href = lessonEditorHref(isFrontend, project.slug, f.content, f.language);
+                        return href ? (
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 text-[11px] font-semibold text-[#3fb950] hover:text-white transition-colors px-2.5 py-1 rounded border border-[#238636] hover:bg-[#238636]"
+                            title="Open this file in the code editor and run it"
+                          >
+                            <Play className="w-3 h-3" />
+                            <span>Open in Editor</span>
+                          </a>
+                        ) : null;
+                      })()}
+                      <button
+                        onClick={() => copyToClipboard(f.content, 'file-' + f.path)}
+                        className="flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
+                      >
+                        {copiedKey === 'file-' + f.path
+                          ? <><Check className="w-3 h-3 text-green-400" /><span className="text-green-400">Copied</span></>
+                          : <><Copy className="w-3 h-3" /><span>Copy</span></>}
+                      </button>
+                    </div>
                   </div>
                   <div className="bg-[#0d1117] overflow-x-auto overflow-y-auto">
                     <pre className="p-4 text-[13px] leading-[1.7] font-mono text-[#e6edf3] whitespace-pre">

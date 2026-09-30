@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { Play, RefreshCw, Maximize2, Copy, Check, RotateCcw, X } from 'lucide-react';
+import { Play, Maximize2, Copy, Check, RotateCcw, X } from 'lucide-react';
 
 interface LiveEditorProps {
   defaultHTML?: string;
@@ -89,8 +89,13 @@ try {
     setOutput('');
   }, [html, css, js, buildSrcDoc]);
 
-  // Auto-run on mount
-  useEffect(() => { run(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Auto-run on mount — write the iframe directly; output already starts empty, no state update needed.
+  useEffect(() => {
+    runCountRef.current++;
+    const src = buildSrcDoc(html, css, js);
+    if (iframeRef.current) iframeRef.current.srcdoc = src;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Listen for console messages from iframe — validate origin before processing
   useEffect(() => {
@@ -126,19 +131,15 @@ try {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const tabs = mode === 'full'
-    ? ['html', 'css', 'js'] as const
-    : mode === 'css'
-    ? ['html', 'css'] as const
-    : mode === 'js'
-    ? ['html', 'js'] as const
-    : ['html'] as const;
+  const hasCssTab = mode === 'css' || mode === 'full' || defaultCSS.trim().length > 0;
+  const hasJsTab  = mode === 'js'  || mode === 'full' || defaultJS.trim().length > 0;
+  const tabs: ('html' | 'css' | 'js')[] = ['html', ...(hasCssTab ? ['css' as const] : []), ...(hasJsTab ? ['js' as const] : [])];
 
   const currentCode = activeTab === 'html' ? html : activeTab === 'css' ? css : js;
   const setCurrentCode = activeTab === 'html' ? setHtml : activeTab === 'css' ? setCss : setJs;
 
   const editorPanel = (
-    <div className={`flex flex-col ${isFullscreen ? 'h-full' : ''}`} style={isFullscreen ? {} : { height }}>
+    <div className={`flex flex-col ${isFullscreen ? 'h-full' : ''}`}>
       {/* Toolbar */}
       <div className="flex items-center justify-between px-3 py-2 bg-[#161b22] border-b border-[#30363d]">
         <div className="flex items-center gap-1">
@@ -157,14 +158,16 @@ try {
           ))}
         </div>
         <div className="flex items-center gap-1.5">
-          {title && <span className="text-[11px] text-[#484f58] mr-2">{title}</span>}
+          {title && <span className="text-[11px] text-[#7d8590] mr-2">{title}</span>}
           <button
+            aria-label="Copy code"
             onClick={copyCode}
             className="flex items-center gap-1 px-2 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
           >
             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
           </button>
           <button
+            aria-label="Reset example"
             onClick={reset}
             className="flex items-center gap-1 px-2 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
             title="Reset to original"
@@ -172,6 +175,7 @@ try {
             <RotateCcw className="w-3 h-3" />
           </button>
           <button
+            aria-label="Toggle full screen"
             onClick={() => setIsFullscreen(!isFullscreen)}
             className="flex items-center gap-1 px-2 py-1 rounded text-[11px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"
           >
@@ -182,8 +186,8 @@ try {
 
       <div className={`flex flex-col md:flex-row ${isFullscreen ? 'flex-1 min-h-0' : ''}`} style={isFullscreen ? {} : {}}>
         {/* Code editor */}
-        <div className="flex-1 flex flex-col min-w-0 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 180 }}>
-          <textarea
+        <div className="flex-1 flex flex-col min-w-0 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: height }}>
+          <textarea aria-label="Code editor"
             value={currentCode}
             onChange={e => !readOnly && setCurrentCode(e.target.value)}
             onKeyDown={e => {
@@ -215,7 +219,7 @@ try {
         </div>
 
         {/* Preview */}
-        <div className="flex-1 flex flex-col min-w-0 bg-white" style={{ minHeight: 160 }}>
+        <div className="flex-1 flex flex-col min-w-0 bg-white" style={{ minHeight: height }}>
           <div className="flex items-center justify-between px-3 py-1.5 bg-[#f0f2f5] border-b border-[#d0d7de]">
             <span className="text-[11px] font-medium text-gray-500">Preview</span>
             <button
@@ -255,7 +259,7 @@ try {
     <div className="rounded-xl overflow-hidden border border-border my-5 bg-[#0d1117]">
       {editorPanel}
       <div className="px-4 py-1.5 bg-[#161b22] border-t border-[#30363d] flex items-center justify-between">
-        <span className="text-[10px] text-[#484f58] font-mono">
+        <span className="text-[10px] text-[#7d8590] font-mono">
           Press Ctrl+Enter to run • Tab for indent
         </span>
         <button

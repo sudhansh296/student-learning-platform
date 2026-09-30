@@ -7,7 +7,7 @@ export const reactStateLesson: ReactLesson = {
   chapter: 'hooks',
   order: 5,
   difficulty: 'beginner',
-  readingTime: 13,
+  readingTime: 16,
   description: 'Master useState - Reacts primary hook for managing changing data. Learn to update primitives, objects, and arrays, understand asynchronous state updates, and lift state to share it between components.',
   sections: [
     {
@@ -347,6 +347,129 @@ function KanbanBoard() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<KanbanBoard />);`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Changing state directly, for example count = count + 1. Fix: always call the setter (setCount) so React knows to re-render.',
+        'Mutating an object or array in state with push or by assigning a property. Fix: create a new copy ([...items, item] or { ...user, name }) and pass that to the setter.',
+        'Reading state right after setting it and expecting the new value. Fix: the update is applied on the next render; use the functional form setCount(c => c + 1) when the new value depends on the old one.',
+        'Storing values in state that you can calculate from other state, such as fullName from firstName and lastName. Fix: compute them during render.',
+        'Calling the setter during render, which causes an infinite loop. Fix: change state only inside event handlers or effects.',
+        'Putting everything in one giant state object. Fix: use several small useState calls for unrelated values.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Toggles such as open or closed menus, dark mode and modals.',
+        'Form fields and their current text.',
+        'Counters, quantities in a cart and pagination page numbers.',
+        'Lists that users add to and remove from, such as to-dos and notes.',
+        'Loading, error and success flags while fetching data.',
+        'Filters and search text that decide which items are shown.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: A like button with a count',
+    },
+    {
+      type: 'text',
+      content: 'Complete LikeButton. It needs two pieces of state: liked (a boolean) and count (a number starting at 0). Clicking the button toggles liked and changes the count by +1 when liking and -1 when un-liking.',
+    },
+    {
+      type: 'tryit',
+      title: 'A like button with a count',
+      content: 'Complete the TODO parts of the component, press Run and check the behaviour described below.',
+      jsx: `const { useState } = React;
+
+function LikeButton() {
+  // TODO: create the liked and count state
+  const liked = false;
+  const count = 0;
+
+  function handleClick() {
+    // TODO: toggle liked and change count by +1 or -1
+  }
+
+  return (
+    <button className={liked ? 'like liked' : 'like'} onClick={handleClick}>
+      {liked ? 'Liked' : 'Like'} ({count})
+    </button>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<LikeButton />);`,
+      css: `body { font-family: system-ui, sans-serif; padding: 20px; }
+button { cursor: pointer; }
+.like { padding: 10px 18px; border-radius: 999px; border: 2px solid #cbd5e1; background: #fff; font-size: 15px; }
+.like.liked { background: #fee2e2; border-color: #ef4444; color: #b91c1c; font-weight: 700; }`,
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'The button starts as "Like (0)". After the first click it shows "Liked (1)" in red. A second click returns it to "Like (0)".',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Use const [liked, setLiked] = useState(false) and const [count, setCount] = useState(0). In the click handler, call setLiked(!liked) and update the count based on the current liked value.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// In a real project, start with: import { useState } from 'react';
+
+function LikeButton() {
+  const [liked, setLiked] = useState(false);
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setLiked(!liked);
+    setCount((c) => (liked ? c - 1 : c + 1));
+  }
+
+  return (
+    <button className={liked ? 'like liked' : 'like'} onClick={handleClick}>
+      {liked ? 'Liked' : 'Like'} ({count})
+    </button>
+  );
+}`,
+      language: 'jsx',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between state and props?',
+      content: 'Props are values a component receives from its parent and should not change them. State is data a component owns and can change over time.',
+    },
+    {
+      type: 'note',
+      title: 'Why does my component not update when I change a variable?',
+      content: 'Ordinary variables do not tell React to re-render. Use state and its setter so React runs the component again.',
+    },
+    {
+      type: 'note',
+      title: 'Why should I use setCount(c => c + 1)?',
+      content: 'It always uses the latest value, which matters when you update the same state several times in a row or inside async code.',
+    },
+    {
+      type: 'note',
+      title: 'Can I have more than one useState in a component?',
+      content: 'Yes. Use one call per independent value; React keeps them separate by call order.',
     },
   ],
   exercises: [

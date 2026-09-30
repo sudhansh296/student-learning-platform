@@ -6,13 +6,17 @@ const cols = [
   { title: 'Frameworks', links: [{ l: 'React', h: '/learn/react' }, { l: 'Next.js', h: '/learn/nextjs' }, { l: 'Node.js', h: '/learn/nodejs' }, { l: 'Express.js', h: '/learn/express' }] },
   { title: 'Databases',  links: [{ l: 'MongoDB', h: '/learn/mongodb' }, { l: 'PostgreSQL', h: '/learn/postgresql' }, { l: 'Databases Guide', h: '/databases' }] },
   { title: 'Resources',  links: [{ l: 'Roadmaps', h: '/roadmaps' }, { l: 'Interview Prep', h: '/interview' }, { l: 'Projects', h: '/projects' }, { l: 'Compare Tech', h: '/compare' }, { l: 'Dev Tools', h: '/tools' }] },
+  { title: 'Cheat Sheets', links: [{ l: 'JavaScript', h: '/javascript-cheatsheet' }, { l: 'HTML', h: '/html-cheatsheet' }, { l: 'CSS', h: '/css-cheatsheet' }, { l: 'React Hooks', h: '/react-hooks-cheatsheet' }, { l: 'TypeScript', h: '/typescript-cheatsheet' }, { l: 'Next.js', h: '/nextjs-cheatsheet' }] },
+  { title: 'Guides', links: [{ l: 'Frontend Roadmap', h: '/frontend-roadmap' }, { l: 'MERN Roadmap', h: '/mern-roadmap' }, { l: 'JavaScript Practice', h: '/javascript-practice' }, { l: 'JavaScript Interview', h: '/javascript-interview-questions' }, { l: 'React Interview', h: '/react-interview-questions' }, { l: 'Node.js Interview', h: '/nodejs-interview-questions' }, { l: 'TypeScript Interview', h: '/typescript-interview-questions' }, { l: 'Next.js Interview', h: '/nextjs-interview-questions' }] },
 ];
+
+const legal = [{ l: 'About', h: '/about' }, { l: 'Contact', h: '/contact' }, { l: 'Privacy Policy', h: '/privacy-policy' }, { l: 'Terms', h: '/terms' }, { l: 'Disclaimer', h: '/disclaimer' }];
 
 export function Footer() {
   return (
     <footer style={{ background: 'var(--bg-section)', borderTop: '1px solid var(--line)' }}>
       <div className="max-w-screen-xl mx-auto px-4 lg:px-6 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-8 mb-10">
 
           <div className="col-span-2 md:col-span-3 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 mb-4">
@@ -55,9 +59,16 @@ export function Footer() {
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6"
           style={{ borderTop: '1px solid var(--line)' }}>
-          <p className="text-[12px]" style={{ color: 'var(--text-3)' }}>
-            © 2026 WebDev Atlas — Built for developers. Free forever.
-          </p>
+          <div className="flex flex-col items-center sm:items-start gap-2">
+            <p className="text-[12px]" style={{ color: 'var(--text-3)' }}>
+              © 2026 WebDev Atlas — Built for developers. Free forever.
+            </p>
+            <nav aria-label="About and legal" className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1">
+              {legal.map(l => (
+                <Link key={l.h} href={l.h} className="text-[12px] hover:text-blue-600 transition-colors" style={{ color: 'var(--text-2)' }}>{l.l}</Link>
+              ))}
+            </nav>
+          </div>
           <span className="text-[11px]" style={{ color: 'var(--text-3)' }}>MIT License · Open Source</span>
         </div>
       </div>

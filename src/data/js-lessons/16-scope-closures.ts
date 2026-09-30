@@ -273,6 +273,119 @@ function demoFactory() {
   ];
   document.getElementById('factoryResult').textContent = lines.join('\ ');
 }`,mode:'full'},
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Using var in a loop with setTimeout and getting the same value every time. Fix: use let so each iteration has its own variable.',
+        'Trying to read a variable from outside the function where it was declared. Fix: scope works inside-out; return the value or declare it in a shared outer scope.',
+        'Accidentally shadowing a variable, for example declaring let count inside a block when you meant to update the outer one. Fix: pick distinct names or drop the inner let.',
+        'Holding on to huge objects in a closure without meaning to. Fix: a closure keeps everything it references alive, so only capture what you need.',
+        'Expecting hoisted let and const to work before declaration. Fix: they are hoisted but not usable until the declaration line runs.',
+        'Creating global variables by mistake. Fix: keep variables inside functions or blocks and use modules for shared code.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Private state: a counter, a cache or a bank balance that only its own functions can change.',
+        'Memoization, where a function remembers results of earlier calls.',
+        'Event handlers that need data from the place where they were created.',
+        'Factory functions that create several similar functions (for example one validator per field).',
+        'Debounce and throttle helpers for search boxes and scroll handlers.',
+        'React hooks rely on closures: an effect or callback sees the values from the render it was created in.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: A private counter',
+    },
+    {
+      type: 'text',
+      content: 'Write makeCounter(start = 0). It must return an object with increment(), decrement() and value() methods that share a private count. The count must not be readable as counter.count from outside.',
+    },
+    {
+      type: 'tryit',
+      title: 'A private counter',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `function makeCounter(start = 0) {
+  // TODO: create a private variable and make the three methods use it
+  return { increment() {}, decrement() {}, value() {} };
+}
+
+const counter = makeCounter();
+console.log(counter.increment());
+console.log(counter.increment());
+console.log(counter.decrement());
+console.log(counter.count);`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `1
+2
+1
+undefined`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Declare let count = start inside makeCounter and return an object whose methods use it. Because the methods close over count, it stays alive but hidden.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `function makeCounter(start = 0) {
+  let count = start;
+  return {
+    increment() { count += 1; return count; },
+    decrement() { count -= 1; return count; },
+    value() { return count; },
+  };
+}
+
+const counter = makeCounter();
+console.log(counter.increment());
+console.log(counter.increment());
+console.log(counter.decrement());
+console.log(counter.count);`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is a closure in simple words?',
+      content: 'A function that remembers the variables from the place where it was created, even after that place has finished running.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between scope and closure?',
+      content: 'Scope is the rule for where a variable can be used. A closure is what happens when a function keeps using a variable from an outer scope.',
+    },
+    {
+      type: 'note',
+      title: 'What is hoisting?',
+      content: 'JavaScript sets up declarations before running the code. Functions can be used early, var starts as undefined, and let and const cannot be used until their line runs.',
+    },
+    {
+      type: 'note',
+      title: 'Do closures cause memory leaks?',
+      content: 'Only if you keep references you no longer need. Normal use is fine; just avoid capturing large objects in long-lived callbacks.',
+    },
   ],
   exercises:[{id:'sc-1',question:'What is a closure?',type:'multiple-choice',options:['A function with no return value','A function that has access to variables from its outer scope even after the outer function has returned','A self-invoking function','A function that calls itself'],correct:1,explanation:'A closure is formed when a function retains access to its lexical scope (outer variables) after the outer function has returned. The inner function "closes over" the outer variables, keeping them alive.'}],
   quiz:[{id:'qsc1',question:'Why does this print 3,3,3: for(var i=0;i<3;i++){setTimeout(()=>console.log(i),0)}?',options:['setTimeout is broken','var is function-scoped - there is only ONE i, and by the time callbacks run, i=3','setTimeout delays by 3 seconds','console.log is asynchronous'],correct:1,explanation:'var is function-scoped (not block-scoped), so all three closures share the SAME i variable. By the time the setTimeout callbacks run (even with 0ms), the loop has finished and i=3. Fix: use let (creates a new i per iteration).'}],

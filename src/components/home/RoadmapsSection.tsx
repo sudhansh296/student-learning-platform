@@ -9,7 +9,7 @@ export function RoadmapsSection() {
         <div className="flex items-end justify-between mb-6">
           <div>
             <h2 className="text-xl font-extrabold" style={{ color: 'var(--text)' }}>Learning Roadmaps</h2>
-            <p className="text-[13px] mt-0.5" style={{ color: 'var(--text-3)' }}>Step-by-step paths from zero to job-ready developer</p>
+            <p className="text-[13px] mt-0.5" style={{ color: 'var(--text-3)' }}>Step-by-step paths from your first lesson to building real projects</p>
           </div>
           <Link href="/roadmaps" className="flex items-center gap-1.5 text-[13px] font-bold hover:underline underline-offset-2" style={{ color: '#2563eb' }}>
             All roadmaps <ArrowRight className="w-3.5 h-3.5" />

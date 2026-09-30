@@ -292,6 +292,139 @@ function renderTabs() {
 window.loadCity = loadCity;
 renderTabs();
 loadCity('New York');`,mode:'full'},
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Forgetting await, so you get a pending Promise instead of the value. Fix: put await before the call that returns a Promise, inside an async function.',
+        'Using await inside a normal function. Fix: mark the function async (or use it at the top level of a module).',
+        'Awaiting independent requests one after another. Fix: start them together and use await Promise.all([a(), b()]) so they run in parallel.',
+        'No error handling. Fix: wrap awaited code in try/catch, or add .catch(), so a failed request does not go unnoticed.',
+        'Using await inside forEach and expecting it to wait. Fix: use a for...of loop for sequential work, or Promise.all with map for parallel work.',
+        'Assuming fetch rejects on 404 or 500. Fix: it only rejects on network failure; check response.ok yourself.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Loading data from an API before showing a page or a list.',
+        'Submitting forms: send the data, wait for the server answer, then show a message.',
+        'Loading a user and their orders at the same time to build a dashboard.',
+        'Waiting for a timer or a delay, for example a retry after a failed request.',
+        'Reading and writing files or databases in Node.js servers.',
+        'Uploading images or files and waiting until each upload finishes.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Load a profile in parallel, and handle failure',
+    },
+    {
+      type: 'text',
+      content: 'getUser and getPosts each take a moment to respond. Write showProfile(id) so it loads both at the same time with Promise.all, prints the name and post count, and prints a friendly message if getUser fails (id 0 is unknown).',
+    },
+    {
+      type: 'tryit',
+      title: 'Load a profile in parallel, and handle failure',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function getUser(id) {
+  await wait(100);
+  if (id === 0) throw new Error('User 0 not found');
+  return { id, name: 'Ada' };
+}
+
+async function getPosts(id) {
+  await wait(100);
+  return ['Post A', 'Post B'];
+}
+
+async function showProfile(id) {
+  console.log('Loading...');
+  // TODO: load user and posts together, print '<name> has <n> posts'
+  // TODO: if it fails, print 'Could not load user: ' + error.message
+}
+
+showProfile(1).then(() => showProfile(0));`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `Loading...
+Ada has 2 posts
+Loading...
+Could not load user: User 0 not found`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Wrap the awaited code in try/catch. const [user, posts] = await Promise.all([getUser(id), getPosts(id)]) starts both requests before waiting.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function getUser(id) {
+  await wait(100);
+  if (id === 0) throw new Error('User 0 not found');
+  return { id, name: 'Ada' };
+}
+
+async function getPosts(id) {
+  await wait(100);
+  return ['Post A', 'Post B'];
+}
+
+async function showProfile(id) {
+  console.log('Loading...');
+  try {
+    const [user, posts] = await Promise.all([getUser(id), getPosts(id)]);
+    console.log(user.name + ' has ' + posts.length + ' posts');
+  } catch (error) {
+    console.log('Could not load user: ' + error.message);
+  }
+}
+
+showProfile(1).then(() => showProfile(0));`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'Is async/await different from Promises?',
+      content: 'It is a cleaner way to write Promise code. An async function always returns a Promise, and await pauses that function until the Promise settles.',
+    },
+    {
+      type: 'note',
+      title: 'Does await block the whole page?',
+      content: 'No. It only pauses the async function it is in. The browser keeps running other code and handling clicks.',
+    },
+    {
+      type: 'note',
+      title: 'When should I use Promise.all?',
+      content: 'When the requests do not depend on each other. If one needs the result of another, await them in order.',
+    },
+    {
+      type: 'note',
+      title: 'What does Promise.all do if one request fails?',
+      content: 'It rejects as soon as any Promise rejects. Use Promise.allSettled if you want every result, successful or not.',
+    },
   ],
   exercises:[
     {id:'as-1',question:'What does an async function always return?',type:'multiple-choice',options:['A regular value','A Promise','undefined','A callback'],correct:1,explanation:'Every async function automatically wraps its return value in a Promise. Even if you return a plain number, the caller receives Promise.resolve(42). This allows using .then() or await on any async function call.'},

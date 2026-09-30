@@ -1,15 +1,39 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+function snapshotNow() {
+  return {
+    unix: Math.floor(Date.now() / 1000),
+    iso: new Date().toISOString(),
+    local: new Date().toLocaleString(),
+  };
+}
 
 export function TimestampConverter() {
-  const [unix, setUnix] = useState(String(Math.floor(Date.now()/1000)));
+  const [unix, setUnix] = useState('');
   const [human, setHuman] = useState('');
+  const [now, setNow] = useState<ReturnType<typeof snapshotNow> | null>(null);
+
+  // Clock values differ between server render and client hydration — fill them
+  // in after mount instead of during render, so the first paint matches SSR.
+  /* eslint-disable react-hooks/set-state-in-effect -- fills in clock values after mount so SSR and the first client render match */
+  useEffect(() => {
+    const snap = snapshotNow();
+    setUnix(String(snap.unix));
+    setNow(snap);
+  }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const fromUnix = () => {
     const d = new Date(parseInt(unix) * 1000);
     setHuman(isNaN(d.getTime()) ? '❌ Invalid timestamp' : d.toLocaleString());
   };
-  const now = () => { setUnix(String(Math.floor(Date.now()/1000))); setHuman(''); };
+  const refreshNow = () => {
+    const snap = snapshotNow();
+    setUnix(String(snap.unix));
+    setNow(snap);
+    setHuman('');
+  };
 
   return (
     <div>
@@ -24,7 +48,7 @@ export function TimestampConverter() {
               className="flex-1 px-4 py-2.5 rounded-lg font-mono text-sm outline-none"
               style={{ background:'var(--bg-section)', border:'1px solid var(--line)', color:'var(--text)' }} />
             <button onClick={fromUnix} className="px-4 py-2 rounded-lg text-sm font-semibold text-white" style={{ background:'#2563eb' }}>Convert</button>
-            <button onClick={now} className="px-4 py-2 rounded-lg text-sm font-semibold" style={{ background:'var(--bg-section)', border:'1px solid var(--line)', color:'var(--text-2)' }}>Now</button>
+            <button onClick={refreshNow} className="px-4 py-2 rounded-lg text-sm font-semibold" style={{ background:'var(--bg-section)', border:'1px solid var(--line)', color:'var(--text-2)' }}>Now</button>
           </div>
         </div>
         {human && (
@@ -35,9 +59,15 @@ export function TimestampConverter() {
         )}
         <div className="p-4 rounded-xl" style={{ background:'var(--bg-section)', border:'1px solid var(--line)' }}>
           <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color:'var(--text-3)' }}>Current time</p>
-          <p className="font-mono text-sm" style={{ color:'var(--text-2)' }}>Unix: {Math.floor(Date.now()/1000)}</p>
-          <p className="font-mono text-sm" style={{ color:'var(--text-2)' }}>ISO: {new Date().toISOString()}</p>
-          <p className="font-mono text-sm" style={{ color:'var(--text-2)' }}>Local: {new Date().toLocaleString()}</p>
+          {now ? (
+            <>
+              <p className="font-mono text-sm" style={{ color:'var(--text-2)' }}>Unix: {now.unix}</p>
+              <p className="font-mono text-sm" style={{ color:'var(--text-2)' }}>ISO: {now.iso}</p>
+              <p className="font-mono text-sm" style={{ color:'var(--text-2)' }}>Local: {now.local}</p>
+            </>
+          ) : (
+            <p className="font-mono text-sm" style={{ color:'var(--text-3)' }}>Loading…</p>
+          )}
         </div>
       </div>
     </div>

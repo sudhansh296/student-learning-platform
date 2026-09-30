@@ -99,7 +99,7 @@ console.log('6: Script end');
 // 3: setImmediate (check phase)
 
 // Why this matters - blocking the event loop
-// âŒ Bad - blocks everything
+// ❌ Bad - blocks everything
 function blockingOperation() {
   const start = Date.now();
   while (Date.now() - start < 5000) {
@@ -108,7 +108,7 @@ function blockingOperation() {
   console.log('Done');
 }
 
-// âœ… Good - non-blocking
+// ✅ Good - non-blocking
 function nonBlockingOperation() {
   setTimeout(() => {
     console.log('Done');
@@ -249,7 +249,7 @@ const input = fs.createReadStream('input.txt');
 const output = fs.createWriteStream('output.txt.gz');
 const gzip = zlib.createGzip();
 
-// Read â†’ Compress â†’ Write
+// Read → Compress → Write
 input.pipe(gzip).pipe(output);
 
 // HTTP streaming
@@ -363,8 +363,8 @@ function runHeavyTask(data) {
     question: 'What is the difference between CommonJS (require) and ES Modules (import)?',
     difficulty: 'beginner',
     tags: ['modules', 'commonjs', 'esm'],
-    shortAnswer: 'CommonJS uses require() and module.exports â€” synchronous, loads at runtime, Node.js default. ES Modules use import/export â€” asynchronous, statically analyzable, standard in browsers and modern Node.',
-    detailedExplanation: 'CommonJS was Node.js\'s original module system. require() is synchronous and loads the module file. ES Modules (ESM) are the JavaScript standard, used in browsers and Node.js (with .mjs extension or "type":"module" in package.json). ESM imports are static â€” known at parse time â€” enabling tree shaking. ESM supports top-level await. CommonJS cannot import ESM directly.',
+    shortAnswer: 'CommonJS uses require() and module.exports — synchronous, loads at runtime, Node.js default. ES Modules use import/export — asynchronous, statically analyzable, standard in browsers and modern Node.',
+    detailedExplanation: 'CommonJS was Node.js\'s original module system. require() is synchronous and loads the module file. ES Modules (ESM) are the JavaScript standard, used in browsers and Node.js (with .mjs extension or "type":"module" in package.json). ESM imports are static — known at parse time — enabling tree shaking. ESM supports top-level await. CommonJS cannot import ESM directly.',
     example: {
       code: `// CommonJS (traditional Node.js)
 // Exporting
@@ -408,7 +408,7 @@ const { PI } = await import('./math.js');
 
 // Cannot mix easily
 // In ESM file:
-// require('./old-module') // âŒ Error! require is not defined
+// require('./old-module') // ❌ Error! require is not defined
 // Must use: import('./old-module')
 
 // Interop
@@ -418,7 +418,7 @@ async function loadModule() {
 }`,
       language: 'javascript'
     },
-    interviewAnswer: 'CommonJS is what I\'ve always used in Node.js â€” synchronous require() that works great for server-side. ES Modules are the modern standard and what browsers use. I use ES Modules in new projects because they enable tree shaking (dead code elimination in bundlers) and top-level await. The key practical difference: ESM imports are hoisted and analyzed statically, CommonJS is dynamic. Most packages support both now via "exports" field in package.json.',
+    interviewAnswer: 'CommonJS is what I\'ve always used in Node.js — synchronous require() that works great for server-side. ES Modules are the modern standard and what browsers use. I use ES Modules in new projects because they enable tree shaking (dead code elimination in bundlers) and top-level await. The key practical difference: ESM imports are hoisted and analyzed statically, CommonJS is dynamic. Most packages support both now via "exports" field in package.json.',
     commonMistakes: [
       'Mixing require() and import in the same file',
       'Forgetting .js extension in ESM imports',
@@ -595,7 +595,7 @@ validateConfig();
 // .env.test          - test environment`,
       language: 'javascript'
     },
-    interviewAnswer: 'I use dotenv for local development and platform-specific settings for production â€” Vercel env variables, AWS Parameter Store, or Kubernetes Secrets. I always validate required environment variables on startup with a clear error message rather than failing silently later. I also provide a .env.example file with all the keys documented so teammates know what to set up.',
+    interviewAnswer: 'I use dotenv for local development and platform-specific settings for production — Vercel env variables, AWS Parameter Store, or Kubernetes Secrets. I always validate required environment variables on startup with a clear error message rather than failing silently later. I also provide a .env.example file with all the keys documented so teammates know what to set up.',
     commonMistakes: [
       'Committing .env to git',
       'Using same JWT_SECRET in development and production',
@@ -674,7 +674,7 @@ app.use(cors(corsConfig));
 // Fix: Add CORS middleware on the API server`,
       language: 'javascript'
     },
-    interviewAnswer: 'CORS is configured on the API server, not the frontend. I use the cors package with explicit allowed origins in production â€” never wildcard in production with credentials. I pass ALLOWED_ORIGINS as an environment variable so it can differ per deployment. The most common mistake is forgetting to handle OPTIONS preflight requests, which causes issues with custom headers or auth.',
+    interviewAnswer: 'CORS is configured on the API server, not the frontend. I use the cors package with explicit allowed origins in production — never wildcard in production with credentials. I pass ALLOWED_ORIGINS as an environment variable so it can differ per deployment. The most common mistake is forgetting to handle OPTIONS preflight requests, which causes issues with custom headers or auth.',
     commonMistakes: [
       'Using wildcard origin with credentials:true (browsers reject this)',
       'Not handling OPTIONS preflight requests',
@@ -774,7 +774,7 @@ app.post('/api/avatar', memUpload.single('avatar'), async (req, res) => {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'File uploads need careful handling. multer makes parsing multipart forms easy. I always validate MIME type in the fileFilter (not just the extension â€” extensions can be faked), set size limits, and sanitize filenames. In development I store locally; in production I upload directly to S3 and store only the URL in the database. Never store uploaded files in the same directory as application code.',
+    interviewAnswer: 'File uploads need careful handling. multer makes parsing multipart forms easy. I always validate MIME type in the fileFilter (not just the extension — extensions can be faked), set size limits, and sanitize filenames. In development I store locally; in production I upload directly to S3 and store only the URL in the database. Never store uploaded files in the same directory as application code.',
     commonMistakes: [
       'Trusting file extension instead of MIME type',
       'No file size limits (DoS via large files)',
@@ -861,7 +861,7 @@ app.post('/api/avatar', memUpload.single('avatar'), async (req, res) => {
 // Always commit package-lock.json!`,
       language: 'json'
     },
-    interviewAnswer: 'package.json defines what packages my app needs. The key distinction between dependencies and devDependencies matters for deployment â€” I only install dependencies in production Docker images to keep them small and secure. devDependencies include testing frameworks, linters, TypeScript compiler â€” things only needed during development. I always commit package-lock.json to ensure everyone uses the exact same package versions.',
+    interviewAnswer: 'package.json defines what packages my app needs. The key distinction between dependencies and devDependencies matters for deployment — I only install dependencies in production Docker images to keep them small and secure. devDependencies include testing frameworks, linters, TypeScript compiler — things only needed during development. I always commit package-lock.json to ensure everyone uses the exact same package versions.',
     commonMistakes: [
       'Putting devDependencies in dependencies (bloats production)',
       'Not committing package-lock.json (inconsistent versions)',
@@ -928,7 +928,7 @@ readStream.on('data', (chunk) => {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'Buffers come up when working with binary data â€” file uploads, image processing, network protocols, or encryption. They\'re chunks of raw bytes. The most common operations I do are converting to/from base64 (for image data URLs) and converting between string encodings. In streams, the data event chunks are Buffers. Modern Node.js also supports TypedArrays which work similarly.',
+    interviewAnswer: 'Buffers come up when working with binary data — file uploads, image processing, network protocols, or encryption. They\'re chunks of raw bytes. The most common operations I do are converting to/from base64 (for image data URLs) and converting between string encodings. In streams, the data event chunks are Buffers. Modern Node.js also supports TypedArrays which work similarly.',
     commonMistakes: [
       'Using allocUnsafe without initializing (contains old data)',
       'Not specifying encoding when creating from string',
@@ -980,7 +980,7 @@ console.log(process.memoryUsage()); // Memory stats
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  console.log('Received SIGTERM â€” shutting down gracefully');
+  console.log('Received SIGTERM — shutting down gracefully');
   server.close(() => {
     console.log('Server closed');
     process.exit(0);
@@ -1002,7 +1002,7 @@ process.exit(0); // Success
 process.exit(1); // Error`,
       language: 'javascript'
     },
-    interviewAnswer: 'process.env is the most used â€” every application reads configuration from environment variables. I also use process.on("SIGTERM") for graceful shutdown in production: when Kubernetes or Docker sends SIGTERM, I close the HTTP server cleanly before exiting instead of dropping active requests. process.exit() is useful in CLI tools but avoid it in server applications unless you\'ve cleaned up first.',
+    interviewAnswer: 'process.env is the most used — every application reads configuration from environment variables. I also use process.on("SIGTERM") for graceful shutdown in production: when Kubernetes or Docker sends SIGTERM, I close the HTTP server cleanly before exiting instead of dropping active requests. process.exit() is useful in CLI tools but avoid it in server applications unless you\'ve cleaned up first.',
     commonMistakes: [
       'Calling process.exit() without cleanup in servers',
       'Accessing process.env values without defaults',
@@ -1095,7 +1095,7 @@ function convertVideo(inputPath, outputPath) {
 }`,
       language: 'javascript'
     },
-    interviewAnswer: 'Child processes are how Node handles CPU-intensive work or external programs without blocking the event loop. exec() for simple shell commands with small output. spawn() when I need streaming output (like running git commands that return lots of text). fork() when I need to run another Node.js module and communicate with it â€” like offloading image processing or PDF generation to a worker process.',
+    interviewAnswer: 'Child processes are how Node handles CPU-intensive work or external programs without blocking the event loop. exec() for simple shell commands with small output. spawn() when I need streaming output (like running git commands that return lots of text). fork() when I need to run another Node.js module and communicate with it — like offloading image processing or PDF generation to a worker process.',
     commonMistakes: [
       'Using exec() for commands with large output (use spawn instead)',
       'Not handling errors in child process callbacks',
@@ -1127,7 +1127,7 @@ class OrderService extends EventEmitter {
   async createOrder(orderData) {
     const order = await saveOrderToDb(orderData);
     
-    // Emit event â€” other services listen without being coupled
+    // Emit event — other services listen without being coupled
     this.emit('order:created', order);
     this.emit('order:payment:required', { orderId: order.id, amount: order.total });
     
@@ -1168,7 +1168,7 @@ orderService.once('order:created', (order) => {
   console.log('First order ever:', order.id);
 });
 
-// Error handling â€” ALWAYS listen for 'error' on EventEmitters!
+// Error handling — ALWAYS listen for 'error' on EventEmitters!
 orderService.on('error', (err) => {
   console.error('OrderService error:', err);
 });
@@ -1192,12 +1192,12 @@ server.on('error', (err) => {
 server.listen(3000);`,
       language: 'javascript'
     },
-    interviewAnswer: 'EventEmitter is Node\'s backbone for decoupled architecture. When an order is created, I emit an event and let email, inventory, and analytics services react independently â€” no service needs to know about the others. This is the pub/sub pattern. The key rule: always add an error listener to any EventEmitter. If an "error" event is emitted without a listener, Node crashes.',
+    interviewAnswer: 'EventEmitter is Node\'s backbone for decoupled architecture. When an order is created, I emit an event and let email, inventory, and analytics services react independently — no service needs to know about the others. This is the pub/sub pattern. The key rule: always add an error listener to any EventEmitter. If an "error" event is emitted without a listener, Node crashes.',
     commonMistakes: [
       'Not listening for "error" events (Node throws unhandled error)',
       'Memory leaks from not removing listeners',
       'Emitting events before listeners are registered',
-      'Maximum listeners warning (default 10 â€” use setMaxListeners)'
+      'Maximum listeners warning (default 10 — use setMaxListeners)'
     ],
     realWorldUse: 'Event-driven architecture, WebSocket servers, build tools, test frameworks (Mocha, Jest), stream processing. Express uses EventEmitter internally.',
     followUpQuestions: [
@@ -1486,7 +1486,7 @@ process.on('SIGINT', shutdown);  // Ctrl+C
   },
 
   {
-    id: 'nodejs-prisma-orm',
+    id: 'nodejs-n-plus-one-query',
     category: 'nodejs',
     type: 'theory',
     question: 'What is the N+1 query problem and how do you solve it in Node.js/Express APIs?',

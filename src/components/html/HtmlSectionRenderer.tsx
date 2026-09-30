@@ -1,62 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { Play, Info, AlertTriangle, Lightbulb, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import { Info, AlertTriangle, Lightbulb, Sparkles } from 'lucide-react';
 import type { HtmlSection } from '@/data/html-curriculum';
 import { CodeBlock } from '@/components/docs/CodeBlock';
 import { InlinePlayground } from '@/components/docs/InlinePlayground';
-
-// Opens the playground with the example's actual code pre-loaded
-function OpenInEditorButton({ code, language }: { code: string; language: string }) {
-  const handleClick = () => {
-    // Encode code as base64 and pass via URL to playground
-    const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-    const param = language === 'css' ? 'css' : language === 'javascript' || language === 'js' ? 'js' : 'html';
-    const url = `/playground?${param}=${encodeURIComponent(encoded)}`;
-    window.open(url, '_blank');
-  };
-
-  return (
-    <button
-      onClick={handleClick}
-      className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-full font-bold text-white text-xs select-none hover:opacity-85 transition-opacity"
-      style={{ background: '#1a1a1a', letterSpacing: '0.01em' }}
-    >
-      <span style={{ color: '#22c55e', fontFamily: 'monospace', fontSize: '13px' }}>&gt;_</span>
-      Code Editor
-    </button>
-  );
-}
-
-function TryItButton({ section }: { section: HtmlSection }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="my-3">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all hover:opacity-90"
-        style={{ background: '#059669' }}>
-        <Play className="w-3.5 h-3.5" />
-        Try it in Code Editor »
-        {open ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-      </button>
-
-      {open && (
-        <div className="mt-2">
-          <InlinePlayground
-            html={section.html || ''}
-            css={section.css || ''}
-            js={section.js || ''}
-            mode={section.mode || 'html'}
-            title={section.title}
-            height={420}
-          />
-        </div>
-      )}
-    </div>
-  );
-}
 
 export function HtmlSectionRenderer({ sections }: { sections: HtmlSection[] }) {
   return (
@@ -102,8 +49,7 @@ export function HtmlSectionRenderer({ sections }: { sections: HtmlSection[] }) {
                     {s.content}
                   </p>
                 )}
-                <CodeBlock code={s.code || ''} language={s.language || 'html'} showLineNumbers />
-                <OpenInEditorButton code={s.code || ''} language={s.language || 'html'} />
+                <CodeBlock code={s.code || ''} language={s.language || 'html'} tech="html" showLineNumbers />
               </div>
             );
 

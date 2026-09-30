@@ -10,7 +10,7 @@ export function RegexTester() {
   const result = useMemo(() => {
     if (!pattern) return { matches: [], isValid: true };
     try {
-      const regex = new RegExp(pattern, flags);
+      new RegExp(pattern, flags); // throws if the pattern/flags combination is invalid
       const matches = [...testString.matchAll(new RegExp(pattern, flags.includes('g') ? flags : flags + 'g'))];
       return { matches: matches.map(m => m[0]), isValid: true, count: matches.length };
     } catch (e) {
@@ -50,14 +50,14 @@ export function RegexTester() {
           <div className="flex-1">
             <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Pattern</label>
             <div className="flex items-center bg-[#0d1117] border border-border rounded-xl overflow-hidden">
-              <span className="pl-4 text-[#484f58] font-mono">/</span>
+              <span className="pl-4 text-[#7d8590] font-mono">/</span>
               <input
                 value={pattern}
                 onChange={e => setPattern(e.target.value)}
                 className="flex-1 px-2 py-3 font-mono text-sm bg-transparent text-[#e6edf3] outline-none"
                 placeholder="Your regex pattern..."
               />
-              <span className="text-[#484f58] font-mono">/</span>
+              <span className="text-[#7d8590] font-mono">/</span>
               <input
                 value={flags}
                 onChange={e => setFlags(e.target.value)}

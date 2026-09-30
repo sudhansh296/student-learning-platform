@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Database, Server, Palette, Zap, CheckCircle2, BookOpen, Code2 } from 'lucide-react';
+import { ArrowRight, Database, Zap, CheckCircle2, BookOpen, Code2 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'MERN Stack Development | WebDevAtlas',
+  title: 'MERN Stack Development',
   description: 'Master full-stack web development with MongoDB, Express.js, React, and Node.js. Complete guide to building modern web applications.',
 };
 
@@ -203,7 +203,7 @@ export default function MernPage() {
 
         {/* Technologies Grid */}
         <div id="technologies" className="grid md:grid-cols-2 gap-6 mb-16">
-          {mernTechnologies.map((tech, idx) => (
+          {mernTechnologies.map((tech) => (
             <Link
               key={tech.name}
               href={tech.href}

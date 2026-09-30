@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Zap, ChevronRight, RotateCcw, CheckCircle2, RefreshCw, XCircle, BookOpen, Trophy, Target } from 'lucide-react';
 import { allInterviewQuestions, interviewCategories } from '@/data/interview';
@@ -12,12 +12,6 @@ interface SessionCard {
   question: InterviewQuestion;
   status: CardStatus | null;
 }
-
-const categoryColors: Record<string, string> = {
-  html: '#E34F26', css: '#264DE4', javascript: '#F7DF1E', react: '#61DAFB',
-  nodejs: '#339933', backend: '#6366F1', frontend: '#06B6D4', database: '#10B981',
-  'rest-api': '#F59E0B', security: '#EF4444', project: '#8B5CF6', coding: '#06B6D4', hr: '#EC4899',
-};
 
 const DECK_SIZES = [10, 20, 30, 50];
 
@@ -298,7 +292,7 @@ export default function RapidRevisionPage() {
               <div className="grid grid-cols-3 gap-3">
                 <button onClick={() => rate('skip')}
                   className="py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all bg-red-50 text-red-600 hover:bg-red-100 border border-red-200">
-                  <XCircle className="w-4 h-4" /> Don't Know
+                  <XCircle className="w-4 h-4" /> Don&apos;t Know
                 </button>
                 <button onClick={() => rate('revise')}
                   className="py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all bg-yellow-50 text-yellow-700 hover:bg-yellow-100 border border-yellow-200">

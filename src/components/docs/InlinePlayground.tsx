@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useId } from 'react';
 import { Play, RotateCcw, Copy, Check, Maximize2, X } from 'lucide-react';
 
 interface InlinePlaygroundProps {
@@ -18,7 +18,7 @@ export function InlinePlayground({
   js: defaultJs = '',
   mode = 'html',
   title,
-  height = 380,
+  height = 420,
 }: InlinePlaygroundProps) {
   const [html, setHtml] = useState(defaultHtml);
   const [css, setCss] = useState(defaultCss);
@@ -31,17 +31,18 @@ export function InlinePlayground({
   const [fullscreen, setFullscreen] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const tabs = mode === 'full' ? ['html','css','js'] as const
-    : mode === 'css' ? ['html','css'] as const
-    : mode === 'js' ? ['html','js'] as const
-    : ['html'] as const;
+  // Show a tab for every language that actually has code (or that the lesson asked for),
+  // so CSS/JS never stay hidden just because `mode` was left at 'html'.
+  const hasCss = mode === 'css' || mode === 'full' || defaultCss.trim().length > 0;
+  const hasJs  = mode === 'js'  || mode === 'full' || defaultJs.trim().length > 0;
+  const tabs: ('html' | 'css' | 'js')[] = ['html', ...(hasCss ? ['css' as const] : []), ...(hasJs ? ['js' as const] : [])];
 
-  const instanceId = useRef(`ip_${Math.random().toString(36).slice(2)}`);
+  const instanceId = useId();
   const runIdRef   = useRef(0);
 
   const buildDoc = useCallback((h: string, c: string, j: string) => {
     const rid = runIdRef.current;
-    const iid = instanceId.current;
+    const iid = instanceId;
     const isJsInHtml = h.trim() && !h.trim().startsWith('<') && !h.includes('</');
     const isJsOnly = !h.trim() && (j.trim().length > 0);
     const body = isJsInHtml ? '' : (isJsOnly ? '<div id="__output" style="padding:16px;font-family:monospace;font-size:14px;line-height:1.6;color:#e6edf3;"></div>' : (h || ''));
@@ -114,7 +115,7 @@ ${script}
 }catch(e){__s('e',['❌ '+e.message]);${isJsOnly ? "__append('e','❌ '+e.message);" : ''}}
 ${noOutputObserver}
 </script></body></html>`;
-  }, []);
+  }, [instanceId]);
 
   const run = useCallback(() => {
     runIdRef.current += 1;
@@ -122,10 +123,15 @@ ${noOutputObserver}
     setLogs([]);
   }, [html, css, js, buildDoc]);
 
-  useEffect(() => { run(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Initial render — write the iframe directly; logs already start empty, no state update needed.
+  useEffect(() => {
+    runIdRef.current += 1;
+    if (iframeRef.current) iframeRef.current.srcdoc = buildDoc(html, css, js);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    const iid = instanceId.current;
+    const iid = instanceId;
     const h = (e: MessageEvent) => {
       // Only accept messages from same origin or null (srcdoc iframes)
       if (e.origin !== window.location.origin && e.origin !== 'null' && e.origin !== '') return;
@@ -135,7 +141,7 @@ ${noOutputObserver}
     };
     window.addEventListener('message', h);
     return () => window.removeEventListener('message', h);
-  }, []);
+  }, [instanceId]);
 
   const reset = () => { setHtml(defaultHtml); setCss(defaultCss); setJs(defaultJs); if (iframeRef.current) { iframeRef.current.srcdoc = buildDoc(defaultHtml, defaultCss, defaultJs); } setLogs([]); };
 
@@ -166,16 +172,16 @@ ${noOutputObserver}
               {t}
             </button>
           ))}
-          {title && <span className="ml-3 text-[10px] text-[#484f58] font-mono">{title}</span>}
+          {title && <span className="ml-3 text-[10px] text-[#7d8590] font-mono">{title}</span>}
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={copyCode} className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors">
+          <button aria-label="Copy code" onClick={copyCode} className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors">
             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
           </button>
-          <button onClick={reset} className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors" title="Reset">
+          <button aria-label="Reset example" onClick={reset} className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors" title="Reset">
             <RotateCcw className="w-3 h-3" />
           </button>
-          <button onClick={() => setFullscreen(f => !f)} className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors">
+          <button aria-label="Toggle full screen" onClick={() => setFullscreen(f => !f)} className="flex items-center gap-1 px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors">
             {fullscreen ? <X className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
           </button>
         </div>
@@ -184,8 +190,8 @@ ${noOutputObserver}
       {/* Body */}
       <div className={`flex flex-col md:flex-row ${fullscreen ? 'flex-1 min-h-0' : ''}`} style={fullscreen ? {} : {}}>
         {/* Editor */}
-        <div className="flex flex-col md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 180 }}>
-          <textarea
+        <div className="flex flex-col md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: height }}>
+          <textarea aria-label="Code editor"
             value={cur}
             onChange={e => setCur(e.target.value)}
             onKeyDown={e => {
@@ -205,7 +211,7 @@ ${noOutputObserver}
         </div>
 
         {/* Preview */}
-        <div className="flex flex-col md:w-1/2" style={{ background: !html.trim() && js.trim() ? '#0d1117' : 'white', minHeight: 160 }}>
+        <div className="flex flex-col md:w-1/2" style={{ background: !html.trim() && js.trim() ? '#0d1117' : 'white', minHeight: height }}>
           <div className="flex items-center justify-between px-3 py-1.5 border-b" style={{ background: !html.trim() && js.trim() ? '#161b22' : '#f0f2f4', borderColor: !html.trim() && js.trim() ? '#30363d' : '#d0d7de' }}>
             <span className="text-[10px] font-semibold uppercase tracking-wide" style={{ color: !html.trim() && js.trim() ? '#8b949e' : '#6b7280' }}>
               {!html.trim() && js.trim() ? 'Output' : 'Preview'}
@@ -228,7 +234,7 @@ ${noOutputObserver}
 
       {/* Footer */}
       <div className="flex items-center justify-between px-4 py-1.5 bg-[#161b22] border-t border-[#30363d]">
-        <span className="text-[10px] text-[#484f58] font-mono">Tab = indent • Ctrl+Enter = run</span>
+        <span className="text-[10px] text-[#7d8590] font-mono">Tab = indent • Ctrl+Enter = run</span>
         <button onClick={run} className="flex items-center gap-1.5 px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-[11px] font-semibold rounded transition-colors">
           <Play className="w-3 h-3" /> Run ▶
         </button>

@@ -77,7 +77,7 @@ export function JsonFormatter() {
             </div>
           ) : (
             <pre className="w-full h-72 p-4 font-mono text-[13px] bg-[#0d1117] text-[#e6edf3] border border-border rounded-xl overflow-auto">
-              {output || <span className="text-[#484f58]">Output will appear here...</span>}
+              {output || <span className="text-[#7d8590]">Output will appear here...</span>}
             </pre>
           )}
         </div>

@@ -113,25 +113,25 @@ export function TsLessonClient({ lesson, allLessons, chapters, prev, next }: Pro
           {lesson.exercises.length > 0 && <ExerciseBlock exercises={lesson.exercises} />}
           {lesson.quiz.length > 0 && <QuizBlock questions={lesson.quiz} title={`${lesson.title} — Quiz`} />}
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-8 flex flex-wrap items-stretch justify-between gap-3">
             {prev ? (
               <Link href={`/learn/typescript/${prev.slug}`}
-                className="group flex items-center gap-3 p-4 rounded-xl border border-border bg-background hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-sm transition-all">
-                <ChevronLeft className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 shrink-0" />
+                className="group max-w-full sm:max-w-[48%] flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-border bg-background hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-sm transition-all">
+                <ChevronLeft className="w-4 h-4 text-muted-foreground group-hover:text-blue-500 shrink-0" />
                 <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">Previous</p>
-                  <p className="text-sm font-semibold text-foreground group-hover:text-blue-600 truncate">{prev.title}</p>
+                  <p className="text-[11px] text-muted-foreground">Previous</p>
+                  <p className="text-[13px] font-semibold text-foreground group-hover:text-blue-600 truncate">{prev.title}</p>
                 </div>
               </Link>
             ) : <div />}
             {next ? (
               <Link href={`/learn/typescript/${next.slug}`}
-                className="group flex items-center justify-end gap-3 p-4 rounded-xl border border-border bg-background hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-sm transition-all text-right">
+                className="group max-w-full sm:max-w-[48%] flex items-center justify-end gap-3 px-3.5 py-2.5 rounded-xl border border-border bg-background hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-sm transition-all text-right">
                 <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">Next</p>
-                  <p className="text-sm font-semibold text-foreground group-hover:text-blue-600 truncate">{next.title}</p>
+                  <p className="text-[11px] text-muted-foreground">Next</p>
+                  <p className="text-[13px] font-semibold text-foreground group-hover:text-blue-600 truncate">{next.title}</p>
                 </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-blue-500 shrink-0" />
+                <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-blue-500 shrink-0" />
               </Link>
             ) : <div />}
           </div>

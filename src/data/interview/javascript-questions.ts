@@ -1034,7 +1034,7 @@ log();`,
     difficulty: 'advanced',
     tags: ['generators', 'iterators', 'es6'],
     shortAnswer: 'Generators are functions that can pause execution and resume later using yield. They return an iterator object. Used for lazy evaluation, infinite sequences, and async control flow.',
-    detailedExplanation: 'A generator function uses function* syntax and can yield multiple values. Calling a generator returns an iterator with a next() method. Each next() call resumes execution until the next yield. Generators are lazy â€” values are computed on demand. They enable infinite sequences, custom iterables, and were the foundation for async/await before it was standardized.',
+    detailedExplanation: 'A generator function uses function* syntax and can yield multiple values. Calling a generator returns an iterator with a next() method. Each next() call resumes execution until the next yield. Generators are lazy — values are computed on demand. They enable infinite sequences, custom iterables, and were the foundation for async/await before it was standardized.',
     example: {
       code: `// Basic generator
 function* counter() {
@@ -1077,7 +1077,7 @@ nextId.next().value; // 'id-1'
 nextId.next().value; // 'id-2'`,
       language: 'javascript'
     },
-    interviewAnswer: 'Generators let a function produce a sequence of values lazily â€” it pauses at each yield and resumes when next() is called. This is great for infinite sequences (like ID generators) and pagination where you don\'t want to compute everything upfront. async/await is actually syntactic sugar built on generators and Promises. I use generators when building custom iterables or processing large datasets in chunks.',
+    interviewAnswer: 'Generators let a function produce a sequence of values lazily — it pauses at each yield and resumes when next() is called. This is great for infinite sequences (like ID generators) and pagination where you don\'t want to compute everything upfront. async/await is actually syntactic sugar built on generators and Promises. I use generators when building custom iterables or processing large datasets in chunks.',
     commonMistakes: [
       'Calling generator function without saving the iterator',
       'Trying to restart a completed generator',
@@ -1106,7 +1106,7 @@ nextId.next().value; // 'id-2'`,
 const cache = new Map();
 let obj = { data: 'large data' };
 cache.set(obj, 'metadata');
-obj = null; // obj NOT garbage collected â€” Map still holds reference!
+obj = null; // obj NOT garbage collected — Map still holds reference!
 
 // WeakMap - weak reference (auto-cleanup)
 const weakCache = new WeakMap();
@@ -1149,7 +1149,7 @@ function processNode(node) {
 }`,
       language: 'javascript'
     },
-    interviewAnswer: 'WeakMap is my go-to for associating metadata with objects without causing memory leaks. If I store DOM node data in a regular Map, the nodes can\'t be garbage collected even after they\'re removed from the page. WeakMap solves this because its entries disappear when the key object is collected. I also use WeakMap for private class data â€” it\'s a clean pattern since the data is automatically cleaned up when the instance is destroyed.',
+    interviewAnswer: 'WeakMap is my go-to for associating metadata with objects without causing memory leaks. If I store DOM node data in a regular Map, the nodes can\'t be garbage collected even after they\'re removed from the page. WeakMap solves this because its entries disappear when the key object is collected. I also use WeakMap for private class data — it\'s a clean pattern since the data is automatically cleaned up when the instance is destroyed.',
     commonMistakes: [
       'Trying to iterate a WeakMap (not supported)',
       'Using primitive values as WeakMap keys',
@@ -1227,7 +1227,7 @@ const proxy = new Proxy(obj, {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'Proxy is JavaScript\'s meta-programming tool. Vue 3 replaced Object.defineProperty with Proxy for reactivity because Proxy can detect new property additions and array index changes â€” things the old approach missed. I use Proxy for input validation (throw errors on invalid values), creating smart defaults, and building observable objects. Reflect should always be used in Proxy traps to maintain correct default behavior.',
+    interviewAnswer: 'Proxy is JavaScript\'s meta-programming tool. Vue 3 replaced Object.defineProperty with Proxy for reactivity because Proxy can detect new property additions and array index changes — things the old approach missed. I use Proxy for input validation (throw errors on invalid values), creating smart defaults, and building observable objects. Reflect should always be used in Proxy traps to maintain correct default behavior.',
     commonMistakes: [
       'Forgetting to return true in set trap (throws TypeError in strict mode)',
       'Not using Reflect for the default operation in traps',
@@ -1250,7 +1250,7 @@ const proxy = new Proxy(obj, {
     difficulty: 'intermediate',
     tags: ['symbol', 'unique', 'iteration'],
     shortAnswer: 'Symbol creates unique, immutable primitive values. Each Symbol() call creates a completely unique value. Used as unique object keys, implementing iteration protocols, and avoiding property name collisions.',
-    detailedExplanation: 'Symbols are a primitive type whose every instance is unique. Symbol("id") !== Symbol("id"). They can be used as object property keys â€” useful to add properties to objects without risk of collision. Well-known symbols (Symbol.iterator, Symbol.toPrimitive, Symbol.hasInstance) define built-in JavaScript behaviors. Symbol properties are not enumerable in for...in loops and don\'t appear in JSON.stringify.',
+    detailedExplanation: 'Symbols are a primitive type whose every instance is unique. Symbol("id") !== Symbol("id"). They can be used as object property keys — useful to add properties to objects without risk of collision. Well-known symbols (Symbol.iterator, Symbol.toPrimitive, Symbol.hasInstance) define built-in JavaScript behaviors. Symbol properties are not enumerable in for...in loops and don\'t appear in JSON.stringify.',
     example: {
       code: `// Every Symbol is unique
 const id1 = Symbol('id');
@@ -1268,14 +1268,14 @@ const user = {
 
 console.log(user.name);      // 'Alex'
 console.log(user[USER_ID]);  // 12345
-console.log(Object.keys(user)); // ['name'] â€” Symbol not listed!
+console.log(Object.keys(user)); // ['name'] — Symbol not listed!
 
 // Global Symbol registry
 const globalId = Symbol.for('app.id'); // Reuse or create
 const sameId = Symbol.for('app.id');   // Returns same Symbol
 console.log(globalId === sameId); // true
 
-// Well-known Symbols â€” customizing built-in behavior
+// Well-known Symbols — customizing built-in behavior
 class Range {
   constructor(start, end) {
     this.start = start;
@@ -1302,7 +1302,7 @@ console.log([...range]); // [1, 2, 3, 4, 5]
 for (const n of range) console.log(n); // 1 2 3 4 5`,
       language: 'javascript'
     },
-    interviewAnswer: 'Symbols solve the property collision problem. If I want to add metadata to a third-party object without risking overwriting their properties, a Symbol key is guaranteed unique. The most practical use I encounter is Symbol.iterator â€” implementing it on a class makes it work with for...of loops and spread syntax. Well-known symbols let you hook into JavaScript\'s built-in behaviors.',
+    interviewAnswer: 'Symbols solve the property collision problem. If I want to add metadata to a third-party object without risking overwriting their properties, a Symbol key is guaranteed unique. The most practical use I encounter is Symbol.iterator — implementing it on a class makes it work with for...of loops and spread syntax. Well-known symbols let you hook into JavaScript\'s built-in behaviors.',
     commonMistakes: [
       'Trying to use Symbol with new (not a constructor)',
       'Forgetting Symbol properties are invisible to JSON.stringify',
@@ -1405,7 +1405,7 @@ window.onerror = (msg, source, line, col, error) => {
 };`,
       language: 'javascript'
     },
-    interviewAnswer: 'Good error handling is about being explicit. I create custom error classes so catch blocks can distinguish error types and handle them appropriately. I never swallow errors with an empty catch block â€” at minimum I log them. For async code, I either use try/catch with async/await or the "Result" pattern (return {data, error}) to avoid try/catch scattering. In production, I send errors to monitoring services like Sentry.',
+    interviewAnswer: 'Good error handling is about being explicit. I create custom error classes so catch blocks can distinguish error types and handle them appropriately. I never swallow errors with an empty catch block — at minimum I log them. For async code, I either use try/catch with async/await or the "Result" pattern (return {data, error}) to avoid try/catch scattering. In production, I send errors to monitoring services like Sentry.',
     commonMistakes: [
       'Empty catch blocks (silently swallowing errors)',
       'Catching errors you can\'t actually handle',
@@ -1427,8 +1427,8 @@ window.onerror = (msg, source, line, col, error) => {
     question: 'What is the difference between call(), apply(), and bind()?',
     difficulty: 'intermediate',
     tags: ['this', 'functions', 'methods'],
-    shortAnswer: 'All three explicitly set "this". call() invokes immediately with args as comma-separated. apply() invokes immediately with args as array. bind() returns a new function with "this" bound â€” does NOT invoke immediately.',
-    detailedExplanation: 'call(thisArg, arg1, arg2) invokes the function with this set to thisArg. apply(thisArg, [arg1, arg2]) same but arguments as array â€” useful when args are already in an array. bind(thisArg) returns a new function permanently bound to thisArg but doesn\'t call it â€” useful for creating callbacks with correct context. In modern code, arrow functions and class fields often replace bind().',
+    shortAnswer: 'All three explicitly set "this". call() invokes immediately with args as comma-separated. apply() invokes immediately with args as array. bind() returns a new function with "this" bound — does NOT invoke immediately.',
+    detailedExplanation: 'call(thisArg, arg1, arg2) invokes the function with this set to thisArg. apply(thisArg, [arg1, arg2]) same but arguments as array — useful when args are already in an array. bind(thisArg) returns a new function permanently bound to thisArg but doesn\'t call it — useful for creating callbacks with correct context. In modern code, arrow functions and class fields often replace bind().',
     example: {
       code: `const person = {
   name: 'Alex',
@@ -1484,7 +1484,7 @@ Math.max.apply(null, numbers); // 9
 // bind  = returns Bound function`,
       language: 'javascript'
     },
-    interviewAnswer: 'I remember call=comma, apply=array, bind=bound. call() and apply() invoke immediately â€” I use call() most often. apply() is handy when I already have args in an array, though spread syntax has largely replaced it. bind() is what I use when I need to pass a method as a callback but need to preserve its this context â€” like event handlers in class components or setTimeout callbacks.',
+    interviewAnswer: 'I remember call=comma, apply=array, bind=bound. call() and apply() invoke immediately — I use call() most often. apply() is handy when I already have args in an array, though spread syntax has largely replaced it. bind() is what I use when I need to pass a method as a callback but need to preserve its this context — like event handlers in class components or setTimeout callbacks.',
     commonMistakes: [
       'Calling bind() and expecting it to invoke (it just returns a function)',
       'Using bind() when an arrow function would be cleaner',
@@ -1537,7 +1537,7 @@ const config = Object.freeze({ api: 'https://api.com', timeout: 5000 });
 config.timeout = 10000; // Silently fails (throws in strict mode)
 console.log(config.timeout); // Still 5000
 
-// Object.create â€” set prototype
+// Object.create — set prototype
 const animal = { speak() { return \`\${this.name} speaks\`; } };
 const dog = Object.create(animal);
 dog.name = 'Rex';
@@ -1556,7 +1556,7 @@ Object.defineProperty(user, 'id', {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'I use Object.entries() constantly when I need to transform objects â€” map over entries, filter properties, or convert to a Map. Object.assign() is used for merging configs and shallow clones, though spread syntax is cleaner. Object.freeze() is useful for constants and config objects you don\'t want accidentally modified. Object.fromEntries() combined with entries() creates a clean functional pipeline for object transformation.',
+    interviewAnswer: 'I use Object.entries() constantly when I need to transform objects — map over entries, filter properties, or convert to a Map. Object.assign() is used for merging configs and shallow clones, though spread syntax is cleaner. Object.freeze() is useful for constants and config objects you don\'t want accidentally modified. Object.fromEntries() combined with entries() creates a clean functional pipeline for object transformation.',
     commonMistakes: [
       'Using Object.keys() on null/undefined (throws)',
       'Thinking Object.freeze() is a deep freeze (it\'s shallow)',

@@ -7,7 +7,7 @@ export const reactUseEffectLesson: ReactLesson = {
   chapter: 'hooks',
   order: 9,
   difficulty: 'intermediate',
-  readingTime: 13,
+  readingTime: 16,
   description: 'Master the useEffect hook - run side effects after render, control when effects re-run with the dependency array, clean up subscriptions, fetch data on mount, and avoid common pitfalls like infinite loops.',
   sections: [
     {
@@ -316,6 +316,138 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Leaving out the dependency array, so the effect runs after every render. Fix: pass [] to run once, or list the values the effect uses.',
+        'Setting state inside an effect that depends on that same state, which creates an infinite loop. Fix: change the dependencies or move the logic to an event handler.',
+        'Forgetting the cleanup function for timers, subscriptions and event listeners. Fix: return a function that clears them, so nothing keeps running after the component is gone.',
+        'Making the effect callback async. Fix: define an async function inside the effect and call it, because the effect must return either nothing or a cleanup function.',
+        'Ignoring stale results from an old request when the inputs change. Fix: use a flag or AbortController in the cleanup so only the latest response is used.',
+        'Using an effect for something you can calculate during render. Fix: derive values in the component body; use effects only to sync with things outside React.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Fetching data when a page or component appears, or when an id or search term changes.',
+        'Starting and stopping timers, such as a clock, countdown or polling.',
+        'Adding and removing browser event listeners like resize, scroll or keydown.',
+        'Updating the document title or other browser APIs.',
+        'Connecting to WebSockets and other live data sources.',
+        'Saving state to localStorage whenever it changes.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: A timer that cleans up after itself',
+    },
+    {
+      type: 'text',
+      content: 'Finish the Timer component. When it appears it should start counting seconds, and when it is hidden it must stop its interval. Use the Hide timer and Show timer button to check that it stops and restarts from 0.',
+    },
+    {
+      type: 'tryit',
+      title: 'A timer that cleans up after itself',
+      content: 'Complete the TODO parts of the component, press Run and check the behaviour described below.',
+      jsx: `const { useState, useEffect } = React;
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    // TODO: start an interval that adds 1 to seconds every second
+    // TODO: return a cleanup function that stops the interval
+  }, []);
+
+  return <p className="time">Seconds: {seconds}</p>;
+}
+
+function App() {
+  const [show, setShow] = useState(true);
+  return (
+    <div>
+      <button onClick={() => setShow(!show)}>{show ? 'Hide timer' : 'Show timer'}</button>
+      {show && <Timer />}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+      css: `body { font-family: system-ui, sans-serif; padding: 20px; }
+button { cursor: pointer; }
+.time { font-size: 22px; font-weight: 700; margin: 14px 0; }`,
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'The number increases by one every second. Clicking Hide timer removes it, Show timer starts a new timer from 0, and nothing keeps counting in the background.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Inside useEffect create const id = setInterval(() => setSeconds(s => s + 1), 1000) and return () => clearInterval(id). Keep the dependency array empty so it runs once per mount.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// In a real project, start with: import { useState, useEffect } from 'react';
+
+function Timer() {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  return <p className="time">Seconds: {seconds}</p>;
+}
+
+function App() {
+  const [show, setShow] = useState(true);
+  return (
+    <div>
+      <button onClick={() => setShow(!show)}>{show ? 'Hide timer' : 'Show timer'}</button>
+      {show && <Timer />}
+    </div>
+  );
+}`,
+      language: 'jsx',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'When does useEffect run?',
+      content: 'After React has updated the screen. With [] it runs once after the first render, with values in the array it runs again when they change, and with no array it runs after every render.',
+    },
+    {
+      type: 'note',
+      title: 'What is the cleanup function for?',
+      content: 'It undoes what the effect set up, such as clearing a timer or removing a listener. React runs it before the next effect and when the component is removed.',
+    },
+    {
+      type: 'note',
+      title: 'Should I fetch data in useEffect?',
+      content: 'It works for simple cases. For bigger apps a data library or your framework\'s data loading avoids repeated code for loading, errors and caching.',
+    },
+    {
+      type: 'note',
+      title: 'Why does my effect run twice in development?',
+      content: 'In Strict Mode React runs effects twice on purpose to help you find missing cleanup. It does not happen in production.',
     },
   ],
   exercises: [

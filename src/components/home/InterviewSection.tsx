@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { allInterviewQuestions, interviewCategories, getQuestionCounts } from '@/data/interview';
+import { allInterviewQuestions } from '@/data/interview';
 import { ArrowRight, Target, Code2, Users, Zap, BookOpen, Shield, Sparkles, TrendingUp } from 'lucide-react';
 
 // Pick a diverse set of 6 featured questions across different categories
@@ -13,37 +13,36 @@ const FEATURED_IDS = [
 ];
 
 const diffStyle: Record<string, { bg: string; color: string; dot: string }> = {
-  beginner:     { bg: '#f0fdf4', color: '#16a34a', dot: '#22c55e' },
-  intermediate: { bg: '#eff6ff', color: '#2563eb', dot: '#3b82f6' },
-  advanced:     { bg: '#fff7ed', color: '#ea580c', dot: '#f97316' },
+  beginner:     { bg: 'rgba(34,197,94,0.12)', color: '#16a34a', dot: '#22c55e' },
+  intermediate: { bg: 'rgba(59,130,246,0.12)', color: '#2563eb', dot: '#3b82f6' },
+  advanced:     { bg: 'rgba(249,115,22,0.12)', color: '#ea580c', dot: '#f97316' },
 };
 
 const categoryStyle: Record<string, { bg: string; color: string; icon: string }> = {
-  javascript:  { bg: '#FFFEF0', color: '#ca8a04', icon: '⚡' },
-  react:       { bg: '#F0FCFF', color: '#0891b2', icon: '⚛️' },
-  nodejs:      { bg: '#F0FFF0', color: '#16a34a', icon: '💚' },
-  css:         { bg: '#F0F4FF', color: '#4f46e5', icon: '🎨' },
-  html:        { bg: '#FFF4F0', color: '#ea580c', icon: '🌐' },
-  database:    { bg: '#ECFDF5', color: '#059669', icon: '🗄️' },
-  'rest-api':  { bg: '#FEF3C7', color: '#d97706', icon: '🌐' },
-  security:    { bg: '#FEE2E2', color: '#dc2626', icon: '🔒' },
-  frontend:    { bg: '#CFFAFE', color: '#0e7490', icon: '🎭' },
-  backend:     { bg: '#EEF2FF', color: '#4338ca', icon: '⚙️' },
-  project:     { bg: '#F3E8FF', color: '#7c3aed', icon: '🚀' },
-  coding:      { bg: '#CFFAFE', color: '#0e7490', icon: '💻' },
-  hr:          { bg: '#FCE7F3', color: '#be185d', icon: '👥' },
+  javascript:  { bg: 'rgba(202,138,4,0.12)', color: '#ca8a04', icon: '⚡' },
+  react:       { bg: 'rgba(8,145,178,0.12)', color: '#0891b2', icon: '⚛️' },
+  nodejs:      { bg: 'rgba(22,163,74,0.12)', color: '#16a34a', icon: '💚' },
+  css:         { bg: 'rgba(79,70,229,0.12)', color: '#4f46e5', icon: '🎨' },
+  html:        { bg: 'rgba(234,88,12,0.12)', color: '#ea580c', icon: '🌐' },
+  database:    { bg: 'rgba(5,150,105,0.12)', color: '#059669', icon: '🗄️' },
+  'rest-api':  { bg: 'rgba(217,119,6,0.12)', color: '#d97706', icon: '🌐' },
+  security:    { bg: 'rgba(220,38,38,0.12)', color: '#dc2626', icon: '🔒' },
+  frontend:    { bg: 'rgba(14,116,144,0.12)', color: '#0e7490', icon: '🎭' },
+  backend:     { bg: 'rgba(67,56,202,0.12)', color: '#4338ca', icon: '⚙️' },
+  project:     { bg: 'rgba(124,58,237,0.12)', color: '#7c3aed', icon: '🚀' },
+  coding:      { bg: 'rgba(14,116,144,0.12)', color: '#0e7490', icon: '💻' },
+  hr:          { bg: 'rgba(190,24,93,0.12)', color: '#be185d', icon: '👥' },
 };
 
-const quickLinks = [
-  { icon: Code2, label: 'Coding Challenges', href: '/interview/coding', gradient: 'from-emerald-500 to-teal-600', desc: `100+ problems` },
-  { icon: Users, label: 'Mock Interview', href: '/interview/mock', gradient: 'from-amber-500 to-orange-600', desc: 'Timed session' },
-  { icon: Zap, label: 'Rapid Revision', href: '/interview/rapid-revision', gradient: 'from-purple-500 to-pink-600', desc: 'Flashcards' },
-  { icon: Target, label: 'Practice All', href: '/interview/practice', gradient: 'from-blue-500 to-indigo-600', desc: '170 questions' },
-];
-
 export function InterviewSection() {
-  const counts = getQuestionCounts();
   const totalQuestions = allInterviewQuestions.length;
+  const roundedQuestions = `${Math.floor(totalQuestions / 100) * 100}+`;
+  const quickLinks = [
+    { icon: Code2, label: 'Coding Challenges', href: '/interview/coding', gradient: 'from-emerald-500 to-teal-600', desc: `100+ problems` },
+    { icon: Users, label: 'Mock Interview', href: '/interview/mock', gradient: 'from-amber-500 to-orange-600', desc: 'Timed session' },
+    { icon: Zap, label: 'Rapid Revision', href: '/interview/rapid-revision', gradient: 'from-purple-500 to-pink-600', desc: 'Flashcards' },
+    { icon: Target, label: 'Practice All', href: '/interview/practice', gradient: 'from-blue-500 to-indigo-600', desc: `${roundedQuestions} questions` },
+  ];
 
   const featured = FEATURED_IDS
     .map(id => allInterviewQuestions.find(q => q.id === id))
@@ -130,7 +129,7 @@ export function InterviewSection() {
             </h3>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {displayQuestions.map((q, i) => {
+            {displayQuestions.map((q) => {
               const catStyle = categoryStyle[q.category] ?? { bg: '#f3f4f6', color: '#6b7280', icon: '📋' };
               const diff = diffStyle[q.difficulty];
               return (
@@ -173,41 +172,6 @@ export function InterviewSection() {
           </div>
         </div>
 
-        {/* Topics coverage with progress bars */}
-        <div className="mb-12">
-          <h3 className="text-xl font-black mb-6 flex items-center gap-3" style={{ color: 'var(--text)' }}>
-            <Shield className="w-6 h-6 text-purple-600" />
-            All Topics Covered
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {interviewCategories.map(cat => {
-              const count = counts[cat.id] ?? 0;
-              return (
-                <Link key={cat.id} href={`/interview/${cat.id}`}
-                  className="group relative p-4 rounded-xl transition-all hover:shadow-lg hover:-translate-y-0.5"
-                  style={{ background: 'var(--card)', border: '1px solid var(--line)' }}>
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-2xl">{cat.icon}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-bold truncate group-hover:text-blue-600 transition-colors"
-                        style={{ color: 'var(--text)' }}>
-                        {cat.name}
-                      </div>
-                      <div className="text-xs font-bold" style={{ color: cat.color }}>
-                        {count} questions
-                      </div>
-                    </div>
-                  </div>
-                  <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--line)' }}>
-                    <div className="h-1.5 rounded-full transition-all group-hover:w-full"
-                      style={{ width: `${Math.min((count / 25) * 100, 100)}%`, background: cat.color }} />
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
         {/* CTA section with dual-tone gradient */}
         <div className="relative p-8 lg:p-12 rounded-3xl overflow-hidden shadow-2xl"
           style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
@@ -222,7 +186,7 @@ export function InterviewSection() {
                 Ready to Crack Your Interview?
               </h3>
               <p className="text-base lg:text-lg text-white/90 max-w-2xl">
-                Join thousands of developers who prepared with our curated questions. Practice with mock interviews, rapid revision, and 170+ real interview questions.
+                Join thousands of developers who prepared with our curated questions. Practice with mock interviews, rapid revision, and {roundedQuestions} real interview questions.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">

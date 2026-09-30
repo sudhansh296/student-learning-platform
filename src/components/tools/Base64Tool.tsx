@@ -59,7 +59,7 @@ export function Base64Tool() {
         <div>
           <label className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Output</label>
           <pre className="w-full h-48 p-4 font-mono text-sm bg-[#0d1117] text-[#e6edf3] border border-border rounded-xl overflow-auto whitespace-pre-wrap break-all">
-            {output || <span className="text-[#484f58]">Result will appear here...</span>}
+            {output || <span className="text-[#7d8590]">Result will appear here...</span>}
           </pre>
         </div>
       </div>

@@ -14,7 +14,6 @@ interface Exercise {
 
 export function ExerciseBlock({ exercises }: { exercises: Exercise[] }) {
   const [answers, setAnswers] = useState<Record<string, string | number>>({});
-  const [revealed, setRevealed] = useState<Record<string, boolean>>({});
   const [showExplanation, setShowExplanation] = useState<Record<string, boolean>>({});
 
   const score = exercises.filter(e => {
@@ -48,7 +47,6 @@ export function ExerciseBlock({ exercises }: { exercises: Exercise[] }) {
           const userAnswer = answers[ex.id];
           const isAnswered = userAnswer !== undefined;
           const isCorrect = isAnswered && String(userAnswer) === String(ex.correct);
-          const isRevealed = revealed[ex.id];
 
           return (
             <div key={ex.id} className="p-5 bg-background">

@@ -6,41 +6,6 @@ import { Callout } from '@/components/docs/Callout';
 import { AnalogyBox } from '@/components/docs/AnalogyBox';
 import { InlinePlayground } from '@/components/docs/InlinePlayground';
 
-// Converts a code title like "All three declaration keywords" into a human explanation
-function titleToExplanation(title: string, language: string): string {
-  // The title IS the explanation — format it as a sentence
-  return title;
-}
-
-function OpenInEditorBtn({ code, language }: { code: string; language: string }) {
-  const handleClick = () => {
-    try {
-      const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-      const param = language === 'css' ? 'css' : language === 'html' ? 'html' : 'js';
-      // For React/JSX code, also pass html=<div id="root"> so it has a mount point
-      const isJsx = language === 'jsx' || language === 'tsx' ||
-        /ReactDOM\.(createRoot|render)|return\s*\(\s*<|<[A-Z]\w*\s*\/>/.test(code);
-      if (isJsx) {
-        const rootHtml = btoa(encodeURIComponent('<div id="root"></div>').replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-        window.open(`/playground?js=${encodeURIComponent(encoded)}&html=${encodeURIComponent(rootHtml)}`, '_blank');
-      } else {
-        window.open(`/playground?${param}=${encodeURIComponent(encoded)}`, '_blank');
-      }
-    } catch {
-      window.open('/playground', '_blank');
-    }
-  };
-  return (
-    <button
-      onClick={handleClick}
-      className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-full font-bold text-white text-xs hover:opacity-80 transition-opacity cursor-pointer select-none"
-      style={{ background: '#1a1a1a' }}
-    >
-      <span style={{ color: '#22c55e', fontFamily: 'monospace', fontSize: '13px' }}>&gt;_</span>
-      Code Editor
-    </button>
-  );
-}
 
 export function JSSectionRenderer({ sections }: { sections: JSSection[] }) {
   return (
@@ -72,7 +37,7 @@ export function JSSectionRenderer({ sections }: { sections: JSSection[] }) {
                 {/* Explanation label above code */}
                 <div className="flex items-center gap-2 mb-2">
                   <div className="w-1 h-5 rounded-full" style={{ background: '#f59e0b' }} />
-                  <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: '#d97706' }}>
+                  <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: '#b45309' }}>
                     {s.language === 'javascript' ? 'JavaScript' : s.language?.toUpperCase()} Example
                   </p>
                 </div>
@@ -82,8 +47,7 @@ export function JSSectionRenderer({ sections }: { sections: JSSection[] }) {
                     {s.content}
                   </p>
                 )}
-                <CodeBlock code={s.code || ''} language={s.language || 'javascript'} output={s.output} showLineNumbers />
-                <OpenInEditorBtn code={s.code || ''} language={s.language || 'javascript'} />
+                <CodeBlock code={s.code || ''} language={s.language || 'javascript'} tech="js" showLineNumbers />
               </div>
             );
 
@@ -94,7 +58,7 @@ export function JSSectionRenderer({ sections }: { sections: JSSection[] }) {
                 {s.title && (
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1 h-5 rounded-full" style={{ background: '#f59e0b' }} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: '#d97706' }}>
+                    <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: '#b45309' }}>
                       Example — {s.title}
                     </p>
                   </div>
@@ -105,8 +69,7 @@ export function JSSectionRenderer({ sections }: { sections: JSSection[] }) {
                     {s.content}
                   </p>
                 )}
-                <CodeBlock code={s.code || ''} language={s.language || 'javascript'} output={s.output} showLineNumbers />
-                <OpenInEditorBtn code={s.code || ''} language={s.language || 'javascript'} />
+                <CodeBlock code={s.code || ''} language={s.language || 'javascript'} tech="js" showLineNumbers />
               </div>
             );
 

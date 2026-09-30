@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, ArrowRight, Terminal, Zap, BookOpen } from 'lucide-react';
-import { searchTechnologies } from '@/data/technologies';
+import { useLessonSearch, hitHref } from '@/lib/searchClient';
+import { SearchResultList } from '@/components/search/SearchResultList';
 import Link from 'next/link';
 
 const quick = [
@@ -16,16 +17,22 @@ const quick = [
 
 export function Hero() {
   const [q, setQ]   = useState('');
-  const [r, setR]   = useState<ReturnType<typeof searchTechnologies>>([]);
+  const [active, setActive] = useState(0);
   const router      = useRouter();
+  const { hits: r, loading, corrected, marks } = useLessonSearch(q);
 
-  const search = (v: string) => { setQ(v); setR(v.length > 1 ? searchTechnologies(v) : []); };
+  const search = (v: string) => { setQ(v); setActive(0); };
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!r.length) return;
-    const x = r[0];
-    router.push(x.type === 'topic' && x.technologySlug
-      ? `/learn/${x.technologySlug}/${x.slug}` : `/learn/${x.slug}`);
+    router.push(hitHref(r[Math.min(active, r.length - 1)], marks));
+    setQ('');
+  };
+  const onKey = (e: React.KeyboardEvent) => {
+    if (!r.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive((a) => (a + 1) % r.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((a) => (a - 1 + r.length) % r.length); }
+    else if (e.key === 'Escape') setQ('');
   };
 
   return (
@@ -66,7 +73,7 @@ export function Hero() {
                 <input type="text" placeholder='Search: "promises", "flexbox", "MongoDB"...'
                   className="flex-1 bg-transparent outline-none text-[14px]"
                   style={{ color: 'var(--text)' }}
-                  value={q} onChange={e => search(e.target.value)} />
+                  value={q} onChange={e => search(e.target.value)} onKeyDown={onKey} />
                 {q && (
                   <button type="submit" className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white"
                     style={{ background: '#2563eb' }}>
@@ -76,24 +83,12 @@ export function Hero() {
               </div>
             </form>
 
-            {r.length > 0 && (
+            {q.trim().length > 1 && (
               <div className="absolute top-full left-0 right-0 mt-1.5 z-20 rounded-2xl overflow-hidden shadow-xl"
                 style={{ background: 'var(--card)', border: '1px solid var(--line)' }}>
-                {r.slice(0, 6).map((x, i) => (
-                  <Link key={i}
-                    href={x.type === 'topic' && x.technologySlug
-                      ? `/learn/${x.technologySlug}/${x.slug}` : `/learn/${x.slug}`}
-                    onClick={() => { setQ(''); setR([]); }}
-                    className="flex items-start gap-3 px-4 py-3 transition-colors hover:bg-[var(--bg-section)]"
-                    style={{ borderBottom: '1px solid var(--line)' }}>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded mt-0.5 uppercase tracking-wider shrink-0"
-                      style={{ background: '#eff6ff', color: '#1d4ed8' }}>{x.category}</span>
-                    <div>
-                      <p className="text-[13px] font-semibold" style={{ color: 'var(--text)' }}>{x.title}</p>
-                      <p className="text-[11px] mt-0.5 line-clamp-1" style={{ color: 'var(--text-3)' }}>{x.description}</p>
-                    </div>
-                  </Link>
-                ))}
+                {r.length > 0
+                  ? <SearchResultList hits={r} marks={marks} corrected={corrected} active={active} onHover={setActive} onPick={() => setQ('')} className="max-h-[26rem]" />
+                  : <p className="px-4 py-6 text-center text-sm" style={{ color: 'var(--text-3)' }}>{loading ? 'Searching…' : `No results for “${q.trim()}”`}</p>}
               </div>
             )}
           </div>

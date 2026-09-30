@@ -2,7 +2,7 @@ import type { CssLesson } from '../css-curriculum';
 
 export const cssBoxModelLesson: CssLesson = {
   id: 'css-box-model', title: 'The CSS Box Model', slug: 'box-model',
-  chapter: 'box', order: 3, difficulty: 'beginner', readingTime: 12,
+  chapter: 'box', order: 3, difficulty: 'beginner', readingTime: 15,
   description: 'Understand how every HTML element is a box - content, padding, border, margin - and how box-sizing changes everything.',
   sections: [
     { type: 'text', content: 'Every HTML element is a rectangular box. The CSS Box Model describes the four layers of this box: content (text/images), padding (space inside), border (the line around it), and margin (space outside). Understanding this model is the foundation of all CSS layout work.' },
@@ -179,6 +179,123 @@ strong { color: #1d4ed8; }
   border-radius: 12px;
 }`,
       mode: 'html' },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Not using box-sizing: border-box, so padding and border make elements wider than the width you set. Fix: start every project with * { box-sizing: border-box; }.',
+        'Being surprised when vertical margins merge. Fix: the margins of neighbouring blocks collapse into the larger one; use padding, or gap in flex and grid, for predictable spacing.',
+        'Using margin to push text away from the edge of its own box. Fix: padding is the space inside the border, margin is the space outside it.',
+        'Setting a fixed height and watching the content spill out. Fix: prefer min-height, or let the content decide the height.',
+        'Adding horizontal margin to an element with width: 100% and causing a horizontal scrollbar. Fix: leave the width as auto so a block fills the space and still respects its margins.',
+        'Setting width and height on an inline element such as span or a. Fix: inline elements ignore them; use display: inline-block or block.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Buttons and cards use padding to create comfortable space around text.',
+        'Consistent spacing between sections and paragraphs is set with margin.',
+        'Inputs, badges and avatars get borders and border-radius.',
+        'Column widths in percentages work predictably when border-box is on.',
+        'Centring a block-level container with margin: 0 auto and a max-width.',
+        'Browser DevTools show a box-model diagram that helps debug unexpected gaps.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Fix the box that overflows its container',
+    },
+    {
+      type: 'text',
+      content: 'The blue box has width: 100%, so it should fit exactly inside the dashed container. But the padding and border are added on top of that width, so the box sticks out on the right. Fix it with box-sizing so the box fits exactly.',
+    },
+    {
+      type: 'tryit',
+      title: 'Fix the box that overflows its container',
+      content: 'Edit the CSS tab, press Run and compare the result with the description below.',
+      html: `<div class="container">
+  <div class="box">I should fit inside the dashed container.</div>
+</div>`,
+      css: `.container {
+  width: 400px;
+  border: 2px dashed #94a3b8;
+  font-family: system-ui, sans-serif;
+}
+.box {
+  width: 100%;
+  padding: 20px;
+  border: 5px solid #3b82f6;
+  background: #eff6ff;
+}
+/* TODO: make the box fit exactly inside the container */`,
+      mode: 'css',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'The blue box fills the dashed container exactly and no longer sticks out on the right.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'By default (content-box) the real width is 100% + 40px padding + 10px border. Set box-sizing: border-box so the padding and border are counted inside the width. Putting it on * {} fixes every element at once.',
+    },
+    {
+      type: 'code',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution, as a complete page you can run in the editor. Compare it with your own version.',
+      code: `<style>
+* { box-sizing: border-box; }
+.container {
+  width: 400px;
+  border: 2px dashed #94a3b8;
+  font-family: system-ui, sans-serif;
+}
+.box {
+  width: 100%;
+  padding: 20px;
+  border: 5px solid #3b82f6;
+  background: #eff6ff;
+}
+</style>
+
+<div class="container">
+  <div class="box">I should fit inside the dashed container.</div>
+</div>`,
+      language: 'html',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What are the four parts of the box model?',
+      content: 'From the inside out: content, padding, border and margin.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between content-box and border-box?',
+      content: 'With content-box, width is only the content and padding and border are added. With border-box, width includes content, padding and border, which is easier to plan with.',
+    },
+    {
+      type: 'note',
+      title: 'Why do my margins not add up?',
+      content: 'Vertical margins between neighbouring blocks collapse into the larger one. They do not collapse inside flex or grid containers.',
+    },
+    {
+      type: 'note',
+      title: 'How can I see the box model of an element?',
+      content: 'Open browser DevTools, select the element, and look at the box diagram in the Computed or Layout panel.',
+    },
   ],
   exercises: [
     { id: 'bm1', question: 'With box-sizing: content-box, a div has width:200px, padding:20px, border:5px. What is the total rendered width?', type: 'code-output', correct: '250px', explanation: '200 (content) + 20 + 20 (padding) + 5 + 5 (border) = 250px. With border-box it would stay at 200px.' },

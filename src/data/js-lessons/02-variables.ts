@@ -7,7 +7,7 @@ export const jsVariablesLesson: JSLesson = {
   chapter: 'basics',
   order: 3,
   difficulty: 'beginner',
-  readingTime: 12,
+  readingTime: 15,
   description: 'Declare variables with let, const, and var. Understand scope, hoisting, naming rules, and modern best practices.',
   sections: [
     {
@@ -283,6 +283,120 @@ function updateCounter() {
                  \`\${Math.abs(count)} below zero\`;
 }`,
       mode: 'full',
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Reaching for var out of habit. Fix: use const by default and let when the value has to change. var is function-scoped and hoisted, which causes bugs that let and const avoid.',
+        'Believing const makes an object or array frozen. Fix: const only stops you from pointing the name at something else; the contents can still change. Use Object.freeze (shallow) or copy-and-update if you need them locked.',
+        'Re-assigning a const, for example const total = 0; total += 5. Fix: use let for counters, totals and anything that changes over time.',
+        'Using a let or const variable before the line that declares it. Fix: declare variables at the top of their block; reading them earlier throws a ReferenceError (the temporal dead zone).',
+        'Forgetting the keyword and writing count = 1. Fix: always declare with const or let; in strict mode and in modules an undeclared assignment throws instead of silently creating a global.',
+        'Choosing vague names such as x, tmp or data2. Fix: name variables after what they hold (totalPrice, isLoggedIn) so the code explains itself.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Configuration values such as an API base URL, a tax rate or a maximum upload size are declared with const.',
+        'Loop counters and running totals (a cart total, a score) use let because they change.',
+        'DOM references are stored once, for example const buyButton = document.querySelector("#buy"), then reused.',
+        'Flags like isLoading or hasError track what the interface should show right now.',
+        'In React, values from hooks are declared with const: const [count, setCount] = useState(0).',
+        'Temporary swap or accumulator variables appear in sorting and search algorithms.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Shopping cart totals',
+    },
+    {
+      type: 'text',
+      content: 'A cart has three prices. Use const for the values that never change and let for the running total. Add up the prices with a loop, then work out 18% tax and the final total, each rounded to two decimals.',
+    },
+    {
+      type: 'tryit',
+      title: 'Shopping cart totals',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `const prices = [499, 249, 799];
+const TAX_RATE = 0.18;
+
+let subtotal = 0;
+// TODO: loop over prices and add each one to subtotal
+
+const tax = 0; // TODO: subtotal * TAX_RATE
+const total = 0; // TODO: subtotal + tax
+
+console.log('Subtotal: ' + subtotal);
+console.log('Tax: ' + tax.toFixed(2));
+console.log('Total: ' + total.toFixed(2));`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `Subtotal: 1547
+Tax: 278.46
+Total: 1825.46`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Start with let subtotal = 0, then add each price inside for (const price of prices). Tax is subtotal * TAX_RATE, and toFixed(2) rounds to two decimals.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `const prices = [499, 249, 799];
+const TAX_RATE = 0.18;
+
+let subtotal = 0;
+for (const price of prices) {
+  subtotal += price;
+}
+
+const tax = subtotal * TAX_RATE;
+const total = subtotal + tax;
+
+console.log('Subtotal: ' + subtotal);
+console.log('Tax: ' + tax.toFixed(2));
+console.log('Total: ' + total.toFixed(2));`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'Should I ever use var?',
+      content: 'Only when you are reading older code. In new code const and let cover every case and behave in a more predictable way.',
+    },
+    {
+      type: 'note',
+      title: 'Why can I push to a const array?',
+      content: 'The variable still points to the same array. const only forbids pointing it at a different value, it does not lock the array itself.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between undefined and "is not defined"?',
+      content: 'undefined means the variable exists but has no value yet. "is not defined" is a ReferenceError: that name does not exist in the current scope.',
+    },
+    {
+      type: 'note',
+      title: 'How should I name variables?',
+      content: 'Use camelCase and describe the content, such as totalPrice or isLoggedIn. Avoid one-letter names except for short loop counters like i.',
     },
   ],
   exercises: [

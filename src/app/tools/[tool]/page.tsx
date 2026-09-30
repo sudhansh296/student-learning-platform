@@ -26,6 +26,7 @@ const toolsMap: Record<string, { name: string; component: React.ComponentType }>
   'timestamp':       { name: 'Timestamp Converter',     component: TimestampConverter },
   'hash-generator':  { name: 'Hash Generator',          component: HashGenerator },
   'markdown-preview':{ name: 'Markdown Previewer',      component: MarkdownPreviewer },
+  'markdown-previewer':{ name: 'Markdown Previewer',    component: MarkdownPreviewer },
 };
 
 interface Props {

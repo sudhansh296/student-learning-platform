@@ -14,7 +14,7 @@ export const restapiInterviewQuestions: InterviewQuestion[] = [
       code: `// RESTful API example
 // Resource-based URLs (nouns, not verbs)
 
-// âœ… RESTful
+// ✅ RESTful
 GET    /api/users          // List all users
 GET    /api/users/123      // Get user 123
 POST   /api/users          // Create new user
@@ -22,7 +22,7 @@ PUT    /api/users/123      // Replace user 123
 PATCH  /api/users/123      // Update user 123
 DELETE /api/users/123      // Delete user 123
 
-// âŒ Not RESTful (using verbs)
+// ❌ Not RESTful (using verbs)
 GET  /api/getUsers
 POST /api/createUser
 GET  /api/deleteUser/123
@@ -1180,7 +1180,7 @@ app.get('/api/users/:id', authenticate, getUser);
 // Result: Interactive Swagger UI at /api-docs
 // Users can try the API directly in the browser`
     },
-    interviewAnswer: 'Good documentation is what makes an API usable. I use swagger-jsdoc to generate OpenAPI specs from comments in my route files â€” the docs stay close to the code and stay updated. The interactive Swagger UI lets developers try the API without writing any code. I also provide a Postman collection for developers who prefer that workflow. The spec also enables code generation for client SDKs.',
+    interviewAnswer: 'Good documentation is what makes an API usable. I use swagger-jsdoc to generate OpenAPI specs from comments in my route files — the docs stay close to the code and stay updated. The interactive Swagger UI lets developers try the API without writing any code. I also provide a Postman collection for developers who prefer that workflow. The spec also enables code generation for client SDKs.',
     commonMistakes: [
       'Outdated documentation that doesn\'t match actual API behavior',
       'No examples in the documentation',
@@ -1201,8 +1201,8 @@ app.get('/api/users/:id', authenticate, getUser);
     question: 'What are webhooks and how do they differ from REST API polling?',
     difficulty: 'intermediate',
     tags: ['webhooks', 'events', 'integration'],
-    shortAnswer: 'Webhooks are HTTP callbacks â€” when an event happens, the server sends an HTTP POST to your URL. Opposite of polling (you ask the server repeatedly). More efficient for real-time updates from external services.',
-    detailedExplanation: 'Polling: client asks server "did something happen?" every N seconds â€” wastes resources if events are infrequent. Webhooks: server pushes a POST to your registered URL when an event occurs. You register a callback URL with the service (Stripe, GitHub, etc.), they call it when relevant events happen. Must verify webhook signatures to ensure authenticity. Must respond with 2xx quickly (process asynchronously). Must handle duplicate events (idempotency).',
+    shortAnswer: 'Webhooks are HTTP callbacks — when an event happens, the server sends an HTTP POST to your URL. Opposite of polling (you ask the server repeatedly). More efficient for real-time updates from external services.',
+    detailedExplanation: 'Polling: client asks server "did something happen?" every N seconds — wastes resources if events are infrequent. Webhooks: server pushes a POST to your registered URL when an event occurs. You register a callback URL with the service (Stripe, GitHub, etc.), they call it when relevant events happen. Must verify webhook signatures to ensure authenticity. Must respond with 2xx quickly (process asynchronously). Must handle duplicate events (idempotency).',
     example: {
       language: 'javascript',
       code: `// Stripe webhook example

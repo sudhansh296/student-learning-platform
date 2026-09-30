@@ -181,6 +181,141 @@ h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#6b7280;ma
 .main-area{flex:1;background:white;padding:16px;font-weight:600;color:#374151;}
 small{font-weight:400;opacity:.8;}`,
      mode:'html'},
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Applying display: flex to the child instead of the parent. Fix: flex goes on the container; only its direct children become flex items.',
+        'Confusing justify-content with align-items. Fix: justify-content works along the main axis (horizontal for a row) and align-items along the cross axis; flex-direction: column swaps them.',
+        'Forgetting flex-wrap on card layouts. Fix: without flex-wrap: wrap the items shrink to stay on one line instead of moving to the next.',
+        'Expecting an item with a set width to keep it. Fix: flex items can shrink by default; use flex: none, flex-shrink: 0 or a min-width for items that must not shrink.',
+        'Expecting grandchildren to be flex items. Fix: only direct children are; make the child a flex container too for the next level.',
+        'Spacing items with margins. Fix: use gap, which adds space only between items and needs no special first or last rules.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Navigation bars with a logo on the left and links or a button on the right.',
+        'Button groups, tag lists and toolbars.',
+        'Product and pricing cards that wrap onto new lines on small screens.',
+        'Centring a login box or hero text horizontally and vertically.',
+        'Sidebar plus main content layouts.',
+        'Sticky footers: a column container with min-height where the main area grows.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Build a navbar with flexbox',
+    },
+    {
+      type: 'text',
+      content: 'Use flexbox so the logo sits on the left, the three links sit next to each other with space between them, and the Sign up button is pushed to the far right. Everything must be vertically centred.',
+    },
+    {
+      type: 'tryit',
+      title: 'Build a navbar with flexbox',
+      content: 'Edit the CSS tab, press Run and compare the result with the description below.',
+      html: `<nav class="navbar">
+  <a class="logo" href="#">WebDev</a>
+  <ul class="links">
+    <li><a href="#">Learn</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="cta">Sign up</button>
+</nav>`,
+      css: `.navbar {
+  background: #0f172a;
+  padding: 12px 20px;
+  font-family: system-ui, sans-serif;
+}
+.logo { color: #fff; font-weight: 800; text-decoration: none; }
+.links { list-style: none; margin: 0; padding: 0; }
+.links a { color: #cbd5e1; text-decoration: none; }
+.cta {
+  background: #3b82f6; color: #fff; border: 0;
+  padding: 8px 14px; border-radius: 6px; cursor: pointer;
+}
+/* TODO: turn .navbar and .links into flex containers */
+/* TODO: push .cta to the right */`,
+      mode: 'css',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'A dark bar: logo on the left, links in a row after it, and the Sign up button aligned to the far right edge, all on one centred line.',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Make .navbar display: flex with align-items: center and a gap. The links list needs display: flex too. margin-left: auto on the button pushes it to the right.',
+    },
+    {
+      type: 'code',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution, as a complete page you can run in the editor. Compare it with your own version.',
+      code: `<style>
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: #0f172a;
+  padding: 12px 20px;
+  font-family: system-ui, sans-serif;
+}
+.logo { color: #fff; font-weight: 800; text-decoration: none; }
+.links { display: flex; gap: 16px; list-style: none; margin: 0; padding: 0; }
+.links a { color: #cbd5e1; text-decoration: none; }
+.cta {
+  margin-left: auto;
+  background: #3b82f6; color: #fff; border: 0;
+  padding: 8px 14px; border-radius: 6px; cursor: pointer;
+}
+</style>
+
+<nav class="navbar">
+  <a class="logo" href="#">WebDev</a>
+  <ul class="links">
+    <li><a href="#">Learn</a></li>
+    <li><a href="#">Projects</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <button class="cta">Sign up</button>
+</nav>`,
+      language: 'html',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'Should I use flexbox or grid?',
+      content: 'Use flexbox for a single row or column of items. Use grid when you need rows and columns together.',
+    },
+    {
+      type: 'note',
+      title: 'What does flex: 1 do?',
+      content: 'It lets an item grow to take an equal share of the free space, so several items with flex: 1 end up the same width.',
+    },
+    {
+      type: 'note',
+      title: 'How do I centre something with flexbox?',
+      content: 'On the parent, set display: flex, justify-content: center and align-items: center.',
+    },
+    {
+      type: 'note',
+      title: 'Why does my flex item overflow instead of shrinking?',
+      content: 'Flex items will not shrink below their content size by default. Add min-width: 0 to the item so it can shrink and let long text wrap or truncate.',
+    },
   ],
   exercises:[
     {id:'fb1',question:'Which CSS property on the CONTAINER controls horizontal spacing between flex items in a row?',type:'multiple-choice',options:['align-items','justify-content','flex-direction','flex-wrap'],correct:1,explanation:'justify-content controls alignment along the main axis. In a row (default), that is horizontal. Use space-between, space-around, center, flex-start, or flex-end.'},

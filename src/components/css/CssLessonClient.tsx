@@ -17,44 +17,75 @@ interface Props {
 }
 
 const diffColor = {
-  beginner:     { bg:'#f0fdf4', color:'#15803d', border:'#bbf7d0' },
-  intermediate: { bg:'#eff6ff', color:'#1d4ed8', border:'#bfdbfe' },
-  advanced:     { bg:'#fff7ed', color:'#c2410c', border:'#fed7aa' },
+  beginner:     { bg:'bg-emerald-100 dark:bg-emerald-900/40', color:'text-emerald-700 dark:text-emerald-400', border:'border-emerald-200 dark:border-emerald-800' },
+  intermediate: { bg:'bg-blue-100 dark:bg-blue-900/40', color:'text-blue-700 dark:text-blue-400', border:'border-blue-200 dark:border-blue-800' },
+  advanced:     { bg:'bg-orange-100 dark:bg-orange-900/40', color:'text-orange-700 dark:text-orange-400', border:'border-orange-200 dark:border-orange-800' },
 };
 
 export function CssLessonClient({ lesson, allLessons, chapters, prev, next }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const dc = diffColor[lesson.difficulty];
+  const activeChapter = chapters.find((chapter) => chapter.id === lesson.chapter);
+  const lessonIndex = allLessons.findIndex((item) => item.slug === lesson.slug);
+  const lessonProgress = Math.round(((lessonIndex + 1) / allLessons.length) * 100);
 
   const sidebar = (
-    <aside className={`w-64 shrink-0 ${sidebarOpen ? 'fixed inset-y-0 left-0 z-50 overflow-y-auto pt-4 shadow-xl' : 'hidden lg:block'}`}
-      style={{ background:'var(--bg)', borderRight:'1px solid var(--line)' }}>
+    <aside
+      className={`shrink-0 ${
+        sidebarOpen
+          ? 'fixed inset-y-0 left-0 z-50 w-72 overflow-y-auto border-r border-border bg-background/95 shadow-2xl backdrop-blur-sm pt-4'
+          : 'hidden lg:flex lg:w-72 lg:flex-col lg:border-r lg:border-border lg:bg-background'
+      }`}
+    >
       {sidebarOpen && (
-        <button onClick={() => setSidebarOpen(false)} className="absolute top-4 right-4 p-1.5 rounded-lg" style={{ color:'var(--text-2)' }}>
-          <X className="w-4 h-4"/>
+        <button
+          aria-label="Close CSS topic sidebar"
+          onClick={() => setSidebarOpen(false)}
+          className="absolute right-4 top-4 rounded-lg border border-border bg-background p-1.5 text-muted-foreground hover:text-foreground"
+        >
+          <X className="h-4 w-4" />
         </button>
       )}
-      <div className="sticky top-20 overflow-y-auto max-h-[calc(100vh-5rem)] pb-10 px-3">
-        <Link href="/css" className="flex items-center gap-2 px-2 mb-5">
+
+      <div className="sticky top-0 overflow-y-auto px-3 pb-10 pt-2">
+        <Link href="/css" className="mb-5 flex items-center gap-2 rounded-xl px-2 py-2 transition-colors hover:bg-muted/60">
           <span className="text-xl">🎨</span>
-          <span className="font-extrabold text-sm" style={{ color:'var(--text)' }}>CSS Tutorial</span>
+          <span className="text-sm font-extrabold text-foreground">CSS Tutorial</span>
         </Link>
-        {chapters.map(ch => {
-          const chLessons = allLessons.filter(l => l.chapter === ch.id);
+
+        <div className="mb-4 rounded-xl border border-border bg-muted/30 p-3">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Progress</p>
+          <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+            <span>Lesson {lessonIndex + 1}</span>
+            <span>{lessonProgress}%</span>
+          </div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+            <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-500" style={{ width: `${lessonProgress}%` }} />
+          </div>
+        </div>
+
+        {chapters.map((ch) => {
+          const chLessons = allLessons.filter((l) => l.chapter === ch.id);
           if (!chLessons.length) return null;
           return (
             <div key={ch.id} className="mb-4">
-              <p className="text-[10px] font-extrabold uppercase tracking-widest px-2 mb-1.5" style={{ color:'var(--text-3)' }}>
+              <p className="mb-1.5 px-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-muted-foreground">
                 {ch.icon} {ch.title}
               </p>
               <ul className="space-y-0.5">
-                {chLessons.map(l => {
+                {chLessons.map((l) => {
                   const isActive = l.slug === lesson.slug;
                   return (
                     <li key={l.id}>
-                      <Link href={`/css/${l.slug}`} onClick={() => setSidebarOpen(false)}
-                        className="block px-3 py-2 rounded-lg text-[13px] transition-all"
-                        style={{ background:isActive?'#eff6ff':'transparent', color:isActive?'#1d4ed8':'var(--text-2)', fontWeight:isActive?'700':'500', borderLeft:isActive?'3px solid #2563eb':'3px solid transparent' }}>
+                      <Link
+                        href={`/css/${l.slug}`}
+                        onClick={() => setSidebarOpen(false)}
+                        className={`block rounded-lg border px-3 py-2 text-[13px] transition-all ${
+                          isActive
+                            ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-400'
+                            : 'border-transparent text-muted-foreground hover:border-border hover:bg-muted/60 hover:text-foreground'
+                        }`}
+                      >
                         {l.title}
                       </Link>
                     </li>
@@ -72,59 +103,74 @@ export function CssLessonClient({ lesson, allLessons, chapters, prev, next }: Pr
     <div className="max-w-screen-xl mx-auto px-4 lg:px-6">
       <div className="flex gap-0 py-0">
         {sidebar}
-        {sidebarOpen && <div className="fixed inset-0 z-40" style={{ background:'rgba(0,0,0,0.4)' }} onClick={() => setSidebarOpen(false)}/>}
+        {sidebarOpen && <div className="fixed inset-0 z-40 bg-black/40" onClick={() => setSidebarOpen(false)} />}
+
         <main className="flex-1 min-w-0 py-8 lg:pl-10">
-          <button onClick={() => setSidebarOpen(true)}
-            className="lg:hidden flex items-center gap-2 mb-5 px-3 py-2 rounded-lg text-sm"
-            style={{ border:'1px solid var(--line)', color:'var(--text-2)', background:'var(--bg)' }}>
-            <Menu className="w-4 h-4"/> All CSS Topics
+          <button
+            aria-label="Open CSS topic sidebar"
+            onClick={() => setSidebarOpen(true)}
+            className="mb-5 flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:hidden"
+          >
+            <Menu className="h-4 w-4" /> All CSS Topics
           </button>
 
-          <Breadcrumb items={[{ label:'Learn', href:'/learn' }, { label:'CSS', href:'/css' }, { label:lesson.title }]} />
+          <Breadcrumb items={[{ label: 'Learn', href: '/learn' }, { label: 'CSS', href: '/css' }, { label: lesson.title }]} />
 
           <div className="mb-8">
-            <h1 className="text-3xl font-extrabold tracking-tight mb-3 leading-tight" style={{ color:'var(--text)' }}>{lesson.title}</h1>
-            <p className="text-[15px] leading-relaxed mb-4 max-w-2xl" style={{ color:'var(--text-2)' }}>{lesson.description}</p>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="text-[11px] font-bold px-2.5 py-1 rounded-full capitalize"
-                style={{ background:dc.bg, color:dc.color, border:`1px solid ${dc.border}` }}>{lesson.difficulty}</span>
-              <span className="flex items-center gap-1.5 text-xs" style={{ color:'var(--text-3)' }}>
-                <Clock className="w-3.5 h-3.5"/> {lesson.readingTime} min read
+            <div className="mb-3 flex flex-wrap items-center gap-2">
+              <span className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-bold capitalize ${dc.bg} ${dc.color} ${dc.border}`}>
+                {lesson.difficulty}
               </span>
-              <span className="flex items-center gap-1.5 text-xs" style={{ color:'var(--text-3)' }}>
-                <BookOpen className="w-3.5 h-3.5"/> {chapters.find(c => c.id===lesson.chapter)?.title}
+              <span className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
+                {activeChapter?.title}
+              </span>
+            </div>
+
+            <h1 className="mb-3 text-3xl font-extrabold tracking-tight text-foreground leading-tight">{lesson.title}</h1>
+            <p className="mb-4 max-w-2xl text-[15px] leading-relaxed text-muted-foreground">{lesson.description}</p>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <Clock className="h-3.5 w-3.5" /> {lesson.readingTime} min read
+              </span>
+              <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <BookOpen className="h-3.5 w-3.5" /> {activeChapter?.title}
               </span>
             </div>
           </div>
 
-          <CssSectionRenderer sections={lesson.sections}/>
+          <CssSectionRenderer sections={lesson.sections} />
 
-          {lesson.exercises && lesson.exercises.length > 0 && <ExerciseBlock exercises={lesson.exercises}/>}
-          {lesson.quiz && lesson.quiz.length > 0 && <QuizBlock questions={lesson.quiz} title={`${lesson.title} Quiz`}/>}
+          {lesson.exercises && lesson.exercises.length > 0 && <ExerciseBlock exercises={lesson.exercises} />}
+          {lesson.quiz && lesson.quiz.length > 0 && <QuizBlock questions={lesson.quiz} title={`${lesson.title} Quiz`} />}
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-8 flex flex-wrap items-stretch justify-between gap-3">
             {prev ? (
-              <Link href={`/css/${prev.slug}`}
-                className="group flex items-center gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5"
-                style={{ border:'1px solid var(--line)', background:'var(--card)' }}>
-                <ChevronLeft className="w-5 h-5 shrink-0" style={{ color:'var(--text-3)' }}/>
+              <Link
+                href={`/css/${prev.slug}`}
+                aria-label={`Previous lesson: ${prev.title}`}
+                className="group max-w-full sm:max-w-[48%] flex items-center gap-3 rounded-xl border border-border bg-background px-3.5 py-2.5 transition-all hover:-translate-y-0.5 hover:border-blue-300 dark:hover:border-blue-700"
+              >
+                <ChevronLeft className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-blue-500" />
                 <div className="min-w-0">
-                  <p className="text-xs" style={{ color:'var(--text-3)' }}>Previous</p>
-                  <p className="text-sm font-semibold truncate group-hover:text-blue-600 transition-colors" style={{ color:'var(--text)' }}>{prev.title}</p>
+                  <p className="text-[11px] text-muted-foreground">Previous</p>
+                  <p className="truncate text-[13px] font-semibold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400">{prev.title}</p>
                 </div>
               </Link>
-            ) : <div/>}
+            ) : <div />}
+
             {next ? (
-              <Link href={`/css/${next.slug}`}
-                className="group flex items-center justify-end gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5 text-right"
-                style={{ border:'1px solid var(--line)', background:'var(--card)' }}>
+              <Link
+                href={`/css/${next.slug}`}
+                aria-label={`Next lesson: ${next.title}`}
+                className="group max-w-full sm:max-w-[48%] flex items-center justify-end gap-3 rounded-xl border border-border bg-background px-3.5 py-2.5 text-right transition-all hover:-translate-y-0.5 hover:border-blue-300 dark:hover:border-blue-700"
+              >
                 <div className="min-w-0">
-                  <p className="text-xs" style={{ color:'var(--text-3)' }}>Next</p>
-                  <p className="text-sm font-semibold truncate group-hover:text-blue-600 transition-colors" style={{ color:'var(--text)' }}>{next.title}</p>
+                  <p className="text-[11px] text-muted-foreground">Next</p>
+                  <p className="truncate text-[13px] font-semibold text-foreground group-hover:text-blue-600 dark:group-hover:text-blue-400">{next.title}</p>
                 </div>
-                <ChevronRight className="w-5 h-5 shrink-0" style={{ color:'var(--text-3)' }}/>
+                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-blue-500" />
               </Link>
-            ) : <div/>}
+            ) : <div />}
           </div>
         </main>
       </div>

@@ -301,6 +301,145 @@ function quickSearch(u) {
 window.searchUser = searchUser;
 window.quickSearch = quickSearch;
 searchUser(null);`,mode:'full'},
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Not checking response.ok. Fix: fetch does not throw for 404 or 500, so check response.ok (or response.status) and throw your own error.',
+        'Forgetting to call response.json() or forgetting to await it. Fix: response.json() returns a Promise; await it to get the data.',
+        'Sending an object as the body without JSON.stringify. Fix: use body: JSON.stringify(data) and the header "Content-Type": "application/json".',
+        'Building query strings by hand and forgetting to encode values. Fix: use URLSearchParams so spaces and special characters are encoded safely.',
+        'Putting secret API keys in front-end code. Fix: anyone can read browser code, so keep secrets on your server and call your own API instead.',
+        'Ignoring CORS errors. Fix: the server must allow your origin; you cannot fix it from front-end code alone.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Loading products, posts or weather data when a page opens.',
+        'Submitting sign-up, login and contact forms to a backend.',
+        'Live search boxes that request suggestions as the user types (with a small delay).',
+        'Dashboards that refresh numbers from an API every few seconds.',
+        'Uploading files or images to a server.',
+        'Talking to your own Express or Next.js API routes from the browser.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: A safe getJson helper',
+    },
+    {
+      type: 'text',
+      content: 'The code below uses a small fake fetch (no internet needed). Write getJson(url) so it returns parsed JSON when the response is OK and throws an Error saying "Request failed with status <code>" otherwise. Print the results as shown.',
+    },
+    {
+      type: 'tryit',
+      title: 'A safe getJson helper',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `// A tiny fake fetch so this exercise works offline
+async function fakeFetch(url) {
+  if (url === '/api/user') {
+    return new Response(JSON.stringify({ name: 'Ada' }), { status: 200 });
+  }
+  return new Response('Not found', { status: 404 });
+}
+
+async function getJson(url) {
+  const response = await fakeFetch(url);
+  // TODO: throw an Error('Request failed with status ' + response.status) if the response is not ok
+  return response.json();
+}
+
+async function main() {
+  const user = await getJson('/api/user');
+  console.log(user.name);
+  try {
+    await getJson('/api/missing');
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+main();`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `Ada
+Request failed with status 404`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'After const response = await fetch(url), check if (!response.ok) and throw new Error("Request failed with status " + response.status). Otherwise return response.json().',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// A tiny fake fetch so this exercise works offline
+async function fakeFetch(url) {
+  if (url === '/api/user') {
+    return new Response(JSON.stringify({ name: 'Ada' }), { status: 200 });
+  }
+  return new Response('Not found', { status: 404 });
+}
+
+async function getJson(url) {
+  const response = await fakeFetch(url);
+  if (!response.ok) {
+    throw new Error('Request failed with status ' + response.status);
+  }
+  return response.json();
+}
+
+async function main() {
+  const user = await getJson('/api/user');
+  console.log(user.name);
+  try {
+    await getJson('/api/missing');
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+main();`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'Does fetch reject when the server returns an error like 404?',
+      content: 'No. It only rejects when the request cannot be made at all, such as being offline. Check response.ok to catch HTTP errors.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between fetch and Axios?',
+      content: 'fetch is built into browsers and Node.js. Axios is a library that adds conveniences such as automatic JSON handling and error throwing on bad status codes.',
+    },
+    {
+      type: 'note',
+      title: 'What is CORS?',
+      content: 'A browser rule that lets a server decide which other websites may read its responses. The fix for a CORS error is on the server, not in your fetch call.',
+    },
+    {
+      type: 'note',
+      title: 'How do I send data with fetch?',
+      content: 'Pass a second argument with method: "POST", a Content-Type header, and body: JSON.stringify(yourObject).',
+    },
   ],
   exercises:[{id:'fetch-1',question:'Why do you need to check response.ok after a fetch() call?',type:'multiple-choice',options:['You don\'t - fetch throws on any non-200 response','fetch() only rejects on network errors (no connection). A 404 or 500 still resolves - you must check response.ok','response.ok is deprecated','You should use response.status instead'],correct:1,explanation:'fetch() only throws (rejects) on network failures - no internet, CORS error, etc. A 404 Not Found or 500 Server Error are still "successful" HTTP responses from fetch\'s perspective. Always check response.ok or response.status to detect API errors.'}],
   quiz:[{id:'qfetch1',question:'What does AbortController allow you to do?',options:['Speed up requests','Cancel an in-progress fetch request','Add authentication','Retry failed requests'],correct:1,explanation:'AbortController lets you cancel pending fetch requests. Pass its signal to fetch\'s options: fetch(url, {signal: controller.signal}). Call controller.abort() to cancel. Useful for timeouts and when the user navigates away before a request completes.'}],

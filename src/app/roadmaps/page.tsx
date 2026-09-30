@@ -1,11 +1,13 @@
 import Link from 'next/link';
+import { GuideLinks } from '@/components/seo/GuideLinks';
+import { HUB } from '@/lib/seo';
 import { roadmaps } from '@/data/roadmaps';
 import { Clock, ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Developer Roadmaps',
-  description: 'Structured learning paths from beginner to job-ready developer.'
+  description: 'Structured learning paths that take you from beginner level to building real projects.'
 };
 
 export default function RoadmapsPage() {
@@ -68,6 +70,11 @@ export default function RoadmapsPage() {
           </Link>
         ))}
       </div>
+      <section className="mt-12">
+        <div className="rounded-2xl p-5 sm:p-6" style={{ background: 'var(--card)', border: '1px solid var(--line)' }}>
+          <GuideLinks title="Detailed step-by-step roadmaps" links={[HUB.frontendRoadmap, HUB.mernRoadmap]} />
+        </div>
+      </section>
     </div>
   );
 }

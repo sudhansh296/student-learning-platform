@@ -5,26 +5,12 @@ import { Info, AlertTriangle, Lightbulb, Sparkles, Play, RotateCcw, Copy, Check,
 import type { TsSection } from '@/data/ts-curriculum';
 import { CodeBlock } from '@/components/docs/CodeBlock';
 
-function OpenInEditorBtn({ code }: { code: string }) {
-  const handleClick = () => {
-    try {
-      const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-      // Send as js — playground auto-detects TypeScript syntax and compiles with CDN typescript.js
-      window.open(`/playground?js=${encodeURIComponent(encoded)}`, '_blank');
-    } catch { window.open('/playground', '_blank'); }
-  };
-  return (
-    <button onClick={handleClick}
-      className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-full font-bold text-white text-xs hover:opacity-80 transition-opacity"
-      style={{ background: '#1a1a1a' }}>
-      <span style={{ color: '#22c55e', fontFamily: 'monospace', fontSize: '13px' }}>&gt;_</span>
-      Code Editor
-    </button>
-  );
-}
 
 function TsPlayground({ js, css, title }: { js: string; css: string; title?: string }) {
   const [code, setCode] = useState(js);
+  const [cssCode, setCssCode] = useState(css);
+  const [tab, setTab] = useState<'ts' | 'css'>('ts');
+  const hasCssTab = css.trim().length > 0;
   const [fullscreen, setFullscreen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -42,9 +28,17 @@ if(__logs.length){const p=document.createElement('pre');p.style.cssText='backgro
   // Auto-run on mount — initialize srcDoc with the built document directly
   const [srcDoc, setSrcDoc] = useState(() => buildDoc(js, css));
 
-  const run = () => setSrcDoc(buildDoc(code, css));
-  const reset = () => { setCode(js); setSrcDoc(buildDoc(js, css)); };
-  const copy = async () => { await navigator.clipboard.writeText(code); setCopied(true); setTimeout(() => setCopied(false), 1800); };
+  const run = () => setSrcDoc(buildDoc(code, cssCode));
+  const reset = () => { setCode(js); setCssCode(css); setSrcDoc(buildDoc(js, css)); };
+  const activeCode = tab === 'css' ? cssCode : code;
+  const setActiveCode = tab === 'css' ? setCssCode : setCode;
+  const copy = async () => { await navigator.clipboard.writeText(activeCode); setCopied(true); setTimeout(() => setCopied(false), 1800); };
+  const tabBtn = (t: 'ts' | 'css', label: string, color: string) => (
+    <button key={t} onClick={() => setTab(t)}
+      className={`px-2.5 py-1 text-[10px] font-mono font-semibold uppercase rounded border-b-2 transition-colors ${tab === t ? `${color} bg-[#21262d]` : 'border-transparent text-[#8b949e] hover:text-white'}`}>
+      {label}
+    </button>
+  );
 
   const editor = (
     <div className={`rounded-xl overflow-hidden border border-[#30363d] bg-[#0d1117] ${fullscreen ? 'fixed inset-4 z-[200] flex flex-col' : ''}`}>
@@ -55,39 +49,46 @@ if(__logs.length){const p=document.createElement('pre');p.style.cssText='backgro
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
             <div className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
-          <span className="text-[11px] font-mono font-semibold text-[#3178c6]">TS</span>
-          {title && <span className="ml-2 text-[10px] text-[#484f58] font-mono">{title}</span>}
+          {hasCssTab ? (
+            <div className="flex items-center gap-1">
+              {tabBtn('ts', 'TS', 'text-[#3178c6] border-[#3178c6]')}
+              {tabBtn('css', 'CSS', 'text-blue-400 border-blue-400')}
+            </div>
+          ) : (
+            <span className="text-[11px] font-mono font-semibold text-[#3178c6]">TS</span>
+          )}
+          {title && <span className="ml-2 text-[10px] text-[#7d8590] font-mono hidden sm:inline">{title}</span>}
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={copy} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d]">
+          <button aria-label="Copy code" onClick={copy} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d]">
             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
           </button>
-          <button onClick={reset} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d]"><RotateCcw className="w-3 h-3" /></button>
-          <button onClick={() => setFullscreen(f => !f)} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d]">
+          <button aria-label="Reset example" onClick={reset} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d]"><RotateCcw className="w-3 h-3" /></button>
+          <button aria-label="Toggle full screen" onClick={() => setFullscreen(f => !f)} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d]">
             {fullscreen ? <X className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
           </button>
         </div>
       </div>
-      <div className={`flex flex-col md:flex-row ${fullscreen ? 'flex-1 min-h-0' : ''}`} style={fullscreen ? {} : { height: undefined }}>
-        <div className="flex flex-col md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ height: fullscreen ? undefined : 200 }}>
-          <textarea value={code} onChange={e => setCode(e.target.value)}
+      <div className={`flex flex-col md:flex-row ${fullscreen ? 'flex-1 min-h-0' : ''}`}>
+        <div className="flex flex-col md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 420 }}>
+          <textarea aria-label="Code editor" value={activeCode} onChange={e => setActiveCode(e.target.value)}
             onKeyDown={e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') run(); }}
             className="flex-1 w-full p-4 font-mono text-[13px] leading-relaxed resize-none outline-none bg-[#0d1117] text-[#e6edf3] caret-white"
-            spellCheck={false} style={{ tabSize: 2, minHeight: 180 }} />
+            spellCheck={false} style={{ tabSize: 2 }} />
         </div>
-        <div className="flex flex-col md:w-1/2 bg-white" style={{ minHeight: 160 }}>
+        <div className="flex flex-col md:w-1/2 bg-white" style={{ minHeight: 420 }}>
           <div className="flex items-center justify-between px-3 py-1.5 bg-[#f0f2f4] border-b border-[#d0d7de]">
             <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">🔷 Output</span>
             <button onClick={run} className="flex items-center gap-1.5 px-3 py-1 bg-[#3178c6] hover:bg-[#2563eb] text-white text-[11px] font-semibold rounded transition-colors">
               <Play className="w-3 h-3" /> Run ▶
             </button>
           </div>
-          <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white" style={{ minHeight: 140 }}
+          <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white"
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals" title="TypeScript Output" />
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-1.5 bg-[#161b22] border-t border-[#30363d]">
-        <span className="text-[10px] text-[#484f58] font-mono">TypeScript concepts • Ctrl+Enter = run</span>
+        <span className="text-[10px] text-[#7d8590] font-mono">TypeScript concepts • Ctrl+Enter = run</span>
         <button onClick={run} className="flex items-center gap-1.5 px-3 py-1 bg-[#3178c6] hover:bg-[#2563eb] text-white text-[11px] font-semibold rounded">
           <Play className="w-3 h-3" /> Run ▶
         </button>
@@ -137,8 +138,7 @@ export function TsSectionRenderer({ sections }: { sections: TsSection[] }) {
                     {s.content}
                   </p>
                 )}
-                <CodeBlock code={s.code || ''} language={s.language || 'typescript'} output={s.output} showLineNumbers />
-                <OpenInEditorBtn code={s.code || ''} />
+                <CodeBlock code={s.code || ''} language={s.language || 'typescript'} tech="ts" showLineNumbers />
               </div>
             );
 

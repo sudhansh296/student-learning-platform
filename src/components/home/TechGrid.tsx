@@ -1,6 +1,6 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { technologies } from '@/data/technologies';
-import { ArrowRight, BookOpen, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowRight, BookOpen, TrendingUp } from 'lucide-react';
 
 const diffStyle: Record<string, { gradient: string; label: string }> = {
   beginner:     { gradient: 'from-green-500 to-emerald-600', label: 'Beginner' },

@@ -188,7 +188,7 @@ function nodeFiles(src: string): string {
   return changed ? out.join('\n') : src;
 }
 
-function web(html: string, css: string, js: string, kind: string, label: string): RunTarget {
+export function web(html: string, css: string, js: string, kind: string, label: string): RunTarget {
   const p: string[] = [];
   // An empty tab would fall back to the editor's demo code, so say explicitly that this example has none.
   p.push(`html=${b64(html || '<!-- This example has no HTML — its output appears in the Console panel -->')}`);

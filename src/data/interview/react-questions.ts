@@ -233,7 +233,7 @@ function DataFetcher({ userId }) {
       code: `// Props - passed from parent
 function Welcome({ name, age }) {
   // name and age are props - read-only
-  // âŒ name = "New Name"; // Error!
+  // ❌ name = "New Name"; // Error!
   
   return <h1>Hello {name}, age {age}</h1>;
 }
@@ -327,10 +327,10 @@ function List({ items }) {
   return (
     <ul>
       {items.map(item => (
-        // âœ… Good - stable unique key
+        // ✅ Good - stable unique key
         <li key={item.id}>{item.name}</li>
         
-        // âŒ Bad - index as key (causes bugs)
+        // ❌ Bad - index as key (causes bugs)
         // <li key={index}>{item.name}</li>
       ))}
     </ul>
@@ -512,7 +512,7 @@ function Bad() {
   
   return (
     <div>
-      {/* âŒ Won't re-render when countRef changes! */}
+      {/* ❌ Won't re-render when countRef changes! */}
       <p>{countRef.current}</p>
       <button onClick={() => countRef.current++}>Bad</button>
     </div>
@@ -572,12 +572,12 @@ function DataTable({ data }) {
 function TodoList() {
   const [todos, setTodos] = useState([]);
   
-  // âŒ New function every render - child re-renders
+  // ❌ New function every render - child re-renders
   const addTodo = (text) => {
     setTodos([...todos, { id: Date.now(), text }]);
   };
   
-  // âœ… Same function reference - child doesn't re-render
+  // ✅ Same function reference - child doesn't re-render
   const addTodoOptimized = useCallback((text) => {
     setTodos(prev => [...prev, { id: Date.now(), text }]);
   }, []); // No dependencies needed with functional update
@@ -606,10 +606,10 @@ const TodoForm = memo(({ onAdd }) => {
 function Counter() {
   const [count, setCount] = useState(0);
   
-  // âŒ Overkill - no benefit
+  // ❌ Overkill - no benefit
   const double = useMemo(() => count * 2, [count]);
   
-  // âœ… Just compute it
+  // ✅ Just compute it
   const double = count * 2;
   
   return <div>{double}</div>;
@@ -896,10 +896,10 @@ function ParentComponent() {
   const [count, setCount] = useState(0);
   const [data] = useState([{ id: 1, name: 'Item 1' }]);
   
-  // âŒ New function every render - memo doesn't help
+  // ❌ New function every render - memo doesn't help
   const handleClick = () => console.log('clicked');
   
-  // âœ… Stable function reference - memo works
+  // ✅ Stable function reference - memo works
   const handleClickOptimized = useCallback(() => {
     console.log('clicked');
   }, []);
@@ -1156,12 +1156,12 @@ function BuggyComponent() {
 // Error boundaries DON'T catch these:
 function NotCaught() {
   const handleClick = () => {
-    // âŒ Error in event handler - not caught
+    // ❌ Error in event handler - not caught
     throw new Error('Not caught');
   };
   
   useEffect(() => {
-    // âŒ Async error - not caught
+    // ❌ Async error - not caught
     setTimeout(() => {
       throw new Error('Not caught');
     }, 1000);
@@ -1479,7 +1479,7 @@ function ShoppingCart() {
 // useReducer: complex objects, related state changes, many actions`,
       language: 'jsx'
     },
-    interviewAnswer: 'useReducer is useState with more structure. I use it when I find myself writing many setState calls that need to be coordinated, or when state transitions have complex logic. The reducer is a pure function that maps (state, action) â†’ newState, which is easy to test in isolation. For a shopping cart with add/remove/update/clear operations, useReducer is much cleaner than multiple useState calls.',
+    interviewAnswer: 'useReducer is useState with more structure. I use it when I find myself writing many setState calls that need to be coordinated, or when state transitions have complex logic. The reducer is a pure function that maps (state, action) → newState, which is easy to test in isolation. For a shopping cart with add/remove/update/clear operations, useReducer is much cleaner than multiple useState calls.',
     commonMistakes: [
       'Mutating state inside the reducer (must return new state)',
       'Using useReducer for simple boolean toggles (overkill)',
@@ -1511,7 +1511,7 @@ function Input(props) {
   return <input {...props} />;
 }
 
-// âŒ This ref points to nothing useful
+// ❌ This ref points to nothing useful
 const ref = useRef();
 <Input ref={ref} /> // ref.current is null in functional component
 
@@ -1578,7 +1578,7 @@ function Parent() {
 }`,
       language: 'jsx'
     },
-    interviewAnswer: 'forwardRef is needed when building reusable input or UI components where consumers need to interact with the underlying DOM â€” like auto-focusing a custom input or triggering scroll. I use it in component libraries. I pair it with useImperativeHandle to expose only the specific methods the parent needs rather than the entire DOM node, which is a cleaner API.',
+    interviewAnswer: 'forwardRef is needed when building reusable input or UI components where consumers need to interact with the underlying DOM — like auto-focusing a custom input or triggering scroll. I use it in component libraries. I pair it with useImperativeHandle to expose only the specific methods the parent needs rather than the entire DOM node, which is a cleaner API.',
     commonMistakes: [
       'Forgetting to accept ref as second parameter in forwardRef',
       'Passing ref in the props object (it\'s separate)',
@@ -1601,7 +1601,7 @@ function Parent() {
     difficulty: 'intermediate',
     tags: ['portals', 'dom', 'modals'],
     shortAnswer: 'Portals render children outside the parent DOM hierarchy while keeping them in the React tree. Used for modals, tooltips, and dropdowns that need to escape CSS overflow:hidden or z-index stacking contexts.',
-    detailedExplanation: 'ReactDOM.createPortal(child, container) renders child into a different DOM node than the parent. The component still behaves as a React child â€” events bubble up through the React tree (not the DOM tree), and Context works normally. Portals solve the stacking context problem: a modal inside a div with overflow:hidden would be clipped without a portal.',
+    detailedExplanation: 'ReactDOM.createPortal(child, container) renders child into a different DOM node than the parent. The component still behaves as a React child — events bubble up through the React tree (not the DOM tree), and Context works normally. Portals solve the stacking context problem: a modal inside a div with overflow:hidden would be clipped without a portal.',
     example: {
       code: `import { createPortal } from 'react-dom';
 import { useState, useEffect } from 'react';
@@ -1640,7 +1640,7 @@ function Modal({ isOpen, onClose, children }) {
   );
 }
 
-// Usage â€” Modal is inside a div with overflow:hidden
+// Usage — Modal is inside a div with overflow:hidden
 // But it still renders at document.body level
 function App() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -1650,7 +1650,7 @@ function App() {
       <button onClick={() => setModalOpen(true)}>Open Modal</button>
       
       {/* Without portal: modal would be clipped by overflow:hidden */}
-      {/* With portal: modal renders at body level â€” not clipped! */}
+      {/* With portal: modal renders at body level — not clipped! */}
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <h2>Modal Title</h2>
         <p>This content is outside the overflow:hidden div!</p>
@@ -1679,7 +1679,7 @@ function Parent() {
       'Not cleaning up portal DOM nodes on unmount',
       'Using portals when z-index management would be simpler'
     ],
-    realWorldUse: 'Modals, tooltips, dropdowns, notification toasts, context menus â€” anything that needs to "escape" its container\'s CSS constraints.',
+    realWorldUse: 'Modals, tooltips, dropdowns, notification toasts, context menus — anything that needs to "escape" its container\'s CSS constraints.',
     followUpQuestions: [
       'Does event bubbling work the same with Portals?',
       'What problem do Portals solve?',
@@ -1699,7 +1699,7 @@ function Parent() {
     example: {
       code: `import { ComponentType, useState, useEffect } from 'react';
 
-// HOC: withAuth â€” redirects if not authenticated
+// HOC: withAuth — redirects if not authenticated
 function withAuth(WrappedComponent) {
   return function AuthenticatedComponent(props) {
     const { user, loading } = useAuth(); // custom hook
@@ -1722,7 +1722,7 @@ function Dashboard({ user }) {
 const ProtectedDashboard = withAuth(Dashboard);
 <ProtectedDashboard /> // Will redirect if not logged in
 
-// HOC: withLogger â€” logs renders
+// HOC: withLogger — logs renders
 function withLogger(WrappedComponent) {
   const displayName = WrappedComponent.displayName || WrappedComponent.name;
   
@@ -1758,7 +1758,7 @@ function useDashboard() {
 }`,
       language: 'jsx'
     },
-    interviewAnswer: 'HOCs solve cross-cutting concerns â€” features that need to be applied across many components like authentication, logging, or error boundaries. The pattern wraps a component and returns an enhanced version. However, hooks have largely replaced HOCs because they\'re simpler â€” no wrapper components, no prop collision. I still encounter HOCs in older codebases and the connect() HOC from Redux, but for new code I prefer hooks.',
+    interviewAnswer: 'HOCs solve cross-cutting concerns — features that need to be applied across many components like authentication, logging, or error boundaries. The pattern wraps a component and returns an enhanced version. However, hooks have largely replaced HOCs because they\'re simpler — no wrapper components, no prop collision. I still encounter HOCs in older codebases and the connect() HOC from Redux, but for new code I prefer hooks.',
     commonMistakes: [
       'Not setting displayName (hard to debug in React DevTools)',
       'Mutating the original component instead of wrapping',

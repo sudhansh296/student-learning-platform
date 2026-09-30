@@ -8,7 +8,7 @@ export const frontendInterviewQuestions: InterviewQuestion[] = [
     question: 'What happens when you type a URL in the browser and press Enter?',
     difficulty: 'intermediate',
     tags: ['browser', 'dns', 'http', 'rendering'],
-    shortAnswer: 'DNS lookup â†’ TCP connection â†’ TLS handshake â†’ HTTP request â†’ server response â†’ HTML parsing â†’ CSS/JS download â†’ DOM+CSSOM â†’ Render Tree â†’ Layout â†’ Paint â†’ Composite.',
+    shortAnswer: 'DNS lookup → TCP connection → TLS handshake → HTTP request → server response → HTML parsing → CSS/JS download → DOM+CSSOM → Render Tree → Layout → Paint → Composite.',
     detailedExplanation: 'Full request lifecycle: 1) DNS resolution turns domain into IP. 2) TCP 3-way handshake. 3) TLS handshake (HTTPS). 4) HTTP GET request sent. 5) Server responds with HTML. 6) Browser parses HTML, builds DOM. 7) Finds CSS/JS links, fetches them. 8) Builds CSSOM from CSS. 9) Combines DOM + CSSOM into Render Tree. 10) Layout calculates positions/sizes. 11) Paint draws pixels. 12) Composite assembles layers. JavaScript execution can block parsing.',
     example: {
       code: `// Performance optimization based on this flow:
@@ -23,13 +23,13 @@ export const frontendInterviewQuestions: InterviewQuestion[] = [
 // 3. Reduce server response time (caching, CDN)
 
 // 4. HTML parsing - scripts block by default!
-// âŒ Blocks HTML parsing
+// ❌ Blocks HTML parsing
 <script src="big-bundle.js"></script>
 
-// âœ… Defer - downloads in parallel, runs after HTML parsed
+// ✅ Defer - downloads in parallel, runs after HTML parsed
 <script defer src="app.js"></script>
 
-// âœ… Async - downloads in parallel, runs immediately when ready
+// ✅ Async - downloads in parallel, runs immediately when ready
 <script async src="analytics.js"></script>
 
 // 5. CSS blocks rendering (render-blocking)
@@ -38,21 +38,21 @@ export const frontendInterviewQuestions: InterviewQuestion[] = [
 
 // 6. Reduce Layout/Reflow triggers
 // Layout is expensive - changing width, height, position triggers it
-// âŒ Causes layout thrashing (read-write-read-write)
+// ❌ Causes layout thrashing (read-write-read-write)
 for (let i = 0; i < 100; i++) {
   el.style.left = el.offsetLeft + 10 + 'px'; // Read, then write = reflow each time
 }
 
-// âœ… Batch reads, then writes
+// ✅ Batch reads, then writes
 const left = el.offsetLeft; // Read once
 for (let i = 0; i < 100; i++) {
   el.style.left = (left + i * 10) + 'px'; // Only write
 }
 
 // 7. Use CSS transforms (GPU-accelerated, no layout)
-// âŒ Triggers layout
+// ❌ Triggers layout
 el.style.left = '100px';
-// âœ… GPU-composited, no layout
+// ✅ GPU-composited, no layout
 el.style.transform = 'translateX(100px)';`,
       language: 'html'
     },
@@ -98,20 +98,20 @@ onCLS(metric => {
 });
 
 // Improving LCP (Largest Contentful Paint)
-// âœ… Preload hero images
+// ✅ Preload hero images
 <link rel="preload" as="image" href="hero.webp">
 
-// âœ… Use WebP format (30-40% smaller than JPEG)
+// ✅ Use WebP format (30-40% smaller than JPEG)
 <picture>
   <source srcset="hero.webp" type="image/webp">
   <img src="hero.jpg" alt="Hero">
 </picture>
 
-// âœ… Size images correctly (no scaling in CSS)
+// ✅ Size images correctly (no scaling in CSS)
 <img src="hero.jpg" width="800" height="400" alt="Hero">
 
 // Improving INP (Interaction to Next Paint)
-// âœ… Break long tasks into smaller chunks
+// ✅ Break long tasks into smaller chunks
 function processBigData(data) {
   // Don't block main thread
   return new Promise(resolve => {
@@ -132,17 +132,17 @@ function processBigData(data) {
 }
 
 // Improving CLS (Cumulative Layout Shift)
-// âœ… Always set image dimensions
+// ✅ Always set image dimensions
 <img src="photo.jpg" width="400" height="300" alt="">
 
-// âœ… Reserve space for ads/embeds
+// ✅ Reserve space for ads/embeds
 .ad-container {
   min-height: 250px; /* Reserve space before ad loads */
 }
 
-// âœ… Don't insert content above existing content
-// âŒ Bad: New banner inserted at top pushes content down
-// âœ… Good: Show banner in fixed position or pre-reserved space`,
+// ✅ Don't insert content above existing content
+// ❌ Bad: New banner inserted at top pushes content down
+// ✅ Good: Show banner in fixed position or pre-reserved space`,
       language: 'javascript'
     },
     interviewAnswer: 'Core Web Vitals directly affect Google search rankings since 2021. LCP measures how fast the main content loads - I optimize it with preloading, WebP images, and server-side rendering. CLS measures layout shifts - I fix it by setting explicit image dimensions and pre-reserving space for dynamic content. INP measures how responsive the UI is to clicks - I fix it by breaking long JavaScript tasks with setTimeout or Web Workers.',
@@ -181,7 +181,7 @@ function processBigData(data) {
 // React.lazy + Suspense
 import { lazy, Suspense } from 'react';
 
-// âœ… Loaded only when component renders
+// ✅ Loaded only when component renders
 const Dashboard = lazy(() => import('./Dashboard'));
 const Settings = lazy(() => import('./Settings'));
 const AdminPanel = lazy(() => import('./AdminPanel'));
@@ -211,8 +211,8 @@ async function loadChartLibrary() {
 // pages/dashboard.js -> /dashboard route
 
 // Measuring impact
-// Before: Initial bundle 1.8MB â†’ 8s load on 3G
-// After:  Initial bundle 200KB â†’ 0.9s load on 3G
+// Before: Initial bundle 1.8MB → 8s load on 3G
+// After:  Initial bundle 200KB → 0.9s load on 3G
 
 // Preloading next chunk (anticipate navigation)
 // User is on homepage, likely to go to dashboard
@@ -247,13 +247,13 @@ async function loadChartLibrary() {
     shortAnswer: 'Accessibility ensures websites work for people with disabilities. Key practices: semantic HTML, ARIA labels, keyboard navigation, color contrast, focus management, and screen reader testing.',
     detailedExplanation: 'Web accessibility means building sites usable by everyone including people with visual, motor, hearing, or cognitive disabilities. WCAG (Web Content Accessibility Guidelines) defines standards. Levels: A (basic), AA (standard target), AAA (enhanced). Screen readers (VoiceOver, NVDA) navigate via semantic HTML and ARIA. Keyboard users need visible focus indicators and logical tab order.',
     example: {
-      code: `// âŒ Inaccessible
+      code: `// ❌ Inaccessible
 <div onClick={handleLogin} class="button">Login</div>
 <img src="chart.png">
 <div class="error">Invalid email</div>
 <input type="text" placeholder="Email">
 
-// âœ… Accessible
+// ✅ Accessible
 // 1. Semantic HTML - use the right elements
 <button onClick={handleLogin}>Login</button>
 // Native button: keyboard accessible, correct role, focusable
@@ -322,7 +322,7 @@ function Modal({ onClose }) {
 // Escape closes modals/dropdowns`,
       language: 'jsx'
     },
-    interviewAnswer: 'Accessibility isn\'t optional â€” it\'s a legal requirement in many countries and the right thing to do. I start with semantic HTML which gives free accessibility: a real button is keyboard-accessible and has correct ARIA role automatically. I add ARIA labels for icon-only buttons and form error states. I test with keyboard navigation and the browser\'s accessibility panel. For complex components like modals and dropdowns, I implement focus trapping and management.',
+    interviewAnswer: 'Accessibility isn\'t optional — it\'s a legal requirement in many countries and the right thing to do. I start with semantic HTML which gives free accessibility: a real button is keyboard-accessible and has correct ARIA role automatically. I add ARIA labels for icon-only buttons and form error states. I test with keyboard navigation and the browser\'s accessibility panel. For complex components like modals and dropdowns, I implement focus trapping and management.',
     commonMistakes: [
       'Using divs/spans as buttons (loses keyboard access)',
       'Missing alt text on images',
@@ -447,7 +447,7 @@ img {
     difficulty: 'beginner',
     tags: ['storage', 'cookies', 'localstorage', 'indexeddb'],
     shortAnswer: 'Cookies (~4KB, sent with requests, server access), localStorage (~5MB, persistent, sync), sessionStorage (~5MB, tab-scoped), IndexedDB (large structured data, async). Use case determines the choice.',
-    detailedExplanation: 'Cookies are the oldest â€” stored per origin, sent automatically with every HTTP request (useful for auth), accessible server and client side, expire by date. localStorage persists until explicitly cleared, synchronous API, ~5MB limit. sessionStorage same API but cleared when tab closes. IndexedDB is a full database in the browser â€” supports transactions, indexes, large amounts of structured data. Cache API for service workers/PWAs.',
+    detailedExplanation: 'Cookies are the oldest — stored per origin, sent automatically with every HTTP request (useful for auth), accessible server and client side, expire by date. localStorage persists until explicitly cleared, synchronous API, ~5MB limit. sessionStorage same API but cleared when tab closes. IndexedDB is a full database in the browser — supports transactions, indexes, large amounts of structured data. Cache API for service workers/PWAs.',
     example: {
       code: `// Cookies - sent with every request, server-readable
 // Best for: session tokens (with httpOnly), user preferences server needs
@@ -500,7 +500,7 @@ dbRequest.onsuccess = (e) => {
 // httpOnly cookies cannot be read by JS (safer for auth)`,
       language: 'javascript'
     },
-    interviewAnswer: 'Storage choice depends on the use case. Auth tokens in httpOnly cookies â€” JavaScript can\'t read them, protecting against XSS. User preferences like theme in localStorage â€” persists across sessions. Multi-step form state in sessionStorage â€” clears when user closes tab preventing stale data. For offline-capable PWAs with large datasets, IndexedDB is the only option. I avoid storing sensitive data in localStorage because any JavaScript on the page can read it.',
+    interviewAnswer: 'Storage choice depends on the use case. Auth tokens in httpOnly cookies — JavaScript can\'t read them, protecting against XSS. User preferences like theme in localStorage — persists across sessions. Multi-step form state in sessionStorage — clears when user closes tab preventing stale data. For offline-capable PWAs with large datasets, IndexedDB is the only option. I avoid storing sensitive data in localStorage because any JavaScript on the page can read it.',
     commonMistakes: [
       'Storing sensitive data in localStorage',
       'Not parsing JSON from localStorage',
@@ -548,12 +548,12 @@ const card = document.createElement('div');
 card.className = 'card';
 card.textContent = 'New Card';
 
-// âŒ Causes multiple reflows
+// ❌ Causes multiple reflows
 for (let i = 0; i < 100; i++) {
   document.body.appendChild(document.createElement('div'));
 }
 
-// âœ… DocumentFragment - batch insert
+// ✅ DocumentFragment - batch insert
 const fragment = document.createDocumentFragment();
 for (let i = 0; i < 100; i++) {
   const div = document.createElement('div');
@@ -562,7 +562,7 @@ for (let i = 0; i < 100; i++) {
 }
 document.body.appendChild(fragment); // One reflow!
 
-// âœ… innerHTML for large updates (one reflow)
+// ✅ innerHTML for large updates (one reflow)
 const list = document.getElementById('list');
 list.innerHTML = items.map(item =>
   \`<li>\${escapeHtml(item.name)}</li>\`
@@ -581,14 +581,14 @@ document.getElementById('todo-list').addEventListener('click', (e) => {
 });`,
       language: 'javascript'
     },
-    interviewAnswer: 'DOM manipulation is foundational JavaScript knowledge even if you use React daily. Key insight: touching the DOM triggers reflow (layout recalculation) and repaint â€” these are expensive. I batch DOM changes with DocumentFragment or innerHTML updates. Event delegation is crucial for dynamic lists â€” instead of adding a listener to each item, I add one to the parent and check the target. This also handles dynamically added items automatically.',
+    interviewAnswer: 'DOM manipulation is foundational JavaScript knowledge even if you use React daily. Key insight: touching the DOM triggers reflow (layout recalculation) and repaint — these are expensive. I batch DOM changes with DocumentFragment or innerHTML updates. Event delegation is crucial for dynamic lists — instead of adding a listener to each item, I add one to the parent and check the target. This also handles dynamically added items automatically.',
     commonMistakes: [
       'Making DOM changes inside loops (many reflows)',
       'Reading layout properties after writing (layout thrashing)',
       'Not removing event listeners (memory leaks)',
       'Using innerHTML with user input (XSS)'
     ],
-    realWorldUse: 'Understanding DOM manipulation is essential even in React apps â€” React IS manipulating the DOM, just efficiently via virtual DOM. Useful for vanilla JS scripts, third-party integrations, and understanding what React does under the hood.',
+    realWorldUse: 'Understanding DOM manipulation is essential even in React apps — React IS manipulating the DOM, just efficiently via virtual DOM. Useful for vanilla JS scripts, third-party integrations, and understanding what React does under the hood.',
     followUpQuestions: [
       'What is layout thrashing?',
       'What is event delegation and why is it useful?',
@@ -603,8 +603,8 @@ document.getElementById('todo-list').addEventListener('click', (e) => {
     question: 'What is event bubbling, capturing, and event delegation?',
     difficulty: 'intermediate',
     tags: ['events', 'bubbling', 'delegation'],
-    shortAnswer: 'Events bubble up from target to root (bubbling) or go down then up (capturing). Event delegation uses bubbling â€” attach one listener to a parent instead of many listeners on children.',
-    detailedExplanation: 'When an event fires, it goes through three phases: capturing (window â†’ target), target, bubbling (target â†’ window). Most events bubble. Event delegation exploits bubbling â€” attach listener to a parent, check event.target to identify which child was clicked. Benefits: fewer listeners = less memory, works for dynamically added elements, easier code. stopPropagation() stops bubbling. preventDefault() prevents default browser behavior.',
+    shortAnswer: 'Events bubble up from target to root (bubbling) or go down then up (capturing). Event delegation uses bubbling — attach one listener to a parent instead of many listeners on children.',
+    detailedExplanation: 'When an event fires, it goes through three phases: capturing (window → target), target, bubbling (target → window). Most events bubble. Event delegation exploits bubbling — attach listener to a parent, check event.target to identify which child was clicked. Benefits: fewer listeners = less memory, works for dynamically added elements, easier code. stopPropagation() stops bubbling. preventDefault() prevents default browser behavior.',
     example: {
       code: `// Event Bubbling
 <div id="parent">
@@ -619,7 +619,7 @@ document.getElementById('parent').addEventListener('click', () => {
   console.log('Parent clicked'); // Also fires! (bubbling)
 });
 
-// Click button â†’ logs: 'Child clicked', then 'Parent clicked'
+// Click button → logs: 'Child clicked', then 'Parent clicked'
 
 // Stop bubbling
 document.getElementById('child').addEventListener('click', (e) => {
@@ -653,7 +653,7 @@ todoList.addEventListener('click', (e) => {
   }
 });
 
-// âœ… Works for dynamically added items!
+// ✅ Works for dynamically added items!
 function addTodo(text) {
   todoList.innerHTML += \`
     <li class="todo-item">
@@ -671,7 +671,7 @@ document.getElementById('parent').addEventListener('click', () => {
 }, true); // Third arg true = capturing phase`,
       language: 'javascript'
     },
-    interviewAnswer: 'Event bubbling is how clicks on a button also trigger listeners on its parent and all ancestors up to the document. Event delegation uses this to your advantage â€” a single listener on a list handles clicks on all list items, including ones added later. This is why jQuery\'s .on() with a selector argument works on future elements. In React, all events are delegated to the root element via React\'s synthetic event system.',
+    interviewAnswer: 'Event bubbling is how clicks on a button also trigger listeners on its parent and all ancestors up to the document. Event delegation uses this to your advantage — a single listener on a list handles clicks on all list items, including ones added later. This is why jQuery\'s .on() with a selector argument works on future elements. In React, all events are delegated to the root element via React\'s synthetic event system.',
     commonMistakes: [
       'Adding listeners inside loops (N listeners instead of 1)',
       'Not removing listeners on cleanup (memory leaks)',
@@ -761,7 +761,7 @@ doExpensiveOperation();
 console.log('Took:', performance.now() - start, 'ms');`,
       language: 'javascript'
     },
-    interviewAnswer: 'I approach performance in layers using Lighthouse as my guide. First: network and assets â€” images in WebP format with lazy loading, code splitting routes, enabling compression. Then rendering â€” defer non-critical scripts, virtual scroll for large lists. Finally runtime â€” memoize expensive React renders, debounce inputs, move heavy computation to web workers. I always measure before optimizing â€” Lighthouse identifies the actual bottlenecks.',
+    interviewAnswer: 'I approach performance in layers using Lighthouse as my guide. First: network and assets — images in WebP format with lazy loading, code splitting routes, enabling compression. Then rendering — defer non-critical scripts, virtual scroll for large lists. Finally runtime — memoize expensive React renders, debounce inputs, move heavy computation to web workers. I always measure before optimizing — Lighthouse identifies the actual bottlenecks.',
     commonMistakes: [
       'Optimizing without measuring first (premature optimization)',
       'Not compressing images (usually the biggest win)',
@@ -869,7 +869,7 @@ self.addEventListener('fetch', (e) => {
 }`,
       language: 'javascript'
     },
-    interviewAnswer: 'Service workers are the key technology behind PWAs. They enable offline functionality by intercepting fetch requests and serving cached responses. The cache-first strategy serves cached content immediately (fast), then optionally updates in background. Stale-while-revalidate is great for news apps â€” show cached content instantly, silently update. PWAs can be installed on home screen, receive push notifications, and work offline â€” matching native app capabilities.',
+    interviewAnswer: 'Service workers are the key technology behind PWAs. They enable offline functionality by intercepting fetch requests and serving cached responses. The cache-first strategy serves cached content immediately (fast), then optionally updates in background. Stale-while-revalidate is great for news apps — show cached content instantly, silently update. PWAs can be installed on home screen, receive push notifications, and work offline — matching native app capabilities.',
     commonMistakes: [
       'Not handling SW update/activation correctly (users see old version)',
       'Caching everything including POST requests',
@@ -894,7 +894,7 @@ self.addEventListener('fetch', (e) => {
     detailedExplanation: 'Tree shaking relies on static analysis of ES module import/export syntax (not CommonJS require). The bundler builds a dependency graph, marks all reachable exports, and removes unreachable ones. Key requirements: use ES modules (import/export), not CommonJS (require/module.exports), and avoid side-effectful imports. The "sideEffects" field in package.json tells bundlers which files have side effects and shouldn\'t be tree-shaken.',
     example: {
       language: 'javascript',
-      code: `// âœ… Tree shakeable - named exports
+      code: `// ✅ Tree shakeable - named exports
 export const add = (a, b) => a + b;
 export const multiply = (a, b) => a * b;
 export const divide = (a, b) => a / b;
@@ -903,11 +903,11 @@ export const divide = (a, b) => a / b;
 import { add } from './math';
 // multiply and divide are NOT included in bundle!
 
-// âŒ CommonJS - NOT tree shakeable
+// ❌ CommonJS - NOT tree shakeable
 module.exports = { add, multiply, divide };
 const math = require('./math'); // Entire module included
 
-// âŒ Side-effectful import - bundler can't remove
+// ❌ Side-effectful import - bundler can't remove
 import './polyfills'; // This modifies globals - can't be removed
 
 // package.json - mark files without side effects
@@ -918,11 +918,11 @@ import './polyfills'; // This modifies globals - can't be removed
 }
 
 // Lodash example - tree shaking matters
-// âŒ Imports entire lodash (70KB+)
+// ❌ Imports entire lodash (70KB+)
 import _ from 'lodash';
 const result = _.chunk([1,2,3,4], 2);
 
-// âœ… Import only chunk (2KB)
+// ✅ Import only chunk (2KB)
 import chunk from 'lodash/chunk';
 // Or with lodash-es (ESM version):
 import { chunk } from 'lodash-es';
@@ -931,7 +931,7 @@ import { chunk } from 'lodash-es';
 // npx webpack-bundle-analyzer
 // Vite: npx vite-bundle-analyzer`
     },
-    interviewAnswer: 'Tree shaking removes unused code from the final bundle, which can dramatically reduce bundle size. The key requirement is ES modules â€” tree shaking doesn\'t work with CommonJS require(). Lodash is the classic example: importing the entire library vs just the functions you need. I always check bundle size with analyzer tools after adding heavy dependencies.',
+    interviewAnswer: 'Tree shaking removes unused code from the final bundle, which can dramatically reduce bundle size. The key requirement is ES modules — tree shaking doesn\'t work with CommonJS require(). Lodash is the classic example: importing the entire library vs just the functions you need. I always check bundle size with analyzer tools after adding heavy dependencies.',
     commonMistakes: [
       'Using CommonJS require() (not tree shakeable)',
       'Importing entire libraries (import _ from "lodash")',
@@ -952,8 +952,8 @@ import { chunk } from 'lodash-es';
     question: 'What is the Critical Rendering Path and how do you optimize it?',
     difficulty: 'intermediate',
     tags: ['performance', 'rendering', 'critical-path'],
-    shortAnswer: 'The Critical Rendering Path is the sequence of steps browsers take to convert HTML/CSS/JS into pixels: DOM â†’ CSSOM â†’ Render Tree â†’ Layout â†’ Paint. Optimizing it reduces time to first render.',
-    detailedExplanation: 'The browser must complete HTML parsing (DOM), CSS parsing (CSSOM), combining them into Render Tree, Layout (geometry), Paint (pixels), and Composite. CSS blocks rendering â€” browser won\'t paint until CSSOM is built. JavaScript blocks HTML parsing by default. The critical path is the minimum work to get the first pixel on screen. Techniques: inline critical CSS, defer non-critical JS, preload key resources, reduce render-blocking resources.',
+    shortAnswer: 'The Critical Rendering Path is the sequence of steps browsers take to convert HTML/CSS/JS into pixels: DOM → CSSOM → Render Tree → Layout → Paint. Optimizing it reduces time to first render.',
+    detailedExplanation: 'The browser must complete HTML parsing (DOM), CSS parsing (CSSOM), combining them into Render Tree, Layout (geometry), Paint (pixels), and Composite. CSS blocks rendering — browser won\'t paint until CSSOM is built. JavaScript blocks HTML parsing by default. The critical path is the minimum work to get the first pixel on screen. Techniques: inline critical CSS, defer non-critical JS, preload key resources, reduce render-blocking resources.',
     example: {
       language: 'html',
       code: `<!-- Render-blocking resources (bad) -->
@@ -993,10 +993,10 @@ import { chunk } from 'lodash-es';
 </body>
 
 <!-- Measuring critical path -->
-<!-- Chrome DevTools â†’ Performance â†’ check for render-blocking resources -->
-<!-- Lighthouse â†’ "Eliminate render-blocking resources" -->`
+<!-- Chrome DevTools → Performance → check for render-blocking resources -->
+<!-- Lighthouse → "Eliminate render-blocking resources" -->`
     },
-    interviewAnswer: 'Optimizing the critical rendering path is about getting the first pixel on screen as fast as possible. My approach: identify render-blocking resources with Lighthouse, inline the critical CSS needed for above-the-fold content, and defer everything else. Deferring scripts is one of the highest-impact changes â€” JS blocks HTML parsing, so even a small script can delay rendering by hundreds of milliseconds.',
+    interviewAnswer: 'Optimizing the critical rendering path is about getting the first pixel on screen as fast as possible. My approach: identify render-blocking resources with Lighthouse, inline the critical CSS needed for above-the-fold content, and defer everything else. Deferring scripts is one of the highest-impact changes — JS blocks HTML parsing, so even a small script can delay rendering by hundreds of milliseconds.',
     commonMistakes: [
       'Putting large JS in <head> without defer/async',
       'Loading all CSS even though only above-fold is needed',
@@ -1018,7 +1018,7 @@ import { chunk } from 'lodash-es';
     difficulty: 'intermediate',
     tags: ['intersection-observer', 'performance', 'lazy-loading'],
     shortAnswer: 'Intersection Observer detects when elements enter/exit the viewport without scroll event listeners. Used for lazy loading images, infinite scroll, and triggering animations when elements become visible.',
-    detailedExplanation: 'Before Intersection Observer, you used scroll event listeners with getBoundingClientRect() â€” expensive because scroll fires hundreds of times per second. Intersection Observer is asynchronous and callback-based â€” the browser calls your callback when observed elements intersect with the viewport (or a root element). The threshold option controls how much of the element must be visible. Much more performant than scroll listeners.',
+    detailedExplanation: 'Before Intersection Observer, you used scroll event listeners with getBoundingClientRect() — expensive because scroll fires hundreds of times per second. Intersection Observer is asynchronous and callback-based — the browser calls your callback when observed elements intersect with the viewport (or a root element). The threshold option controls how much of the element must be visible. Much more performant than scroll listeners.',
     example: {
       language: 'javascript',
       code: `// Basic Intersection Observer
@@ -1085,7 +1085,7 @@ function useIntersectionObserver(ref, options = {}) {
   return isIntersecting;
 }`
     },
-    interviewAnswer: 'Intersection Observer is the performant way to react to elements entering the viewport. Before it existed, developers used scroll event listeners that fired hundreds of times per second and called getBoundingClientRect() â€” which forces layout recalculation. Intersection Observer is async and battery-friendly. I use it for lazy-loading images, triggering CSS animations when elements scroll into view, and infinite scroll pagination.',
+    interviewAnswer: 'Intersection Observer is the performant way to react to elements entering the viewport. Before it existed, developers used scroll event listeners that fired hundreds of times per second and called getBoundingClientRect() — which forces layout recalculation. Intersection Observer is async and battery-friendly. I use it for lazy-loading images, triggering CSS animations when elements scroll into view, and infinite scroll pagination.',
     commonMistakes: [
       'Still using scroll events for viewport detection',
       'Not unobserving after first trigger (wastes memory)',

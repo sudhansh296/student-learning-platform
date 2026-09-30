@@ -2,7 +2,7 @@ import type { JSLesson } from '../js-curriculum';
 
 export const jsArraysLesson: JSLesson = {
   id: 'js-arrays-complete', title: 'Arrays - Complete Guide', slug: 'arrays',
-  chapter: 'data', order: 9, difficulty: 'beginner', readingTime: 16,
+  chapter: 'data', order: 9, difficulty: 'beginner', readingTime: 19,
   description: 'Master JavaScript arrays - creation, all methods, destructuring, spread, sorting, searching, and real-world patterns.',
   sections: [
     { type: 'text', content: 'Arrays are ordered lists of values. In JavaScript, arrays can hold any mix of types - numbers, strings, objects, even other arrays. Arrays are everywhere: lists of users, API responses, React state, database results - mastering array methods is one of the most important skills for a JavaScript developer.' },
@@ -287,6 +287,126 @@ window.addStudent = addStudent;
 window.deleteStudent = deleteStudent;
 renderTable();`,
       mode: 'full' },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Sorting numbers without a compare function, so [10, 2, 1].sort() gives [1, 10, 2]. Fix: use sort((a, b) => a - b).',
+        'Using map when you only want to loop. Fix: use forEach for side effects and map only when you need a new array back.',
+        'Mutating the original array with push, splice or sort and breaking other code. Fix: copy first ([...list]) or use non-mutating methods such as filter, map and slice.',
+        'Forgetting the initial value in reduce, which fails on an empty array. Fix: pass one, for example reduce((sum, n) => sum + n, 0).',
+        'Comparing arrays with ===. Fix: two arrays are equal only when they are the same object; compare their contents item by item instead.',
+        'Reading past the end with a wrong index. Fix: the last item is at list.length - 1, or use list.at(-1).',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Rendering lists: a product grid, a to-do list or search results is an array mapped to elements.',
+        'Filtering data by category, price range or search text before showing it.',
+        'Totals and statistics such as cart sum, average rating or number of items in stock use reduce.',
+        'Sorting tables and leaderboards by a column.',
+        'Storing a queue of tasks or notifications that grows and shrinks.',
+        'Response data from an API usually arrives as an array of objects.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Clean up a product list',
+    },
+    {
+      type: 'text',
+      content: 'You have a list of products. Use filter to keep only the ones in stock, map to get their names in upper case, reduce to add up the prices, and find the cheapest in-stock product. Print the three results as shown.',
+    },
+    {
+      type: 'tryit',
+      title: 'Clean up a product list',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `const products = [
+  { name: 'pen', price: 10, inStock: true },
+  { name: 'book', price: 250, inStock: true },
+  { name: 'bag', price: 900, inStock: false },
+  { name: 'lamp', price: 400, inStock: true },
+];
+
+const inStock = products; // TODO: keep only items where inStock is true
+
+const names = []; // TODO: names of in-stock products in upper case
+const totalPrice = 0; // TODO: sum of the in-stock prices
+const cheapest = products[0]; // TODO: the cheapest in-stock product
+
+console.log(names.join(', '));
+console.log(totalPrice);
+console.log(cheapest.name);`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `PEN, BOOK, LAMP
+660
+pen`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Chain the steps: const inStock = products.filter(p => p.inStock). For the cheapest, reduce and keep the item with the smaller price, or sort a copy.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `const products = [
+  { name: 'pen', price: 10, inStock: true },
+  { name: 'book', price: 250, inStock: true },
+  { name: 'bag', price: 900, inStock: false },
+  { name: 'lamp', price: 400, inStock: true },
+];
+
+const inStock = products.filter((p) => p.inStock);
+
+const names = inStock.map((p) => p.name.toUpperCase());
+const totalPrice = inStock.reduce((sum, p) => sum + p.price, 0);
+const cheapest = inStock.reduce((best, p) => (p.price < best.price ? p : best));
+
+console.log(names.join(', '));
+console.log(totalPrice);
+console.log(cheapest.name);`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between map, filter and reduce?',
+      content: 'map turns every item into something else, filter keeps only the items that pass a test, and reduce combines all items into a single value.',
+    },
+    {
+      type: 'note',
+      title: 'Does sort change the original array?',
+      content: 'Yes. sort works in place. Sort a copy with [...list].sort() if you need to keep the original order.',
+    },
+    {
+      type: 'note',
+      title: 'How do I check whether an array contains a value?',
+      content: 'Use list.includes(value) for simple values, or list.some(item => condition) when you need to test objects.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between slice and splice?',
+      content: 'slice returns a copy of part of the array and leaves the original alone. splice removes or inserts items and changes the original.',
+    },
   ],
   exercises: [
     { id: 'arr-1', question: 'Which method transforms every array element and returns a NEW array of the same length?', type: 'multiple-choice', options: ['filter()', 'map()', 'reduce()', 'forEach()'], correct: 1, explanation: 'map() creates a new array by applying a callback to every element. It always returns an array of the same length. forEach() is similar but returns undefined.' },

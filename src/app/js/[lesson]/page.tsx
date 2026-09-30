@@ -4,6 +4,8 @@ import { jsLessonsNew } from '@/data/js-lessons/index';
 import { jsLessons as oldLessons } from '@/data/js-curriculum';
 import { JSLessonClient } from '@/components/js/JSLessonClient';
 import type { Metadata } from 'next';
+import { lessonMetadata, withH1 } from '@/lib/seo';
+import { LessonSeoExtras } from '@/components/seo/LessonSeoExtras';
 
 interface Props { params: Promise<{ lesson: string }> }
 
@@ -17,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lesson } = await params;
   const l = getAllLessons().find(x => x.slug === lesson);
   if (!l) return { title: 'Not Found' };
-  return { title: `${l.title} — JavaScript Tutorial`, description: l.description };
+  return lessonMetadata('js', l);
 }
 
 export default async function JSLessonPage({ params }: Props) {
@@ -31,12 +33,15 @@ export default async function JSLessonPage({ params }: Props) {
   const next = idx < all.length - 1 ? all[idx + 1] : null;
 
   return (
-    <JSLessonClient
-      lesson={lessonData}
-      allLessons={all}
-      chapters={jsChapters}
-      prev={prev}
-      next={next}
-    />
+    <>
+      <JSLessonClient
+        lesson={withH1('js', lessonData)}
+        allLessons={all}
+        chapters={jsChapters}
+        prev={prev}
+        next={next}
+      />
+      <LessonSeoExtras courseId="js" lesson={lessonData} />
+    </>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, X, RotateCcw, Trophy } from 'lucide-react';
+import { Check, X, RotateCcw } from 'lucide-react';
 
 interface QuizQuestion {
   id: string;
@@ -122,7 +122,7 @@ export function QuizBlock({ questions, title }: { questions: QuizQuestion[]; tit
 
           {/* Results */}
           <div className="space-y-4">
-            {questions.map((q, i) => {
+            {questions.map((q) => {
               const userAns = answers[q.id];
               const correct = userAns === q.correct;
               return (

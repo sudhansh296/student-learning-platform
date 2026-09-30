@@ -1,21 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, Copy, ChevronDown, ChevronUp } from 'lucide-react';
+import { Check, Copy, ChevronDown, ChevronUp, Play } from 'lucide-react';
+import { runInEditor, detectLanguage } from '@/lib/runInEditor';
+
+/** What the button says the example will run in. */
+const SHORT: Record<string, string> = { express: 'Node', js: 'JS', html: 'HTML', css: 'CSS', typescript: 'TS', react: 'React', nextjs: 'Next.js', postgres: 'SQL', mongo: 'Mongo', git: 'Git', docker: 'Docker', redis: 'Redis', yaml: 'YAML', json: 'JSON', http: 'HTTP' };
 
 interface CodeBlockProps {
   code: string;
   language?: string;
   filename?: string;
-  output?: string;
   showLineNumbers?: boolean;
+  /** Lesson technology id — when set, runnable examples get a "Run in Editor" button that opens the code in the playground. */
+  tech?: string;
 }
 
-export function CodeBlock({ code, language = 'javascript', filename, output, showLineNumbers = false }: CodeBlockProps) {
+export function CodeBlock({ code, language: declared = 'javascript', filename, showLineNumbers = false, tech }: CodeBlockProps) {
+  const language = detectLanguage(code, declared);
   const [copied, setCopied] = useState(false);
-  const [showOutput, setShowOutput] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
+  const target = tech ? runInEditor(tech, code, language === 'sql' && declared !== 'sql' ? declared : language) : null;
   const lines = code.split('\n');
   const isLong = lines.length > 20;
   const displayLines = isLong && !expanded ? lines.slice(0, 20) : lines;
@@ -60,6 +66,19 @@ export function CodeBlock({ code, language = 'javascript', filename, output, sho
           <span className={`text-[11px] font-mono uppercase tracking-wider ${langColors[language] || 'text-gray-400'}`}>
             {language}
           </span>
+          {target && (
+            <a
+              href={target.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-[11px] font-semibold text-[#3fb950] hover:text-white transition-colors px-2.5 py-1 rounded border border-[#238636] hover:bg-[#238636]"
+              title={`Open this example in the ${target.label} code editor and run it`}
+            >
+              <Play className="w-3 h-3" />
+              <span>Run in Editor</span>
+              <span className="opacity-90 font-normal">· {SHORT[target.kind] ?? target.label}</span>
+            </a>
+          )}
           <button
             onClick={copy}
             className="flex items-center gap-1.5 text-[11px] text-[#8b949e] hover:text-white transition-colors px-2 py-1 rounded hover:bg-[#21262d]"
@@ -87,11 +106,11 @@ export function CodeBlock({ code, language = 'javascript', filename, output, sho
             {displayLines.map((line, i) => (
               <div key={i} className="flex">
                 {showLineNumbers && (
-                  <span className="select-none text-[#484f58] w-8 shrink-0 text-right pr-4">
+                  <span className="select-none text-[#7d8590] w-8 shrink-0 text-right pr-4">
                     {i + 1}
                   </span>
                 )}
-                <span className="text-[#e6edf3]">{renderSyntax(line, language)}</span>
+                <span className="text-[#e6edf3]">{renderSyntax(line)}</span>
               </div>
             ))}
           </code>
@@ -111,30 +130,12 @@ export function CodeBlock({ code, language = 'javascript', filename, output, sho
           )}
         </button>
       )}
-
-      {/* Output */}
-      {output && (
-        <div className="border-t border-[#30363d]">
-          <button
-            onClick={() => setShowOutput(!showOutput)}
-            className="w-full flex items-center justify-between px-4 py-2 text-[11px] text-[#8b949e] hover:text-white bg-[#161b22] transition-colors hover:bg-[#21262d]"
-          >
-            <span className="font-medium uppercase tracking-wider">Output</span>
-            {showOutput ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-          </button>
-          {showOutput && (
-            <div className="px-4 py-3 bg-[#0d1117]">
-              <pre className="text-[12px] font-mono text-[#3fb950] leading-5">{output}</pre>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }
 
 // Simple syntax highlighting via regex
-function renderSyntax(line: string, _lang: string): React.ReactNode {
+function renderSyntax(line: string): React.ReactNode {
   // Return non-breaking space for empty lines to preserve line height
   return line || '\u00A0';
 }

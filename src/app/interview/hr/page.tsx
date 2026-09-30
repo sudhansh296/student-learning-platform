@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowLeft, Users, CheckCircle2, AlertTriangle, Lightbulb, MessageCircle, Star } from 'lucide-react';
+import { ArrowLeft, Users, CheckCircle2, AlertTriangle, Star } from 'lucide-react';
 import { getQuestionsByCategory } from '@/data/interview';
 import InterviewQuestionList from '@/components/interview/InterviewQuestionList';
 
 export const metadata: Metadata = {
-  title: 'HR Interview Preparation | WebDevAtlas',
+  title: 'HR Interview Preparation',
   description: 'Master behavioral and HR interview questions with STAR method, salary negotiation, and communication tips',
 };
 

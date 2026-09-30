@@ -7,7 +7,7 @@ export const jsObjectsLesson: JSLesson = {
   chapter: 'data',
   order: 10,
   difficulty: 'beginner',
-  readingTime: 16,
+  readingTime: 19,
   description: 'Master JavaScript objects - creation, access, methods, destructuring, spread, Object methods, and JSON.',
   sections: [
     {
@@ -357,6 +357,109 @@ function setTag(t){activeTag=t;render();}
 window.saveContact=saveContact; window.editContact=editContact; window.cancelEdit=cancelEdit; window.deleteContact=deleteContact; window.setTag=setTag;
 render();`,
       mode: 'full',
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Copying an object with = and expecting an independent copy. Fix: both names point to the same object; use { ...user } for a shallow copy or structuredClone(user) for a deep one.',
+        'Changing nested data through a shallow copy. Fix: spread copies only the first level, so copy the nested object too: { ...user, address: { ...user.address, city } }.',
+        'Reading a property of undefined, such as user.address.city when address is missing. Fix: use optional chaining, user.address?.city, and a default with ??.',
+        'Using dot notation with a dynamic key, for example user.key when the key is stored in a variable. Fix: use bracket notation, user[key].',
+        'Losing this when a method is passed around as a callback. Fix: call it through the object, or bind it, or use an arrow function wrapper.',
+        'Assuming for...in only visits your own properties. Fix: prefer Object.keys, Object.values or Object.entries, which list own properties only.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'A user profile, product or order is naturally an object with named fields.',
+        'API requests and responses are JSON objects that you build and read.',
+        'React state often holds an object, and you update it by creating a new copy.',
+        'Configuration objects pass many options to a function in a readable way.',
+        'Lookup tables such as { admin: 3, editor: 2, viewer: 1 } replace long if/else chains.',
+        'Counting things, for example words in a text, with an object used as a dictionary.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Update a profile without changing the original',
+    },
+    {
+      type: 'text',
+      content: 'Create updatedUser from user with age 25 and city "Mumbai" using the spread operator. The original object must stay unchanged. Print both objects as shown to prove it.',
+    },
+    {
+      type: 'tryit',
+      title: 'Update a profile without changing the original',
+      content: 'Edit the starter code, press Run and compare the console output with the expected output below.',
+      js: `const user = { name: 'Asha', age: 24, address: { city: 'Pune' } };
+
+const updatedUser = user; // TODO: a new object with age 25 and city 'Mumbai'
+
+console.log(user.name + ' ' + user.age + ' ' + user.address.city);
+console.log(updatedUser.name + ' ' + updatedUser.age + ' ' + updatedUser.address.city);`,
+      mode: 'js',
+    },
+    {
+      type: 'example',
+      title: 'Expected output',
+      content: 'Your console output should look exactly like this.',
+      code: `Asha 24 Pune
+Asha 25 Mumbai`,
+      language: 'text',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Spread the old object first, then override: { ...user, age: 25, address: { ...user.address, city: "Mumbai" } }. The nested address needs its own spread.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `const user = { name: 'Asha', age: 24, address: { city: 'Pune' } };
+
+const updatedUser = {
+  ...user,
+  age: 25,
+  address: { ...user.address, city: 'Mumbai' },
+};
+
+console.log(user.name + ' ' + user.age + ' ' + user.address.city);
+console.log(updatedUser.name + ' ' + updatedUser.age + ' ' + updatedUser.address.city);`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between dot and bracket notation?',
+      content: 'Dot notation (user.name) is for fixed property names. Bracket notation (user[key]) works with variables and names that are not valid identifiers.',
+    },
+    {
+      type: 'note',
+      title: 'How do I check whether a property exists?',
+      content: 'Use "name" in user or Object.hasOwn(user, "name"). Checking user.name !== undefined also treats an existing property with the value undefined as missing.',
+    },
+    {
+      type: 'note',
+      title: 'How do I loop over an object?',
+      content: 'Use Object.entries(user) with for...of or forEach. It gives you [key, value] pairs for the object\'s own properties.',
+    },
+    {
+      type: 'note',
+      title: 'Can I make an object read-only?',
+      content: 'Object.freeze(obj) stops changes to its top-level properties. It is shallow, so nested objects can still change.',
     },
   ],
   exercises: [

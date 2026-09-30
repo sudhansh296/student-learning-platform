@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Browser-side simulator runtime served as static plain scripts.
+    "public/sim/**",
   ]),
 ]);
 

@@ -7,7 +7,7 @@ export const reactFormsLesson: ReactLesson = {
   chapter: 'patterns',
   order: 10,
   difficulty: 'intermediate',
-  readingTime: 13,
+  readingTime: 16,
   description: 'Build fully functional forms in React - controlled inputs, handling multiple fields efficiently, form submission, client-side validation, and working with select, textarea, and checkbox elements.',
   sections: [
     {
@@ -393,6 +393,150 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Setting value without onChange, so the input cannot be typed into. Fix: a controlled input needs both value and an onChange that updates state.',
+        'Forgetting event.preventDefault() in onSubmit, which reloads the page. Fix: call it first thing in the submit handler.',
+        'Switching between controlled and uncontrolled by starting with undefined. Fix: give every controlled field an initial value such as an empty string.',
+        'Reading the input from state before the update has happened. Fix: use event.target.value inside the handler, and remember state updates on the next render.',
+        'Validating only in the browser. Fix: client validation is for convenience; the server must validate again because users can bypass the page.',
+        'Handling many fields with a separate state and handler each. Fix: keep one object and one handler that uses the input name attribute.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'Login, sign-up and password reset forms.',
+        'Search boxes that filter a list as you type.',
+        'Checkout and address forms with validation messages.',
+        'Contact and feedback forms that post to an API.',
+        'Settings pages with checkboxes, selects and toggles.',
+        'Admin screens for creating and editing records.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: A newsletter form with validation',
+    },
+    {
+      type: 'text',
+      content: 'Finish handleSubmit. If the email does not contain "@", show the message "Please enter a valid email". Otherwise clear any error and show a thank-you message that includes the address.',
+    },
+    {
+      type: 'tryit',
+      title: 'A newsletter form with validation',
+      content: 'Complete the TODO parts of the component, press Run and check the behaviour described below.',
+      jsx: `const { useState } = React;
+
+function Newsletter() {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [done, setDone] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // TODO: if the email has no '@', set the error 'Please enter a valid email'
+    // TODO: otherwise clear the error and set done to true
+  }
+
+  if (done) return <p className="ok">Thanks! We will write to {email}.</p>;
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <label htmlFor="email">Email</label>
+      <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+      {error && <p className="error">{error}</p>}
+      <button type="submit">Subscribe</button>
+    </form>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Newsletter />);`,
+      css: `body { font-family: system-ui, sans-serif; padding: 20px; }
+button { cursor: pointer; }
+form { display: flex; flex-direction: column; gap: 8px; max-width: 280px; }
+input { padding: 8px 10px; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+button { background: #2563eb; color: #fff; border: 0; border-radius: 6px; padding: 8px 12px; }
+.error { color: #b91c1c; font-size: 13px; margin: 0; }
+.ok { color: #166534; font-weight: 700; }`,
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'Submitting "ada" shows "Please enter a valid email". Submitting "ada@example.com" replaces the form with "Thanks! We will write to ada@example.com."',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'Call e.preventDefault() first. Then if (!email.includes("@")) { setError("Please enter a valid email"); return; } setError(""); setDone(true);',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `// In a real project, start with: import { useState } from 'react';
+
+function Newsletter() {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [done, setDone] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email.includes('@')) {
+      setError('Please enter a valid email');
+      return;
+    }
+    setError('');
+    setDone(true);
+  }
+
+  if (done) return <p className="ok">Thanks! We will write to {email}.</p>;
+
+  return (
+    <form onSubmit={handleSubmit} noValidate>
+      <label htmlFor="email">Email</label>
+      <input id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+      {error && <p className="error">{error}</p>}
+      <button type="submit">Subscribe</button>
+    </form>
+  );
+}`,
+      language: 'jsx',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is a controlled component?',
+      content: 'A form input whose value comes from React state and is updated through onChange, so React always knows the current text.',
+    },
+    {
+      type: 'note',
+      title: 'When should I use an uncontrolled input?',
+      content: 'For simple cases where you only need the value on submit, or for file inputs. You read the value from a ref or from FormData.',
+    },
+    {
+      type: 'note',
+      title: 'Do I need a form library?',
+      content: 'Not for small forms. Libraries like React Hook Form help when you have many fields, complex validation or performance concerns.',
+    },
+    {
+      type: 'note',
+      title: 'Where should validation happen?',
+      content: 'Both places: in the browser for quick feedback, and on the server for security, because the browser check can be bypassed.',
     },
   ],
   exercises: [

@@ -122,12 +122,12 @@ db.users.find({ email: "alex@example.com" }).explain("executionStats");
 // Shows: IXSCAN (index scan) vs COLLSCAN (collection scan)
 
 // When to create indexes
-// âœ… Columns used in WHERE clauses
-// âœ… Foreign key columns used in JOINs
-// âœ… Columns used in ORDER BY
-// âŒ Columns rarely queried
-// âŒ Tables with few rows
-// âŒ Columns updated very frequently`,
+// ✅ Columns used in WHERE clauses
+// ✅ Foreign key columns used in JOINs
+// ✅ Columns used in ORDER BY
+// ❌ Columns rarely queried
+// ❌ Tables with few rows
+// ❌ Columns updated very frequently`,
       language: 'sql'
     },
     interviewAnswer: 'Indexes are the most impactful database optimization. I create indexes on every column used in WHERE clauses, JOINs, and sort operations. The rule of thumb: index for reads, pay cost on writes. I use EXPLAIN to verify queries use indexes. In MongoDB, I always index any field I query on. Over-indexing hurts insert performance, so I analyze query patterns before adding indexes.',
@@ -418,9 +418,9 @@ order_items (order_id, product_id, quantity)
     zip: "10001"
   }
 }
-// âœ… Always fetched together
-// âœ… Atomic updates
-// âœ… Single query
+// ✅ Always fetched together
+// ✅ Atomic updates
+// ✅ Single query
 
 // Blog post with embedded comments (small number)
 {
@@ -432,8 +432,8 @@ order_items (order_id, product_id, quantity)
     { author: "Jane", text: "Thanks!" }
   ]
 }
-// âœ… Good for few, bounded comments
-// âŒ Bad for thousands of comments
+// ✅ Good for few, bounded comments
+// ❌ Bad for thousands of comments
 
 // REFERENCING - good for: users + orders (many), movies + actors (many-to-many)
 
@@ -616,7 +616,7 @@ db.products.aggregate([
     difficulty: 'beginner',
     tags: ['sql', 'queries', 'group-by'],
     shortAnswer: 'WHERE filters rows before grouping. GROUP BY groups rows by column values. HAVING filters groups after aggregation. WHERE can\'t use aggregate functions; HAVING can.',
-    detailedExplanation: 'SQL query execution order: FROM â†’ WHERE â†’ GROUP BY â†’ HAVING â†’ SELECT â†’ ORDER BY. WHERE filters individual rows before any grouping. GROUP BY combines rows with the same value into groups, enabling aggregate functions (COUNT, SUM, AVG). HAVING filters the resulting groups, and can use aggregate functions unlike WHERE.',
+    detailedExplanation: 'SQL query execution order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY. WHERE filters individual rows before any grouping. GROUP BY combines rows with the same value into groups, enabling aggregate functions (COUNT, SUM, AVG). HAVING filters the resulting groups, and can use aggregate functions unlike WHERE.',
     example: {
       code: `-- Sample: orders table
 -- order_id, user_id, status, total, created_at
@@ -658,8 +658,8 @@ ORDER BY total_revenue DESC
 LIMIT 10;
 
 -- Error: can't use aggregate in WHERE
--- SELECT user_id FROM orders WHERE COUNT(*) > 5; -- âŒ Wrong
--- SELECT user_id FROM orders GROUP BY user_id HAVING COUNT(*) > 5; -- âœ… Correct`,
+-- SELECT user_id FROM orders WHERE COUNT(*) > 5; -- ❌ Wrong
+-- SELECT user_id FROM orders GROUP BY user_id HAVING COUNT(*) > 5; -- ✅ Correct`,
       language: 'sql'
     },
     interviewAnswer: 'Think of it as a pipeline: WHERE reduces rows before grouping, GROUP BY creates aggregate groups, HAVING filters those groups. The key insight is that WHERE runs before GROUP BY, so it can\'t use aggregate functions. HAVING runs after, so it can. I use HAVING to filter for "customers who spent more than $1000" because that requires the SUM to be calculated first.',
@@ -803,7 +803,7 @@ async function getAdultUsers() {
 // Fetch 100 posts, then each author - 101 queries!
 const posts = await Post.find(); // 1 query
 
-// âŒ N+1 - one query per post
+// ❌ N+1 - one query per post
 for (const post of posts) {
   post.author = await User.findById(post.userId); // 100 queries
 }
@@ -909,9 +909,9 @@ const mongoose = await mongoose.connect(uri, {
 // mongos (router): routes queries to correct shard
 
 // Choosing a shard key
-// âœ… Good: high cardinality, evenly distributed
-// âŒ Bad: monotonically increasing (creates hot shard)
-// âŒ Bad: low cardinality (e.g., gender - only 2-3 shards max)
+// ✅ Good: high cardinality, evenly distributed
+// ❌ Bad: monotonically increasing (creates hot shard)
+// ❌ Bad: low cardinality (e.g., gender - only 2-3 shards max)
 
 // Hash-based sharding
 sh.shardCollection("mydb.users", { userId: "hashed" });
@@ -1091,9 +1091,9 @@ orderSchema.index(
 
 // Compound index field order matters!
 // Index: { lastName: 1, firstName: 1 }
-db.users.find({ lastName: 'Smith' }); // âœ… Uses index
-db.users.find({ lastName: 'Smith', firstName: 'Alex' }); // âœ… Uses index
-db.users.find({ firstName: 'Alex' }); // âŒ Cannot use this index alone`,
+db.users.find({ lastName: 'Smith' }); // ✅ Uses index
+db.users.find({ lastName: 'Smith', firstName: 'Alex' }); // ✅ Uses index
+db.users.find({ firstName: 'Alex' }); // ❌ Cannot use this index alone`,
       language: 'javascript'
     },
     interviewAnswer: 'Indexing strategy is critical for MongoDB performance. I always create indexes for fields used in find() queries and sort operations. Compound indexes follow the ESR rule. TTL indexes are great for session cleanup and log expiry - no manual cleanup needed. I use explain() to verify queries use IXSCAN not COLLSCAN. Too many indexes slow writes, so I analyze query patterns before indexing.',
@@ -1119,7 +1119,7 @@ db.users.find({ firstName: 'Alex' }); // âŒ Cannot use this index alone`,
     difficulty: 'intermediate',
     tags: ['sql', 'views', 'abstraction'],
     shortAnswer: 'A view is a saved SQL query that acts like a virtual table. It simplifies complex queries, enforces access control, and provides a stable API layer over changing table structures.',
-    detailedExplanation: 'Views store a SELECT query and let you query it like a table. Regular views recalculate every query (no stored data). Materialized views cache the result and refresh periodically â€” great for expensive aggregations. Views provide security (hide sensitive columns), abstraction (rename/reformat columns), and reusability (complex joins defined once). Updatable views allow INSERT/UPDATE/DELETE under certain conditions.',
+    detailedExplanation: 'Views store a SELECT query and let you query it like a table. Regular views recalculate every query (no stored data). Materialized views cache the result and refresh periodically — great for expensive aggregations. Views provide security (hide sensitive columns), abstraction (rename/reformat columns), and reusability (complex joins defined once). Updatable views allow INSERT/UPDATE/DELETE under certain conditions.',
     example: {
       code: `-- Create a view
 CREATE VIEW active_users AS
@@ -1176,7 +1176,7 @@ REFRESH MATERIALIZED VIEW monthly_revenue;
 DROP VIEW IF EXISTS active_users;`,
       language: 'sql'
     },
-    interviewAnswer: 'I use views for two main reasons: abstraction and security. For security, I create views that expose only non-sensitive columns â€” external systems query the view, never the underlying table. For abstraction, complex join queries used in multiple reports get wrapped in a view so report code stays simple. Materialized views are my go-to for dashboard analytics that run slowly â€” I refresh them hourly instead of recalculating on every page load.',
+    interviewAnswer: 'I use views for two main reasons: abstraction and security. For security, I create views that expose only non-sensitive columns — external systems query the view, never the underlying table. For abstraction, complex join queries used in multiple reports get wrapped in a view so report code stays simple. Materialized views are my go-to for dashboard analytics that run slowly — I refresh them hourly instead of recalculating on every page load.',
     commonMistakes: [
       'Using views everywhere (adds abstraction overhead)',
       'Forgetting materialized views need manual refresh',
@@ -1199,7 +1199,7 @@ DROP VIEW IF EXISTS active_users;`,
     difficulty: 'advanced',
     tags: ['cap-theorem', 'distributed', 'consistency'],
     shortAnswer: 'CAP Theorem states distributed systems can only guarantee 2 of 3: Consistency (all nodes see same data), Availability (every request gets a response), Partition Tolerance (system works despite network failures). Most DBs choose CP or AP.',
-    detailedExplanation: 'Network partitions are inevitable in distributed systems, so partition tolerance is non-negotiable. This leaves a choice between Consistency (no stale reads) and Availability (always respond). CP systems (MongoDB, HBase) sacrifice availability during partitions â€” refuse to serve stale data. AP systems (Cassandra, DynamoDB) sacrifice consistency â€” serve possibly stale data but always respond. SQL databases with ACID are CA systems (assume no partitions).',
+    detailedExplanation: 'Network partitions are inevitable in distributed systems, so partition tolerance is non-negotiable. This leaves a choice between Consistency (no stale reads) and Availability (always respond). CP systems (MongoDB, HBase) sacrifice availability during partitions — refuse to serve stale data. AP systems (Cassandra, DynamoDB) sacrifice consistency — serve possibly stale data but always respond. SQL databases with ACID are CA systems (assume no partitions).',
     example: {
       code: `// CAP Theorem examples in practice
 
@@ -1248,7 +1248,7 @@ async function getFeed(userId) {
 // Redis: CP (single node) or AP (Redis Cluster with async replication)`,
       language: 'javascript'
     },
-    interviewAnswer: 'CAP Theorem guides distributed database choices. Since network partitions always happen, the real choice is CP vs AP. For banking or inventory (can\'t show wrong balance), I choose CP â€” better to show an error than wrong data. For social feeds or search (slight staleness is acceptable), I choose AP â€” always respond even if data is seconds old. This is why you might see "your post is being processed" â€” the system chose availability over immediate consistency.',
+    interviewAnswer: 'CAP Theorem guides distributed database choices. Since network partitions always happen, the real choice is CP vs AP. For banking or inventory (can\'t show wrong balance), I choose CP — better to show an error than wrong data. For social feeds or search (slight staleness is acceptable), I choose AP — always respond even if data is seconds old. This is why you might see "your post is being processed" — the system chose availability over immediate consistency.',
     commonMistakes: [
       'Thinking you can have all three (you can\'t guarantee it)',
       'Not understanding partition tolerance is mandatory in distributed systems',
@@ -1282,16 +1282,16 @@ EXPLAIN ANALYZE SELECT * FROM orders WHERE user_id = 123;
 CREATE INDEX idx_orders_user_id ON orders(user_id);
 
 -- 3. Avoid functions on indexed columns
--- âŒ Can't use index on email
+-- ❌ Can't use index on email
 SELECT * FROM users WHERE LOWER(email) = 'alex@test.com';
--- âœ… Use functional index or store lowercase
+-- ✅ Use functional index or store lowercase
 CREATE INDEX idx_email_lower ON users(LOWER(email));
 -- Or store email already lowercase
 
 -- 4. Avoid SELECT *
--- âŒ Fetches all columns including large text/blob fields
+-- ❌ Fetches all columns including large text/blob fields
 SELECT * FROM articles WHERE author_id = 1;
--- âœ… Only needed columns
+-- ✅ Only needed columns
 SELECT id, title, published_at FROM articles WHERE author_id = 1;
 
 -- 5. Covering index (index includes all needed columns)
@@ -1300,11 +1300,11 @@ CREATE INDEX idx_users_covering ON users(age, name, email);
 -- Index-only scan: no need to access main table!
 
 -- 6. Rewrite correlated subquery as JOIN
--- âŒ Slow: runs subquery for each row
+-- ❌ Slow: runs subquery for each row
 SELECT * FROM orders o
 WHERE (SELECT COUNT(*) FROM order_items WHERE order_id = o.id) > 5;
 
--- âœ… Fast: single join
+-- ✅ Fast: single join
 SELECT o.*
 FROM orders o
 JOIN (
@@ -1315,10 +1315,10 @@ JOIN (
 ) oi ON o.id = oi.order_id;
 
 -- 7. Pagination: keyset is faster than OFFSET for large tables
--- âŒ OFFSET scans all previous rows
+-- ❌ OFFSET scans all previous rows
 SELECT * FROM posts ORDER BY id LIMIT 20 OFFSET 10000;
 
--- âœ… Keyset pagination
+-- ✅ Keyset pagination
 SELECT * FROM posts 
 WHERE id > 10000  -- Last seen ID
 ORDER BY id 
@@ -1332,7 +1332,7 @@ db.orders.find({ userId: '123' }).explain('executionStats');
 db.orders.createIndex({ userId: 1 });`,
       language: 'sql'
     },
-    interviewAnswer: 'Query optimization always starts with EXPLAIN ANALYZE â€” you need to see what\'s actually happening before guessing. The most impactful fix is almost always a missing index. I look for sequential scans on large tables in the query plan. After adding indexes, I check for SELECT * pulling unnecessary large columns, and N+1 patterns. For very large tables, pagination with keyset (WHERE id > last_seen) is much faster than OFFSET which scans all skipped rows.',
+    interviewAnswer: 'Query optimization always starts with EXPLAIN ANALYZE — you need to see what\'s actually happening before guessing. The most impactful fix is almost always a missing index. I look for sequential scans on large tables in the query plan. After adding indexes, I check for SELECT * pulling unnecessary large columns, and N+1 patterns. For very large tables, pagination with keyset (WHERE id > last_seen) is much faster than OFFSET which scans all skipped rows.',
     commonMistakes: [
       'Adding indexes without checking EXPLAIN first',
       'Over-indexing (every index slows down writes)',
@@ -1428,7 +1428,7 @@ const { rows } = await pool.query(
 );`,
       language: 'sql'
     },
-    interviewAnswer: 'Stored procedures are useful when you need to reduce network round trips for complex multi-step operations, or when you need to enforce business logic at the database level regardless of which application connects. The transfer funds example is classic â€” running it in the DB ensures atomicity and reduces 4 network calls to 1. However, I generally prefer handling business logic in the application layer where it\'s easier to test, version control, and deploy.',
+    interviewAnswer: 'Stored procedures are useful when you need to reduce network round trips for complex multi-step operations, or when you need to enforce business logic at the database level regardless of which application connects. The transfer funds example is classic — running it in the DB ensures atomicity and reduces 4 network calls to 1. However, I generally prefer handling business logic in the application layer where it\'s easier to test, version control, and deploy.',
     commonMistakes: [
       'Putting all business logic in stored procedures (hard to maintain)',
       'Not handling errors inside procedures',

@@ -435,7 +435,7 @@ jobs:
     difficulty: 'intermediate',
     tags: ['authentication', 'jwt', 'bcrypt', 'security'],
     shortAnswer: 'Hash passwords with bcrypt on registration. On login, verify and issue a short-lived JWT (15 min) + refresh token (7 days). Protect routes with auth middleware.',
-    detailedExplanation: 'Authentication has two sides: storing credentials safely and verifying identity on each request. Never store plain-text passwords. Hash with bcrypt (cost factor 10-12). JWT is stateless � the server signs a token, the client sends it on every request, the server verifies the signature without a DB lookup. Store refresh tokens in httpOnly cookies to prevent XSS.',
+    detailedExplanation: 'Authentication has two sides: storing credentials safely and verifying identity on each request. Never store plain-text passwords. Hash with bcrypt (cost factor 10-12). JWT is stateless — the server signs a token, the client sends it on every request, the server verifies the signature without a DB lookup. Store refresh tokens in httpOnly cookies to prevent XSS.',
     example: {
       code: `// Register
 const hash = await bcrypt.hash(password, 12);
@@ -463,7 +463,7 @@ export const authenticate = (req, res, next) => {
     interviewAnswer: 'Walk through: bcrypt hash on register, compare on login, sign JWT, protect routes with middleware. Mention refresh tokens and httpOnly cookies.',
     commonMistakes: ['Storing plain-text passwords', 'Long-lived JWTs with no refresh', 'Storing JWT in localStorage (XSS risk)', 'No HTTPS in production'],
     realWorldUse: 'Every authenticated app needs this pattern.',
-    followUpQuestions: ['JWT vs Sessions � when to use which?', 'How do you invalidate a JWT before it expires?', 'What is OAuth?'],
+    followUpQuestions: ['JWT vs Sessions — when to use which?', 'How do you invalidate a JWT before it expires?', 'What is OAuth?'],
   },
 
   {
@@ -505,27 +505,27 @@ CREATE INDEX idx_products_category ON products(category_id);
     question: 'How did you manage state in your React project?',
     difficulty: 'intermediate',
     tags: ['state-management', 'react', 'zustand', 'context', 'react-query'],
-    shortAnswer: 'useState for local state. Context for global UI state (user, theme). Zustand for complex shared state. React Query for server/async state � caching, refetching, loading states.',
-    detailedExplanation: 'State has two categories: UI state (local) and server state (from APIs). useState for local. Context + useReducer for medium global state. Zustand or Redux Toolkit for large complex state. React Query for server state � handles loading, error, caching, and background refetching automatically.',
+    shortAnswer: 'useState for local state. Context for global UI state (user, theme). Zustand for complex shared state. React Query for server/async state — caching, refetching, loading states.',
+    detailedExplanation: 'State has two categories: UI state (local) and server state (from APIs). useState for local. Context + useReducer for medium global state. Zustand or Redux Toolkit for large complex state. React Query for server state — handles loading, error, caching, and background refetching automatically.',
     example: {
       code: `// Local state
 const [isOpen, setIsOpen] = useState(false);
 
-// Context � global auth
+// Context — global auth
 const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
 };
 
-// Zustand � cart store
+// Zustand — cart store
 const useCartStore = create((set) => ({
   items: [],
   addItem: (item) => set((s) => ({ items: [...s.items, item] })),
   removeItem: (id) => set((s) => ({ items: s.items.filter(i => i.id !== id) })),
 }));
 
-// React Query � server state
+// React Query — server state
 const { data: products, isLoading } = useQuery({
   queryKey: ['products', category],
   queryFn: () => fetch('/api/products').then(r => r.json()),
@@ -551,7 +551,7 @@ const { data: products, isLoading } = useQuery({
     example: {
       code: `const router = express.Router();
 
-// GET /api/v1/products � paginated list
+// GET /api/v1/products — paginated list
 router.get('/', async (req, res) => {
   const { page = 1, limit = 20 } = req.query;
   const [data, total] = await Promise.all([
@@ -596,7 +596,7 @@ router.delete('/:id', authenticate, authorize('admin'), async (req, res) => {
     question: 'How did you deploy your project? Walk me through the deployment process.',
     difficulty: 'intermediate',
     tags: ['deployment', 'ci-cd', 'vercel', 'railway', 'github-actions'],
-    shortAnswer: 'Frontend on Vercel/Netlify. Backend on Railway/Render/AWS. CI/CD with GitHub Actions � lint, test, build on every push, then auto-deploy. Env vars in platform secrets, never in code.',
+    shortAnswer: 'Frontend on Vercel/Netlify. Backend on Railway/Render/AWS. CI/CD with GitHub Actions — lint, test, build on every push, then auto-deploy. Env vars in platform secrets, never in code.',
     detailedExplanation: 'Modern deployment is fully automated. Push to main triggers GitHub Actions: install ? lint ? test ? build ? deploy. Frontend on Vercel (zero-config, global CDN). Backend on Railway for simplicity. Database on MongoDB Atlas (managed). Secrets in platform env var settings. Health check endpoint to verify deployments.',
     example: {
       code: `# .github/workflows/deploy.yml
@@ -623,7 +623,7 @@ jobs:
 # Health check
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-# .gitignore � never commit secrets
+# .gitignore — never commit secrets
 .env
 .env.local`,
       language: 'yaml',
@@ -702,7 +702,7 @@ class ErrorBoundary extends React.Component {
     shortAnswer: 'Frontend: code splitting, lazy loading images/routes, memoization. Backend: DB indexes, Redis caching for hot queries. Network: CDN for static assets, gzip compression.',
     detailedExplanation: 'Always measure first (Lighthouse, Chrome DevTools) then fix the bottleneck. Common wins: lazy loading reduces initial bundle size, DB indexes turn O(n) scans into O(log n) lookups, Redis caches repeated queries, CDN serves assets from edge servers near users, gzip reduces transfer size.',
     example: {
-      code: `// Frontend � code splitting & lazy loading
+      code: `// Frontend — code splitting & lazy loading
 const ProductList = React.lazy(() => import('./ProductList'));
 // Image lazy loading
 <img src={url} loading="lazy" alt="product" />
@@ -710,7 +710,7 @@ const ProductList = React.lazy(() => import('./ProductList'));
 const filtered = useMemo(() => items.filter(fn), [items]);
 const handler  = useCallback(() => onClick(id), [id]);
 
-// Backend � DB index (O(n) -> O(log n))
+// Backend — DB index (O(n) -> O(log n))
 userSchema.index({ email: 1 });
 productSchema.index({ category: 1, price: -1 });
 
@@ -731,7 +731,7 @@ app.use(compression());
 res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=60');`,
       language: 'javascript',
     },
-    interviewAnswer: 'Start with measurement � Lighthouse or DevTools found the bottleneck. Then describe the specific fix and quantify the improvement ("bundle dropped from 2MB to 400KB", "query went from 2s to 50ms after indexing").',
+    interviewAnswer: 'Start with measurement — Lighthouse or DevTools found the bottleneck. Then describe the specific fix and quantify the improvement ("bundle dropped from 2MB to 400KB", "query went from 2s to 50ms after indexing").',
     commonMistakes: ['Optimizing without measuring first', 'No DB indexes on large collections', 'Not lazy loading routes and images', 'Caching without invalidation strategy'],
     realWorldUse: 'Performance is a key metric everywhere. Showing you measured and improved it is very impactful.',
     followUpQuestions: ['How do you measure Core Web Vitals?', 'How do you invalidate cache?', 'What is a CDN?'],
@@ -747,7 +747,7 @@ res.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=60');`,
     shortAnswer: 'Testing pyramid: many unit tests (fast, isolated), some integration tests (API routes + DB), few E2E tests (critical user flows). Jest/Vitest for unit/integration, Cypress/Playwright for E2E.',
     detailedExplanation: 'The testing pyramid guides investment: unit tests are cheap and fast (test individual functions with mocked dependencies), integration tests verify multiple units together (route + controller + DB), E2E tests run the full browser flow (slowest, most expensive). Aim for 70% unit, 20% integration, 10% E2E. Always test critical paths: auth, payments, core user flows.',
     example: {
-      code: `// Unit test � Jest
+      code: `// Unit test — Jest
 describe('mergeCart', () => {
   test('takes higher quantity for duplicate items', () => {
     const guest = [{ id: 'a', qty: 3 }];
@@ -759,7 +759,7 @@ describe('mergeCart', () => {
   });
 });
 
-// Integration test � supertest
+// Integration test — supertest
 describe('POST /api/auth/login', () => {
   test('returns 200 and token on valid credentials', async () => {
     await User.create({ email: 't@t.com', password: await bcrypt.hash('pass', 10) });
@@ -773,7 +773,7 @@ describe('POST /api/auth/login', () => {
   });
 });
 
-// E2E � Cypress
+// E2E — Cypress
 it('completes checkout', () => {
   cy.login('user@test.com', 'pass');
   cy.get('[data-testid="add-to-cart"]').click();
@@ -796,7 +796,7 @@ it('completes checkout', () => {
     difficulty: 'intermediate',
     tags: ['security', 'helmet', 'rate-limiting', 'xss', 'cors', 'validation'],
     shortAnswer: 'helmet.js sets security headers, rate limiting prevents brute force, input validation/sanitization prevents injection, CORS restricts origins, HTTPS everywhere, secrets in environment variables.',
-    detailedExplanation: 'Security is multi-layered. helmet.js sets HTTP security headers (Content-Security-Policy, X-Frame-Options, HSTS). Rate limiting prevents brute-force on auth endpoints. Input validation prevents injection attacks. CORS restricts which origins can call your API. Never commit secrets � use env vars. HTTPS enforced in production.',
+    detailedExplanation: 'Security is multi-layered. helmet.js sets HTTP security headers (Content-Security-Policy, X-Frame-Options, HSTS). Rate limiting prevents brute-force on auth endpoints. Input validation prevents injection attacks. CORS restricts which origins can call your API. Never commit secrets — use env vars. HTTPS enforced in production.',
     example: {
       code: `const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
@@ -817,7 +817,7 @@ app.use('/api', rateLimit({ windowMs: 60_000, max: 100 }));
 // Sanitize MongoDB operators from inputs
 app.use(mongoSanitize());
 
-// CORS � only allow your frontend
+// CORS — only allow your frontend
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 // Input validation with Zod
@@ -845,8 +845,8 @@ router.post('/login', (req, res, next) => {
     question: 'How did you implement file uploads in your project?',
     difficulty: 'intermediate',
     tags: ['file-upload', 'multer', 'cloudinary', 's3', 'storage'],
-    shortAnswer: 'Multer handles multipart/form-data on the backend. Store files in cloud storage (Cloudinary for images, S3 for general files) � never on the server disk in production. Store the URL in the database.',
-    detailedExplanation: 'File uploads have two steps: receive the file and store it. Never store files on the server disk in production � servers restart and lose files, and you cannot scale horizontally. Cloudinary is excellent for images (auto-resize, optimize, CDN delivery). AWS S3 for general files. Validate file type and size. Store only the cloud URL in your database.',
+    shortAnswer: 'Multer handles multipart/form-data on the backend. Store files in cloud storage (Cloudinary for images, S3 for general files) — never on the server disk in production. Store the URL in the database.',
+    detailedExplanation: 'File uploads have two steps: receive the file and store it. Never store files on the server disk in production — servers restart and lose files, and you cannot scale horizontally. Cloudinary is excellent for images (auto-resize, optimize, CDN delivery). AWS S3 for general files. Validate file type and size. Store only the cloud URL in your database.',
     example: {
       code: `const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -884,7 +884,7 @@ router.post('/upload-avatar', authenticate, upload.single('avatar'), async (req,
     },
     interviewAnswer: 'Explain the flow: Multer receives the file, validates type/size, uploads to Cloudinary, stores the URL in MongoDB. Mention why cloud storage over disk (scalability, persistence across deploys).',
     commonMistakes: ['Storing files on server disk in production', 'No file size or type validation', 'Storing binary data in the database', 'No CDN for serving images'],
-    realWorldUse: 'Profile pictures, product images, document uploads � very common real-world feature.',
+    realWorldUse: 'Profile pictures, product images, document uploads — very common real-world feature.',
     followUpQuestions: ['How do you handle image resizing?', 'How do you delete an old file when updated?', 'How do you handle very large file uploads?'],
   }
 
@@ -900,7 +900,7 @@ router.post('/upload-avatar', authenticate, upload.single('avatar'), async (req,
     difficulty: 'advanced',
     tags: ['websockets', 'socket.io', 'real-time', 'notifications'],
     shortAnswer: 'WebSockets (Socket.io) for bidirectional real-time (chat, live updates). Server-Sent Events for one-way server push (notifications). Always authenticate socket connections.',
-    detailedExplanation: 'Real-time features need persistent connections. WebSockets are full-duplex � both sides can send. Socket.io adds rooms, namespaces, and auto-reconnection. Use rooms to broadcast only to relevant users. Authenticate on connection using JWT. For simple one-way push (notifications) SSE is lighter than WebSockets.',
+    detailedExplanation: 'Real-time features need persistent connections. WebSockets are full-duplex — both sides can send. Socket.io adds rooms, namespaces, and auto-reconnection. Use rooms to broadcast only to relevant users. Authenticate on connection using JWT. For simple one-way push (notifications) SSE is lighter than WebSockets.',
     example: {
       code: `// Server
 const io = new Server(httpServer, { cors: { origin: process.env.FRONTEND_URL } });
@@ -936,8 +936,8 @@ return () => socket.disconnect(); // cleanup`,
       language: 'javascript',
     },
     interviewAnswer: 'Describe the use case, why WebSockets over polling, how you authenticated socket connections, and how you used rooms to target broadcasts.',
-    commonMistakes: ['No auth on socket connections', 'Broadcasting to ALL clients instead of rooms', 'Memory leaks � not cleaning up listeners on unmount'],
-    realWorldUse: 'Chat, live dashboards, collaborative tools, notifications � high-value feature.',
+    commonMistakes: ['No auth on socket connections', 'Broadcasting to ALL clients instead of rooms', 'Memory leaks — not cleaning up listeners on unmount'],
+    realWorldUse: 'Chat, live dashboards, collaborative tools, notifications — high-value feature.',
     followUpQuestions: ['WebSockets vs SSE vs Long-polling?', 'How do you scale WebSockets across multiple servers?', 'How do you handle reconnection?'],
   },
 
@@ -948,8 +948,8 @@ return () => socket.disconnect(); // cleanup`,
     question: 'How did you implement pagination in your project?',
     difficulty: 'beginner',
     tags: ['pagination', 'cursor', 'offset', 'api', 'database'],
-    shortAnswer: 'Offset pagination (skip/limit) is simple but slow on large datasets. Cursor-based pagination uses the last item ID as a cursor � fast regardless of page number. Use offset for admin tables, cursor for infinite scroll feeds.',
-    detailedExplanation: 'Pagination prevents loading all data at once. Offset: skip N records, take M. Simple but slow at high offsets (DB scans all skipped rows). Cursor: use last item\'s ID as a bookmark � consistent and fast. Offset is fine for small datasets. Cursor is better for large datasets and infinite scroll.',
+    shortAnswer: 'Offset pagination (skip/limit) is simple but slow on large datasets. Cursor-based pagination uses the last item ID as a cursor — fast regardless of page number. Use offset for admin tables, cursor for infinite scroll feeds.',
+    detailedExplanation: 'Pagination prevents loading all data at once. Offset: skip N records, take M. Simple but slow at high offsets (DB scans all skipped rows). Cursor: use last item\'s ID as a bookmark — consistent and fast. Offset is fine for small datasets. Cursor is better for large datasets and infinite scroll.',
     example: {
       code: `// Offset pagination
 router.get('/products', async (req, res) => {
@@ -980,7 +980,7 @@ router.get('/feed', async (req, res) => {
     interviewAnswer: 'Explain both approaches and which you used. Mention you included total count and page metadata in the response for the frontend to render pagination controls.',
     commonMistakes: ['No pagination at all (loading all records)', 'Forgetting total count in response', 'Cursor pagination without consistent sort'],
     realWorldUse: 'Every list endpoint needs pagination. Very commonly asked API design follow-up.',
-    followUpQuestions: ['Cursor vs offset � when to use which?', 'How do you implement infinite scroll on the frontend?', 'How do you handle new items added during pagination?'],
+    followUpQuestions: ['Cursor vs offset — when to use which?', 'How do you implement infinite scroll on the frontend?', 'How do you handle new items added during pagination?'],
   },
 
   {
@@ -1013,7 +1013,7 @@ router.get('/search', async (req, res) => {
   res.json({ data: products });
 });
 
-// 3. Frontend � debounced search hook
+// 3. Frontend — debounced search hook
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -1027,7 +1027,7 @@ useEffect(() => { if (debouncedQuery) fetchResults(debouncedQuery); }, [debounce
       language: 'javascript',
     },
     interviewAnswer: 'Describe your search approach, how you indexed searchable fields, how you handle filters alongside search, and the debounce on the frontend.',
-    commonMistakes: ['Regex search on unindexed fields (full collection scan)', 'No debounce � API call on every keypress', 'Case-sensitive search when users expect case-insensitive'],
+    commonMistakes: ['Regex search on unindexed fields (full collection scan)', 'No debounce — API call on every keypress', 'Case-sensitive search when users expect case-insensitive'],
     realWorldUse: 'Search is a core feature of almost every app.',
     followUpQuestions: ['How would you add autocomplete?', 'How does Atlas Search differ from $text?', 'How do you handle typos?'],
   },
@@ -1042,18 +1042,18 @@ useEffect(() => { if (debouncedQuery) fetchResults(debouncedQuery); }, [debounce
     shortAnswer: '.env locally (gitignored), platform secrets in production (Vercel/Railway dashboard). Commit .env.example to show teammates required vars. Validate required vars at app startup.',
     detailedExplanation: 'Environment config (API keys, DB URLs, secrets) must never be in source code. Use dotenv locally. Platform secret managers in production. Different values per environment (dev DB vs prod DB). Validate all required env vars at startup so missing config fails loudly at boot rather than silently at runtime.',
     example: {
-      code: `// .env  (gitignored � NEVER commit)
+      code: `// .env  (gitignored — NEVER commit)
 DATABASE_URL=mongodb://localhost:27017/myapp_dev
 JWT_SECRET=local-dev-secret-change-in-prod
 STRIPE_KEY=sk_test_...
 
-// .env.example  (committed � shows required vars)
+// .env.example  (committed — shows required vars)
 DATABASE_URL=
 JWT_SECRET=
 STRIPE_KEY=
 FRONTEND_URL=
 
-// config/index.ts � validate at startup
+// config/index.ts — validate at startup
 const required = ['DATABASE_URL', 'JWT_SECRET', 'STRIPE_KEY'];
 const missing  = required.filter(k => !process.env[k]);
 if (missing.length) {
@@ -1087,8 +1087,8 @@ export const config = {
     question: 'How did you structure your codebase? What folder structure did you use?',
     difficulty: 'beginner',
     tags: ['code-structure', 'mvc', 'architecture', 'separation-of-concerns'],
-    shortAnswer: 'Layer-based (controllers/services/models/routes) for small-medium apps. Feature-based (grouping by domain) scales better for large apps. Key principle: thin controllers, fat services � business logic lives in the service layer.',
-    detailedExplanation: 'Code structure affects long-term maintainability. MVC separates concerns: routes define endpoints, controllers handle HTTP, services contain business logic, models define data shape. Thin controllers only handle req/res � business logic in services makes it testable and reusable. Feature-based structure groups all files for a domain together, which is easier to navigate at scale.',
+    shortAnswer: 'Layer-based (controllers/services/models/routes) for small-medium apps. Feature-based (grouping by domain) scales better for large apps. Key principle: thin controllers, fat services — business logic lives in the service layer.',
+    detailedExplanation: 'Code structure affects long-term maintainability. MVC separates concerns: routes define endpoints, controllers handle HTTP, services contain business logic, models define data shape. Thin controllers only handle req/res — business logic in services makes it testable and reusable. Feature-based structure groups all files for a domain together, which is easier to navigate at scale.',
     example: {
       code: `// Layer-based structure
 src/
@@ -1102,13 +1102,13 @@ src/
     products/ ? product.controller.ts  product.service.ts  ...
   shared/     ? middleware/  utils/  config/
 
-// Thin controller � only HTTP concerns
+// Thin controller — only HTTP concerns
 const getProduct = catchAsync(async (req, res) => {
   const product = await productService.findById(req.params.id);
   res.json({ data: product });
 });
 
-// Fat service � all business logic here
+// Fat service — all business logic here
 const findById = async (id: string) => {
   const product = await Product.findById(id);
   if (!product) throw new AppError('Product not found', 404);

@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
+import { GuideLinks } from '@/components/seo/GuideLinks';
+import { HUB } from '@/lib/seo';
 import Link from 'next/link';
 import { BookOpen, Code2, Briefcase, Users, Zap, Target, Rocket } from 'lucide-react';
 import { interviewCategories, getQuestionCounts } from '@/data/interview';
 
 export const metadata: Metadata = {
-  title: 'Interview Preparation | WebDevAtlas',
+  title: 'Interview Preparation',
   description: 'Prepare for web development interviews with comprehensive questions, coding challenges, mock interviews, and project explanations.',
 };
 
@@ -213,6 +215,11 @@ export default function InterviewDashboard() {
               </div>
             </div>
           </Link>
+        </div>
+      </section>
+      <section className="max-w-screen-xl mx-auto px-4 lg:px-6 pb-16">
+        <div className="rounded-2xl p-5 sm:p-6" style={{ background: 'var(--card)', border: '1px solid var(--line)' }}>
+          <GuideLinks title="Full question banks with answers" links={[HUB.jsInterview, HUB.reactInterview, HUB.nodeInterview, HUB.jsPractice]} />
         </div>
       </section>
     </div>

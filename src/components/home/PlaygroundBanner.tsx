@@ -66,7 +66,7 @@ export function PlaygroundBanner() {
                   <div className="pl-4"><span style={{color:'#ff7b72'}}>return</span> <span style={{color:'#a5d6ff'}}>{"`Hello, ${name}! 👋`"}</span><span style={{color:'#e6edf3'}}>;</span></div>
                   <div><span style={{color:'#e6edf3'}}>{'};'}</span></div>
                   <div>&nbsp;</div>
-                  <div><span style={{color:'#8b949e'}}>// Edit and press Run ▶</span></div>
+                  <div><span style={{color:'#8b949e'}}>{'// Edit and press Run ▶'}</span></div>
                   <div><span style={{color:'#79c0ff'}}>console</span><span style={{color:'#e6edf3'}}>.</span><span style={{color:'#d2a8ff'}}>log</span><span style={{color:'#e6edf3'}}>(greet(</span><span style={{color:'#a5d6ff'}}>&ldquo;Developer&rdquo;</span><span style={{color:'#e6edf3'}}>));</span></div>
                   <div style={{color:'#3fb950'}} className="mt-1">▶ Hello, Developer! 👋</div>
                 </div>

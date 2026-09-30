@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ═══════════════════════════════════════════════════
    LIGHT — Samsung style: pure white, crisp, minimal
@@ -10,7 +11,7 @@
   --card-hover:  #f9f9f9;
   --text:        #1e1e1e;
   --text-2:      #555555;
-  --text-3:      #888888;
+  --text-3:      #666666;
   --line:        #e0e0e0;
   --line-2:      #cccccc;
   --blue:        #2563eb;
@@ -28,7 +29,7 @@
   --card-hover:  #1c2333;
   --text:        #e6edf3;
   --text-2:      #8d96a0;
-  --text-3:      #5a6473;
+  --text-3:      #7d8794;
   --line:        #21262d;
   --line-2:      #30363d;
   --blue:        #58a6ff;

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
-  ArrowLeft, Users, Clock, Target, Play, ChevronRight,
+  ArrowLeft, Users, Clock, Play,
   CheckCircle2, XCircle, BarChart2, RotateCcw, Eye, AlertTriangle
 } from 'lucide-react';
 import { allInterviewQuestions, interviewCategories } from '@/data/interview';

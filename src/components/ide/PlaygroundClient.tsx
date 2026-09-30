@@ -2,8 +2,12 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Play, RotateCcw, Maximize2, Minimize2, Copy, Check, Download, ChevronDown, Terminal, BookOpen } from 'lucide-react';
+import { Play, RotateCcw, Maximize2, Minimize2, Copy, Check, Download, ChevronDown, Terminal, BookOpen, Plus, X, Loader2, Save, FolderOpen, Trash2, Share2, Eraser } from 'lucide-react';
 import Link from 'next/link';
+import type { ComponentType } from 'react';
+import { buildSimDoc, isSimKind, NODE_STARTER, SIM_LANGUAGES, type SimKind } from './simDocs';
+import { editorLangFor, type EditorLang } from './editorLanguages';
+import { buildShareUrl, clearDraft, copyText, loadDraft, saveDraft, timeAgo, type PlaygroundDraft } from '@/lib/playgroundStore';
 
 const TS_JS = '// TypeScript — type annotations compile automatically\ninterface User {\n  name: string;\n  age: number;\n}\n\nfunction greet(user: User): string {\n  return "Hello, " + user.name + "! Age: " + user.age;\n}\n\nconst alex: User = { name: "Alex", age: 25 };\nconsole.log(greet(alex));\n\n// Generic function\nfunction first<T>(arr: T[]): T | undefined { return arr[0]; }\nconsole.log("first:", first([10, 20, 30]));\n\n// Union type\ntype Status = "active" | "inactive" | "pending";\nfunction getLabel(s: Status) {\n  const map: Record<Status, string> = { active: "Active", inactive: "Inactive", pending: "Pending" };\n  return map[s];\n}\nconsole.log(getLabel("active"));';
 
@@ -254,16 +258,6 @@ const TEMPLATES: Record<string, { html: string; css: string; js: string; label: 
     html: '<!-- Write your HTML here -->\n<h1>Hello, World!</h1>\n<p>Edit me and click \u25b6 Run</p>',
     css: 'body {\n  font-family: system-ui, sans-serif;\n  padding: 24px;\n  background: #f9fafb;\n  color: #111827;\n}\nh1 { color: #2563eb; font-size: 2rem; margin-bottom: 8px; }\np { color: #6b7280; }',
     js: '// Write JavaScript here\nconsole.log("Hello from JavaScript!");\nconsole.log("Add more console.log() calls to see output here.");',
-  },
-  typescript: {
-    icon: '🔷', label: 'TypeScript', desc: 'TypeScript with type checking',
-    html: '', css: '', js: TS_JS,
-  },
-  react: {
-    icon: '⚛️', label: 'React', desc: 'React component with JSX',
-    html: '<div id="root"></div>',
-    css: 'body{margin:0;font-family:system-ui,sans-serif;background:#f0f4ff;}\n.card{background:white;border-radius:12px;padding:20px;max-width:320px;margin:20px auto;box-shadow:0 4px 20px rgba(0,0,0,.1);}\nh2{color:#2563eb;margin:0 0 8px;}\np{color:#6b7280;font-size:14px;margin:0 0 12px;}\nbutton{background:#2563eb;color:white;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;}\n.count{font-size:32px;font-weight:800;color:#2563eb;text-align:center;margin:12px 0;}',
-    js: REACT_JS,
   },
   counter: {
     icon: '\u{1F9E0}', label: 'Quiz App', desc: 'Multi-category quiz with timer & leaderboard',
@@ -1031,7 +1025,7 @@ body{background:#111;display:flex;justify-content:center;align-items:flex-start;
   </div>
 </div>
 <script>
-var expr='', memory=0, history=[], mode='std', base=10;
+var expr='', memory=0, calcHistory=[], mode='std', base=10;
 var RL=document.getElementById('result-line');
 var EL=document.getElementById('expr-line');
 var HL=document.getElementById('hist-line');
@@ -1087,7 +1081,7 @@ function calculate(){
       setDisplay('Error');setExpr('');expr='';return;
     }
   }
-  // Finalize: save to history, clear expression line, keep result
+  // Finalize: save to calcHistory, clear expression line, keep result
   addHistory(expr,displayVal);
   setHist(expr+' =');
   setExpr('');
@@ -1097,39 +1091,16 @@ function calculate(){
   console.log('=',displayVal);
 }
 
-function calculate(){
-  if(calculating)return;
-  // After a result, expr is like "2080" - just display it again, don't error
-  if(!expr)return;
-  calculating=true;
-  setTimeout(function(){calculating=false;},200);
-  try{
-    var r=Function('"use strict";return('+expr+')')();
-    if(typeof r!=='number'||!isFinite(r))throw new Error('Invalid');
-    r=parseFloat(r.toFixed(10));
-    addHistory(expr,r);
-    setHist(expr+' =');
-    setExpr('');
-    setDisplay(r);
-    if(mode==='prog')updateBases(r);
-    expr=String(r);
-    console.log('=',r);
-  }catch(e){
-    setDisplay('Error');
-    setExpr('');
-    expr='';
-  }
-}
 
 function addHistory(e,r){
-  history.unshift({expr:e,result:r});
-  if(history.length>20)history.pop();
+  calcHistory.unshift({expr:e,result:r});
+  if(calcHistory.length>20)calcHistory.pop();
   renderHistory();
 }
 function renderHistory(){
   var ul=document.getElementById('hist-ul');
   ul.innerHTML='';
-  history.forEach(function(h,i){
+  calcHistory.forEach(function(h,i){
     var li=document.createElement('li');
     li.innerHTML=h.expr+'<b>='+h.result+'</b>';
     li.addEventListener('click',function(){expr=String(h.result);setDisplay(h.result);setHist(h.expr+' =');});
@@ -1203,7 +1174,7 @@ document.getElementById('bmc').addEventListener('click',function(){memory=0;cons
 document.getElementById('bmr').addEventListener('click',function(){var v=memory;expr=String(v);setDisplay(v);setHist('MR = '+v);});
 document.getElementById('bmp').addEventListener('click',function(){var v=parseFloat(RL.textContent)||0;memory+=v;console.log('M+ Memory:',memory);});
 document.getElementById('bmm').addEventListener('click',function(){var v=parseFloat(RL.textContent)||0;memory-=v;console.log('M- Memory:',memory);});
-document.getElementById('bhclear').addEventListener('click',function(){history=[];document.getElementById('hist-ul').innerHTML='';});
+document.getElementById('bhclear').addEventListener('click',function(){calcHistory=[];document.getElementById('hist-ul').innerHTML='';});
 // Keyboard
 document.addEventListener('keydown',function(e){
   if(e.key>='0'&&e.key<='9'){numPress(e.key);}
@@ -1224,11 +1195,62 @@ console.log('Scientific Calculator ready! Standard / Scientific (sin,cos,tan,log
 };
 
 
+// Splits a full HTML document into separate HTML / CSS / JS parts so each language gets its own
+// editor tab. Only inline <style> and plain inline <script> blocks are pulled out; external
+// <link>/<script src> tags are kept in the HTML tab.
+function splitDocument(doc: string): { html: string; css: string; js: string } {
+  if (!/<style[\s>]|<script[\s>]/i.test(doc)) return { html: doc, css: '', js: '' };
+  const styles: string[] = [];
+  const scripts: string[] = [];
+  let rest = doc.replace(/<style\b[^>]*>([\s\S]*?)<\/style>/gi, (_m, c: string) => { styles.push(c.trim()); return ''; });
+  rest = rest.replace(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi, (m, attrs: string, c: string) => {
+    if (/\bsrc\s*=/i.test(attrs) || /\btype\s*=\s*["'](?!text\/javascript["'])/i.test(attrs)) return m;
+    scripts.push(c.trim());
+    return '';
+  });
+  const bodyMatch = rest.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
+  let html = rest;
+  if (bodyMatch) {
+    const head = rest.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] ?? '';
+    const keep = (head.match(/<link\b[^>]*>|<script\b[^>]*\bsrc=[^>]*><\/script>/gi) ?? []).join('\n');
+    html = (keep ? keep + '\n' : '') + bodyMatch[1];
+  }
+  return { html: html.replace(/\n{3,}/g, '\n\n').trim(), css: styles.join('\n\n'), js: scripts.join('\n\n') };
+}
+
+// Templates that ship as one self-contained document (Calculator, TaskFlow, Country Explorer)
+// are split up front so HTML, CSS and JS each show in their own tab.
+for (const t of Object.values(TEMPLATES)) {
+  if (!t.css && !t.js) Object.assign(t, splitDocument(t.html));
+}
+
+// User code is embedded in a <script> element: "</script" inside a string would end the tag early.
+const scriptSafe = (s: string) => s.replace(/<\/script/gi, '<\\/script').replace(/<!--/g, '<\\!--');
+
 // Build the iframe HTML for a given mode
+/** TypeScript-only syntax the simpler "colon + primitive type" check misses: tuples, generics, as const, satisfies, typed parameters and return types. */
+const TS_ONLY_SYNTAX = /\bas\s+const\b|\bsatisfies\s+[\w{[]|\bimplements\s+\w|:\s*\[[^\]\n]*\]\s*=|\bfunction\s+\w*\s*<[^>\n]+>\s*\(|\(\s*\w+\??\s*:\s*[A-Za-z_][\w.]*(?:<[^>\n]*>)?(?:\[\])?\s*[,)=]|\)\s*:\s*[A-Za-z_][\w.<>[\], |]*\s*(?:\{|=>)|\b(?:public|private|protected|readonly)\s+\w+\s*[:(=]/;
+
 function buildIframe(h: string, c: string, j: string, runId: number): string {
   // If HTML is a full self-contained document, inject the console bridge just before </body> and return as-is
   const trimmed = h.trim();
   if (trimmed.toLowerCase().startsWith('<!doctype') || (trimmed.toLowerCase().startsWith('<html') && trimmed.includes('</html>'))) {
+    // A full document was pasted into the HTML tab, but the CSS/JS tabs also have their own content
+    // (e.g. a project's index.html, style.css and script.js pasted into their three separate tabs).
+    // The document's own local <link rel="stylesheet">/<script src="..."> cannot resolve to a real
+    // file here, so replace them with the actual tab content instead of silently ignoring it.
+    let doc = trimmed;
+    if (c.trim()) {
+      doc = doc.replace(/<link\b[^>]*rel=["']stylesheet["'][^>]*>\s*/gi, '');
+      const styleTag = `<style>${c}</style>`;
+      doc = /<\/head>/i.test(doc) ? doc.replace(/<\/head>/i, styleTag + '</head>') : doc.replace(/<\/body>/i, styleTag + '</body>');
+    }
+    if (j.trim()) {
+      doc = doc.replace(/<script\b[^>]*\bsrc=["'](?!https?:)[^"']*["'][^>]*>\s*<\/script>\s*/gi, '');
+      const scriptTag = `<script>${scriptSafe(j)}<\/script>`;
+      doc = doc.replace(/<\/body>/i, scriptTag + '</body>');
+    }
+
     const bridge = `<script>
 var __rid=${runId};
 var APP_ORIGIN=${JSON.stringify(typeof window !== 'undefined' ? window.location.origin : '')};
@@ -1239,18 +1261,19 @@ console.warn=function(){var a=Array.prototype.slice.call(arguments);__ow.apply(c
 console.error=function(){var a=Array.prototype.slice.call(arguments);__oe.apply(console,a);__post("e",a.map(String).join(" "));};
 window.onerror=function(m,s,l){__post("e","❌ "+m+(l?" (line "+l+")":""));return false;};
 <\/script>`;
-    return trimmed.replace(/<\/body>/i, bridge + '</body>');
+    return doc.replace(/<\/body>/i, bridge + '</body>');
   }
 
   const isJsInHtml = h.trim() && !h.trim().startsWith('<') && !h.includes('</');
   const bodyContent = isJsInHtml ? '' : (h || '');
   const jsContent   = isJsInHtml ? h : j;
 
-  const hasReact = /ReactDOM\.(createRoot|render)|React\.(useState|useEffect|useRef)\b|return\s*\(\s*<|<[A-Z]\w*\s*\/>|return\s*<[A-Z]|className=|htmlFor=|onClick=|onChange=/.test(jsContent);
+  const hasReact = /ReactDOM\.(createRoot|render)|React\.(useState|useEffect|useRef)\b|return\s*\(\s*<|<[A-Z]\w*\s*\/>|return\s*<[A-Z]|(?<![.\w$])(?:className|htmlFor|onClick|onChange)=/.test(jsContent);
   const hasTS    = !hasReact && (
     /:\s*(string|number|boolean|any|void|never|unknown)\b/.test(jsContent) ||
     /^(interface|type|enum)\s+\w/m.test(jsContent) ||
-    /:\s*\w+\[\]/.test(jsContent)
+    /:\s*\w+\[\]/.test(jsContent) ||
+    TS_ONLY_SYNTAX.test(jsContent)
   );
 
   // The bridge - uses var so it's accessible from new Function() and Babel script contexts
@@ -1283,14 +1306,14 @@ window.onerror=function(m,s,l){__post("e","❌ "+m+(l?" (line "+l+")":""));retur
     'window.onerror=function(m,s,l){__post("e","❌ "+m+(l?" (line "+l+")":""));return false;};',
   ].join('');
 
-  const style = `*{box-sizing:border-box}body{margin:0;padding:16px;font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;background:#fff;color:#111}${c}`;
+  const style = `*{box-sizing:border-box}body{margin:0;padding:16px;font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;background:#fff;color:#111}${c.replace(/<\/style/gi, '<\\/style')}`;
 
   if (hasTS) {
     // Strip import/export statements before compiling — CDN mode doesn't support ES modules
     const cleanedTS = jsContent
       .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*$/gm, '')
       .replace(/^export\s+(default\s+)?/gm, '');
-    const escaped = JSON.stringify(cleanedTS);
+    const escaped = JSON.stringify(cleanedTS).replace(/</g, '\\u003c');
     return `<!DOCTYPE html><html><head><meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/typescript@5/lib/typescript.js"></script>
 <style>${style}</style></head>
@@ -1302,7 +1325,7 @@ ${bridge}
   if(!__root){__root=document.createElement('div');__root.id='root';document.body.appendChild(__root);}
 })();
 try{
-  var __compiled=ts.transpileModule(${escaped},{compilerOptions:{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.None,strict:false}});
+  var __compiled=ts.transpileModule(${escaped},{compilerOptions:{target:ts.ScriptTarget.ES2020,module:ts.ModuleKind.None,strict:false,experimentalDecorators:true}});
   // Wrap in async IIFE so top-level await works
   var __asyncFn='(async function(){'+__compiled.outputText+'})()';
   var __result=new Function('return '+__asyncFn)();
@@ -1337,15 +1360,7 @@ try{
         rc += '\nif(typeof '+last+'!=="undefined"&&document.getElementById("root")){ReactDOM.createRoot(document.getElementById("root")).render(React.createElement('+last+'));}';
       }
     }
-    return `<!DOCTYPE html><html><head><meta charset="UTF-8">
-<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<style>${style}</style></head>
-<body>${bodyContent || '<div id="root"></div>'}
-<script>${bridge}</script>
-<script type="text/babel">
-(async function(){
+    const reactWrapped = `(async function(){
 try{
   ${rc}
 }catch(e){
@@ -1353,37 +1368,138 @@ try{
   var rootEl=document.getElementById('root');
   if(rootEl){rootEl.innerHTML='<div style="color:#dc2626;background:#fef2f2;padding:12px;border-radius:8px;font-family:monospace;font-size:13px;white-space:pre-wrap">❌ React Error: '+e.message+'</div>';}
 }
+})();`;
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>${style}</style></head>
+<body>${bodyContent || '<div id="root"></div>'}
+<script>${bridge}</script>
+<script>
+(function(){
+  var src=${JSON.stringify(reactWrapped).replace(/</g, '\\u003c')};
+  try{
+    var out=Babel.transform(src,{presets:['react',['typescript',{isTSX:true,allExtensions:true}]],plugins:[['proposal-decorators',{legacy:true}],['proposal-class-properties',{loose:true}]]}).code;
+    var s=document.createElement('script');s.textContent=out;document.body.appendChild(s);
+  }catch(e){
+    console.error('❌ '+e.message);
+    var rootEl=document.getElementById('root');
+    if(rootEl){rootEl.innerHTML='<div style="color:#dc2626;background:#fef2f2;padding:12px;border-radius:8px;font-family:monospace;font-size:13px;white-space:pre-wrap">❌ React Error: '+String(e.message).replace(/</g,'&lt;')+'</div>';}
+  }
 })();
 </script></body></html>`;
   }
 
   // Plain JS/HTML
+  const needsRoot = /['"`]root['"`]|#root/.test(jsContent);
+  const needsDemo = /['"`]demo['"`]|#demo/.test(jsContent);
+  // Only wrap in an async IIFE when the code really uses top-level await; otherwise run it as a
+  // normal script so functions/vars stay global (inline onclick handlers keep working).
+  const needsAsync = /\bawait\b/.test(jsContent);
+  const stubs = (needsRoot ? "var __root=document.getElementById('root');if(!__root){__root=document.createElement('div');__root.id='root';document.body.appendChild(__root);}" : '')
+    + (needsDemo ? "var __demo=document.getElementById('demo');if(!__demo){__demo=document.createElement('div');__demo.id='demo';__demo.style.display='none';document.body.appendChild(__demo);}" : '');
+  const errUi = "function __showErr(m){__post('e','❌ '+m);var d=document.createElement('div');d.style.cssText='color:#dc2626;background:#fef2f2;padding:12px;border-radius:8px;font-family:monospace;font-size:13px;margin-top:8px;white-space:pre-wrap';d.textContent='❌ Error: '+m;document.body.appendChild(d);}";
+  const userScript = needsAsync
+    ? `(async function(){
+try{
+${scriptSafe(jsContent)}
+}catch(e){__showErr(e.message);}
+})();`
+    : scriptSafe(jsContent);
   return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <style>${style}</style></head>
 <body>${bodyContent}
 <script>
 ${bridge}
-// Provide common stubs so teaching examples don't crash on missing DOM elements
-(function(){
-  var __root=document.getElementById('root');
-  if(!__root){__root=document.createElement('div');__root.id='root';document.body.appendChild(__root);}
-  var __demo=document.getElementById('demo');
-  if(!__demo){__demo=document.createElement('div');__demo.id='demo';__demo.style.display='none';document.body.appendChild(__demo);}
-})();
-// Wrap in async IIFE so top-level await works
-(async function(){
-try{
-${jsContent}
-}catch(e){
-  __post("e","❌ "+e.message);
-  var __errDiv=document.createElement('div');
-  __errDiv.style.cssText='color:#dc2626;background:#fef2f2;padding:12px;border-radius:8px;font-family:monospace;font-size:13px;margin-top:8px;white-space:pre-wrap';
-  __errDiv.textContent='❌ Error: '+e.message;
-  document.body.appendChild(__errDiv);
+${errUi}
+${needsAsync ? '' : "window.addEventListener('error',function(e){__showErr(e.message);});"}
+${stubs}
+<\/script>
+<script>
+${userScript}
+<\/script></body></html>`;
 }
-})();
-</script></body></html>`;
-}
+
+// ─── Server-run languages (real interpreters/compilers via /api/execute) ───
+// These aren't browser languages — HTML/CSS/JS/TS/React keep running instantly
+// in the iframe above; these run on a real runtime when you hit Run.
+const SERVER_LANGUAGES = {
+  node: {
+    label: 'Node.js', icon: '🟢', ext: 'js',
+    starter: NODE_STARTER,
+  },
+  python: {
+    label: 'Python', icon: '🐍', ext: 'py',
+    starter: '# Python — runs on a real Python 3 interpreter\ndef greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("World"))\n\nnumbers = [1, 2, 3, 4, 5]\nsquares = [n * n for n in numbers]\nprint("Squares:", squares)\n',
+  },
+  java: {
+    label: 'Java', icon: '☕', ext: 'java',
+    starter: '// Java — compiled and run for real\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n\n        int[] numbers = {1, 2, 3, 4, 5};\n        int sum = 0;\n        for (int n : numbers) sum += n;\n        System.out.println("Sum: " + sum);\n    }\n}\n',
+  },
+  c: {
+    label: 'C', icon: '🔵', ext: 'c',
+    starter: '// C — compiled with gcc\n#include <stdio.h>\n\nint main() {\n    printf("Hello, C!\\n");\n\n    int numbers[] = {1, 2, 3, 4, 5};\n    int sum = 0;\n    for (int i = 0; i < 5; i++) sum += numbers[i];\n    printf("Sum: %d\\n", sum);\n    return 0;\n}\n',
+  },
+  cpp: {
+    label: 'C++', icon: '➕', ext: 'cpp',
+    starter: '// C++ — compiled with g++\n#include <iostream>\n#include <vector>\n\nint main() {\n    std::cout << "Hello, C++!" << std::endl;\n\n    std::vector<int> numbers = {1, 2, 3, 4, 5};\n    int sum = 0;\n    for (int n : numbers) sum += n;\n    std::cout << "Sum: " << sum << std::endl;\n    return 0;\n}\n',
+  },
+  csharp: {
+    label: 'C#', icon: '🎯', ext: 'cs',
+    starter: '// C# — compiled and run with Mono\nusing System;\n\nclass Program {\n    static void Main() {\n        Console.WriteLine("Hello, C#!");\n\n        int[] numbers = {1, 2, 3, 4, 5};\n        int sum = 0;\n        foreach (int n in numbers) sum += n;\n        Console.WriteLine("Sum: " + sum);\n    }\n}\n',
+  },
+  go: {
+    label: 'Go', icon: '🐹', ext: 'go',
+    starter: '// Go — compiled and run for real\npackage main\n\nimport "fmt"\n\nfunc main() {\n\tfmt.Println("Hello, Go!")\n\n\tnumbers := []int{1, 2, 3, 4, 5}\n\tsum := 0\n\tfor _, n := range numbers {\n\t\tsum += n\n\t}\n\tfmt.Println("Sum:", sum)\n}\n',
+  },
+  rust: {
+    label: 'Rust', icon: '🦀', ext: 'rs',
+    starter: '// Rust — compiled with rustc\nfn main() {\n    println!("Hello, Rust!");\n\n    let numbers = vec![1, 2, 3, 4, 5];\n    let sum: i32 = numbers.iter().sum();\n    println!("Sum: {}", sum);\n}\n',
+  },
+  php: {
+    label: 'PHP', icon: '🐘', ext: 'php',
+    starter: '<?php\n// PHP — runs on a real PHP interpreter\necho "Hello, PHP!\\n";\n\n$numbers = [1, 2, 3, 4, 5];\n$sum = array_sum($numbers);\necho "Sum: $sum\\n";\n',
+  },
+  ruby: {
+    label: 'Ruby', icon: '💎', ext: 'rb',
+    starter: '# Ruby — runs on a real Ruby interpreter\nputs "Hello, Ruby!"\n\nnumbers = [1, 2, 3, 4, 5]\nsum = numbers.sum\nputs "Sum: #{sum}"\n',
+  },
+  bash: {
+    label: 'Bash', icon: '💻', ext: 'sh',
+    starter: '#!/bin/bash\n# Bash — runs on a real shell\necho "Hello, Bash!"\n\nsum=0\nfor n in 1 2 3 4 5; do\n  sum=$((sum + n))\ndone\necho "Sum: $sum"\n',
+  },
+  sql: {
+    label: 'SQL', icon: '🗄️', ext: 'sql',
+    starter: "-- SQL — runs on a real SQLite database\nCREATE TABLE users (id INTEGER, name TEXT, age INTEGER);\n\nINSERT INTO users VALUES (1, 'Alex', 25), (2, 'Sam', 30), (3, 'Jordan', 22);\n\nSELECT name, age FROM users WHERE age > 24 ORDER BY age;\n",
+  },
+} as const;
+
+// ─── Client-run languages — same picker, but these compile & run instantly ───
+// in the browser (like the JS tab already does), no server round trip needed.
+const BROWSER_LANGUAGES = {
+  typescript: { label: 'TypeScript', icon: '🔷', ext: 'ts', starter: TS_JS },
+  react:      { label: 'React',      icon: '⚛️', ext: 'jsx', starter: REACT_JS },
+} as const;
+
+// Simulators (Express, Next.js, ...) are defined next to their runtime in simDocs.ts.
+const CLIENT_LANGUAGES = { ...BROWSER_LANGUAGES, ...SIM_LANGUAGES } as const;
+
+const ALL_LANGUAGES = { ...CLIENT_LANGUAGES, ...SERVER_LANGUAGES } as const;
+
+type LanguageId = keyof typeof ALL_LANGUAGES;
+
+const isClientLang = (id: LanguageId): boolean => id in CLIENT_LANGUAGES;
+const isSimLang = (id: LanguageId): id is SimKind => isSimKind(id);
+
+type ExecResult = {
+  ok: boolean;
+  stdout: string;
+  stderr: string;
+  compileError: string;
+  error?: string;
+  durationMs?: number;
+};
 
 export function PlaygroundClient() {
   const searchParams = useSearchParams();
@@ -1400,134 +1516,428 @@ export function PlaygroundClient() {
 
   const urlHtml = decodeParam('html');
   const urlCss  = decodeParam('css');
-  const urlJs   = decodeParam('js');
+  const urlLangRaw = searchParams.get('lang') || '';
+  const urlLang = (urlLangRaw in ALL_LANGUAGES ? urlLangRaw : null) as LanguageId | null;
+  const langUrlCode = urlLang ? decodeParam('js') || decodeParam('code') : '';
+  const urlJs   = urlLang ? '' : decodeParam('js');
   const urlTemplate = searchParams.get('template') || '';
+  const urlStdin = urlLang ? decodeParam('input') : '';
 
   // Resolve initial template from ?template= param
   const resolvedTemplate = urlTemplate && TEMPLATES[urlTemplate] ? urlTemplate : 'blank';
+  const projectParam = searchParams.get('project') || (urlTemplate && !TEMPLATES[urlTemplate] ? urlTemplate : '');
   const activeInitTemplate = urlHtml || urlJs ? 'blank' : resolvedTemplate;
 
   // When JS is pre-loaded from URL (from lesson Code Editor button),
   // detect if it needs React/TS mode and set appropriate HTML
   const tpl = TEMPLATES[activeInitTemplate] || TEMPLATES.blank;
-  const initHtml = urlHtml || (urlJs ? (() => {
+  // A full HTML document passed via ?html= is split so its <style>/<script> land in the CSS/JS tabs.
+  const urlSplit = urlHtml && !urlCss && !urlJs ? splitDocument(urlHtml) : null;
+  const initHtml = urlSplit ? urlSplit.html : urlHtml || (urlJs ? (() => {
     const hasR = /ReactDOM\.(createRoot|render)|return\s*\(\s*<|<[A-Z]\w*\s*\/>/.test(urlJs);
     if (hasR) return '<div id="root"></div>';
     return TEMPLATES.blank.html;
   })() : tpl.html);
 
   const [html, setHtml] = useState(initHtml);
-  const [css,  setCss]  = useState(urlCss  || tpl.css);
-  const [js,   setJs]   = useState(urlJs   || tpl.js);
-  const [tab, setTab]   = useState<'html' | 'css' | 'js'>(urlCss ? 'css' : urlJs ? 'js' : 'html');
+  const initCss = urlSplit ? urlSplit.css : (urlCss || tpl.css);
+  const initJs  = urlSplit ? urlSplit.js  : (urlJs  || tpl.js);
+  const [css,  setCss]  = useState(initCss);
+  const [js,   setJs]   = useState(initJs);
+  const urlTab = searchParams.get('tab');
+  const initialTab = urlLang ?? (urlTab === 'html' || urlTab === 'css' || urlTab === 'js' ? urlTab : (urlCss ? 'css' : urlJs ? 'js' : 'html'));
+  const [tab, setTab]   = useState<'html' | 'css' | 'js' | LanguageId>(initialTab);
   const [logs, setLogs] = useState<{ type: string; msg: string }[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [copied, setCopied]   = useState(false);
   const [activeTemplate, setActiveTemplate] = useState(activeInitTemplate);
+  const [projectTitle, setProjectTitle] = useState<string | null>(null);
   const [showTemplates, setShowTemplates]   = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const runIdRef  = useRef(0);
+  const logSeqRef = useRef(0);
+  const tplRef = useRef<HTMLDivElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
+
+  // ─── Language picker: TypeScript/React run instantly in-browser; Python, Java, ───
+  // C, C++, C#, Go, Rust, PHP, Ruby, Bash, SQL run for real via /api/execute.
+  const [langCode, setLangCode]       = useState<Partial<Record<LanguageId, string>>>(urlLang && langUrlCode ? { [urlLang]: langUrlCode } : {});
+  const [activeLang, setActiveLang]   = useState<LanguageId | null>(urlLang);
+  const [showLangPicker, setShowLangPicker] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
+  const [execResult, setExecResult]   = useState<ExecResult | null>(null);
+  const [stdinValue, setStdinValue]   = useState(urlStdin);
+  const [showStdin, setShowStdin]     = useState(urlStdin !== '');
+
+  // ─── Editor component (CodeMirror, loaded on demand; the plain textarea below is the fallback) ───
+  const [EditorComp, setEditorComp] = useState<ComponentType<{ value: string; onChange: (v: string) => void; onRun: () => void; language: EditorLang }> | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    import('./CodeEditor').then(m => { if (!cancelled) setEditorComp(() => m.default); }).catch(() => { /* keep the textarea */ });
+    return () => { cancelled = true; };
+  }, []);
+
+  // ─── Drafts, share link, mobile panes ───
+  const [showDraftMenu, setShowDraftMenu] = useState(false);
+  const [draftInfo, setDraftInfo] = useState<PlaygroundDraft | null>(null);
+  const [flash, setFlash] = useState<{ text: string; tone: 'ok' | 'warn' } | null>(null);
+  const [shared, setShared] = useState(false);
+  const [mobilePane, setMobilePane] = useState<'code' | 'preview' | 'console'>('code');
+  const draftRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const notify = (text: string, tone: 'ok' | 'warn' = 'ok') => {
+    setFlash({ text, tone });
+    if (flashTimer.current) clearTimeout(flashTimer.current);
+    flashTimer.current = setTimeout(() => setFlash(null), 2500);
+  };
+
+  const isWebTab = tab === 'html' || tab === 'css' || tab === 'js';
+  const activeIsClientLang = activeLang !== null && isClientLang(activeLang);
+  const showsIframe = isWebTab || activeIsClientLang;
+  // TypeScript is almost always logic/console-driven, not DOM-driven — give
+  // Console the primary space there instead of a mostly-empty preview pane.
+  const consoleFirst = tab === 'typescript';
+  const getLangCode = (id: LanguageId) => langCode[id] ?? ALL_LANGUAGES[id].starter;
+
+  // A snippet that only defines functions/types prints nothing and draws nothing — say so instead of looking broken.
+  const hintIfSilent = useCallback((j: string) => {
+    if (!j.trim() || /\b(console|document|window|alert|prompt|confirm|ReactDOM|fetch|setTimeout|setInterval|addEventListener|innerHTML|getElementById|querySelector)\b/.test(j)) return;
+    const runId = runIdRef.current, seq = logSeqRef.current;
+    setTimeout(() => {
+      if (runIdRef.current !== runId || logSeqRef.current !== seq) return;
+      setLogs([{ type: 'l', msg: '✓ Ran without errors — this snippet has no console.log, so nothing is printed. Add console.log(...) to see a result.' }]);
+    }, 1000);
+  }, []);
 
   const run = useCallback((h: string, c: string, j: string) => {
     runIdRef.current += 1;
     const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    const doc = buildIframe(h.replace('__APP_ORIGIN__', origin), c, j, runIdRef.current);
+    const doc = buildIframe(h.replace('__APP_ORIGIN__', origin), c, j.replace('__APP_ORIGIN__', origin), runIdRef.current);
     if (iframeRef.current) iframeRef.current.srcdoc = doc;
     setLogs([]);
+    hintIfSilent(j);
+  }, [hintIfSilent]);
+
+  const runClientLang = useCallback((id: LanguageId, code: string) => {
+    if (isSimLang(id)) {
+      runIdRef.current += 1;
+      const doc = buildSimDoc(id, code, runIdRef.current, window.location.origin);
+      if (iframeRef.current) iframeRef.current.srcdoc = doc;
+      setLogs([]);
+    } else run('', '', code);
+  }, [run]);
+
+  const runServerLanguage = useCallback(async () => {
+    if (!activeLang) return;
+    setIsExecuting(true);
+    setExecResult(null);
+    try {
+      const res = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ language: activeLang, code: getLangCode(activeLang), stdin: stdinValue }),
+      });
+      const data = await res.json();
+      setExecResult(
+        res.ok ? data : { ok: false, stdout: '', stderr: '', compileError: '', error: data?.error || 'Something went wrong.' }
+      );
+    } catch {
+      setExecResult({ ok: false, stdout: '', stderr: '', compileError: '', error: 'Network error — please try again.' });
+    } finally {
+      setIsExecuting(false);
+    }
+  }, [activeLang, langCode, stdinValue]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const runCurrent = useCallback(() => {
+    if (isWebTab) run(html, css, js);
+    else if (activeIsClientLang && activeLang) runClientLang(activeLang, getLangCode(activeLang));
+    else runServerLanguage();
+    setMobilePane(p => (p === 'code' ? (showsIframe ? 'preview' : 'console') : p)); // on phones, jump from the code to its result
+  }, [isWebTab, activeIsClientLang, showsIframe, activeLang, langCode, html, css, js, run, runClientLang, runServerLanguage]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Initial render — write the iframe directly; logs already start empty, no state update needed.
+  useEffect(() => {
+    runIdRef.current += 1;
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    if (urlLang && isClientLang(urlLang)) {
+      const code = langUrlCode || ALL_LANGUAGES[urlLang].starter;
+      const sim = isSimLang(urlLang) ? buildSimDoc(urlLang, code, runIdRef.current, origin) : buildIframe('', '', code, runIdRef.current);
+      if (iframeRef.current) iframeRef.current.srcdoc = sim;
+      if (!isSimLang(urlLang)) hintIfSilent(code);
+      return;
+    }
+    const h = initHtml, c = initCss, j = initJs;
+    const doc = buildIframe(h.replace('__APP_ORIGIN__', origin), c, j.replace('__APP_ORIGIN__', origin), runIdRef.current);
+    if (iframeRef.current) iframeRef.current.srcdoc = doc;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const runCurrent = useCallback(() => run(html, css, js), [html, css, js, run]);
-
-  useEffect(() => { run(initHtml, urlCss || tpl.css, urlJs || tpl.js); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // ?project=<slug> (or an unknown ?template=<key>) loads a project's HTML/CSS/JS files into their own tabs.
+  useEffect(() => {
+    if (!projectParam) return;
+    let cancelled = false;
+    import('@/data/projects').then(({ allProjects }) => {
+      const p = allProjects.find(x => x.slug === projectParam || x.playgroundKey === projectParam);
+      if (!p || cancelled) return;
+      const pick = (lang: string) => p.files.find(f => f.language === lang)?.content ?? '';
+      const parts = splitDocument(pick('html'));
+      const h = parts.html
+        .replace(/<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi, '')
+        .replace(/<script\b[^>]*\bsrc=["'](?!https?:)[^"']*["'][^>]*><\/script>/gi, '')
+        .trim();
+      const c = pick('css') || parts.css;
+      const j = pick('javascript') || parts.js;
+      setHtml(h); setCss(c); setJs(j); setProjectTitle(p.title);
+      setTimeout(() => run(h, c, j), 40);
+    });
+    return () => { cancelled = true; };
+  }, [projectParam, run]);
 
   useEffect(() => {
     const handler = (e: MessageEvent) => {
       if (!e.data?._wda) return;
-      setLogs(p => [...p.slice(-49), { type: e.data.t, msg: e.data.d }]);
+      logSeqRef.current += 1;
+      // the same failure is often reported twice (window.onerror and console.error): show it once, keeping the copy with the line number
+      const same = (m: unknown) => String(m).replace(/^\s*(?:❌|✖)\s*/, '').replace(/^Uncaught\s+/, '').replace(/^TypeScript:\s*/, '').replace(/\s*\(line \d+\)\s*$/, '');
+      setLogs(p => {
+        const last = p[p.length - 1];
+        if (e.data.t === 'e' && last?.type === 'e' && same(last.msg) === same(e.data.d)) {
+          return [...p.slice(0, -1), { type: 'e', msg: /\(line \d+\)\s*$/.test(String(last.msg)) ? last.msg : e.data.d }];
+        }
+        return [...p.slice(-49), { type: e.data.t, msg: e.data.d }];
+      });
     };
     window.addEventListener('message', handler);
     return () => window.removeEventListener('message', handler);
   }, []);
 
+  // Close the Templates / Language dropdowns on outside click, Escape, or focus moving into the preview iframe.
+  useEffect(() => {
+    if (!showTemplates && !showLangPicker && !showDraftMenu) return;
+    const close = () => { setShowTemplates(false); setShowLangPicker(false); setShowDraftMenu(false); };
+    const onDown = (e: PointerEvent) => {
+      const t = e.target as Node;
+      if (tplRef.current?.contains(t) || langRef.current?.contains(t) || draftRef.current?.contains(t)) return;
+      close();
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('blur', close);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+      window.removeEventListener('blur', close);
+    };
+  }, [showTemplates, showLangPicker, showDraftMenu]);
+
   const loadTemplate = (key: string) => {
     const t = TEMPLATES[key];
     setHtml(t.html); setCss(t.css); setJs(t.js);
-    setActiveTemplate(key); setShowTemplates(false);
+    setActiveTemplate(key); setShowTemplates(false); setProjectTitle(null);
+    if (!isWebTab) { setActiveLang(null); setTab('js'); }
     setTimeout(() => run(t.html, t.css, t.js), 40);
   };
 
+  const selectLanguage = (id: LanguageId) => {
+    setLangCode(prev => (prev[id] !== undefined ? prev : { ...prev, [id]: ALL_LANGUAGES[id].starter }));
+    setActiveLang(id);
+    setTab(id);
+    setShowLangPicker(false);
+    setExecResult(null);
+    if (isClientLang(id)) setTimeout(() => runClientLang(id, langCode[id] ?? ALL_LANGUAGES[id].starter), 40);
+  };
+
+  // keep the language tab in view when the tab row is narrower than its tabs
+  useEffect(() => {
+    tabsRef.current?.querySelector('[data-lang-tab]')?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }, [activeLang, tab]);
+
+  const closeLanguageTab = () => {
+    setActiveLang(null);
+    setTab('html');
+    setExecResult(null);
+  };
+
   const copy = async () => {
-    const code = tab === 'html' ? html : tab === 'css' ? css : js;
+    const code = isWebTab ? (tab === 'html' ? html : tab === 'css' ? css : js) : getLangCode(activeLang!);
     await navigator.clipboard.writeText(code);
     setCopied(true); setTimeout(() => setCopied(false), 2000);
   };
 
   const exportFile = () => {
+    if (!isWebTab && activeLang) {
+      const blob = new Blob([getLangCode(activeLang)], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+      a.download = `program.${ALL_LANGUAGES[activeLang].ext}`; a.click();
+      return;
+    }
     const blob = new Blob([buildIframe(html, css, js, 0)], { type: 'text/html' });
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
     a.download = 'project.html'; a.click();
   };
 
-  const cur    = tab === 'html' ? html : tab === 'css' ? css : js;
-  const setCur = (v: string) => { if (tab === 'html') setHtml(v); else if (tab === 'css') setCss(v); else setJs(v); };
+  // ─── Drafts (explicit only: nothing is saved or loaded unless the user asks) ───
+  const toggleDraftMenu = () => {
+    setShowTemplates(false); setShowLangPicker(false);
+    setDraftInfo(loadDraft());
+    setShowDraftMenu(v => !v);
+  };
+
+  const saveDraftNow = () => {
+    const codes = Object.fromEntries(Object.entries(langCode).filter((e): e is [string, string] => typeof e[1] === 'string'));
+    const ok = saveDraft({ html, css, js, langCode: codes, tab, activeLang, stdin: stdinValue, template: activeTemplate });
+    setDraftInfo(ok ? loadDraft() : null);
+    notify(ok ? 'Draft saved' : 'Could not save: browser storage is blocked', ok ? 'ok' : 'warn');
+    setShowDraftMenu(false);
+  };
+
+  const loadDraftNow = () => {
+    const d = loadDraft();
+    setShowDraftMenu(false);
+    if (!d) { setDraftInfo(null); notify('No saved draft found', 'warn'); return; }
+    const lang = d.activeLang && d.activeLang in ALL_LANGUAGES ? (d.activeLang as LanguageId) : null;
+    const nextTab: 'html' | 'css' | 'js' | LanguageId = d.tab === 'html' || d.tab === 'css' || d.tab === 'js' ? d.tab : lang && d.tab === lang ? lang : 'html';
+    setHtml(d.html); setCss(d.css); setJs(d.js);
+    setLangCode(d.langCode as Partial<Record<LanguageId, string>>);
+    setStdinValue(d.stdin); setShowStdin(d.stdin !== '');
+    setActiveLang(lang); setTab(nextTab);
+    if (d.template in TEMPLATES) setActiveTemplate(d.template);
+    setProjectTitle(null); setExecResult(null); setMobilePane('code');
+    // web and browser-run languages preview straight away; server languages wait for Run
+    setTimeout(() => {
+      if (lang && nextTab === lang) { if (isClientLang(lang)) runClientLang(lang, d.langCode[lang] ?? ALL_LANGUAGES[lang].starter); }
+      else run(d.html, d.css, d.js);
+    }, 40);
+    notify('Draft loaded');
+  };
+
+  const clearDraftNow = () => {
+    clearDraft(); setDraftInfo(null); setShowDraftMenu(false);
+    notify('Draft cleared');
+  };
+
+  // ─── Share link: the current code in the same query parameters the editor already reads ───
+  const share = async () => {
+    const { url, tooLong } = buildShareUrl(window.location.origin, {
+      tab, html, css, js, activeLang, langCode: activeLang ? getLangCode(activeLang) : '', stdin: stdinValue,
+    });
+    if (tooLong) { notify('Too much code for a share link. Use Export instead.', 'warn'); return; }
+    if (await copyText(url)) { setShared(true); setTimeout(() => setShared(false), 2000); }
+    else notify('Could not copy the link', 'warn');
+  };
+
+  const cur    = isWebTab ? (tab === 'html' ? html : tab === 'css' ? css : js) : getLangCode(activeLang!);
+  const setCur = (v: string) => {
+    if (tab === 'html') setHtml(v);
+    else if (tab === 'css') setCss(v);
+    else if (tab === 'js') setJs(v);
+    else if (activeLang) setLangCode(prev => ({ ...prev, [activeLang]: v }));
+  };
 
   // Language mode badge
   const hasReact = /ReactDOM\.(createRoot|render)|return\s*\(<|<[A-Z]\w*\s*\/>/.test(js);
-  const hasTS    = !hasReact && (/:\s*(string|number|boolean)\b/.test(js) || /^(interface|type|enum)\s+\w/m.test(js));
+  const hasTS    = !hasReact && (/:\s*(string|number|boolean)\b/.test(js) || /^(interface|type|enum)\s+\w/m.test(js) || TS_ONLY_SYNTAX.test(js));
   const langMode = tab === 'js' ? (hasReact ? '⚛️ React' : hasTS ? '🔷 TypeScript' : '⚡ JavaScript') : tab === 'html' ? '🌐 HTML' : '🎨 CSS';
 
-  const tabCls = (t: string) => `px-4 py-2.5 text-[12px] font-mono font-bold tracking-wide border-b-2 transition-colors ${
+  const tabCls = (t: string) => `px-4 py-2.5 text-[12px] font-mono font-bold tracking-wide border-b-2 transition-colors shrink-0 ${
     tab === t
       ? t === 'html' ? 'text-orange-400 border-orange-400 bg-orange-400/5'
         : t === 'css' ? 'text-blue-400 border-blue-400 bg-blue-400/5'
-        : 'text-yellow-400 border-yellow-400 bg-yellow-400/5'
+        : t === 'js' ? 'text-yellow-400 border-yellow-400 bg-yellow-400/5'
+        : 'text-purple-400 border-purple-400 bg-purple-400/5'
       : 'text-[#6b7280] border-transparent hover:text-white hover:bg-white/5'
   }`;
-  const logCls = (t: string) => `text-[11px] font-mono py-0.5 px-1 ${t === 'e' ? 'text-red-400' : t === 'w' ? 'text-yellow-400' : 'text-[#3fb950]'}`;
+  const logCls = (t: string) => `text-[11px] font-mono py-0.5 px-1 whitespace-pre-wrap break-words ${t === 'w' ? 'text-yellow-400' : 'text-[#3fb950]'}`;
+  // normal output stays plain; errors get their own red block so they cannot be mistaken for a log line
+  const cleanError = (m: string) => String(m).replace(/^\s*(?:❌|✖|✗)\s*/, '').replace(/^Uncaught\s+/, '');
+
+  // Phones show one panel at a time (Code / Preview / Console or Output); from md up everything stays side by side.
+  const pane = !showsIframe && mobilePane === 'preview' ? 'console' : mobilePane;
+  const errorCount = logs.filter(l => l.type === 'e').length;
+  const outputHasError = !!execResult && (!!execResult.error || !!execResult.compileError || !!execResult.stderr || execResult.ok === false);
+  const segments: { id: 'code' | 'preview' | 'console'; label: string; badge?: string; bad?: boolean }[] = [
+    { id: 'code', label: 'Code' },
+    ...(showsIframe ? [{ id: 'preview' as const, label: 'Preview' }] : []),
+    showsIframe
+      ? { id: 'console' as const, label: 'Console', badge: logs.length ? String(logs.length) : undefined, bad: errorCount > 0 }
+      : { id: 'console' as const, label: 'Output', bad: outputHasError },
+  ];
+  const editorLang: EditorLang = editorLangFor(isWebTab ? tab : activeLang ?? 'text', hasReact ? 'jsx' : hasTS ? 'typescript' : 'javascript');
 
   return (
     <div className={`flex flex-col bg-[#0d1117] ${isFullscreen ? 'fixed inset-0 z-[100]' : 'min-h-[calc(100vh-58px)]'}`}>
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-[#161b22] border-b border-[#30363d] shrink-0">
+      <div className="flex items-center justify-between px-2 sm:px-4 py-2 bg-[#161b22] border-b border-[#30363d] shrink-0">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-1.5 text-white font-bold text-[13px] font-mono mr-1">
             <Terminal className="w-4 h-4 text-green-400" />
             <span className="hidden sm:inline">Code Editor</span>
           </Link>
-          <div className="relative">
-            <button onClick={() => setShowTemplates(!showTemplates)}
+          <div className="relative" ref={tplRef}>
+            <button onClick={() => { setShowLangPicker(false); setShowTemplates(v => !v); }}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-white text-[11px] font-medium transition-colors">
-              <span>{TEMPLATES[activeTemplate].icon}</span>
-              <span className="hidden sm:inline">{TEMPLATES[activeTemplate].label}</span>
+              <span>{projectTitle ? '📁' : TEMPLATES[activeTemplate].icon}</span>
+              <span className="hidden sm:inline">{projectTitle ?? TEMPLATES[activeTemplate].label}</span>
               <ChevronDown className="w-3 h-3" />
             </button>
             {showTemplates && (
               <div className="absolute top-full left-0 mt-1 w-52 bg-[#161b22] border border-[#30363d] rounded-xl shadow-2xl z-50 overflow-hidden py-1">
-                <p className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#484f58]">Templates</p>
+                <p className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#7d8590]">Templates</p>
                 {Object.entries(TEMPLATES).map(([k, t]) => (
                   <button key={k} onClick={() => loadTemplate(k)}
                     className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left hover:bg-[#21262d] transition-colors ${activeTemplate === k ? 'text-white' : 'text-[#8b949e]'}`}>
                     <span className="text-base">{t.icon}</span>
-                    <div><p className="text-[12px] font-semibold">{t.label}</p><p className="text-[10px] text-[#484f58]">{t.desc}</p></div>
+                    <div><p className="text-[12px] font-semibold">{t.label}</p><p className="text-[10px] text-[#7d8590]">{t.desc}</p></div>
                   </button>
                 ))}
               </div>
             )}
           </div>
         </div>
-        <div className="flex items-center gap-1.5">
-          <button onClick={copy} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
+        <div className="flex items-center gap-0.5 sm:gap-1.5">
+          <div className="relative" ref={draftRef}>
+            <button onClick={toggleDraftMenu} aria-haspopup="menu" aria-expanded={showDraftMenu} title="Save or load a draft in this browser"
+              className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
+              <Save className="w-3.5 h-3.5" /><span className="hidden sm:inline">Draft</span>
+            </button>
+            {showDraftMenu && (
+              <div role="menu" className="absolute top-full right-0 mt-1 w-56 bg-[#161b22] border border-[#30363d] rounded-xl shadow-2xl z-50 overflow-hidden py-1">
+                <button role="menuitem" onClick={saveDraftNow} className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left text-[12px] font-semibold text-[#e6edf3] hover:bg-[#21262d]">
+                  <Save className="w-3.5 h-3.5 text-green-400" />Save draft
+                </button>
+                {draftInfo && (
+                  <>
+                    <button role="menuitem" onClick={loadDraftNow} className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left text-[12px] font-semibold text-[#e6edf3] hover:bg-[#21262d]">
+                      <FolderOpen className="w-3.5 h-3.5 text-blue-400" />
+                      <span className="flex-1">Load draft<span className="block text-[10px] font-normal text-[#6b7280]">saved {timeAgo(draftInfo.savedAt)}</span></span>
+                    </button>
+                    <button role="menuitem" onClick={clearDraftNow} className="w-full flex items-center gap-2.5 px-3 py-2.5 text-left text-[12px] font-semibold text-[#e6edf3] hover:bg-[#21262d]">
+                      <Trash2 className="w-3.5 h-3.5 text-red-400" />Clear draft
+                    </button>
+                  </>
+                )}
+                <p className="px-3 pt-1.5 pb-2 text-[10px] leading-snug text-[#7d8590] border-t border-[#21262d] mt-1">Drafts stay in this browser only. Nothing is saved until you press Save.</p>
+              </div>
+            )}
+          </div>
+          <button onClick={share} title="Copy a link that reopens this code" className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
+            {shared ? <><Check className="w-3.5 h-3.5 text-green-400" /><span className="hidden sm:inline text-green-400">Copied</span></> : <><Share2 className="w-3.5 h-3.5" /><span className="hidden sm:inline">Share</span></>}
+          </button>
+          <button onClick={copy} className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
             {copied ? <><Check className="w-3.5 h-3.5 text-green-400" /><span className="hidden sm:inline text-green-400">Copied!</span></> : <><Copy className="w-3.5 h-3.5" /><span className="hidden sm:inline">Copy</span></>}
           </button>
-          <button onClick={exportFile} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
+          <button onClick={exportFile} className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
             <Download className="w-3.5 h-3.5" /><span className="hidden sm:inline">Export</span>
           </button>
           <Link href="/js/introduction" className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium text-[#8b949e] hover:text-white hover:bg-[#21262d]">
             <BookOpen className="w-3.5 h-3.5" />Tutorial
           </Link>
-          <button onClick={runCurrent}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-green-600 hover:bg-green-500 text-white text-[12px] font-bold transition-colors shadow-lg shadow-green-900/30">
-            <Play className="w-3.5 h-3.5" />Run ▶
+          <button onClick={runCurrent} disabled={isExecuting}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-green-600 hover:bg-green-500 disabled:opacity-60 disabled:cursor-not-allowed text-white text-[12px] font-bold transition-colors shadow-lg shadow-green-900/30">
+            {isExecuting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Play className="w-3.5 h-3.5" />}
+            {isExecuting ? 'Running…' : 'Run ▶'}
           </button>
           <button onClick={() => setIsFullscreen(f => !f)} className="p-1.5 rounded-lg text-[#6b7280] hover:text-white hover:bg-[#21262d]">
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -1535,71 +1945,256 @@ export function PlaygroundClient() {
         </div>
       </div>
 
+      {/* Phones: one panel at a time */}
+      <div role="tablist" aria-label="Editor panels" className="md:hidden flex gap-1 p-1.5 bg-[#161b22] border-b border-[#30363d] shrink-0">
+        {segments.map(s => (
+          <button key={s.id} role="tab" aria-selected={pane === s.id} onClick={() => setMobilePane(s.id)}
+            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[12px] font-bold transition-colors ${pane === s.id ? 'bg-[#21262d] text-white' : 'text-[#6b7280] hover:text-white'}`}>
+            {s.label}
+            {s.badge && <span className={`text-[10px] font-mono px-1.5 rounded-full ${s.bad ? 'bg-red-500/20 text-red-400' : 'bg-[#30363d] text-[#8b949e]'}`}>{s.badge}</span>}
+            {!s.badge && s.bad && <span className="w-1.5 h-1.5 rounded-full bg-red-400" aria-label="has errors" />}
+          </button>
+        ))}
+      </div>
+
       {/* Main */}
       <div className="flex flex-col md:flex-row flex-1 min-h-0">
         {/* Editor */}
-        <div className="flex flex-col w-full md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 200 }}>
-          <div className="flex items-center bg-[#0d1117] border-b border-[#30363d]">
+        <div className={`${pane === 'code' ? 'flex' : 'hidden md:flex'} flex-col w-full md:w-1/2 max-md:flex-1 md:border-r border-[#30363d] min-h-[55vh] md:min-h-[420px]`}>
+          <div className="flex items-center h-[42px] shrink-0 bg-[#0d1117] border-b border-[#30363d]">
+            {/* tabs stay on one line: if there is not enough room they scroll sideways instead of wrapping */}
+            <div ref={tabsRef} className="flex items-stretch self-stretch min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {(['html','css','js'] as const).map(t => (
               <button key={t} onClick={() => setTab(t)} className={tabCls(t)}>{t.toUpperCase()}</button>
             ))}
-            <span className="ml-2 text-[10px] text-[#8b949e] font-mono hidden sm:block">{langMode}</span>
-            <span className="ml-auto pr-3 text-[10px] text-[#484f58] font-mono hidden lg:block">Ctrl+Enter = run</span>
+            {activeLang && (
+              <div data-lang-tab className={`${tabCls(activeLang)} flex items-center gap-1.5 !py-0`}>
+                <button onClick={() => setTab(activeLang)} className="flex items-center gap-1.5 py-2.5">
+                  <span>{ALL_LANGUAGES[activeLang].icon}</span>
+                  <span>{ALL_LANGUAGES[activeLang].label}</span>
+                </button>
+                <button onClick={closeLanguageTab} aria-label="Close language tab"
+                  className="p-1 rounded hover:bg-white/10 hover:text-red-400">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+            </div>
+            <div className="relative shrink-0" ref={langRef}>
+              <button onClick={() => { setShowTemplates(false); setShowLangPicker(v => !v); }} aria-label="Choose language" aria-haspopup="menu" aria-expanded={showLangPicker}
+                className="flex items-center gap-1 px-3 py-2.5 text-[11px] font-mono font-bold text-[#6b7280] hover:text-white hover:bg-white/5 transition-colors">
+                <Plus className="w-3.5 h-3.5" /><span className="hidden sm:inline">Language</span>
+              </button>
+              {showLangPicker && (
+                <div className="absolute top-full left-0 max-sm:fixed max-sm:top-auto max-sm:left-2 max-sm:right-2 max-sm:w-auto mt-1 w-72 bg-[#161b22] border border-[#30363d] rounded-xl shadow-2xl z-50 overflow-hidden py-1 max-h-96 overflow-y-auto">
+                  <p className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#7d8590]">Instant — runs in your browser</p>
+                  <div className="grid grid-cols-2 gap-0.5 px-1 pb-1.5">
+                    {(Object.entries(BROWSER_LANGUAGES) as [LanguageId, typeof ALL_LANGUAGES[LanguageId]][]).map(([id, l]) => (
+                      <button key={id} onClick={() => selectLanguage(id)}
+                        className={`flex items-center gap-2 px-2.5 py-2 rounded-lg text-left hover:bg-[#21262d] transition-colors ${activeLang === id ? 'text-white bg-[#21262d]' : 'text-[#8b949e]'}`}>
+                        <span className="text-base">{l.icon}</span>
+                        <span className="text-[12px] font-semibold">{l.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#7d8590] border-t border-[#30363d] mt-1 pt-2">Simulators — backend &amp; tools, in your browser</p>
+                  <div className="grid grid-cols-2 gap-0.5 px-1 pb-1.5">
+                    {(Object.entries(SIM_LANGUAGES) as [LanguageId, typeof ALL_LANGUAGES[LanguageId]][]).map(([id, l]) => (
+                      <button key={id} onClick={() => selectLanguage(id)}
+                        className={`flex items-center gap-2 px-2.5 py-2 rounded-lg text-left hover:bg-[#21262d] transition-colors ${activeLang === id ? 'text-white bg-[#21262d]' : 'text-[#8b949e]'}`}>
+                        <span className="text-base">{l.icon}</span>
+                        <span className="text-[12px] font-semibold">{l.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-[#7d8590] border-t border-[#30363d] mt-1 pt-2">Real runtime — compiles &amp; runs on a server</p>
+                  <div className="grid grid-cols-2 gap-0.5 px-1 pb-1.5">
+                    {(Object.entries(SERVER_LANGUAGES) as [LanguageId, typeof ALL_LANGUAGES[LanguageId]][]).map(([id, l]) => (
+                      <button key={id} onClick={() => selectLanguage(id)}
+                        className={`flex items-center gap-2 px-2.5 py-2 rounded-lg text-left hover:bg-[#21262d] transition-colors ${activeLang === id ? 'text-white bg-[#21262d]' : 'text-[#8b949e]'}`}>
+                        <span className="text-base">{l.icon}</span>
+                        <span className="text-[12px] font-semibold">{l.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <span className="ml-2 text-[10px] text-[#8b949e] font-mono hidden sm:block min-w-0 truncate shrink-[100]">
+              {isWebTab ? langMode : `${ALL_LANGUAGES[activeLang!].icon} ${ALL_LANGUAGES[activeLang!].label} ${activeIsClientLang ? '(instant)' : '(server)'}`}
+            </span>
+            <span className="ml-auto pl-2 pr-3 text-[10px] text-[#7d8590] font-mono hidden lg:block min-w-0 truncate shrink-[100]">Ctrl+Enter = run</span>
           </div>
-          <textarea value={cur} onChange={e => setCur(e.target.value)}
-            onKeyDown={e => {
-              if (e.key === 'Tab') {
-                e.preventDefault();
-                const s = e.currentTarget.selectionStart;
-                const v = cur.slice(0, s) + '  ' + cur.slice(e.currentTarget.selectionEnd);
-                setCur(v);
-                requestAnimationFrame(() => { if(e.currentTarget){e.currentTarget.selectionStart=e.currentTarget.selectionEnd=s+2;}});
-              }
-              if ((e.ctrlKey||e.metaKey) && e.key === 'Enter') runCurrent();
-            }}
-            spellCheck={false}
-            className="flex-1 w-full p-4 font-mono text-[13px] leading-relaxed resize-none outline-none bg-[#0d1117] text-[#e6edf3] caret-white"
-            style={{ tabSize: 2 }} />
+          {(tab === 'nextjs' || tab === 'express') && (
+            <div className="px-3 py-1.5 text-[10px] leading-snug font-mono text-[#8b949e] bg-[#161b22] border-b border-[#30363d]">
+              {tab === 'nextjs'
+                ? <>Browser simulator — one file per <span className="text-[#79c0ff]">{'// FILE: path'}</span> line (app/page.js, app/api/x/route.js, app/blog/[id]/page.js, middleware.js …)</>
+                : <>Browser simulator with a request tester. Add files with <span className="text-[#79c0ff]">{'// FILE: routes/users.js'}</span> and <span className="text-[#79c0ff]">require(&apos;./routes/users&apos;)</span>.</>}
+            </div>
+          )}
+          <div className="relative flex-1 min-h-[240px] bg-[#0d1117]">
+            {EditorComp ? (
+              <EditorComp key={isWebTab ? tab : activeLang ?? 'code'} value={cur} onChange={setCur} onRun={runCurrent} language={editorLang} />
+            ) : (
+              // fallback while the editor loads, or if it cannot load: the plain textarea
+              <textarea value={cur} onChange={e => setCur(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const s = e.currentTarget.selectionStart;
+                    const v = cur.slice(0, s) + '  ' + cur.slice(e.currentTarget.selectionEnd);
+                    setCur(v);
+                    requestAnimationFrame(() => { if(e.currentTarget){e.currentTarget.selectionStart=e.currentTarget.selectionEnd=s+2;}});
+                  }
+                  if ((e.ctrlKey||e.metaKey) && e.key === 'Enter') runCurrent();
+                }}
+                spellCheck={false}
+                aria-label="Code editor"
+                className="absolute inset-0 w-full h-full p-4 font-mono text-[13px] leading-relaxed resize-none outline-none bg-[#0d1117] text-[#e6edf3] caret-white"
+                style={{ tabSize: 2 }} />
+            )}
+          </div>
         </div>
 
-        {/* Preview + Console */}
-        <div className="flex flex-col w-full md:w-1/2" style={{ minHeight: 320 }}>
-          <div className="flex items-center justify-between px-4 py-2 bg-white border-b border-gray-200 shrink-0">
-            <div className="flex items-center gap-1.5">
-              <div className="flex gap-1">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+        {/* Preview + Console, or server-language Output terminal */}
+        <div className={`${pane === 'code' ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-1/2 max-md:flex-1 min-h-[55vh] md:min-h-[420px]`}>
+          {showsIframe ? (
+            <>
+              <div className={`${pane === 'preview' ? 'flex' : 'max-md:hidden md:flex'} items-center justify-between px-4 h-[42px] bg-white border-b border-gray-200 shrink-0`}>
+                <div className="flex items-center gap-1.5">
+                  <div className="flex gap-1">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                  </div>
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest ml-2">
+                    {consoleFirst ? 'DOM Preview' : 'Live Preview'}
+                  </span>
+                </div>
+                <button onClick={runCurrent} className="text-gray-400 hover:text-gray-700 transition-colors"><RotateCcw className="w-3.5 h-3.5" /></button>
               </div>
-              <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest ml-2">Live Preview</span>
-            </div>
-            <button onClick={runCurrent} className="text-gray-400 hover:text-gray-700 transition-colors"><RotateCcw className="w-3.5 h-3.5" /></button>
-          </div>
-          <iframe ref={iframeRef} className="flex-1 bg-white border-0 w-full"
-            style={{ minHeight: 220, overflowY: 'auto' }}
-            scrolling="yes"
-            sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" title="Live Preview" />
-          <div className="border-t border-[#30363d] bg-[#0d1117] shrink-0" style={{ minHeight: 24, maxHeight: 40 }}>
-            <div className="flex items-center justify-between px-3 py-0.5 border-b border-[#21262d]">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#6b7280]">
-                Console {logs.length > 0 && <span className="ml-1 text-[#484f58]">({logs.length})</span>}
-              </span>
-              <button onClick={() => setLogs([])} className="text-[10px] text-[#484f58] hover:text-[#8b949e]">Clear</button>
-            </div>
-            <div className="overflow-y-auto p-1 space-y-0.5" style={{ maxHeight: 20 }}>
-              {logs.length === 0
-                ? <p className="text-[9px] text-[#484f58] font-mono px-1">console.log() output here...</p>
-                : logs.map((l, i) => <p key={i} className={logCls(l.type)}>{l.msg}</p>)}
-            </div>
-          </div>
+              <iframe ref={iframeRef}
+                className={`${pane === 'preview' ? '' : 'max-md:hidden'} ` + (consoleFirst
+                  ? 'flex-1 basis-1/2 bg-white border-0 w-full overflow-y-auto min-h-[140px]'
+                  : `flex-1 bg-white border-0 w-full overflow-y-auto ${activeLang && isSimLang(activeLang) ? 'min-h-[360px]' : 'min-h-[200px]'}`)}
+                scrolling="yes"
+                sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-modals" title="Live Preview" />
+              <div className={`${pane === 'console' ? 'max-md:flex-1 max-md:h-auto max-md:min-h-[45vh]' : 'max-md:hidden'} ` + (consoleFirst
+                ? 'flex flex-col border-t border-[#30363d] bg-[#0d1117] flex-1 basis-1/2 min-h-[140px]'
+                : 'flex flex-col border-t border-[#30363d] bg-[#0d1117] shrink-0 h-[110px] sm:h-[150px] md:h-[130px] lg:h-[170px]')}>
+                <div className="flex items-center justify-between px-3 py-1 border-b border-[#21262d] shrink-0">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#6b7280]">
+                    Console {logs.length > 0 && <span className="ml-1 text-[#7d8590]">({logs.length})</span>}
+                    {errorCount > 0 && <span className="ml-1.5 text-red-400 normal-case tracking-normal">{errorCount} error{errorCount > 1 ? 's' : ''}</span>}
+                  </span>
+                  <button onClick={() => setLogs([])} disabled={logs.length === 0} aria-label="Clear console"
+                    className="flex items-center gap-1 text-[10px] text-[#6b7280] hover:text-white disabled:opacity-40 disabled:hover:text-[#6b7280]">
+                    <Eraser className="w-3 h-3" />Clear console
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-1.5 space-y-0.5" aria-live="polite">
+                  {logs.length === 0
+                    ? <p className="text-[9px] text-[#7d8590] font-mono px-1">console.log() output here...</p>
+                    : logs.map((l, i) => l.type === 'e' ? (
+                        <div key={i} role="alert" className="my-1 rounded-md border border-red-500/30 bg-red-500/10 px-2.5 py-1.5">
+                          <p className="text-[9px] font-bold uppercase tracking-wider text-red-400">Error</p>
+                          <pre className="text-[11px] font-mono text-red-300 whitespace-pre-wrap break-words">{cleanError(l.msg)}</pre>
+                        </div>
+                      ) : <p key={i} className={logCls(l.type)}>{l.msg}</p>)}
+                </div>
+              </div>
+            </>
+          ) : activeLang && (
+            <>
+              <div className="flex items-center justify-between px-4 h-[42px] bg-[#161b22] border-b border-[#30363d] shrink-0">
+                <div className="flex items-center gap-1.5">
+                  <div className="flex gap-1">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                  </div>
+                  <span className="text-[11px] font-semibold text-[#8b949e] uppercase tracking-widest ml-2">Output</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => setExecResult(null)} disabled={!execResult || isExecuting} aria-label="Clear output"
+                    className="flex items-center gap-1 text-[10px] text-[#6b7280] hover:text-white font-mono disabled:opacity-40 disabled:hover:text-[#6b7280]">
+                    <Eraser className="w-3 h-3" />Clear output
+                  </button>
+                  <button onClick={() => setShowStdin(v => !v)} className="text-[10px] text-[#6b7280] hover:text-white font-mono">
+                    {showStdin ? 'Hide input' : '+ Input (stdin)'}
+                  </button>
+                </div>
+              </div>
+              {showStdin && (
+                <div className="border-b border-[#30363d] bg-[#0d1117] px-3 py-2 shrink-0">
+                  <textarea value={stdinValue} onChange={e => setStdinValue(e.target.value)}
+                    placeholder="Typed input your program reads, e.g. via input() / Scanner / cin…"
+                    spellCheck={false}
+                    className="w-full h-16 resize-none bg-[#161b22] border border-[#30363d] rounded-lg p-2 font-mono text-[12px] text-[#e6edf3] outline-none" />
+                </div>
+              )}
+              <div className="flex-1 overflow-y-auto bg-[#0d1117] p-3 font-mono text-[12px] leading-relaxed min-h-[200px]">
+                {isExecuting ? (
+                  <p className="text-[#8b949e] flex items-center gap-2">
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" /> Running {ALL_LANGUAGES[activeLang].label} on a real runtime…
+                  </p>
+                ) : execResult ? (
+                  <div className="space-y-2.5">
+                    {execResult.error && (
+                      <div role="alert" className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2">
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-red-400 mb-0.5">Error</p>
+                        <pre className="text-red-300 whitespace-pre-wrap break-words">{execResult.error}</pre>
+                      </div>
+                    )}
+                    {execResult.compileError && (
+                      <div role="alert" className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2">
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-amber-400 mb-0.5">Compile error</p>
+                        <pre className="text-amber-200 whitespace-pre-wrap break-words">{execResult.compileError}</pre>
+                      </div>
+                    )}
+                    {execResult.stdout && (
+                      <div>
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-[#6b7280] mb-0.5">stdout</p>
+                        <pre className="text-[#e6edf3] whitespace-pre-wrap break-words">{execResult.stdout}</pre>
+                      </div>
+                    )}
+                    {execResult.stderr && (
+                      <div className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2">
+                        <p className="text-[9px] font-bold uppercase tracking-wider text-red-400 mb-0.5">stderr</p>
+                        <pre className="text-red-300 whitespace-pre-wrap break-words">{execResult.stderr}</pre>
+                      </div>
+                    )}
+                    {!execResult.error && !execResult.compileError && !execResult.stdout && !execResult.stderr && (
+                      <p className="text-[#7d8590]">Program ran with no output.</p>
+                    )}
+                    {(typeof execResult.durationMs === 'number' || !execResult.ok) && (
+                      <p className={`text-[10px] ${outputHasError ? 'text-red-400' : 'text-[#3fb950]'}`}>
+                        {outputHasError ? '✗ finished with errors' : '✓ finished'}
+                        {typeof execResult.durationMs === 'number' && ` in ${execResult.durationMs}ms`}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-[#7d8590]">Press Run ▶ to execute this {ALL_LANGUAGES[activeLang].label} code on a real {ALL_LANGUAGES[activeLang].label} runtime.</p>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       {/* Status bar */}
       <div className="flex items-center justify-between px-4 py-1 bg-[#161b22] border-t border-[#30363d] shrink-0">
-        <span className="text-[10px] text-[#484f58] font-mono">{tab.toUpperCase()} · {cur.split('\n').length} lines</span>
-        <span className="text-[10px] text-[#484f58] font-mono">HTML · CSS · JS · TypeScript · React — all supported</span>
+        <span className="text-[10px] text-[#7d8590] font-mono">{tab.toUpperCase()} · {cur.split('\n').length} lines</span>
+        <span className="text-[10px] text-[#7d8590] font-mono hidden sm:block">HTML · CSS · JS · TS · React · Express · Next.js instantly &nbsp;+&nbsp; Node.js · Python · Java · C · C++ · C# · Go · Rust · PHP · Ruby · Bash · SQL via Run</span>
+        <span className="text-[10px] text-[#7d8590] font-mono sm:hidden">17 languages supported</span>
       </div>
+
+      {flash && (
+        <div role="status" className={`fixed bottom-12 left-1/2 -translate-x-1/2 z-[110] max-w-[90vw] px-4 py-2 rounded-lg border text-[12px] font-semibold shadow-2xl bg-[#161b22] ${flash.tone === 'ok' ? 'border-green-600/50 text-green-400' : 'border-amber-500/50 text-amber-300'}`}>
+          {flash.text}
+        </div>
+      )}
     </div>
   );
 }

@@ -15,12 +15,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (!category) {
     return {
-      title: 'Category Not Found | WebDevAtlas',
+      title: 'Category Not Found',
     };
   }
 
   return {
-    title: `${category.name} Interview Questions | WebDevAtlas`,
+    title: `${category.name} Interview Questions`,
     description: `Prepare for ${category.name} interviews. ${category.description}`,
   };
 }

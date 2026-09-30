@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { roadmaps } from '@/data/roadmaps';
 import { Breadcrumb } from '@/components/docs/Breadcrumb';
-import { Clock, CheckCircle2, Circle } from 'lucide-react';
+import { Clock, Circle } from 'lucide-react';
 import type { Metadata } from 'next';
 
 interface Props {

@@ -45,10 +45,10 @@ export const technologies: Technology[] = [
     yearCreated: 1996,
     prerequisites: ['html'],
     relatedTechnologies: ['html', 'javascript', 'tailwindcss'],
-    topics: Array.from({ length: 10 }, (_, i) => ({
+    topics: Array.from({ length: 11 }, (_, i) => ({
       id: `css-topic-${i}`,
-      title: ['Introduction','Selectors','Box Model','Colors & Backgrounds','Text & Fonts','Flexbox','CSS Grid','Positioning','Transitions & Animations','Responsive Design'][i],
-      slug: ['introduction','selectors','box-model','colors-backgrounds','text-fonts','flexbox','grid','positioning','animations','responsive'][i],
+      title: ['Introduction','Selectors','Box Model','Colors & Backgrounds','Text & Fonts','Flexbox','CSS Grid','Positioning','Transitions & Animations','Responsive Design','References'][i],
+      slug: ['introduction','selectors','box-model','colors-backgrounds','text-fonts','flexbox','grid','positioning','animations','responsive','references'][i],
       technologyId: 'css',
       description: '',
       difficulty: 'beginner' as const,
@@ -129,10 +129,10 @@ export const technologies: Technology[] = [
     yearCreated: 2013,
     prerequisites: ['javascript', 'html', 'css'],
     relatedTechnologies: ['javascript', 'typescript', 'nextjs', 'redux'],
-    topics: Array.from({ length: 20 }, (_, i) => ({
+    topics: Array.from({ length: 21 }, (_, i) => ({
       id: `react-topic-${i}`,
-      title: ['Introduction','JSX','Components','Props','State (useState)','Events','Conditional Rendering','Lists and Keys','useEffect Hook','Forms','Context API','useRef Hook','Custom Hooks','Performance','React Router','Fetching Data','Advanced State','TypeScript with React','React Patterns','Best Practices'][i],
-      slug: ['introduction','jsx','components','props','state','events','conditional-rendering','lists-keys','useeffect','forms','context','useref','custom-hooks','performance','router','fetch-data','context-advanced','typescript-react','patterns','best-practices'][i],
+      title: ['Introduction','JSX','Components','Props','State (useState)','Events','Conditional Rendering','Lists and Keys','useEffect Hook','Forms','Context API','useRef Hook','Custom Hooks','Performance','React Router','Fetching Data','Advanced State','TypeScript with React','React Patterns','Best Practices','References'][i],
+      slug: ['introduction','jsx','components','props','state','events','conditional-rendering','lists-keys','useeffect','forms','context','useref','custom-hooks','performance','router','fetch-data','context-advanced','typescript-react','patterns','best-practices','references'][i],
       technologyId: 'react',
       description: '',
       difficulty: 'intermediate' as const,

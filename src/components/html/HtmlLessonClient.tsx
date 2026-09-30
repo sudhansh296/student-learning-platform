@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Clock, BookOpen, Menu, X, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Clock, BookOpen, Menu, X } from 'lucide-react';
 import type { HtmlLesson } from '@/data/html-curriculum';
 import { HtmlSectionRenderer } from './HtmlSectionRenderer';
 import { ExerciseBlock } from '@/components/docs/ExerciseBlock';
@@ -142,15 +142,15 @@ export function HtmlLessonClient({ lesson, allLessons, chapters, prev, next }: P
           )}
 
           {/* Prev / Next */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-8 flex flex-wrap items-stretch justify-between gap-3">
             {prev ? (
               <Link href={`/html/${prev.slug}`}
-                className="group flex items-center gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5"
+                className="group max-w-full sm:max-w-[48%] flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5"
                 style={{ border: '1px solid var(--line)', background: 'var(--card)' }}>
-                <ChevronLeft className="w-5 h-5 shrink-0" style={{ color: 'var(--text-3)' }} />
+                <ChevronLeft className="w-4 h-4 shrink-0" style={{ color: 'var(--text-3)' }} />
                 <div className="min-w-0">
-                  <p className="text-xs" style={{ color: 'var(--text-3)' }}>Previous</p>
-                  <p className="text-sm font-semibold truncate group-hover:text-blue-600 transition-colors"
+                  <p className="text-[11px]" style={{ color: 'var(--text-3)' }}>Previous</p>
+                  <p className="text-[13px] font-semibold truncate group-hover:text-blue-600 transition-colors"
                     style={{ color: 'var(--text)' }}>{prev.title}</p>
                 </div>
               </Link>
@@ -158,14 +158,14 @@ export function HtmlLessonClient({ lesson, allLessons, chapters, prev, next }: P
 
             {next ? (
               <Link href={`/html/${next.slug}`}
-                className="group flex items-center justify-end gap-3 p-4 rounded-2xl transition-all hover:-translate-y-0.5 text-right"
+                className="group max-w-full sm:max-w-[48%] flex items-center justify-end gap-3 px-3.5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5 text-right"
                 style={{ border: '1px solid var(--line)', background: 'var(--card)' }}>
                 <div className="min-w-0">
-                  <p className="text-xs" style={{ color: 'var(--text-3)' }}>Next</p>
-                  <p className="text-sm font-semibold truncate group-hover:text-blue-600 transition-colors"
+                  <p className="text-[11px]" style={{ color: 'var(--text-3)' }}>Next</p>
+                  <p className="text-[13px] font-semibold truncate group-hover:text-blue-600 transition-colors"
                     style={{ color: 'var(--text)' }}>{next.title}</p>
                 </div>
-                <ChevronRight className="w-5 h-5 shrink-0" style={{ color: 'var(--text-3)' }} />
+                <ChevronRight className="w-4 h-4 shrink-0" style={{ color: 'var(--text-3)' }} />
               </Link>
             ) : <div />}
           </div>

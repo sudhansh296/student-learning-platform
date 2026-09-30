@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowLeft, Briefcase, CheckCircle2, AlertTriangle, Lightbulb, ExternalLink } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Project Interview Prep | WebDevAtlas',
+  title: 'Project Interview Prep',
   description: 'Learn to explain your projects confidently in technical interviews',
 };
 
@@ -179,7 +179,7 @@ export default function ProjectInterviewPage() {
 
         {/* Dos and Don'ts */}
         <section className="mb-12">
-          <h2 className="text-xl font-extrabold mb-6" style={{ color: 'var(--text)' }}>Dos & Don'ts</h2>
+          <h2 className="text-xl font-extrabold mb-6" style={{ color: 'var(--text)' }}>Dos &amp; Don&apos;ts</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-5 rounded-xl" style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}>
               <h3 className="font-bold mb-3 flex items-center gap-2 text-green-700">

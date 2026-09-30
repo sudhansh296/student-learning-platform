@@ -345,7 +345,7 @@ ctx.fill();
 
 <!-- ARIA when semantic HTML isn't enough -->
 <div role="button" tabindex="0" aria-label="Close dialog">
-  Ã—
+  ×
 </div>
 
 <!-- ARIA labels -->
@@ -1139,7 +1139,7 @@ document.documentElement.style.setProperty('--color-text', '#f0f0f0');
 const primaryColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--color-primary').trim();`
     },
-    interviewAnswer: 'CSS variables changed how I approach theming. Instead of maintaining separate stylesheets for light and dark mode, I define semantic variable names and change their values in one place. The cascade means scoped overrides work naturally â€” a dark card component only needs to override a few variables. Unlike SASS variables, CSS variables are live â€” changing them with JavaScript instantly updates the entire UI.',
+    interviewAnswer: 'CSS variables changed how I approach theming. Instead of maintaining separate stylesheets for light and dark mode, I define semantic variable names and change their values in one place. The cascade means scoped overrides work naturally — a dark card component only needs to override a few variables. Unlike SASS variables, CSS variables are live — changing them with JavaScript instantly updates the entire UI.',
     commonMistakes: [
       'Forgetting the -- prefix',
       'Using CSS variables where SASS variables would be simpler',
@@ -1161,7 +1161,7 @@ const primaryColor = getComputedStyle(document.documentElement)
     difficulty: 'beginner',
     tags: ['bem', 'naming', 'methodology'],
     shortAnswer: 'BEM (Block Element Modifier) is a CSS naming convention: .block__element--modifier. Blocks are standalone components, elements are children, modifiers are variants. Eliminates specificity battles and makes relationships clear.',
-    detailedExplanation: 'BEM solves CSS naming and specificity problems. Block: independent component (.card, .button). Element: child of a block, uses double underscore (.card__title, .card__image). Modifier: variant or state, uses double dash (.button--primary, .button--disabled, .card--featured). All classes are single level â€” no nesting needed, easy to override, globally unique names prevent conflicts. Used alongside design systems and component architecture.',
+    detailedExplanation: 'BEM solves CSS naming and specificity problems. Block: independent component (.card, .button). Element: child of a block, uses double underscore (.card__title, .card__image). Modifier: variant or state, uses double dash (.button--primary, .button--disabled, .card--featured). All classes are single level — no nesting needed, easy to override, globally unique names prevent conflicts. Used alongside design systems and component architecture.',
     example: {
       language: 'html',
       code: `<!-- BEM Structure -->
@@ -1209,13 +1209,13 @@ const primaryColor = getComputedStyle(document.documentElement)
   color: white;
 }
 
-/* âœ… BEM benefits: no nesting, low specificity */
-/* âŒ Without BEM: specificity wars */
-.sidebar .card .button.active { } /* High specificity â€” hard to override */
-/* âœ… With BEM: */
-.card__button--primary { }  /* Single class â€” easy to override */`
+/* ✅ BEM benefits: no nesting, low specificity */
+/* ❌ Without BEM: specificity wars */
+.sidebar .card .button.active { } /* High specificity — hard to override */
+/* ✅ With BEM: */
+.card__button--primary { }  /* Single class — easy to override */`
     },
-    interviewAnswer: 'BEM gives every class a globally unique name by encoding the component relationship into the name itself. .card__title is always the title inside a .card â€” no matter where it appears in HTML. The double underscore and dash separators make the relationship obvious at a glance. The big win is low specificity â€” all classes are single-level, so overriding is straightforward. This scales much better than deeply nested CSS.',
+    interviewAnswer: 'BEM gives every class a globally unique name by encoding the component relationship into the name itself. .card__title is always the title inside a .card — no matter where it appears in HTML. The double underscore and dash separators make the relationship obvious at a glance. The big win is low specificity — all classes are single-level, so overriding is straightforward. This scales much better than deeply nested CSS.',
     commonMistakes: [
       'Triple nesting like block__element__element (only one level of elements)',
       'Using BEM for global styles like typography or layout utilities',
@@ -1236,7 +1236,7 @@ const primaryColor = getComputedStyle(document.documentElement)
     question: 'What are CSS Container Queries and how are they different from media queries?',
     difficulty: 'intermediate',
     tags: ['container-queries', 'responsive', 'modern-css'],
-    shortAnswer: 'Container queries let components respond to their container\'s size, not the viewport size. Media queries respond to viewport width â€” container queries respond to parent element width. Better for reusable components.',
+    shortAnswer: 'Container queries let components respond to their container\'s size, not the viewport size. Media queries respond to viewport width — container queries respond to parent element width. Better for reusable components.',
     detailedExplanation: 'Media queries have a fundamental problem for components: a sidebar card and a main content card have the same styles even though they\'re in very different size containers. Container queries solve this by letting components style themselves based on their container. Define a containment context with container-type, then use @container to query the container size. Supported in all modern browsers since 2023.',
     example: {
       language: 'css',
@@ -1296,7 +1296,7 @@ const primaryColor = getComputedStyle(document.documentElement)
   font-size: clamp(1rem, 3cqi, 2rem);  /* 3% of container inline size */
 }`
     },
-    interviewAnswer: 'Container queries solve the problem that media queries can\'t: how does a component know how much space it has without knowing where it\'s placed? With media queries, I had to write location-specific overrides like .sidebar .card. Container queries make components truly self-contained â€” the card adapts based on its container, not the viewport. This is the future of responsive component design.',
+    interviewAnswer: 'Container queries solve the problem that media queries can\'t: how does a component know how much space it has without knowing where it\'s placed? With media queries, I had to write location-specific overrides like .sidebar .card. Container queries make components truly self-contained — the card adapts based on its container, not the viewport. This is the future of responsive component design.',
     commonMistakes: [
       'Forgetting to set container-type on the parent',
       'Using container queries where media queries are simpler',

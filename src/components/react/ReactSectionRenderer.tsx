@@ -1,29 +1,10 @@
 ﻿'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Info, AlertTriangle, Lightbulb, Sparkles, Play, RotateCcw, Copy, Check, Maximize2, X } from 'lucide-react';
 import type { ReactSection } from '@/data/react-curriculum';
 import { CodeBlock } from '@/components/docs/CodeBlock';
 
-function OpenInEditorBtn({ code }: { code: string }) {
-  const handleClick = () => {
-    try {
-      // Detect if this is React JSX code
-      const isReact = /ReactDOM\.createRoot|React\.(useState|useEffect)|<[A-Z]/.test(code);
-      const encoded = btoa(encodeURIComponent(code).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
-      // Send as js — playground auto-detects React and loads CDN Babel
-      window.open(`/playground?js=${encodeURIComponent(encoded)}`, '_blank');
-    } catch { window.open('/playground', '_blank'); }
-  };
-  return (
-    <button onClick={handleClick}
-      className="inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-full font-bold text-white text-xs hover:opacity-80 transition-opacity"
-      style={{ background: '#1a1a1a' }}>
-      <span style={{ color: '#22c55e', fontFamily: 'monospace', fontSize: '13px' }}>&gt;_</span>
-      Code Editor
-    </button>
-  );
-}
 
 function ReactPlayground({ jsx, css, title }: { jsx: string; css: string; title?: string }) {
   const [code, setCode] = useState(jsx);
@@ -45,8 +26,19 @@ try{${j}}catch(e){document.getElementById('root').innerHTML='<pre style="color:r
 </script></body></html>`;
   }, []);
 
-  // Auto-run on mount — initialize srcDoc with the built document directly
-  const [srcDoc, setSrcDoc] = useState(() => buildDoc(jsx, css));
+  // The preview pulls React and Babel from a CDN (~1 MB), so it starts only when the example scrolls into view
+  // (or when Run is pressed) instead of slowing down the whole lesson page at load.
+  const [srcDoc, setSrcDoc] = useState<string | null>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    const start = () => setSrcDoc((d) => d ?? buildDoc(jsx, css));
+    if (typeof IntersectionObserver === 'undefined') { const t = setTimeout(start, 0); return () => clearTimeout(t); }
+    const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) { start(); io.disconnect(); } }, { rootMargin: '300px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [buildDoc, jsx, css]);
 
   const run = () => setSrcDoc(buildDoc(code, styles));
   const reset = () => { setCode(jsx); setStyles(css); setSrcDoc(buildDoc(jsx, css)); };
@@ -67,40 +59,41 @@ try{${j}}catch(e){document.getElementById('root').innerHTML='<pre style="color:r
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
             <div className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
-          <button onClick={() => setTab('jsx')} className={`px-3 py-1 text-[11px] font-mono font-semibold uppercase rounded border-b-2 transition-colors ${tab==='jsx' ? 'text-cyan-400 border-cyan-400 bg-[#21262d]' : 'border-transparent text-[#8b949e] hover:text-white'}`}>JSX</button>
-          <button onClick={() => setTab('css')} className={`px-3 py-1 text-[11px] font-mono font-semibold uppercase rounded border-b-2 transition-colors ${tab==='css' ? 'text-blue-400 border-blue-400 bg-[#21262d]' : 'border-transparent text-[#8b949e] hover:text-white'}`}>CSS</button>
-          {title && <span className="ml-3 text-[10px] text-[#484f58] font-mono">{title}</span>}
+          <button onClick={() => setTab('jsx')} className={`px-3 py-1 text-[11px] font-mono font-semibold uppercase rounded border-b-2 transition-colors ${tab==='jsx' ? 'text-cyan-400 border-cyan-400 bg-[#21262d]' : 'border-transparent text-[#a0a9b5] hover:text-white'}`}>JSX</button>
+          <button onClick={() => setTab('css')} className={`px-3 py-1 text-[11px] font-mono font-semibold uppercase rounded border-b-2 transition-colors ${tab==='css' ? 'text-blue-400 border-blue-400 bg-[#21262d]' : 'border-transparent text-[#a0a9b5] hover:text-white'}`}>CSS</button>
+          {title && <span className="ml-3 text-[10px] text-[#7d8590] font-mono">{title}</span>}
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={copy} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors">
+          <button onClick={copy} aria-label="Copy code" className="px-2 py-1 rounded text-[10px] text-[#a0a9b5] hover:text-white hover:bg-[#21262d] transition-colors">
             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3" />}
           </button>
-          <button onClick={reset} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors"><RotateCcw className="w-3 h-3" /></button>
-          <button onClick={() => setFullscreen(f => !f)} className="px-2 py-1 rounded text-[10px] text-[#8b949e] hover:text-white hover:bg-[#21262d] transition-colors">
+          <button onClick={reset} aria-label="Reset example" className="px-2 py-1 rounded text-[10px] text-[#a0a9b5] hover:text-white hover:bg-[#21262d] transition-colors"><RotateCcw className="w-3 h-3" /></button>
+          <button onClick={() => setFullscreen(f => !f)} aria-label={fullscreen ? 'Exit full screen' : 'Full screen'} className="px-2 py-1 rounded text-[10px] text-[#a0a9b5] hover:text-white hover:bg-[#21262d] transition-colors">
             {fullscreen ? <X className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
           </button>
         </div>
       </div>
       <div className={`flex flex-col md:flex-row ${fullscreen ? 'flex-1 min-h-0' : ''}`}>
-        <div className="flex flex-col w-full md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 200 }}>
-          <textarea value={cur} onChange={e => setCur(e.target.value)}
+        <div className="flex flex-col w-full md:w-1/2 border-b md:border-b-0 md:border-r border-[#30363d]" style={{ minHeight: 420 }}>
+          <textarea value={cur} onChange={e => setCur(e.target.value)} aria-label={tab === 'jsx' ? 'JSX code editor' : 'CSS code editor'}
             onKeyDown={e => { if ((e.ctrlKey||e.metaKey) && e.key==='Enter') run(); }}
             className="flex-1 w-full p-4 font-mono text-[13px] leading-relaxed resize-none outline-none bg-[#0d1117] text-[#e6edf3] caret-white"
             spellCheck={false} style={{ tabSize: 2 }} />
         </div>
-        <div className="flex flex-col w-full md:w-1/2 bg-white" style={{ minHeight: 200 }}>
+        <div className="flex flex-col w-full md:w-1/2 bg-white" style={{ minHeight: 420 }}>
           <div className="flex items-center justify-between px-3 py-1.5 bg-[#f0f2f4] border-b border-[#d0d7de]">
             <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">⚛️ React Preview</span>
             <button onClick={run} className="flex items-center gap-1.5 px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white text-[11px] font-semibold rounded transition-colors">
               <Play className="w-3 h-3" /> Run ▶
             </button>
           </div>
-          <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white"
-            sandbox="allow-scripts allow-same-origin" title="React Preview" />
+          {srcDoc !== null
+            ? <iframe srcDoc={srcDoc} className="flex-1 border-0 w-full bg-white" sandbox="allow-scripts allow-same-origin" title="React Preview" />
+            : <div className="flex-1 flex items-center justify-center text-[12px] text-gray-500">Preview loads as you scroll here…</div>}
         </div>
       </div>
       <div className="flex items-center justify-between px-4 py-1.5 bg-[#161b22] border-t border-[#30363d]">
-        <span className="text-[10px] text-[#484f58] font-mono">React 18 + Babel • Ctrl+Enter = run</span>
+        <span className="text-[10px] text-[#7d8590] font-mono">React 18 + Babel • Ctrl+Enter = run</span>
         <button onClick={run} className="flex items-center gap-1.5 px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white text-[11px] font-semibold rounded transition-colors">
           <Play className="w-3 h-3" /> Run ▶
         </button>
@@ -111,7 +104,7 @@ try{${j}}catch(e){document.getElementById('root').innerHTML='<pre style="color:r
   return (
     <>
       {fullscreen && <div className="fixed inset-0 z-[199] bg-black/60 backdrop-blur-sm" />}
-      <div className="my-5">{editor}</div>
+      <div ref={boxRef} className="my-5">{editor}</div>
     </>
   );
 }
@@ -140,7 +133,7 @@ export function ReactSectionRenderer({ sections }: { sections: ReactSection[] })
                 {s.title && (
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1 h-5 rounded-full" style={{ background: '#0891b2' }} />
-                    <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: '#0891b2' }}>
+                    <p className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: '#0e7490' }}>
                       Example — {s.title}
                     </p>
                   </div>
@@ -150,8 +143,7 @@ export function ReactSectionRenderer({ sections }: { sections: ReactSection[] })
                     {s.content}
                   </p>
                 )}
-                <CodeBlock code={s.code || ''} language={s.language || 'jsx'} showLineNumbers />
-                <OpenInEditorBtn code={s.code || ''} />
+                <CodeBlock code={s.code || ''} language={s.language || 'jsx'} tech="react" showLineNumbers />
               </div>
             );
 

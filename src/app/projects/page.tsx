@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Clock, ArrowRight, Terminal } from 'lucide-react';
+import { Clock, ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import { allProjects } from '@/data/projects';
 

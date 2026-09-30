@@ -7,7 +7,7 @@ export const mongodbCrudLesson: MongodbLesson = {
   chapter: 'crud',
   order: 3,
   difficulty: 'beginner',
-  readingTime: 15,
+  readingTime: 18,
   description: 'Create, Read, Update, Delete operations - insertOne, find, updateOne, deleteOne and their bulk variants.',
   sections: [
     {
@@ -555,6 +555,122 @@ renderOpCount();
 
 window.setActive=setActive;
 window.runOp=runOp;`,
+    },
+    {
+      type: 'heading',
+      content: 'Common mistakes beginners make',
+    },
+    {
+      type: 'list',
+      items: [
+        'Calling updateOne with a plain object and no operator. Fix: wrap changes in an operator such as { $set: { age: 21 } }; use replaceOne when you really want to replace the whole document.',
+        'Running deleteMany({}) or updateMany({}, ...) by accident and changing every document. Fix: check the filter with find() first, and be careful with an empty filter.',
+        'Forgetting that find() returns a cursor. Fix: in a Node.js driver call .toArray() (or loop over the cursor); mongosh prints the results for you.',
+        'Matching the wrong type, for example age: "20" when the stored value is the number 20. Fix: use the same type as the data.',
+        'Inserting a duplicate _id or a duplicate value in a unique field. Fix: let MongoDB generate _id and handle the duplicate-key error (code 11000).',
+        'Fetching whole documents when you need two fields. Fix: use a projection, such as find({}, { name: 1 }), and limit large results.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Where you use this in real projects',
+    },
+    {
+      type: 'list',
+      items: [
+        'User accounts and profiles: insert on sign-up, update on edit, delete on account removal.',
+        'Product catalogues where items are searched, updated and removed.',
+        'Blog posts and comments that are created and edited often.',
+        'Shopping carts and orders that change as users shop.',
+        'Application settings and logs stored as flexible documents.',
+        'Admin panels for reviewing and editing data.',
+      ],
+    },
+    {
+      type: 'heading',
+      content: 'Practice task: Practice all four CRUD operations',
+    },
+    {
+      type: 'text',
+      content: 'Open the starter in the MongoDB editor. It inserts three students. Then complete the four TODO steps: find the students in the Web course, add one year to Ravi\'s age with $inc, delete the student named Meera, and finally list what is left.',
+    },
+    {
+      type: 'example',
+      title: 'Starter code',
+      content: 'Open this in the editor, complete the TODO parts and test with the tester that appears next to the code.',
+      code: `// A small "students" collection
+db.students.insertMany([
+  { name: 'Asha', age: 20, course: 'Web' },
+  { name: 'Ravi', age: 22, course: 'Data' },
+  { name: 'Meera', age: 21, course: 'Web' }
+]);
+
+// TODO 1: find all students in the Web course
+
+// TODO 2: increase Ravi's age by 1 with $inc
+
+// TODO 3: delete the student named Meera
+
+// TODO 4: list the remaining students
+db.students.find();`,
+      language: 'javascript',
+    },
+    {
+      type: 'note',
+      title: 'Expected result',
+      content: 'Step 1 returns Asha and Meera. After steps 2 and 3 the final find() shows two documents: Asha (age 20, Web) and Ravi (age 23, Data).',
+    },
+    {
+      type: 'tip',
+      title: 'Hint',
+      content: 'find takes a filter object: { course: "Web" }. For the update use db.students.updateOne({ name: "Ravi" }, { $inc: { age: 1 } }). deleteOne takes the same kind of filter.',
+    },
+    {
+      type: 'example',
+      title: 'Solution (try it yourself first)',
+      content: 'One possible solution. Yours may look different and still be correct.',
+      code: `db.students.insertMany([
+  { name: 'Asha', age: 20, course: 'Web' },
+  { name: 'Ravi', age: 22, course: 'Data' },
+  { name: 'Meera', age: 21, course: 'Web' }
+]);
+
+// 1. read: students in the Web course
+db.students.find({ course: 'Web' });
+
+// 2. update: Ravi is a year older
+db.students.updateOne({ name: 'Ravi' }, { $inc: { age: 1 } });
+
+// 3. delete: remove Meera
+db.students.deleteOne({ name: 'Meera' });
+
+// 4. read again: what is left
+db.students.find();`,
+      language: 'javascript',
+    },
+    {
+      type: 'heading',
+      content: 'Frequently asked questions',
+    },
+    {
+      type: 'note',
+      title: 'What is the _id field?',
+      content: 'The unique identifier of every document. MongoDB creates an ObjectId for you unless you supply your own value.',
+    },
+    {
+      type: 'note',
+      title: 'What is the difference between updateOne and replaceOne?',
+      content: 'updateOne changes only the fields named in an operator like $set and keeps the rest. replaceOne swaps the whole document (except _id) with the new one.',
+    },
+    {
+      type: 'note',
+      title: 'How do I return only some fields?',
+      content: 'Pass a projection as the second argument: db.users.find({}, { name: 1, email: 1 }).',
+    },
+    {
+      type: 'note',
+      title: 'Is MongoDB schema-less?',
+      content: 'Its collections do not force a fixed structure, but you still need to design your documents. Tools like Mongoose let you add validation and structure in your app.',
     },
   ],
   exercises: [
