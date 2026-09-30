@@ -1,0 +1,147 @@
+.diagram {
+  position: relative;
+  width: 1180px;
+  height: 1140px;
+  margin: 0 auto;
+  background-image: radial-gradient(var(--line) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+.nodeCircle {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  text-decoration: none;
+}
+.nodeCircle:hover {
+  transform: scale(1.08);
+}
+
+.btnPrimary {
+  transition: background 0.15s ease;
+  text-decoration: none;
+}
+.btnPrimary:hover {
+  background: #1d4ed8;
+}
+.btnSecondary {
+  transition: background 0.15s ease;
+  text-decoration: none;
+}
+.btnSecondary:hover {
+  background: #f4f4f4;
+}
+
+@keyframes dcIdleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes dcIdleBounceFlip {
+  0%, 100% { transform: scaleX(-1) translateY(0); }
+  50% { transform: scaleX(-1) translateY(-6px); }
+}
+@keyframes dcPulseRing {
+  0% { transform: scale(0.7); opacity: 0.5; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes dcDotBounce {
+  0%, 60%, 100% { transform: scale(0.6); opacity: 0.4; }
+  30% { transform: scale(1); opacity: 1; }
+}
+
+.walker {
+  transition: left 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95), top 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation: dcIdleBounce 1.5s ease-in-out infinite;
+}
+.walkerFaceLeft {
+  animation-name: dcIdleBounceFlip;
+}
+.walkerRing {
+  transition: left 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95), top 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  animation: dcPulseRing 1.8s ease-out infinite;
+}
+.walkerClip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 8px rgba(37, 99, 235, 0.25));
+  display: none;
+}
+.moodWalk .clipWalk { display: block; }
+.moodRead .clipRead { display: block; }
+.moodThink .clipThink { display: block; }
+.moodType .clipType { display: block; }
+.moodCelebrate .clipCelebrate { display: block; }
+
+.cloudImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 1.5px #93c5fd) drop-shadow(0 0 3px #93c5fd) drop-shadow(0 8px 18px rgba(37, 99, 235, 0.22));
+}
+.sideRight .cloudImg { transform: scaleX(-1); }
+.sideRight .bubbleTextArea { left: 62px; right: 30px; }
+
+.bubbleTextArea {
+  position: absolute;
+  top: 46px;
+  left: 30px;
+  right: 62px;
+  bottom: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e4c7a;
+  line-height: 1.3;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.typingDots {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px 2px;
+}
+.typingDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #6fa8d8;
+  animation: dcDotBounce 1s infinite ease-in-out;
+}
+.typingDots span:nth-child(2) { animation-delay: 0.15s; }
+.typingDots span:nth-child(3) { animation-delay: 0.3s; }
+.isTyping .typingDots { display: flex; }
+.isTyping .bubbleText { display: none; }
+.isTyping .bubbleTextArea { transform: scale(0.8); }
+.bubbleText { display: inline; }
+
+.walkerBubble {
+  transition: left 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95), top 2.2s cubic-bezier(0.45, 0.05, 0.55, 0.95),
+    opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sideLeft { transform-origin: 88% 85%; }
+.sideRight { transform-origin: 12% 85%; }
+.bubbleClosed { opacity: 0; transform: scale(0.3); pointer-events: none; }
+.bubbleOpen { opacity: 1; transform: scale(1); }
+
+.hvTip {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+  z-index: 25;
+}
+.hvTrigger:hover + .hvTip {
+  opacity: 1;
+  visibility: visible;
+}

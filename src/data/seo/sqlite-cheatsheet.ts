@@ -1,0 +1,180 @@
+import { code, type Cheatsheet } from './cheatsheet-types';
+
+export const sqliteCheatsheet: Cheatsheet = {
+  path: '/sqlite-cheatsheet',
+  tech: 'sqlite',
+  badge: 'SQLite',
+  title: 'SQLite Cheat Sheet: CRUD, Relationships and Node.js',
+  description: 'SQLite cheat sheet covering what makes SQLite different, CRUD operations, relationships, transactions, the CLI and using it from Node.js. Run the examples in the editor.',
+  h1: 'SQLite Cheat Sheet – CRUD, Relationships and Using It From Node.js',
+  intro: 'A practical SQLite reference: what makes SQLite different from a server-based database, CRUD operations, foreign keys and relationships, transactions, the sqlite3 CLI and PRAGMA settings, using it from Node.js with better-sqlite3, and when to move on to PostgreSQL. The runnable SQL examples on this page use portable syntax that also works on the site\'s live database, so a few SQLite-only specifics (AUTOINCREMENT, PRAGMA, the CLI\'s dot commands) are shown as reference tables rather than runnable code.',
+  sections: [
+    {
+      id: 'what-is-sqlite',
+      title: 'What makes SQLite different',
+      table: {
+        headers: ['Trait', 'What it means'],
+        rows: [
+          ['Embedded / serverless', 'No separate database process — the database engine runs inside your application'],
+          ['Single file', 'An entire database is one .db file on disk (or fully in memory)'],
+          ['Dynamically typed columns', 'A column\'s declared type is a hint, not strictly enforced, for most columns'],
+          ['Zero configuration', 'No server to install, configure or manage — just a file'],
+          ['Concurrent readers, one writer', 'Many connections can read at once; writes are serialized'],
+        ],
+        codeCols: [0],
+      },
+      tips: [
+        'SQLite is a great fit for local development, mobile and desktop apps, small-to-medium websites, and as an application file format — not for a high-write, multi-server web backend, which is where PostgreSQL or MySQL fit better.',
+      ],
+      lessons: ['sqlite/01-introduction'],
+    },
+    {
+      id: 'crud',
+      title: 'CRUD operations',
+      examples: [{
+        title: 'Creating a table and basic CRUD',
+        language: 'sql',
+        code: code(
+          'CREATE TABLE tasks (',
+          '  id SERIAL PRIMARY KEY,',
+          '  title TEXT NOT NULL,',
+          '  done BOOLEAN DEFAULT false',
+          ');',
+          '',
+          "INSERT INTO tasks (title) VALUES ('Write docs'), ('Fix bug');",
+          'SELECT * FROM tasks;',
+          '',
+          'UPDATE tasks SET done = true WHERE id = 1;',
+          'DELETE FROM tasks WHERE id = 2;',
+          'SELECT * FROM tasks;',
+        ),
+      }],
+      tips: [
+        'In real SQLite, a table\'s auto-incrementing primary key is usually written as "id INTEGER PRIMARY KEY" (SQLite auto-increments a bare INTEGER PRIMARY KEY on its own) rather than a separate AUTOINCREMENT keyword, which exists but is rarely needed.',
+      ],
+      lessons: ['sqlite/03-crud'],
+    },
+    {
+      id: 'relationships',
+      title: 'Foreign keys and relationships',
+      examples: [{
+        title: 'A one-to-many relationship',
+        language: 'sql',
+        code: code(
+          'CREATE TABLE authors (id SERIAL PRIMARY KEY, name TEXT);',
+          'CREATE TABLE books (id SERIAL PRIMARY KEY, author_id INTEGER REFERENCES authors(id), title TEXT);',
+          '',
+          "INSERT INTO authors (name) VALUES ('Ada Lovelace');",
+          "INSERT INTO books (author_id, title) VALUES (1, 'Notes on the Analytical Engine');",
+          '',
+          'SELECT b.title, a.name',
+          'FROM books b',
+          'JOIN authors a ON a.id = b.author_id;',
+        ),
+      }],
+      tips: [
+        'In real SQLite, foreign key enforcement is off by default per connection and must be turned on explicitly with PRAGMA foreign_keys = ON — easy to forget, and a common source of "why didn\'t this constraint fire" confusion.',
+      ],
+      lessons: ['sqlite/04-relationships'],
+    },
+    {
+      id: 'transactions',
+      title: 'Transactions',
+      examples: [{
+        title: 'Wrapping related writes in a transaction',
+        language: 'sql',
+        code: code(
+          'CREATE TABLE accounts (id TEXT PRIMARY KEY, balance NUMERIC);',
+          "INSERT INTO accounts VALUES ('a', 100), ('b', 50);",
+          '',
+          'BEGIN;',
+          "UPDATE accounts SET balance = balance - 20 WHERE id = 'a';",
+          "UPDATE accounts SET balance = balance + 20 WHERE id = 'b';",
+          'COMMIT;',
+          '',
+          'SELECT * FROM accounts;',
+        ),
+      }],
+      tips: [
+        'Wrapping several related writes (like a transfer between two rows) in a transaction means they either all succeed or all roll back together — important any time one write depends on another.',
+      ],
+      lessons: ['sqlite/03-crud'],
+    },
+    {
+      id: 'nodejs',
+      title: 'Using SQLite from Node.js',
+      examples: [{
+        title: 'better-sqlite3: a synchronous API',
+        language: 'javascript',
+        code: code(
+          "const Database = require('better-sqlite3');",
+          "const db = new Database('app.db');",
+          '',
+          "db.exec('CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, title TEXT)');",
+          '',
+          "const insert = db.prepare('INSERT INTO tasks (title) VALUES (?)');",
+          "insert.run('Write docs');",
+          '',
+          "const tasks = db.prepare('SELECT * FROM tasks').all();",
+          'console.log(tasks);',
+        ),
+      }],
+      tips: [
+        'better-sqlite3 is synchronous by design — every call blocks until it finishes — which is a deliberate tradeoff that makes the API simpler and, for SQLite\'s typical workloads, is usually faster than an async wrapper around the same operations.',
+        'Prepared statements (db.prepare(...)) are both faster for repeated queries and the correct way to safely include user input with ? placeholders instead of string concatenation.',
+      ],
+      lessons: ['sqlite/02-setup-nodejs'],
+    },
+    {
+      id: 'cli-pragma',
+      title: 'The sqlite3 CLI and PRAGMA settings',
+      table: {
+        headers: ['Command', 'What it does'],
+        rows: [
+          ['.tables', 'List tables in the current database'],
+          ['.schema tablename', 'Show the CREATE TABLE statement for a table'],
+          ['.headers on', 'Show column names in query output'],
+          ['.mode column', 'Format output as aligned columns'],
+          ['.quit', 'Exit the CLI'],
+        ],
+        codeCols: [0],
+      },
+      tips: [
+        'PRAGMA foreign_keys = ON; enables foreign key enforcement for the current connection (off by default).',
+        'PRAGMA journal_mode = WAL; switches to write-ahead logging, which lets reads and writes happen more concurrently — a common production tuning setting.',
+      ],
+      lessons: ['sqlite/06-references'],
+    },
+    {
+      id: 'comparison',
+      title: 'SQLite vs PostgreSQL vs MySQL',
+      table: {
+        headers: ['', 'SQLite', 'PostgreSQL / MySQL'],
+        rows: [
+          ['Architecture', 'Embedded (in-process, no server)', 'Client-server (separate process, network connection)'],
+          ['Concurrency', 'One writer at a time', 'Many concurrent writers'],
+          ['Setup', 'Zero — it is a file', 'Requires installing and running a server'],
+          ['Best fit', 'Local apps, mobile, small sites, testing', 'Multi-user web applications at scale'],
+        ],
+      },
+      tips: [
+        'A common real pattern: use SQLite for fast local development and tests, and PostgreSQL in production — as long as you avoid PostgreSQL-only features during development, the SQL mostly stays portable between the two.',
+      ],
+      lessons: ['sqlite/05-comparison'],
+    },
+  ],
+  faq: [
+    { q: 'Why do the SQL examples on this page use SERIAL instead of SQLite\'s AUTOINCREMENT?', a: 'The live editor on this page runs SQL against a real, Postgres-compatible database, so the runnable examples use portable syntax that works there. Real SQLite normally auto-increments a bare "INTEGER PRIMARY KEY" without needing the AUTOINCREMENT keyword at all.' },
+    { q: 'Does SQLite support foreign keys?', a: 'Yes, but enforcement is off by default per connection — you need to run PRAGMA foreign_keys = ON to have SQLite actually reject a write that violates a foreign key constraint.' },
+    { q: 'Is SQLite good enough for a production web app?', a: 'For many small-to-medium sites and internal tools, yes — SQLite in WAL mode handles surprisingly high read traffic well. It becomes a poor fit once you need many concurrent writers, multiple application servers sharing one database, or replication.' },
+    { q: 'What is the difference between better-sqlite3 and node-sqlite3?', a: 'better-sqlite3 is synchronous and generally faster and simpler to use for typical SQLite workloads. node-sqlite3 is asynchronous (callback-based), which better matches Node\'s usual style but adds overhead SQLite\'s fast, local operations rarely need.' },
+    { q: 'Can I just switch from SQLite to PostgreSQL later without rewriting everything?', a: 'Mostly, if you stuck to portable SQL — but expect some differences: PostgreSQL enforces column types strictly (SQLite is more lenient), auto-increment syntax differs, and any SQLite-only PRAGMA settings or extensions will need a PostgreSQL equivalent or removal.' },
+  ],
+  more: [
+    { label: 'SQL cheat sheet', href: '/sql-cheatsheet' },
+    { label: 'SQL interview questions', href: '/sql-interview-questions' },
+    { label: 'PostgreSQL cheat sheet', href: '/postgresql-cheatsheet' },
+    { label: 'Node.js cheat sheet', href: '/nodejs-cheatsheet' },
+    { label: 'Backend developer roadmap', href: '/roadmaps/backend' },
+  ],
+};
